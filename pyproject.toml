@@ -28,6 +28,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
@@ -41,4 +42,3 @@ python_version = "3.11"
 strict = true
 packages = ["trade_analytics"]
 mypy_path = "src"
-
