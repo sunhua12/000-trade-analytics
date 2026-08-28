@@ -62,7 +62,7 @@
 - Consumes: CLI values `period: str`、`cmd_code: str`、`query_type: str`。
 - Produces: `QueryType`、`ComtradeQuery`、`ComtradeQuery.to_params() -> dict[str, str | int]`。
 
-- [ ] **Step 1: 建立 package 設定與 failing query tests**
+- [x] **Step 1: 建立 package 設定與 failing query tests**
 
 Create `pyproject.toml` with project metadata, `src` package discovery, dependencies `httpx>=0.27,<1`、`pydantic>=2.8,<3`、`tenacity>=9,<10`, and dev dependencies `pytest>=8,<10`、`pytest-cov>=5,<8`、`respx>=0.21,<1`、`ruff>=0.8,<1`、`mypy>=1.13,<2`。
 
@@ -115,7 +115,7 @@ def test_cmd_code_must_be_two_four_or_six_digits(cmd_code: str) -> None:
         ComtradeQuery(period="202401", cmd_code=cmd_code, query_type="partner_detail")
 ```
 
-- [ ] **Step 2: 執行 tests，確認因 package 尚未存在而正確失敗**
+- [x] **Step 2: 執行 tests，確認因 package 尚未存在而正確失敗**
 
 Run:
 
@@ -127,7 +127,7 @@ python3.11 -m venv .venv
 
 Expected: FAIL during import with `ModuleNotFoundError: No module named 'trade_analytics'` or missing `queries` module。
 
-- [ ] **Step 3: 實作最小 query model 與 exceptions**
+- [x] **Step 3: 實作最小 query model 與 exceptions**
 
 Create `queries.py` with:
 
@@ -182,13 +182,13 @@ class ComtradeQuery(BaseModel):
 
 Create the exception hierarchy from the design in `exceptions.py` and export public types from `ingestion/__init__.py`。
 
-- [ ] **Step 4: 執行 query tests，確認通過**
+- [x] **Step 4: 執行 query tests，確認通過**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_queries.py -v`
 
 Expected: all tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add pyproject.toml .gitignore src tests/unit/ingestion/test_queries.py
@@ -208,7 +208,7 @@ git commit -m "feat: define Comtrade query contract"
 - Consumes: `dict[str, object]` decoded from Preview API JSON。
 - Produces: `ComtradeResponse(count: int, data: list[TradeRecord], error: str)` and `TradeRecord` aliased fields。
 
-- [ ] **Step 1: 建立最小 response fixture 與 failing schema tests**
+- [x] **Step 1: 建立最小 response fixture 與 failing schema tests**
 
 Fixture contains three import records for period `202401`: partner `156`, partner `410`, and World `0`; fields include the actual API names `period`、`reporterCode`、`flowCode`、`partnerCode`、`partner2Code`、`classificationCode`、`cmdCode`、`customsCode`、`motCode`、`qty`、`netWgt`、`primaryValue`、`isQtyEstimated`、`isNetWgtEstimated`、`isAggregate`。
 
@@ -254,13 +254,13 @@ def test_missing_required_trade_key_is_rejected() -> None:
         ComtradeResponse.model_validate(payload)
 ```
 
-- [ ] **Step 2: 執行 tests，確認 missing module failure**
+- [x] **Step 2: 執行 tests，確認 missing module failure**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_schemas.py -v`
 
 Expected: FAIL because `schemas.py` does not exist。
 
-- [ ] **Step 3: 實作 aliased Pydantic models**
+- [x] **Step 3: 實作 aliased Pydantic models**
 
 Use explicit aliases, `ConfigDict(populate_by_name=True, extra="allow")`, numeric nullable fields, and boolean estimation flags. Required contract fields must not have defaults; optional API description／measurement fields default to `None`。
 
@@ -287,13 +287,13 @@ class TradeRecord(BaseModel):
     is_aggregate: bool | None = Field(default=None, alias="isAggregate")
 ```
 
-- [ ] **Step 4: 執行 schema tests 與既有 tests**
+- [x] **Step 4: 執行 schema tests 與既有 tests**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_schemas.py tests/unit/ingestion/test_queries.py -v`
 
 Expected: all tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/trade_analytics/ingestion/schemas.py tests/fixtures tests/unit/ingestion/test_schemas.py
@@ -312,7 +312,7 @@ git commit -m "feat: validate Comtrade preview responses"
 - Consumes: `ComtradeQuery` and injected `httpx.Client`。
 - Produces: `ComtradeClient.fetch(query: ComtradeQuery) -> ComtradeResponse`。
 
-- [ ] **Step 1: 寫 HTTP success、retry、non-retry 與 truncation failing tests**
+- [x] **Step 1: 寫 HTTP success、retry、non-retry 與 truncation failing tests**
 
 Use `respx` and `wait_none()` so Unit Tests do not sleep:
 
@@ -381,13 +381,13 @@ def test_count_at_preview_limit_is_rejected(preview_payload: dict[str, object]) 
 
 Add timeout and 400 tests, plus a test proving request params contain `flowCode=M`。Provide `preview_payload` through a fixture in `tests/conftest.py`。
 
-- [ ] **Step 2: 執行 client tests，確認正確失敗**
+- [x] **Step 2: 執行 client tests，確認正確失敗**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_client.py -v`
 
 Expected: FAIL because `client.py` does not exist。
 
-- [ ] **Step 3: 實作 client 與 Tenacity retry**
+- [x] **Step 3: 實作 client 與 Tenacity retry**
 
 Implement:
 
@@ -402,13 +402,13 @@ Implement:
 
 Use a private retryable exception carrying optional `retry_after: float | None`; the default wait callable returns retry-after when present, otherwise exponential `min(2 ** (attempt - 1), 8)` seconds。
 
-- [ ] **Step 4: 執行 client tests 與完整 Unit Tests**
+- [x] **Step 4: 執行 client tests 與完整 Unit Tests**
 
 Run: `.venv/bin/pytest tests/unit/ingestion -v`
 
 Expected: all tests PASS with no real delay and no network request。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/trade_analytics/ingestion/client.py tests/conftest.py tests/unit/ingestion/test_client.py
@@ -427,7 +427,7 @@ git commit -m "feat: add resilient Comtrade HTTP client"
 - Consumes: `ComtradeClient.fetch()` and `ComtradeQuery`。
 - Produces: `IngestionDataset(query: ComtradeQuery, rows: tuple[TradeRecord, ...])` via `fetch_dataset()`。
 
-- [ ] **Step 1: 寫 query-type 與 data-contract failing tests**
+- [x] **Step 1: 寫 query-type 與 data-contract failing tests**
 
 Create a small fake client returning `ComtradeResponse`, not a mock call assertion. Tests must cover:
 
@@ -445,25 +445,25 @@ def test_world_total_contains_exactly_one_world_row(preview_response: ComtradeRe
 
 Also test `EmptyDataError` and `DataContractError` for mismatched period、reporter、flow、cmd code、non-world row in a World-only response、duplicate grain and multiple World rows。
 
-- [ ] **Step 2: 執行 service tests，確認 missing service failure**
+- [x] **Step 2: 執行 service tests，確認 missing service failure**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_service.py -v`
 
 Expected: FAIL because `service.py` does not exist。
 
-- [ ] **Step 3: 實作最小 service**
+- [x] **Step 3: 實作最小 service**
 
 Implement immutable `IngestionDataset` and validation helpers。For every record compare query contract, then branch on `QueryType`。Duplicate key is exactly `(row.period, row.partner_code, row.cmd_code)`。
 
 `partner_detail` filters World before empty and duplicate validation。`world_total` rejects any non-world row and requires length exactly one；because the client request explicitly includes `partnerCode=0`, a mixed response is a contract failure rather than silently filtered。
 
-- [ ] **Step 4: 執行 service tests 與完整 Unit Tests**
+- [x] **Step 4: 執行 service tests 與完整 Unit Tests**
 
 Run: `.venv/bin/pytest tests/unit/ingestion -v`
 
 Expected: all tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/trade_analytics/ingestion/service.py tests/unit/ingestion/test_service.py
@@ -484,7 +484,7 @@ git commit -m "feat: enforce Comtrade ingestion contract"
 - Consumes: `IngestionDataset`。
 - Produces: `serialize_ndjson(dataset) -> bytes`、`build_manifest(dataset, data, ingested_at) -> Manifest`、`LocalStorage.write(...) -> StoredIngestion`。
 
-- [ ] **Step 1: 寫 deterministic serialization 與 checksum failing tests**
+- [x] **Step 1: 寫 deterministic serialization 與 checksum failing tests**
 
 Tests must create the same two rows in reversed order and prove identical bytes／checksum。They must verify newline-delimited JSON, `sha256:` prefix, `row_count`, Decimal-based `primary_value_sum`, request parameters and `schema_version="1.0.0"`。
 
@@ -497,43 +497,43 @@ def test_checksum_is_independent_of_input_row_order(dataset: IngestionDataset) -
     assert checksum(first) == checksum(second)
 ```
 
-- [ ] **Step 2: 執行 manifest tests，確認 missing module failure**
+- [x] **Step 2: 執行 manifest tests，確認 missing module failure**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_manifest.py -v`
 
 Expected: FAIL because `manifest.py` does not exist。
 
-- [ ] **Step 3: 實作 canonical serialization 與 manifest**
+- [x] **Step 3: 實作 canonical serialization 與 manifest**
 
 Serialize `TradeRecord.model_dump(by_alias=True, mode="json", exclude_none=False)` using `json.dumps(sort_keys=True, separators=(",", ":"), ensure_ascii=False)`。Sort by period、partnerCode、cmdCode and terminate every row with `\n`。Compute primary value sum as `sum(Decimal(str(value)) ...)` and serialize the total as a string。
 
-- [ ] **Step 4: 執行 manifest tests，確認通過**
+- [x] **Step 4: 執行 manifest tests，確認通過**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_manifest.py -v`
 
 Expected: all tests PASS。
 
-- [ ] **Step 5: 寫 local storage failing tests**
+- [x] **Step 5: 寫 local storage failing tests**
 
 Use `tmp_path` and assert exact output paths, file bytes and parsed manifest。Patch `Path.replace` or inject a replace function to prove temporary files are used before final files。Also simulate a write error and assert no success result is returned。
 
-- [ ] **Step 6: 執行 storage tests，確認 missing module failure**
+- [x] **Step 6: 執行 storage tests，確認 missing module failure**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_storage.py -v`
 
 Expected: FAIL because `storage.py` does not exist。
 
-- [ ] **Step 7: 實作 LocalStorage**
+- [x] **Step 7: 實作 LocalStorage**
 
 Output root defaults to `Path("data/preview")`。Build `period=<period>/query_type=<query_type>`。Create both temporary files in the target directory using `tempfile.NamedTemporaryFile(delete=False, dir=target_dir)`，flush and `os.fsync` each file, then `os.replace` data followed by manifest。On exception, unlink remaining temporary files and re-raise。
 
-- [ ] **Step 8: 執行 storage、manifest 與完整 Unit Tests**
+- [x] **Step 8: 執行 storage、manifest 與完整 Unit Tests**
 
 Run: `.venv/bin/pytest tests/unit/ingestion -v`
 
 Expected: all tests PASS。
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add src/trade_analytics/ingestion/manifest.py src/trade_analytics/ingestion/storage.py tests/unit/ingestion/test_manifest.py tests/unit/ingestion/test_storage.py
@@ -553,7 +553,7 @@ git commit -m "feat: write deterministic Comtrade preview artifacts"
 - Consumes: CLI arguments and the modules from Tasks 1–5。
 - Produces: exit code `0` with JSON metadata on stdout or exit code `1／2` with concise error on stderr。
 
-- [ ] **Step 1: 寫 CLI parse、success 與 failure tests**
+- [x] **Step 1: 寫 CLI parse、success 與 failure tests**
 
 Import `ingest.main` and inject a callable `runner(query, output_dir)` so tests do not use network。Cover defaults, invalid period argparse exit, success metadata, domain exception exit and no full rows in stdout。
 
@@ -571,25 +571,25 @@ Expected success output fields:
 }
 ```
 
-- [ ] **Step 2: 執行 CLI tests，確認 missing module failure**
+- [x] **Step 2: 執行 CLI tests，確認 missing module failure**
 
 Run: `.venv/bin/pytest tests/unit/test_ingest_cli.py -v`
 
 Expected: FAIL because `ingest.py` does not exist。
 
-- [ ] **Step 3: 實作 CLI 與 default runner**
+- [x] **Step 3: 實作 CLI 與 default runner**
 
 Use `argparse` with required `--query-type` choices from `QueryType` and defaults from the spec。The default runner opens `httpx.Client(timeout=httpx.Timeout(connect=10, read=30, write=30, pool=10))`, then constructs client → service → manifest → storage。Only the CLI owns stdout／stderr；library modules raise typed exceptions。
 
 Catch `ValidationError` and `ComtradeError`，print concise error to stderr without headers or response body，return `1`。Argparse invalid options retain exit code `2`。
 
-- [ ] **Step 4: 執行 CLI tests 與完整 Unit Tests**
+- [x] **Step 4: 執行 CLI tests 與完整 Unit Tests**
 
 Run: `.venv/bin/pytest tests/unit -v`
 
 Expected: all tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add ingest.py src/trade_analytics/ingestion/__init__.py tests/unit/test_ingest_cli.py
@@ -610,17 +610,17 @@ git commit -m "feat: add Comtrade preview ingestion CLI"
 - Consumes: public client／service interface and live Preview API。
 - Produces: opt-in integration suite and complete user instructions。
 
-- [ ] **Step 1: 寫 opt-in Integration Test 與 skip guard**
+- [x] **Step 1: 寫 opt-in Integration Test 與 skip guard**
 
 Add `--run-integration` in `pytest_addoption` and skip tests marked `integration` unless enabled。Integration test uses `period=202401`、`cmd_code=8542` and executes both query types。Assert partner rows are non-empty and non-world, World result is exactly one row, all flow codes are `M`, and response remains below 500。
 
-- [ ] **Step 2: 驗證一般 Unit Test 不會呼叫網路**
+- [x] **Step 2: 驗證一般 Unit Test 不會呼叫網路**
 
 Run: `.venv/bin/pytest -m 'not integration' -v`
 
 Expected: Integration Test is skipped and all Unit Tests PASS。
 
-- [ ] **Step 3: 更新 README**
+- [x] **Step 3: 更新 README**
 
 Replace `demo` with:
 
@@ -632,13 +632,13 @@ Replace `demo` with:
 - Preview API limitations: no API key、500-row truncation guard、nullable descriptions and annual URL not used。
 - Phase 1 scope boundary: no Lambda／S3／BigQuery。
 
-- [ ] **Step 4: 執行真實 Integration Test**
+- [x] **Step 4: 執行真實 Integration Test**
 
 Run: `.venv/bin/pytest tests/integration/test_preview_api.py --run-integration -v`
 
 Expected: two query types PASS against the live Preview endpoint。
 
-- [ ] **Step 5: 執行 CLI smoke test**
+- [x] **Step 5: 執行 CLI smoke test**
 
 Run:
 
@@ -649,7 +649,7 @@ Run:
 
 Expected: both commands return exit code 0 and create separate `data.ndjson`／`manifest.json` directories。Verify partner output has no `partnerCode=0`; World output has exactly one row。
 
-- [ ] **Step 6: 執行完整品質閘門**
+- [x] **Step 6: 執行完整品質閘門**
 
 Run:
 
@@ -663,7 +663,7 @@ git diff --check
 
 Expected: all commands exit 0, coverage at least 85%, no warnings or formatting errors。
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add README.md pyproject.toml tests/conftest.py tests/integration/test_preview_api.py
