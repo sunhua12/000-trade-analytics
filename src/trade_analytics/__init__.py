@@ -1,0 +1,1 @@
+"""Trade analytics package."""
