@@ -6,7 +6,6 @@ from pydantic import ValidationError
 
 from trade_analytics.ingestion.schemas import ComtradeResponse
 
-
 FIXTURE = Path("tests/fixtures/comtrade_preview_response.json")
 
 
