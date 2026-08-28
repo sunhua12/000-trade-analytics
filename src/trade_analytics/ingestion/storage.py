@@ -61,14 +61,18 @@ class LocalStorage:
             + "\n"
         ).encode()
 
-        data_temp = self._write_temporary(target_dir, data)
-        manifest_temp = self._write_temporary(target_dir, manifest_data)
+        data_temp: Path | None = None
+        manifest_temp: Path | None = None
         try:
+            data_temp = self._write_temporary(target_dir, data)
+            manifest_temp = self._write_temporary(target_dir, manifest_data)
             os.replace(data_temp, data_path)
             os.replace(manifest_temp, manifest_path)
         except Exception:
-            data_temp.unlink(missing_ok=True)
-            manifest_temp.unlink(missing_ok=True)
+            if data_temp is not None:
+                data_temp.unlink(missing_ok=True)
+            if manifest_temp is not None:
+                manifest_temp.unlink(missing_ok=True)
             raise
 
         return StoredIngestion(

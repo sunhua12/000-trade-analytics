@@ -95,3 +95,32 @@ def test_storage_does_not_return_success_when_replace_fails(
         storage.write(partner_dataset(preview_payload))
 
     assert not list(tmp_path.rglob("*.tmp"))
+
+
+def test_storage_removes_data_temp_when_manifest_temp_write_fails(
+    tmp_path: Path,
+    preview_payload: dict[str, Any],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    writes = 0
+
+    def fail_second_temporary_write(directory: Path, content: bytes) -> Path:
+        nonlocal writes
+        writes += 1
+        if writes == 2:
+            raise OSError("manifest temp write failed")
+        temporary = directory / ".data.tmp"
+        temporary.write_bytes(content)
+        return temporary
+
+    monkeypatch.setattr(
+        LocalStorage,
+        "_write_temporary",
+        staticmethod(fail_second_temporary_write),
+    )
+    storage = LocalStorage(root=tmp_path, clock=lambda: FIXED_TIME)
+
+    with pytest.raises(OSError, match="manifest temp write failed"):
+        storage.write(partner_dataset(preview_payload))
+
+    assert not list(tmp_path.rglob("*.tmp"))
