@@ -87,6 +87,38 @@ def test_timeout_is_retried(preview_payload: dict[str, Any]) -> None:
 
 
 @respx.mock
+def test_retry_after_header_controls_retry_delay(preview_payload: dict[str, Any]) -> None:
+    delays: list[float] = []
+    respx.get(ComtradeClient.DEFAULT_BASE_URL).mock(
+        side_effect=[
+            httpx.Response(429, headers={"Retry-After": "7"}),
+            httpx.Response(200, json=preview_payload),
+        ]
+    )
+
+    with httpx.Client() as http_client:
+        ComtradeClient(http_client=http_client, sleep=delays.append).fetch(QUERY)
+
+    assert delays == [7.0]
+
+
+@respx.mock
+def test_missing_retry_after_uses_exponential_delay(preview_payload: dict[str, Any]) -> None:
+    delays: list[float] = []
+    respx.get(ComtradeClient.DEFAULT_BASE_URL).mock(
+        side_effect=[
+            httpx.Response(503),
+            httpx.Response(200, json=preview_payload),
+        ]
+    )
+
+    with httpx.Client() as http_client:
+        ComtradeClient(http_client=http_client, sleep=delays.append).fetch(QUERY)
+
+    assert delays == [1.0]
+
+
+@respx.mock
 def test_retry_exhaustion_raises_request_error() -> None:
     route = respx.get(ComtradeClient.DEFAULT_BASE_URL).mock(return_value=httpx.Response(503))
 

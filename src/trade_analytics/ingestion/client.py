@@ -1,6 +1,7 @@
 """Resilient HTTP client for the UN Comtrade Preview API."""
 
 from collections.abc import Callable
+from time import sleep as sleep_seconds
 from typing import Any
 
 import httpx
@@ -52,11 +53,13 @@ class ComtradeClient:
         base_url: str = DEFAULT_BASE_URL,
         timeout: httpx.Timeout | float = 30.0,
         wait: wait_base | Callable[[RetryCallState], float] | None = None,
+        sleep: Callable[[float], None] = sleep_seconds,
     ) -> None:
         self._http_client = http_client
         self._base_url = base_url
         self._timeout = timeout
         self._wait = wait or _RetryAfterOrExponential()
+        self._sleep = sleep
 
     def fetch(self, query: ComtradeQuery) -> ComtradeResponse:
         """Fetch one validated Preview API response."""
@@ -64,6 +67,7 @@ class ComtradeClient:
             stop=stop_after_attempt(self.MAX_ATTEMPTS),
             retry=retry_if_exception_type(_RetryableRequestError),
             wait=self._wait,
+            sleep=self._sleep,
             reraise=True,
         )
         try:
