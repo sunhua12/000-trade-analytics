@@ -3,7 +3,12 @@ from dataclasses import replace
 from datetime import UTC, datetime
 from typing import Any
 
-from trade_analytics.ingestion.manifest import build_manifest, checksum, serialize_ndjson
+from trade_analytics.ingestion.manifest import (
+    build_manifest,
+    checksum,
+    serialize_manifest,
+    serialize_ndjson,
+)
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
 from trade_analytics.ingestion.schemas import ComtradeResponse
 from trade_analytics.ingestion.service import IngestionDataset, IngestionService
@@ -76,3 +81,23 @@ def test_manifest_summarizes_dataset_without_float_drift(
     assert str(manifest.primary_value_sum) == "300.0"
     assert manifest.ingested_at == ingested_at
     assert manifest.source == "UN Comtrade Preview API"
+
+
+def test_manifest_serialization_is_stable_json_with_a_trailing_newline(
+    preview_payload: dict[str, Any],
+) -> None:
+    dataset = partner_dataset(preview_payload)
+    data = serialize_ndjson(dataset)
+    manifest = build_manifest(
+        dataset,
+        data=data,
+        ingested_at=datetime(2026, 8, 28, tzinfo=UTC),
+    )
+
+    serialized = serialize_manifest(manifest)
+    payload = json.loads(serialized)
+
+    assert serialized.endswith(b"\n")
+    assert payload["primary_value_sum"] == "300.0"
+    assert payload["checksum"] == checksum(data)
+    assert serialized.index(b'"checksum"') < serialized.index(b'"row_count"')

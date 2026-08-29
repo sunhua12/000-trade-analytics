@@ -1,6 +1,5 @@
 """Local filesystem storage for Phase 1 ingestion artifacts."""
 
-import json
 import os
 import tempfile
 from collections.abc import Callable
@@ -8,7 +7,11 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
-from trade_analytics.ingestion.manifest import build_manifest, serialize_ndjson
+from trade_analytics.ingestion.manifest import (
+    build_manifest,
+    serialize_manifest,
+    serialize_ndjson,
+)
 from trade_analytics.ingestion.service import IngestionDataset
 
 
@@ -51,15 +54,7 @@ class LocalStorage:
 
         data = serialize_ndjson(dataset)
         manifest = build_manifest(dataset, data=data, ingested_at=self._clock())
-        manifest_data = (
-            json.dumps(
-                manifest.model_dump(mode="json"),
-                ensure_ascii=False,
-                indent=2,
-                sort_keys=True,
-            )
-            + "\n"
-        ).encode()
+        manifest_data = serialize_manifest(manifest)
 
         data_temp: Path | None = None
         manifest_temp: Path | None = None

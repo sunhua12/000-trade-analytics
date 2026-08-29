@@ -26,6 +26,19 @@ class Manifest(BaseModel):
     source: str
 
 
+def serialize_manifest(manifest: Manifest) -> bytes:
+    """Serialize manifest metadata as stable, human-readable JSON bytes."""
+    return (
+        json.dumps(
+            manifest.model_dump(mode="json"),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    ).encode()
+
+
 def serialize_ndjson(dataset: IngestionDataset) -> bytes:
     """Serialize records to stable, newline-delimited JSON bytes."""
     ordered_rows = sorted(
