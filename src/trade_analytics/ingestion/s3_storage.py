@@ -1,14 +1,19 @@
 """Immutable Amazon S3 storage for validated ingestion artifacts."""
 
+import json
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Literal, Protocol
 
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError  # type: ignore[import-untyped]
+from pydantic import ValidationError
 
+from trade_analytics.ingestion.exceptions import StorageConflictError
 from trade_analytics.ingestion.manifest import (
+    Manifest,
     build_manifest,
+    checksum,
     serialize_manifest,
     serialize_ndjson,
 )
@@ -77,26 +82,102 @@ class S3Storage:
 
         data_existing = self._read_object(data_key)
         manifest_existing = self._read_object(manifest_key)
-        del data_existing, manifest_existing
+        if data_existing is not None and manifest_existing is not None:
+            self._validate_existing_artifacts(
+                data=data_existing,
+                manifest_data=manifest_existing,
+                expected_checksum=manifest.checksum,
+                root=root,
+            )
+            return self._stored_result(
+                status="already_exists",
+                data_key=data_key,
+                manifest_key=manifest_key,
+                row_count=manifest.row_count,
+                checksum_value=manifest.checksum,
+            )
 
-        self._client.put_object(
-            Bucket=self._bucket,
-            Key=data_key,
-            Body=data,
-            ContentType="application/x-ndjson",
-        )
-        self._client.put_object(
-            Bucket=self._bucket,
-            Key=manifest_key,
-            Body=manifest_data,
-            ContentType="application/json",
-        )
-        return StoredS3Ingestion(
+        if data_existing is not None and checksum(data_existing) != manifest.checksum:
+            raise self._conflict(root)
+        if manifest_existing is not None:
+            self._validate_existing_manifest(
+                manifest_data=manifest_existing,
+                expected_checksum=manifest.checksum,
+                root=root,
+            )
+
+        if data_existing is None:
+            self._client.put_object(
+                Bucket=self._bucket,
+                Key=data_key,
+                Body=data,
+                ContentType="application/x-ndjson",
+            )
+        if manifest_existing is None:
+            self._client.put_object(
+                Bucket=self._bucket,
+                Key=manifest_key,
+                Body=manifest_data,
+                ContentType="application/json",
+            )
+        return self._stored_result(
             status="success",
+            data_key=data_key,
+            manifest_key=manifest_key,
+            row_count=manifest.row_count,
+            checksum_value=manifest.checksum,
+        )
+
+    def _validate_existing_artifacts(
+        self,
+        *,
+        data: bytes,
+        manifest_data: bytes,
+        expected_checksum: str,
+        root: str,
+    ) -> None:
+        self._validate_existing_manifest(
+            manifest_data=manifest_data,
+            expected_checksum=expected_checksum,
+            root=root,
+        )
+        if checksum(data) != expected_checksum:
+            raise self._conflict(root)
+
+    def _validate_existing_manifest(
+        self,
+        *,
+        manifest_data: bytes,
+        expected_checksum: str,
+        root: str,
+    ) -> None:
+        try:
+            existing_manifest = Manifest.model_validate(json.loads(manifest_data))
+        except (json.JSONDecodeError, UnicodeDecodeError, ValidationError) as error:
+            raise StorageConflictError(
+                f"S3 checksum conflict at s3://{self._bucket}/{root}: invalid manifest"
+            ) from error
+        if existing_manifest.checksum != expected_checksum:
+            raise self._conflict(root)
+
+    def _conflict(self, root: str) -> StorageConflictError:
+        return StorageConflictError(f"S3 checksum conflict at s3://{self._bucket}/{root}")
+
+    def _stored_result(
+        self,
+        *,
+        status: Literal["success", "already_exists"],
+        data_key: str,
+        manifest_key: str,
+        row_count: int,
+        checksum_value: str,
+    ) -> StoredS3Ingestion:
+        return StoredS3Ingestion(
+            status=status,
             data_uri=f"s3://{self._bucket}/{data_key}",
             manifest_uri=f"s3://{self._bucket}/{manifest_key}",
-            row_count=manifest.row_count,
-            checksum=manifest.checksum,
+            row_count=row_count,
+            checksum=checksum_value,
         )
 
     def _read_object(self, key: str) -> bytes | None:
