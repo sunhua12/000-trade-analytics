@@ -34,7 +34,7 @@
 - Consumes: `Manifest`, `build_manifest(dataset, data, ingested_at)`, `serialize_ndjson(dataset)`.
 - Produces: `serialize_manifest(manifest: Manifest) -> bytes` for local and S3 storage.
 
-- [ ] **Step 1: Write the failing manifest serialization test**
+- [x] **Step 1: Write the failing manifest serialization test**
 
 Add a test that builds a manifest at a fixed UTC timestamp and asserts `serialize_manifest()` returns UTF-8 JSON with sorted keys, two-space indentation, a trailing newline, string-preserved Decimal, and the expected checksum.
 
@@ -46,13 +46,13 @@ assert payload["primary_value_sum"] == "300.0"
 assert payload["checksum"].startswith("sha256:")
 ```
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_manifest.py -q`
 
 Expected: collection or import failure because `serialize_manifest` does not exist.
 
-- [ ] **Step 3: Implement the serializer and reuse it locally**
+- [x] **Step 3: Implement the serializer and reuse it locally**
 
 Add to `manifest.py`:
 
@@ -71,13 +71,13 @@ def serialize_manifest(manifest: Manifest) -> bytes:
 
 Replace the duplicated JSON block in `LocalStorage.write()` with `serialize_manifest(manifest)`.
 
-- [ ] **Step 4: Run focused manifest and local storage tests**
+- [x] **Step 4: Run focused manifest and local storage tests**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_manifest.py tests/unit/ingestion/test_storage.py -q`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/trade_analytics/ingestion/manifest.py src/trade_analytics/ingestion/storage.py tests/unit/ingestion/test_manifest.py
@@ -101,7 +101,7 @@ git commit -m "refactor: share ingestion artifact serialization"
   - `S3Storage.write(dataset: IngestionDataset) -> StoredS3Ingestion`.
   - `StorageConflictError(ComtradeError)`.
 
-- [ ] **Step 1: Write the failing happy-path test**
+- [x] **Step 1: Write the failing happy-path test**
 
 Add `boto3>=1.35,<2` to runtime dependencies and run `.venv/bin/pip install -e '.[dev]'` so the test can use the real botocore `ClientError` shape.
 
@@ -124,13 +124,13 @@ assert fake_s3.puts[0]["ContentType"] == "application/x-ndjson"
 assert fake_s3.puts[1]["ContentType"] == "application/json"
 ```
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_s3_storage.py -q`
 
 Expected: import failure because `s3_storage` does not exist.
 
-- [ ] **Step 3: Implement the minimal happy path**
+- [x] **Step 3: Implement the minimal happy path**
 
 Implement normalized prefixes with surrounding slashes removed, stable keys, missing-object detection for `NoSuchKey`, `404` and `NotFound`, and two `put_object` calls with bytes bodies and the required content types. Reject an empty bucket or an empty normalized prefix with `ValueError`.
 
@@ -146,13 +146,13 @@ class StoredS3Ingestion:
     checksum: str
 ```
 
-- [ ] **Step 4: Run the focused test**
+- [x] **Step 4: Run the focused test**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_s3_storage.py -q`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/trade_analytics/ingestion/exceptions.py src/trade_analytics/ingestion/s3_storage.py tests/unit/ingestion/test_s3_storage.py
@@ -169,7 +169,7 @@ git commit -m "feat: write ingestion artifacts to S3"
 - Consumes: `S3Storage.write()` and the exact serialized artifacts from Tasks 1–2.
 - Produces: immutable rerun behavior and `StorageConflictError` messages containing bucket/key context but no credentials.
 
-- [ ] **Step 1: Write failing idempotency and conflict tests**
+- [x] **Step 1: Write failing idempotency and conflict tests**
 
 Add separate tests for:
 
@@ -182,23 +182,23 @@ with pytest.raises(StorageConflictError, match="checksum conflict"):
 
 Assert that the identical rerun makes no `put_object` calls and a conflict does not mutate fake storage.
 
-- [ ] **Step 2: Run focused tests and verify RED**
+- [x] **Step 2: Run focused tests and verify RED**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_s3_storage.py -q`
 
 Expected: tests fail because existing objects are overwritten or not compared.
 
-- [ ] **Step 3: Implement complete-object idempotency**
+- [x] **Step 3: Implement complete-object idempotency**
 
 When both objects exist, parse the existing manifest as `Manifest`, verify its checksum equals the generated checksum, verify the existing data bytes also hash to that checksum, then return `already_exists`. Raise `StorageConflictError` for invalid JSON, invalid manifest schema, mismatched data or mismatched generated checksum.
 
-- [ ] **Step 4: Run focused tests and verify GREEN**
+- [x] **Step 4: Run focused tests and verify GREEN**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_s3_storage.py -q`
 
 Expected: PASS for happy path, rerun and conflicts.
 
-- [ ] **Step 5: Write failing partial-object recovery tests**
+- [x] **Step 5: Write failing partial-object recovery tests**
 
 Add independent tests for:
 
@@ -206,17 +206,17 @@ Add independent tests for:
 - Matching manifest exists and data is missing: only data is written.
 - A lone existing object conflicts: no object is overwritten and `StorageConflictError` is raised.
 
-- [ ] **Step 6: Run partial-object tests and verify RED**
+- [x] **Step 6: Run partial-object tests and verify RED**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_s3_storage.py -q`
 
 Expected: at least one partial recovery assertion fails.
 
-- [ ] **Step 7: Implement safe partial recovery**
+- [x] **Step 7: Implement safe partial recovery**
 
 Compare a lone data object's calculated checksum with the generated checksum. Parse and compare a lone manifest's checksum with the generated checksum. Write only the missing object when the existing object matches; otherwise raise `StorageConflictError`.
 
-- [ ] **Step 8: Run focused tests and commit**
+- [x] **Step 8: Run focused tests and commit**
 
 Run: `.venv/bin/pytest tests/unit/ingestion/test_s3_storage.py -q`
 
@@ -240,7 +240,7 @@ git commit -m "feat: make S3 raw writes idempotent"
   - `run_ingestion(query, *, bucket, prefix, base_url) -> StoredS3Ingestion`.
   - AWS entry point `handler(event: dict[str, object], context: object) -> dict[str, object]`.
 
-- [ ] **Step 1: Write failing handler contract tests**
+- [x] **Step 1: Write failing handler contract tests**
 
 Inject a fake runner through a keyword-only default argument and assert a valid event produces the exact response fields. Add separate tests that reject unknown action, invalid period, unknown query type and missing `RAW_BUCKET` before the runner is called.
 
@@ -257,27 +257,27 @@ assert result == {
 }
 ```
 
-- [ ] **Step 2: Run handler tests and verify RED**
+- [x] **Step 2: Run handler tests and verify RED**
 
 Run: `.venv/bin/pytest tests/unit/test_lambda_handler.py -q`
 
 Expected: import failure because `lambda_handler` does not exist.
 
-- [ ] **Step 3: Implement event validation and response mapping**
+- [x] **Step 3: Implement event validation and response mapping**
 
 Use Pydantic with `extra="forbid"`. Read `RAW_BUCKET`, `RAW_PREFIX` and `COMTRADE_BASE_URL` only after event validation. Let validation, Comtrade and storage exceptions propagate so AWS records a failed invocation. Emit one JSON structured log containing `run_id`, period, query type, status, row count and checksum.
 
-- [ ] **Step 4: Implement runtime composition**
+- [x] **Step 4: Implement runtime composition**
 
 `run_ingestion()` creates a bounded `httpx.Timeout`, an `httpx.Client`, `ComtradeClient(base_url=base_url)`, `IngestionService`, `boto3.client("s3")` and `S3Storage`. Do not instantiate network clients at module import time.
 
-- [ ] **Step 5: Run handler and regression tests**
+- [x] **Step 5: Run handler and regression tests**
 
 Run: `.venv/bin/pytest tests/unit/test_lambda_handler.py tests/unit -q`
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/trade_analytics/lambda_handler.py tests/unit/test_lambda_handler.py
@@ -295,7 +295,7 @@ git commit -m "feat: add Lambda ingestion handler"
 - Consumes: `trade_analytics.lambda_handler.handler`.
 - Produces: local Image `trade-analytics-ingestion:phase2` for `linux/amd64`.
 
-- [ ] **Step 1: Verify runtime dependency and handler imports**
+- [x] **Step 1: Verify runtime dependency and handler imports**
 
 With the S3 task's runtime dependencies installed, run:
 
@@ -305,13 +305,13 @@ With the S3 task's runtime dependencies installed, run:
 
 Expected: both imports succeed.
 
-- [ ] **Step 2: Refresh the project installation in the venv**
+- [x] **Step 2: Refresh the project installation in the venv**
 
 Run: `.venv/bin/pip install -e '.[dev]'`
 
 Expected: boto3 and botocore are installed only inside `.venv`.
 
-- [ ] **Step 3: Create Dockerfile and build context exclusions**
+- [x] **Step 3: Create Dockerfile and build context exclusions**
 
 Create:
 
@@ -327,7 +327,7 @@ CMD ["trade_analytics.lambda_handler.handler"]
 
 `.dockerignore` must exclude `.git`, `.venv`, `.env*`, caches, coverage, `data`, tests, docs and user-owned project notes.
 
-- [ ] **Step 4: Document local build and smoke invocation**
+- [x] **Step 4: Document local build and smoke invocation**
 
 Add commands using:
 
@@ -342,7 +342,7 @@ curl -sS -X POST \
 
 The expected response is a controlled Pydantic validation error and no Comtrade/S3 request.
 
-- [ ] **Step 5: Run static and unit verification**
+- [x] **Step 5: Run static and unit verification**
 
 Run:
 
@@ -355,7 +355,7 @@ Run:
 
 Expected: all commands exit 0.
 
-- [ ] **Step 6: Build and inspect the Image**
+- [x] **Step 6: Build and inspect the Image**
 
 Run:
 
@@ -366,7 +366,7 @@ docker image inspect trade-analytics-ingestion:phase2
 
 Expected: build exits 0 and inspection reports `Architecture=amd64` with Lambda handler command.
 
-- [ ] **Step 7: Run container smoke invocation and commit**
+- [x] **Step 7: Run container smoke invocation and commit**
 
 Start the container, invoke the invalid event, verify the expected function error, then stop the container. Commit:
 
@@ -385,7 +385,7 @@ git commit -m "build: package ingestion as Lambda image"
 - Consumes: Image `trade-analytics-ingestion:phase2`, handler event contract and S3 key policy.
 - Produces: manual Console checklist plus only the Docker/ECR commands that cannot be performed inside Lambda/S3 Console setup.
 
-- [ ] **Step 1: Write the deployment guide**
+- [x] **Step 1: Write the deployment guide**
 
 Document exact Console fields and safe defaults:
 
@@ -397,11 +397,11 @@ Document exact Console fields and safe defaults:
 - Test events for both query types and expected S3 keys.
 - ECR authentication/tag/push commands with placeholders that cannot be mistaken for real credentials.
 
-- [ ] **Step 2: Add README navigation and operational warnings**
+- [x] **Step 2: Add README navigation and operational warnings**
 
 Link the guide, explain that the current default still uses Preview API, and state that a successful local invalid-event smoke test does not verify AWS permissions or a real S3 write.
 
-- [ ] **Step 3: Verify documentation and repository hygiene**
+- [x] **Step 3: Verify documentation and repository hygiene**
 
 Run:
 
@@ -414,11 +414,11 @@ git status --short
 
 Expected: no credential material, no whitespace errors, and only intended files plus the two pre-existing user notes.
 
-- [ ] **Step 4: Run final verification**
+- [x] **Step 4: Run final verification**
 
 Run the complete Ruff, mypy and unit test commands again, rebuild the Image without cache, inspect it, and repeat the Runtime Interface Emulator invalid-event smoke test.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add docs/aws-console-lambda-deployment.md README.md
@@ -434,17 +434,17 @@ git commit -m "docs: add AWS Console Lambda deployment guide"
 - Consumes: all implementation and verification outputs.
 - Produces: verified branch and exact artifact/Image information for the user.
 
-- [ ] **Step 1: Review the diff against every spec section**
+- [x] **Step 1: Review the diff against every spec section**
 
 Run: `git diff main...HEAD --stat` and `git diff main...HEAD`.
 
 Confirm event contract, environment variables, S3 keys, idempotency, Docker architecture, no IaC and Console guide coverage.
 
-- [ ] **Step 2: Run fresh completion verification**
+- [x] **Step 2: Run fresh completion verification**
 
 Run all unit tests, integration tests when network approval is available, Ruff, mypy, Docker no-cache build, Image inspection and container smoke invocation. Record exact pass counts, coverage and Image ID.
 
-- [ ] **Step 3: Mark plan checkboxes complete and commit**
+- [x] **Step 3: Mark plan checkboxes complete and commit**
 
 Update only this plan's checkbox states and commit:
 
@@ -453,6 +453,6 @@ git add docs/superpowers/plans/2026-08-29-lambda-container-s3-ingestion.md
 git commit -m "docs: complete Lambda container implementation plan"
 ```
 
-- [ ] **Step 4: Hand off without changing AWS state**
+- [x] **Step 4: Hand off without changing AWS state**
 
 Report the branch name, Image tag/ID, commands for ECR push, Console guide path, verification evidence, and any steps requiring the user's AWS account. Do not push the Image, create resources, merge branches or alter AWS without a separate explicit request.
