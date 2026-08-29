@@ -187,3 +187,20 @@ def test_s3_storage_rejects_conflicting_lone_data_object(
 
     assert fake_s3.objects == snapshot
     assert fake_s3.puts == []
+
+
+def test_s3_storage_rejects_conflicting_lone_manifest_object(
+    preview_payload: dict[str, Any],
+) -> None:
+    dataset = partner_dataset(preview_payload)
+    fake_s3 = FakeS3()
+    manifest_key = "un_comtrade/period=202401/query_type=partner_detail/manifest.json"
+    fake_s3.objects[("raw-bucket", manifest_key)] = b"{}\n"
+    snapshot = dict(fake_s3.objects)
+    storage = S3Storage(bucket="raw-bucket", client=fake_s3, clock=lambda: FIXED_TIME)
+
+    with pytest.raises(StorageConflictError, match="checksum conflict"):
+        storage.write(dataset)
+
+    assert fake_s3.objects == snapshot
+    assert fake_s3.puts == []
