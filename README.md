@@ -173,6 +173,8 @@ Lambda 成功事件格式：
 
 必要環境變數是 `RAW_BUCKET`；`RAW_PREFIX` 預設為 `un_comtrade`，`COMTRADE_BASE_URL` 預設使用 Phase 1 Preview endpoint。
 
+AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署指南](docs/aws-console-lambda-deployment.md)。
+
 ## 錯誤與重試
 
 - HTTP `429` 與 `500／502／503／504` 最多執行 4 次 request。
