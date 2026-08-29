@@ -88,6 +88,7 @@ git commit -m "refactor: share ingestion artifact serialization"
 
 **Files:**
 - Modify: `src/trade_analytics/ingestion/exceptions.py`
+- Modify: `pyproject.toml`
 - Create: `src/trade_analytics/ingestion/s3_storage.py`
 - Create: `tests/unit/ingestion/test_s3_storage.py`
 
@@ -101,6 +102,8 @@ git commit -m "refactor: share ingestion artifact serialization"
   - `StorageConflictError(ComtradeError)`.
 
 - [ ] **Step 1: Write the failing happy-path test**
+
+Add `boto3>=1.35,<2` to runtime dependencies and run `.venv/bin/pip install -e '.[dev]'` so the test can use the real botocore `ClientError` shape.
 
 Create an in-memory fake client that records `put_object` calls and raises a botocore `ClientError` with code `NoSuchKey` from `get_object` when absent. Assert:
 
@@ -284,7 +287,6 @@ git commit -m "feat: add Lambda ingestion handler"
 ### Task 5: Runtime Dependencies and Lambda Docker Image
 
 **Files:**
-- Modify: `pyproject.toml`
 - Create: `Dockerfile`
 - Create: `.dockerignore`
 - Modify: `README.md`
@@ -293,17 +295,17 @@ git commit -m "feat: add Lambda ingestion handler"
 - Consumes: `trade_analytics.lambda_handler.handler`.
 - Produces: local Image `trade-analytics-ingestion:phase2` for `linux/amd64`.
 
-- [ ] **Step 1: Add a failing dependency/import check**
+- [ ] **Step 1: Verify runtime dependency and handler imports**
 
-Add `boto3>=1.35,<2` to runtime dependencies and install the project into `.venv`. Run:
+With the S3 task's runtime dependencies installed, run:
 
 ```bash
 .venv/bin/python -c "import boto3; from trade_analytics.lambda_handler import handler"
 ```
 
-Before dependency installation, expected: `ModuleNotFoundError: No module named 'boto3'`.
+Expected: both imports succeed.
 
-- [ ] **Step 2: Install the updated project in the venv**
+- [ ] **Step 2: Refresh the project installation in the venv**
 
 Run: `.venv/bin/pip install -e '.[dev]'`
 

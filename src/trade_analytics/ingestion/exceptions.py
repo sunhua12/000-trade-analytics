@@ -27,3 +27,7 @@ class EmptyDataError(ComtradeResponseError):
 
 class DataContractError(ComtradeResponseError):
     """One or more response records violated the ingestion contract."""
+
+
+class StorageConflictError(ComtradeError):
+    """Existing immutable Raw storage conflicts with generated artifacts."""
