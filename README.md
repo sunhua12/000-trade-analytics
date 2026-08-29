@@ -1,6 +1,6 @@
 # U.S. Semiconductor Import Intelligence
 
-Phase 1 提供可重用的 Python ingestion package 與 CLI，從 UN Comtrade Preview API 擷取美國半導體月度進口資料。
+Phase 1 提供可重用的 Python ingestion package 與 CLI，從 UN Comtrade Preview API 擷取美國半導體月度進口資料。Phase 2 的第一個子階段將相同 package 封裝為 AWS Lambda Container Image，並支援寫入 Amazon S3 Raw Layer。
 
 目前固定資料範圍：
 
@@ -14,6 +14,7 @@ Phase 1 提供可重用的 Python ingestion package 與 CLI，從 UN Comtrade Pr
 ## 環境需求
 
 - Python 3.11。
+- Docker Desktop，用於建置與本機驗證 Lambda Image。
 - 不需要 UN Comtrade API Key；Phase 1 使用公開 Preview API。
 
 建立專案虛擬環境：
@@ -126,6 +127,52 @@ Unit Tests 不會呼叫真實網路：
 .venv/bin/mypy src ingest.py
 ```
 
+## Lambda Container Image
+
+建置與 AWS Lambda `x86_64` 相同架構的 Image：
+
+```bash
+docker build \
+  --platform linux/amd64 \
+  -t trade-analytics-ingestion:phase2 \
+  .
+```
+
+啟動 AWS Lambda Runtime Interface Emulator：
+
+```bash
+docker run \
+  --platform linux/amd64 \
+  --rm \
+  -p 9000:8080 \
+  -e RAW_BUCKET=local-smoke-only \
+  trade-analytics-ingestion:phase2
+```
+
+另一個 Terminal 使用非法事件驗證 Handler 可以載入，而且不會呼叫 Comtrade 或 S3：
+
+```bash
+curl -sS -X POST \
+  http://localhost:9000/2015-03-31/functions/function/invocations \
+  -d '{"action":"unsupported","period":"202401","query_type":"partner_detail"}'
+```
+
+預期收到 Pydantic Validation Error。這個 smoke test 只驗證 Container 與 Handler 載入；成功寫入 S3 必須部署至具有 IAM Role 的 Lambda 後測試。
+
+Lambda 成功事件格式：
+
+```json
+{
+  "action": "ingest",
+  "period": "202401",
+  "cmd_code": "8542",
+  "query_type": "partner_detail",
+  "run_id": "manual-test"
+}
+```
+
+必要環境變數是 `RAW_BUCKET`；`RAW_PREFIX` 預設為 `un_comtrade`，`COMTRADE_BASE_URL` 預設使用 Phase 1 Preview endpoint。
+
 ## 錯誤與重試
 
 - HTTP `429` 與 `500／502／503／504` 最多執行 4 次 request。
@@ -139,9 +186,11 @@ Unit Tests 不會呼叫真實網路：
 - Preview API 單次最多回傳 500 筆；本專案會偵測並拒絕疑似截斷結果。
 - Preview response 的國家名稱、ISO、重量及部分描述欄位可能為 `null`。
 - Phase 1 使用月度端點 `C/M/HS`，不使用年度端點 `C/A/HS`。
-- 本階段不包含 AWS Lambda、Amazon S3、BigQuery、dbt 或 Airflow；這些屬於後續 Phase。
+- 目前 Lambda Image 仍使用 Preview API，尚未包含正式 API Key、BigQuery、dbt 或 Airflow。
 
 ## 設計與實作計畫
 
 - [Phase 1 Design](docs/superpowers/specs/2026-08-28-un-comtrade-preview-ingestion-design.md)
 - [Phase 1 Implementation Plan](docs/superpowers/plans/2026-08-28-un-comtrade-preview-ingestion.md)
+- [Lambda Container and S3 Design](docs/superpowers/specs/2026-08-29-lambda-container-s3-ingestion-design.md)
+- [Lambda Container and S3 Implementation Plan](docs/superpowers/plans/2026-08-29-lambda-container-s3-ingestion.md)
