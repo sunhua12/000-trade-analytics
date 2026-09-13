@@ -26,4 +26,6 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
 @pytest.fixture
 def preview_payload() -> dict[str, Any]:
     fixture = Path("tests/fixtures/comtrade_preview_response.json")
-    return json.loads(fixture.read_text())
+    payload = json.loads(fixture.read_text())
+    assert isinstance(payload, dict), "Preview fixture must be a JSON object"
+    return payload

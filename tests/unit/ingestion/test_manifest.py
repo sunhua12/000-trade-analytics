@@ -1,6 +1,7 @@
 import json
 from dataclasses import replace
 from datetime import UTC, datetime
+from decimal import Decimal
 from typing import Any
 
 from trade_analytics.ingestion.manifest import (
@@ -54,7 +55,7 @@ def test_serialization_preserves_api_field_names_and_numeric_values(
     records = [json.loads(line) for line in lines]
 
     assert [record["partnerCode"] for record in records] == [156, 410]
-    assert [record["primaryValue"] for record in records] == [100.0, 200.0]
+    assert [record["primaryValue"] for record in records] == ["100", "200"]
     assert "partner_code" not in records[0]
 
 
@@ -75,7 +76,7 @@ def test_manifest_summarizes_dataset_without_float_drift(
 
     assert manifest.request_parameters == dataset.query.to_params()
     assert manifest.checksum == checksum(data)
-    assert manifest.schema_version == "1.0.0"
+    assert manifest.schema_version == "2.0.0"
     assert manifest.hs_version == "H6"
     assert manifest.row_count == 2
     assert str(manifest.primary_value_sum) == "300.0"
@@ -98,6 +99,22 @@ def test_manifest_serialization_is_stable_json_with_a_trailing_newline(
     payload = json.loads(serialized)
 
     assert serialized.endswith(b"\n")
-    assert payload["primary_value_sum"] == "300.0"
+    assert payload["primary_value_sum"] == "300"
     assert payload["checksum"] == checksum(data)
     assert serialized.index(b'"checksum"') < serialized.index(b'"row_count"')
+
+
+def test_decimal_representations_have_identical_checksums(preview_payload: dict[str, Any]) -> None:
+    dataset = partner_dataset(preview_payload)
+    equivalent = replace(
+        dataset,
+        rows=tuple(
+            row.model_copy(update={"primary_value": Decimal(str(row.primary_value) + "00")})
+            for row in dataset.rows
+        ),
+    )
+    assert serialize_ndjson(dataset) == serialize_ndjson(equivalent)
+    zero = replace(
+        dataset, rows=(dataset.rows[0].model_copy(update={"primary_value": Decimal("-0.00")}),)
+    )
+    assert json.loads(serialize_ndjson(zero))["primaryValue"] == "0"

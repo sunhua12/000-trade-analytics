@@ -2,6 +2,12 @@
 
 本文件只建立 Phase 2 第一個子階段：ECR、Lambda、IAM 與 S3。程式仍使用公開 UN Comtrade Preview API；不需要 Comtrade API Key，也不包含 BigQuery 或 Airflow。
 
+Day 3 已更新為 schema version 2.0.0、v2 路徑與顯式 revision。實際部署驗收依 [Day 4 計畫](day-04-learning-plan.md) 執行。本文件更新不表示已建立或驗證 AWS 資源。Day 3 修改後必須重新建置 image，不能沿用先前 image 驗收新介面。
+
+```bash
+docker buildx build --platform linux/amd64 --provenance=false --load -t trade-analytics-ingestion:phase2 .
+```
+
 ## 1. 先決條件
 
 - 本機 Docker Desktop 已啟動。
@@ -125,7 +131,13 @@ ECR login token 有效時間有限，而且登入與 repository 必須使用相�
         "s3:GetObject",
         "s3:PutObject"
       ],
-      "Resource": "arn:aws:s3:::<RAW_BUCKET_NAME>/un_comtrade/*"
+      "Resource": "arn:aws:s3:::<RAW_BUCKET_NAME>/un_comtrade/v2/*"
+    },
+    {
+      "Sid": "RecognizeMissingObjectsInTradeBucket",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::<RAW_BUCKET_NAME>"
     }
   ]
 }
@@ -136,6 +148,8 @@ Inline policy name 輸入 `TradeAnalyticsRawS3Access`。不要授予 `s3:*` 或�
 `AWSLambdaBasicExecutionRole` 提供 CloudWatch Logs 所需權限；Lambda 存取 S3 則由上述最小權限 policy 提供。[Lambda execution role 文件](https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html)、[CloudWatch Logs 權限](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-cloudwatchlogs.html)
 
 若把 `RAW_PREFIX` 改成其他值，IAM Resource 也必須改成相同 prefix。
+
+上述 ListBucket 採專案專用 bucket 的範圍，讓 GetObject 遇到尚不存在的 key 時能得到 404；缺少此權限可能是 403，不能一律當成不存在。共用 bucket 應另行評估列舉權限。Lambda 不需 DeleteObject 權限。
 
 ## 6. 透過 Lambda Console 建立 Function
 
@@ -158,7 +172,7 @@ Container Image function 無法直接轉換成 ZIP function；需要改部署類
 進入 **Configuration** → **General configuration** → **Edit**：
 
 - Memory：`512 MB`。
-- Timeout：`2 min 0 sec`。
+- Timeout：先設 `3 min 0 sec`，依實際 API 重試與等待耗時調整。
 
 ### Environment variables
 
@@ -170,6 +184,8 @@ Container Image function 無法直接轉換成 ZIP function；需要改部署類
 | `RAW_PREFIX` | `un_comtrade` |
 
 `COMTRADE_BASE_URL` 可省略；省略時使用 Phase 1 Preview endpoint。不要把 AWS access key 或 secret key 放進環境變數。
+
+保留 `/HS` endpoint，H6 由回應驗證層限制。`RAW_PREFIX=un_comtrade`，程式會自動附加 v2，不要設成 `un_comtrade/v2`。
 
 ### Reserved concurrency
 
@@ -189,6 +205,7 @@ Container Image function 無法直接轉換成 ZIP function；需要改部署類
   "period": "202401",
   "cmd_code": "8542",
   "query_type": "partner_detail",
+  "revision": 1,
   "run_id": "console-partner-202401"
 }
 ```
@@ -215,6 +232,7 @@ Container Image function 無法直接轉換成 ZIP function；需要改部署類
   "period": "202401",
   "cmd_code": "8542",
   "query_type": "world_total",
+  "revision": 1,
   "run_id": "console-world-202401"
 }
 ```
@@ -226,12 +244,11 @@ Container Image function 無法直接轉換成 ZIP function；需要改部署類
 進入 Raw bucket，確認：
 
 ```text
-un_comtrade/
-└── period=202401/
-    ├── query_type=partner_detail/
+un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/
+    ├── query_type=partner_detail/revision=1/
     │   ├── data.ndjson
     │   └── manifest.json
-    └── query_type=world_total/
+    └── query_type=world_total/revision=1/
         ├── data.ndjson
         └── manifest.json
 ```
@@ -243,6 +260,9 @@ un_comtrade/
 - `request_parameters.period` 是 `202401`。
 - `request_parameters.reporterCode` 是 `842`。
 - `source` 是 `UN Comtrade Preview API`。
+- `schema_version=2.0.0`、`hs_version=H6`、`revision=1`，period／cmd_code／query_type 對應事件。
+- 金額與重量的非 NULL 值以十進位字串保存，需重新計算金額及 data 的 SHA-256。
+- 重跑前後 S3 Version ID 與 Last modified 不變；不把 ETag 當成 SHA-256。
 
 ## 9. 常見問題
 
@@ -255,7 +275,7 @@ un_comtrade/
 確認：
 
 - `RAW_BUCKET` 完全符合 bucket 名稱。
-- IAM policy resource 的 bucket 與 `un_comtrade/*` prefix 正確。
+- IAM policy resource 的 bucket 與 `un_comtrade/v2/*` prefix 正確。
 - Lambda 使用的是 `trade-analytics-ingestion-lambda-role`。
 
 ### ECR Image 已更新，但 Lambda 還是舊版本

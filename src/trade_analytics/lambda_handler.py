@@ -5,9 +5,9 @@ import logging
 import os
 from typing import Literal, Protocol
 
-import boto3  # type: ignore[import-untyped]
+import boto3
 import httpx
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from trade_analytics.ingestion.client import ComtradeClient
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
@@ -27,6 +27,7 @@ class LambdaEvent(BaseModel):
     cmd_code: str = "8542"
     query_type: QueryType
     run_id: str | None = None
+    revision: int = Field(default=1, gt=0, strict=True)
 
 
 class IngestionRunner(Protocol):
@@ -80,6 +81,7 @@ def handler(
         period=validated.period,
         cmd_code=validated.cmd_code,
         query_type=validated.query_type,
+        revision=validated.revision,
     )
 
     bucket = os.environ.get("RAW_BUCKET", "").strip()

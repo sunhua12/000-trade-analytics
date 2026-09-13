@@ -49,10 +49,26 @@ class IngestionService:
             raise DataContractError("world_total response contained non-world partner records")
         if len(response.data) != 1:
             raise DataContractError("world_total response must contain exactly one World record")
+        value = response.data[0].primary_value
+        if value is None or value <= 0:
+            raise DataContractError("world_total primaryValue must be greater than zero")
         return IngestionDataset(query=query, rows=tuple(response.data))
 
     @staticmethod
     def _validate_core_contract(row: TradeRecord, query: ComtradeQuery) -> None:
+        expected_fields = {
+            "classification_code": query.expected_hs_version,
+            "frequency_code": "M",
+            "partner_2_code": 0,
+            "customs_code": "C00",
+            "mot_code": 0,
+        }
+        for field, expected in expected_fields.items():
+            if getattr(row, field) != expected:
+                raise DataContractError(f"record {field} must equal {expected}")
+        value = row.primary_value
+        if value is None or not value.is_finite() or value < 0:
+            raise DataContractError("primaryValue must be a finite non-negative amount")
         if row.period != query.period:
             raise DataContractError(
                 f"record period {row.period} did not match requested period {query.period}"

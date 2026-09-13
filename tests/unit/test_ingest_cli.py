@@ -119,3 +119,28 @@ def test_cli_rejects_unknown_query_type() -> None:
         ingest.main(["--query-type", "unknown"])
 
     assert error.value.code == 2
+
+
+def test_cli_passes_revision_and_reports_already_exists(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    def runner(query: ComtradeQuery, output_dir: Path) -> StoredIngestion:
+        assert query.revision == 2
+        result = successful_result(output_dir, query)
+        from dataclasses import replace
+
+        return replace(result, status="already_exists")
+
+    assert (
+        ingest.main(
+            ["--query-type", "partner_detail", "--revision", "2", "--output-dir", str(tmp_path)],
+            runner=runner,
+        )
+        == 0
+    )
+    assert json.loads(capsys.readouterr().out)["status"] == "already_exists"
+
+
+@pytest.mark.parametrize("revision", ["0", "-1"])
+def test_cli_rejects_invalid_revision(revision: str) -> None:
+    assert ingest.main(["--query-type", "partner_detail", "--revision", revision]) == 1

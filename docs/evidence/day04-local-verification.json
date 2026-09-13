@@ -1,0 +1,21 @@
+{
+  "verified_on": "2026-09-12",
+  "scope": "Local verification of user-provided S3 downloads; no AWS API calls or World file verification",
+  "data_path": "data/data.ndjson",
+  "manifest_path": "data/manifest.json",
+  "row_count": 67,
+  "primary_value_sum": "2799575181",
+  "checksum": "sha256:90002d6c1374e9e48fe946e22613a9c0629766e87a1674eab11a7404a461abcf",
+  "ingested_at": "2026-09-12T12:20:07.713138Z",
+  "checks": {
+    "row_count_matches": true,
+    "checksum_matches": true,
+    "sum_matches": true,
+    "fixed_dimensions_match": true,
+    "no_world": true,
+    "unique_grain": true,
+    "valid_amounts": true,
+    "manifest_contract": true
+  },
+  "all_passed": true
+}

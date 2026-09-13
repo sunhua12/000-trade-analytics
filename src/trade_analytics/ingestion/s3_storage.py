@@ -1,21 +1,18 @@
 """Immutable Amazon S3 storage for validated ingestion artifacts."""
 
-import json
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Literal, Protocol
 
-from botocore.exceptions import ClientError  # type: ignore[import-untyped]
-from pydantic import ValidationError
+from botocore.exceptions import ClientError
 
-from trade_analytics.ingestion.exceptions import StorageConflictError
 from trade_analytics.ingestion.manifest import (
-    Manifest,
+    artifact_partition,
     build_manifest,
-    checksum,
     serialize_manifest,
     serialize_ndjson,
+    validate_existing_artifacts,
 )
 from trade_analytics.ingestion.service import IngestionDataset
 
@@ -23,11 +20,13 @@ from trade_analytics.ingestion.service import IngestionDataset
 class S3ObjectClient(Protocol):
     """Subset of the boto3 S3 client used by ingestion storage."""
 
-    def get_object(self, **kwargs: Any) -> dict[str, Any]:
+    def get_object(self, *, Bucket: str, Key: str) -> Mapping[str, Any]:
         """Return one object response or raise ClientError when absent."""
         ...
 
-    def put_object(self, **kwargs: Any) -> dict[str, Any]:
+    def put_object(
+        self, *, Bucket: str, Key: str, Body: bytes, ContentType: str
+    ) -> Mapping[str, Any]:
         """Write one complete object body."""
         ...
 
@@ -70,10 +69,7 @@ class S3Storage:
 
     def write(self, dataset: IngestionDataset) -> StoredS3Ingestion:
         """Serialize and write both artifacts to one stable S3 partition."""
-        root = (
-            f"{self._prefix}/period={dataset.query.period}/"
-            f"query_type={dataset.query.query_type.value}"
-        )
+        root = f"{self._prefix}/{artifact_partition(dataset.query)}"
         data_key = f"{root}/data.ndjson"
         manifest_key = f"{root}/manifest.json"
         data = serialize_ndjson(dataset)
@@ -82,28 +78,19 @@ class S3Storage:
 
         data_existing = self._read_object(data_key)
         manifest_existing = self._read_object(manifest_key)
+        validate_existing_artifacts(
+            data=data_existing,
+            manifest_data=manifest_existing,
+            expected=manifest,
+            location=f"s3://{self._bucket}/{root}",
+        )
         if data_existing is not None and manifest_existing is not None:
-            self._validate_existing_artifacts(
-                data=data_existing,
-                manifest_data=manifest_existing,
-                expected_checksum=manifest.checksum,
-                root=root,
-            )
             return self._stored_result(
                 status="already_exists",
                 data_key=data_key,
                 manifest_key=manifest_key,
                 row_count=manifest.row_count,
                 checksum_value=manifest.checksum,
-            )
-
-        if data_existing is not None and checksum(data_existing) != manifest.checksum:
-            raise self._conflict(root)
-        if manifest_existing is not None:
-            self._validate_existing_manifest(
-                manifest_data=manifest_existing,
-                expected_checksum=manifest.checksum,
-                root=root,
             )
 
         if data_existing is None:
@@ -127,41 +114,6 @@ class S3Storage:
             row_count=manifest.row_count,
             checksum_value=manifest.checksum,
         )
-
-    def _validate_existing_artifacts(
-        self,
-        *,
-        data: bytes,
-        manifest_data: bytes,
-        expected_checksum: str,
-        root: str,
-    ) -> None:
-        self._validate_existing_manifest(
-            manifest_data=manifest_data,
-            expected_checksum=expected_checksum,
-            root=root,
-        )
-        if checksum(data) != expected_checksum:
-            raise self._conflict(root)
-
-    def _validate_existing_manifest(
-        self,
-        *,
-        manifest_data: bytes,
-        expected_checksum: str,
-        root: str,
-    ) -> None:
-        try:
-            existing_manifest = Manifest.model_validate(json.loads(manifest_data))
-        except (json.JSONDecodeError, UnicodeDecodeError, ValidationError) as error:
-            raise StorageConflictError(
-                f"S3 checksum conflict at s3://{self._bucket}/{root}: invalid manifest"
-            ) from error
-        if existing_manifest.checksum != expected_checksum:
-            raise self._conflict(root)
-
-    def _conflict(self, root: str) -> StorageConflictError:
-        return StorageConflictError(f"S3 checksum conflict at s3://{self._bucket}/{root}")
 
     def _stored_result(
         self,

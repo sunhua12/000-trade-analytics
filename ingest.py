@@ -32,6 +32,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Fetch UN Comtrade monthly Preview data")
     parser.add_argument("--period", default="202401", help="Monthly period in YYYYMM format")
     parser.add_argument("--cmd-code", default="8542", help="HS commodity code")
+    parser.add_argument("--revision", type=int, default=1, help="Positive source revision")
     parser.add_argument(
         "--query-type",
         required=True,
@@ -55,6 +56,7 @@ def main(argv: Sequence[str] | None = None, *, runner: Runner = run_ingestion) -
             period=arguments.period,
             cmd_code=arguments.cmd_code,
             query_type=arguments.query_type,
+            revision=arguments.revision,
         )
         stored = runner(query, arguments.output_dir)
     except (ValidationError, ComtradeError) as error:
@@ -62,7 +64,7 @@ def main(argv: Sequence[str] | None = None, *, runner: Runner = run_ingestion) -
         return 1
 
     output = {
-        "status": "success",
+        "status": stored.status,
         "period": query.period,
         "query_type": query.query_type.value,
         "row_count": stored.row_count,

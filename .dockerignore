@@ -14,5 +14,5 @@ __pycache__
 data
 docs
 tests
-trade-analytics.md
-trade-analytics-spec.md
+docs/trade-analytics.md
+docs/trade-analytics-spec.md

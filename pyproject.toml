@@ -16,6 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "boto3-stubs[s3]>=1.35,<2",
     "mypy>=1.13,<2",
     "pytest>=8,<10",
     "pytest-cov>=5,<8",
@@ -37,6 +38,8 @@ markers = [
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# Personal dictionary conversion files are unrelated to this project's tests.
+extend-exclude = ["tests/TEST"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

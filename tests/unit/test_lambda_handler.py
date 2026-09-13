@@ -86,10 +86,12 @@ def test_handler_maps_a_valid_event_to_ingestion_and_response(
         {"action": "unknown", "period": "202401", "query_type": "partner_detail"},
         {"action": "ingest", "period": "202413", "query_type": "partner_detail"},
         {"action": "ingest", "period": "202401", "query_type": "unknown"},
+        {"action": "ingest", "period": "202401", "query_type": "partner_detail", "revision": 0},
+        {"action": "ingest", "period": "202401", "query_type": "partner_detail", "revision": True},
     ],
 )
 def test_handler_rejects_invalid_events_before_runtime_configuration(
-    event: dict[str, str],
+    event: dict[str, object],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.delenv("RAW_BUCKET", raising=False)
@@ -99,6 +101,18 @@ def test_handler_rejects_invalid_events_before_runtime_configuration(
         handler(event, None, runner=runner)
 
     assert runner.calls == []
+
+
+def test_handler_passes_explicit_revision(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("RAW_BUCKET", "raw-bucket")
+    runner = RecordingRunner()
+    handler(
+        {"action": "ingest", "period": "202401", "query_type": "partner_detail", "revision": 2},
+        None,
+        runner=runner,
+    )
+    query = runner.calls[0]["query"]
+    assert query.revision == 2
 
 
 def test_handler_requires_raw_bucket_after_event_validation(

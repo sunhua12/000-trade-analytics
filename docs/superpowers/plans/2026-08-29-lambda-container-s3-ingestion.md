@@ -117,8 +117,7 @@ stored = S3Storage(
 
 assert stored.status == "success"
 assert stored.data_uri == (
-    "s3://raw-bucket/un_comtrade/period=202401/"
-    "query_type=partner_detail/data.ndjson"
+    "s3://raw-bucket/un_comtrade/period=202401/query_type=partner_detail/data.ndjson"
 )
 assert fake_s3.puts[0]["ContentType"] == "application/x-ndjson"
 assert fake_s3.puts[1]["ContentType"] == "application/json"

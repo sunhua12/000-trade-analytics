@@ -2,6 +2,8 @@
 
 Phase 1 提供可重用的 Python ingestion package 與 CLI，從 UN Comtrade Preview API 擷取美國半導體月度進口資料。Phase 2 的第一個子階段將相同 package 封裝為 AWS Lambda Container Image，並支援寫入 Amazon S3 Raw Layer。
 
+Day 3 已實作資料契約與 v2 儲存格式。真實 AWS 部署屬於 Day 4；目前 API 仍使用 `/HS`，但程式只接受 H6（HS2022）回應。H5 或混合分類會被拒絕，不會重新標記成 H6。
+
 目前固定資料範圍：
 
 - Reporter：美國，`reporterCode=842`。
@@ -10,6 +12,8 @@ Phase 1 提供可重用的 Python ingestion package 與 CLI，從 UN Comtrade Pr
 - 預設期間：`202401`。
 - 預設商品：HS `8542`。
 - Query Type：`partner_detail`、`world_total`。
+- 固定維度：`partner2Code=0`、`customsCode=C00`、`motCode=0`，均在回應中驗證。
+- Revision：正整數，預設 `1`。必要金額必須有限且非負；World 必須大於 0。
 
 ## 環境需求
 
@@ -54,13 +58,21 @@ World Total：
   --output-dir /tmp/trade-preview
 ```
 
+明確保存來源修訂，使用新 revision：
+
+```bash
+.venv/bin/python ingest.py --period 202401 --query-type partner_detail --revision 2
+```
+
+revision 不送給 API，僅作為本地／S3 原檔身分；`expected_hs_version` 同樣不是 API 參數，MVP 固定為 H6。
+
 成功時 CLI 只輸出 metadata：
 
 ```json
 {
   "checksum": "sha256:...",
-  "data_path": "data/preview/period=202401/query_type=partner_detail/data.ndjson",
-  "manifest_path": "data/preview/period=202401/query_type=partner_detail/manifest.json",
+  "data_path": "data/preview/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/data.ndjson",
+  "manifest_path": "data/preview/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/manifest.json",
   "period": "202401",
   "query_type": "partner_detail",
   "row_count": 62,
@@ -71,17 +83,20 @@ World Total：
 ## 輸出結構
 
 ```text
-data/preview/
-└── period=202401/
-    ├── query_type=partner_detail/
+data/preview/v2/hs_version=H6/cmd_code=8542/period=202401/
+    ├── query_type=partner_detail/revision=1/
     │   ├── data.ndjson
     │   └── manifest.json
-    └── query_type=world_total/
+    └── query_type=world_total/revision=1/
         ├── data.ndjson
         └── manifest.json
 ```
 
-`data.ndjson` 保存 API 欄位名稱與資料型別；資料列會穩定排序，使相同資料能產生相同 checksum。
+`data.ndjson` 保存 API 欄位名稱，schema version 為 `2.0.0`。金額、重量與數量從 JSON 解析起使用 Decimal，輸出為無指數、無多餘尾零的十進位字串；NULL 保持 NULL。相同資料會穩定排序，使相同內容產生相同 checksum。
+
+受影響欄位為 `primaryValue`、`cifvalue`、`fobvalue`、`netWgt`、`grossWgt`、`qty`、`altQty`。例如 `100.00` 存為 `"100"`，`-0.0` 存為 `"0"`。其他新出現的 JSON 小數也保存為十進位字串。BigQuery 載入時需要正規化為 NUMERIC，超出其精度範圍必須另行處理。Manifest 合計使用足夠的 Decimal 精度，避免預設 28 位有效數造成加總捨入。
+
+舊版 `data/preview/period=...` 與 Day 2 檔案保留，不自動搬移；格式不同的 checksum 不應直接比較。
 
 `manifest.json` 包含：
 
@@ -91,6 +106,19 @@ data/preview/
 - Row count。
 - Primary value sum。
 - Ingestion timestamp。
+- Period、query type、commodity code 與 revision。
+
+本機與 S3 採相同重跑規則：
+
+| 狀態 | 行為 |
+|---|---|
+| 首次寫入 | `success` |
+| 相同內容、相同 revision | `already_exists`；保留檔案及原始 ingested_at |
+| 同 revision 內容或 Manifest 身分／合計不符 | `StorageConflictError`；不覆寫 |
+| 只存在一個吻合的檔案 | 只補缺檔，回傳 `success` |
+| 需要保存來源更正 | 操作者明確指定新 revision；保留舊版 |
+
+Manifest 核對排除 ingested_at，其餘契約欄位都需符合本次資料。採單 writer 操作，兩個檔案不是整體原子交易；可以安全重跑補檔，不提供跨 writer 鎖定。重跑仍會呼叫 API，再比較內容。
 
 本機 `data/` 已由 `.gitignore` 排除。
 
@@ -108,7 +136,7 @@ Unit Tests 不會呼叫真實網路：
 .venv/bin/pytest tests/unit -q \
   --cov=trade_analytics.ingestion \
   --cov-report=term-missing \
-  --cov-fail-under=85
+  --cov-fail-under=90
 ```
 
 手動執行真實 Preview API Integration Tests：
@@ -124,16 +152,19 @@ Unit Tests 不會呼叫真實網路：
 ```bash
 .venv/bin/ruff format --check src tests ingest.py
 .venv/bin/ruff check src tests ingest.py
-.venv/bin/mypy src ingest.py
+.venv/bin/mypy .
 ```
+
+Ruff 排除與專案無關的個人 `tests/TEST/` 字典轉換目錄；專案測試仍全部檢查。開發依賴包含 `boto3-stubs[s3]`，以便驗證真實 SDK 與測試替身的介面。
 
 ## Lambda Container Image
 
 建置與 AWS Lambda `x86_64` 相同架構的 Image：
 
 ```bash
-docker build \
+docker buildx build \
   --platform linux/amd64 \
+  --provenance=false --load \
   -t trade-analytics-ingestion:phase2 \
   .
 ```
@@ -167,11 +198,14 @@ Lambda 成功事件格式：
   "period": "202401",
   "cmd_code": "8542",
   "query_type": "partner_detail",
+  "revision": 1,
   "run_id": "manual-test"
 }
 ```
 
 必要環境變數是 `RAW_BUCKET`；`RAW_PREFIX` 預設為 `un_comtrade`，`COMTRADE_BASE_URL` 預設使用 Phase 1 Preview endpoint。
+
+S3 的新路徑為 `un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/`；`RAW_PREFIX` 不必額外附加 v2。
 
 AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署指南](docs/aws-console-lambda-deployment.md)。
 
@@ -191,6 +225,11 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 - 目前 Lambda Image 仍使用 Preview API，尚未包含正式 API Key、BigQuery、dbt 或 Airflow。
 
 ## 設計與實作計畫
+
+- [20 天規格](docs/trade-analytics-spec.md)
+- [資料契約](docs/data-contract.md)
+- [Day 3 學習計畫](docs/day-03-learning-plan.md)
+- [學習日誌](docs/learning-log.md)
 
 - [Phase 1 Design](docs/superpowers/specs/2026-08-28-un-comtrade-preview-ingestion-design.md)
 - [Phase 1 Implementation Plan](docs/superpowers/plans/2026-08-28-un-comtrade-preview-ingestion.md)

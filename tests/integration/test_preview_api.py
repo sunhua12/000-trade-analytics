@@ -1,3 +1,5 @@
+from collections.abc import Iterator
+
 import httpx
 import pytest
 
@@ -9,7 +11,7 @@ pytestmark = pytest.mark.integration
 
 
 @pytest.fixture
-def live_service() -> IngestionService:
+def live_service() -> Iterator[IngestionService]:
     timeout = httpx.Timeout(connect=10.0, read=30.0, write=30.0, pool=10.0)
     client = httpx.Client()
     service = IngestionService(ComtradeClient(http_client=client, timeout=timeout))
