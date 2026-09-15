@@ -1,5 +1,7 @@
 # Trade Analytics 學習與實作日誌
 
+最新補充（2026-09-14）：Day 4 的 Terraform state 管理與既有資源接管已完成，詳見文末補充；Day 4 原始紀錄保留歷史狀態。
+
 依 [20 天實作規格](trade-analytics-spec.md) 記錄實際進度、驗證結果與待辦事項。計畫工時與實際工時分開記錄；完成狀態以實作結果及本人確認為準。
 
 ## Day 1：理解資料擷取流程與確認開發環境
@@ -182,3 +184,19 @@ Day 3 補 H6 與固定維度驗證、版本／商品碼儲存路徑、Decimal �
 ### 待補與下一步
 
 單日計劃使用 Console，但總規格 Day 4 另要求 Terraform、remote state 與 plan／apply 證據，故總規格尚不勾選完成。後續補 IaC 管理既有資源，以及資源名稱、image digest、invocation、S3 URI、Version ID、World 核對數值與預算資訊。本次 raw 資料保留供 Day 5 的 S3 → BigQuery 單月入倉使用。
+
+### 2026-09-14：Terraform 接管補充
+
+助理完成 bootstrap state bucket 的 6 個資源／設定，將 state 遷移至 S3，再匯入 application 的 11 個既有資源／設定。兩組使用不同 state key、固定版本與 lock file，套用後 plan 均回傳 `No changes`。本次實際启用 raw bucket 版本控制，Logs 設為保留 30 天；Lambda 映像與環境變數值不變。使用者實際學習工時未記錄。
+
+驗證與剩餘差距見 [Terraform 接管驗證](evidence/aws/terraform-adoption.md)。OIDC bootstrap／部署、ECR lifecycle 與功能追溯等仍未全部完成，因此不將總規格 Day 4 勾選為全部通過。
+
+## Day 5：BigQuery 單月載入與驗證
+
+本人完成兩張 landing 表與 S3 Transfer，並提供查詢截圖、Transfer config／run IDs 與筆數／金額查詢 Job ID。明細 67 筆、World 1 筆，兩者金額各為 2,799,575,181；完整驗證截圖中金額缺失／轉型、月份商品分類與夥伴缺值檢查均為 0，World 正確分離。本人另確認明細 Transfer 重跑後仍為 67 筆。
+
+已選定 S3 Data Transfer Service 作為本次載入方案，未實作 Python 替代 adapter。截圖確認兩張 raw 表存在；分區／clustering 已由後續截圖確認；非機密載入設定與來源 checksum 對應仍待補。實際學習工時未記錄。證據依本人提供，助理未獨立查詢 GCP 執行紀錄。
+
+詳見 [Day 5 載入紀錄](day05-load-record.md)。提供的 Job ID 僅對應筆數／金額 SQL，不冒用為完整驗證或底層 load job ID。核心單月載入已通過，完整單日收尾仍待完成。
+
+2026-09-15 補充：兩張 raw 表均已取消 60 天分區期限，更新後截圖確認「分區永不過期」，分區／clustering 與 0 筆空表狀態正確。原 DDL 遺漏明確取消到期設定，已修正並完成雲端確認，歷史月份入倉的此項阻礙已排除。

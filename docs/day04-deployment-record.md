@@ -1,5 +1,7 @@
 # Day 4：AWS 部署與驗證紀錄
 
+2026-09-14 補充：bootstrap remote state 與 application 既有資源接管已完成，兩組後續 plan 均無差異。實測 raw bucket 原先未啟用版本控制，本次才啟用；Lambda digest 與執行設定已讀取確認。詳見 [Terraform 接管驗證](evidence/aws/terraform-adoption.md)。下方保留 2026-09-12 的原始紀錄；OIDC bootstrap、其餘治理設定與功能證據仍待補，不宣稱總規格全部完成。
+
 | 項目 | 紀錄 |
 |---|---|
 | 日期 | 2026-09-12（Asia/Taipei） |

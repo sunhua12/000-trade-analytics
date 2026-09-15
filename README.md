@@ -226,6 +226,9 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 
 ## 設計與實作計畫
 
+- [AWS Terraform 管理與接管流程](infrastructure/aws/README.md)
+- [Terraform 實際接管驗證](docs/evidence/aws/terraform-adoption.md)
+
 - [20 天規格](docs/trade-analytics-spec.md)
 - [資料契約](docs/data-contract.md)
 - [Day 3 學習計畫](docs/day-03-learning-plan.md)

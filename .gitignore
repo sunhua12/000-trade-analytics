@@ -9,3 +9,16 @@ __pycache__/
 *.egg-info/
 data/
 
+# Terraform local state, credentials, plans and downloaded providers.
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfplan.json
+*.tfvars
+*.tfvars.json
+*.backend.hcl
+crash.log
+crash.*.log
+infrastructure/aws/bootstrap/backend.tf
+infrastructure/aws/local/
