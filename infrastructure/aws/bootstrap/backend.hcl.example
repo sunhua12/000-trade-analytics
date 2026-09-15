@@ -1,0 +1,5 @@
+bucket       = "YOUR_UNIQUE_STATE_BUCKET"
+key          = "trade-analytics/bootstrap/terraform.tfstate"
+region       = "ap-northeast-1"
+encrypt      = true
+use_lockfile = true

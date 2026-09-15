@@ -1,6 +1,7 @@
 """Resilient HTTP client for the UN Comtrade Preview API."""
 
 from collections.abc import Callable
+from decimal import Decimal
 from time import sleep as sleep_seconds
 from typing import Any
 
@@ -62,6 +63,7 @@ class ComtradeClient:
         self._sleep = sleep
 
     def fetch(self, query: ComtradeQuery) -> ComtradeResponse:
+        """For Test"""
         """Fetch one validated Preview API response."""
         retrying = Retrying(
             stop=stop_after_attempt(self.MAX_ATTEMPTS),
@@ -111,7 +113,7 @@ class ComtradeClient:
     @staticmethod
     def _decode_payload(response: httpx.Response) -> dict[str, Any]:
         try:
-            payload = response.json()
+            payload = response.json(parse_float=Decimal)
         except ValueError as error:
             raise ComtradeResponseError("UN Comtrade response was not valid JSON") from error
         if not isinstance(payload, dict):

@@ -2,8 +2,9 @@
 
 from datetime import datetime
 from enum import StrEnum
+from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class QueryType(StrEnum):
@@ -21,6 +22,8 @@ class ComtradeQuery(BaseModel):
     period: str = "202401"
     cmd_code: str = "8542"
     query_type: QueryType
+    expected_hs_version: Literal["H6"] = "H6"
+    revision: int = Field(default=1, gt=0, strict=True)
 
     @field_validator("period")
     @classmethod

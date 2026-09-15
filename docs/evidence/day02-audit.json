@@ -1,0 +1,280 @@
+{
+  "checked_at": "2026-09-09T08:59:48.516160+00:00",
+  "datasets": [
+    {
+      "file": "data/day02-preview/period=202301/query_type=partner_detail/data.ndjson",
+      "query_type": "partner_detail",
+      "period": "202301",
+      "manifest": {
+        "checksum": "sha256:9c3b9dfa8f7ca6e726bdf520a4f595077333b488b2b250688dec84c6d08f1117",
+        "hs_version": "H6",
+        "ingested_at": "2026-09-09T08:53:31.414079Z",
+        "primary_value_sum": "2799575181.0",
+        "request_parameters": {
+          "cmdCode": "8542",
+          "customsCode": "C00",
+          "flowCode": "M",
+          "motCode": 0,
+          "partner2Code": 0,
+          "period": "202301",
+          "reporterCode": 842
+        },
+        "row_count": 67,
+        "schema_version": "1.0.0",
+        "source": "UN Comtrade Preview API"
+      },
+      "checks": {
+        "checksum": true,
+        "row_count": true,
+        "sum": true,
+        "fixed_fields": true,
+        "unique_grain": true,
+        "partner_rule": true
+      },
+      "primary_value": {
+        "null": 0,
+        "zero": 0,
+        "negative": 0,
+        "positive": 67
+      },
+      "net_weight": {
+        "null": 31,
+        "zero": 0,
+        "negative": 0,
+        "positive": 36
+      },
+      "missing_iso": 67,
+      "missing_name": 67,
+      "unmapped_codes": [],
+      "special_reference_entries": [
+        {
+          "code": 490,
+          "reference": {
+            "id": 490,
+            "text": "Other Asia, nes",
+            "PartnerCode": 490,
+            "PartnerDesc": "Other Asia, nes",
+            "partnerNote": "Other Asia, not elsewhere specified",
+            "PartnerCodeIsoAlpha3": "S19",
+            "entryEffectiveDate": "1900-01-01T00:00:00",
+            "isGroup": false
+          },
+          "value": "630972428.0"
+        }
+      ]
+    },
+    {
+      "file": "data/day02-preview/period=202301/query_type=world_total/data.ndjson",
+      "query_type": "world_total",
+      "period": "202301",
+      "manifest": {
+        "checksum": "sha256:fb353a61b6b68ff3de0184712374677685bff192677dd38f76154043f2cc5786",
+        "hs_version": "H6",
+        "ingested_at": "2026-09-09T08:53:46.185148Z",
+        "primary_value_sum": "2799575181.0",
+        "request_parameters": {
+          "cmdCode": "8542",
+          "customsCode": "C00",
+          "flowCode": "M",
+          "motCode": 0,
+          "partner2Code": 0,
+          "partnerCode": 0,
+          "period": "202301",
+          "reporterCode": 842
+        },
+        "row_count": 1,
+        "schema_version": "1.0.0",
+        "source": "UN Comtrade Preview API"
+      },
+      "checks": {
+        "checksum": true,
+        "row_count": true,
+        "sum": true,
+        "fixed_fields": true,
+        "unique_grain": true,
+        "partner_rule": true
+      },
+      "primary_value": {
+        "null": 0,
+        "zero": 0,
+        "negative": 0,
+        "positive": 1
+      },
+      "net_weight": {
+        "null": 1,
+        "zero": 0,
+        "negative": 0,
+        "positive": 0
+      },
+      "missing_iso": 1,
+      "missing_name": 1,
+      "unmapped_codes": [],
+      "special_reference_entries": [
+        {
+          "code": 0,
+          "reference": {
+            "id": 0,
+            "text": "World",
+            "PartnerCode": 0,
+            "PartnerDesc": "World",
+            "partnerNote": "World",
+            "PartnerCodeIsoAlpha3": "W00",
+            "entryEffectiveDate": "1901-01-01T00:00:00",
+            "isGroup": true
+          },
+          "value": "2799575181.0"
+        }
+      ]
+    },
+    {
+      "file": "data/day02-preview/period=202412/query_type=partner_detail/data.ndjson",
+      "query_type": "partner_detail",
+      "period": "202412",
+      "manifest": {
+        "checksum": "sha256:034b6a951be3b4cace7285ed1f894f19f08a9c3a37b9ace62a8a863e831c719d",
+        "hs_version": "H6",
+        "ingested_at": "2026-09-09T08:54:06.742502Z",
+        "primary_value_sum": "4054690213.0",
+        "request_parameters": {
+          "cmdCode": "8542",
+          "customsCode": "C00",
+          "flowCode": "M",
+          "motCode": 0,
+          "partner2Code": 0,
+          "period": "202412",
+          "reporterCode": 842
+        },
+        "row_count": 67,
+        "schema_version": "1.0.0",
+        "source": "UN Comtrade Preview API"
+      },
+      "checks": {
+        "checksum": true,
+        "row_count": true,
+        "sum": true,
+        "fixed_fields": true,
+        "unique_grain": true,
+        "partner_rule": true
+      },
+      "primary_value": {
+        "null": 0,
+        "zero": 0,
+        "negative": 0,
+        "positive": 67
+      },
+      "net_weight": {
+        "null": 14,
+        "zero": 0,
+        "negative": 0,
+        "positive": 53
+      },
+      "missing_iso": 67,
+      "missing_name": 67,
+      "unmapped_codes": [],
+      "special_reference_entries": [
+        {
+          "code": 490,
+          "reference": {
+            "id": 490,
+            "text": "Other Asia, nes",
+            "PartnerCode": 490,
+            "PartnerDesc": "Other Asia, nes",
+            "partnerNote": "Other Asia, not elsewhere specified",
+            "PartnerCodeIsoAlpha3": "S19",
+            "entryEffectiveDate": "1900-01-01T00:00:00",
+            "isGroup": false
+          },
+          "value": "1151535965.0"
+        }
+      ]
+    },
+    {
+      "file": "data/day02-preview/period=202412/query_type=world_total/data.ndjson",
+      "query_type": "world_total",
+      "period": "202412",
+      "manifest": {
+        "checksum": "sha256:b773836b60dd083f54caddf53de1dff13edbe4b3fb85ad992bfc6e5cced7ee9d",
+        "hs_version": "H6",
+        "ingested_at": "2026-09-09T08:58:39.225399Z",
+        "primary_value_sum": "4054690213.0",
+        "request_parameters": {
+          "cmdCode": "8542",
+          "customsCode": "C00",
+          "flowCode": "M",
+          "motCode": 0,
+          "partner2Code": 0,
+          "partnerCode": 0,
+          "period": "202412",
+          "reporterCode": 842
+        },
+        "row_count": 1,
+        "schema_version": "1.0.0",
+        "source": "UN Comtrade Preview API"
+      },
+      "checks": {
+        "checksum": true,
+        "row_count": true,
+        "sum": true,
+        "fixed_fields": true,
+        "unique_grain": true,
+        "partner_rule": true
+      },
+      "primary_value": {
+        "null": 0,
+        "zero": 0,
+        "negative": 0,
+        "positive": 1
+      },
+      "net_weight": {
+        "null": 1,
+        "zero": 0,
+        "negative": 0,
+        "positive": 0
+      },
+      "missing_iso": 1,
+      "missing_name": 1,
+      "unmapped_codes": [],
+      "special_reference_entries": [
+        {
+          "code": 0,
+          "reference": {
+            "id": 0,
+            "text": "World",
+            "PartnerCode": 0,
+            "PartnerDesc": "World",
+            "partnerNote": "World",
+            "PartnerCodeIsoAlpha3": "W00",
+            "entryEffectiveDate": "1901-01-01T00:00:00",
+            "isGroup": true
+          },
+          "value": "4054690213.0"
+        }
+      ]
+    }
+  ],
+  "reconciliation": [
+    {
+      "period": "202301",
+      "partner_sum": "2799575181.0",
+      "world_total": "2799575181.0",
+      "difference": "0.0",
+      "difference_rate": "0"
+    },
+    {
+      "period": "202412",
+      "partner_sum": "4054690213.0",
+      "world_total": "4054690213.0",
+      "difference": "0.0",
+      "difference_rate": "0"
+    }
+  ],
+  "h6_endpoint_probe": {
+    "statuses": [
+      500,
+      500,
+      500,
+      500
+    ],
+    "conclusion": "Not validated; HTTP 500 does not establish permanent lack of support."
+  }
+}

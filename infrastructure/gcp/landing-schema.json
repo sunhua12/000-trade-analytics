@@ -1,0 +1,237 @@
+[
+  {
+    "name": "typeCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "freqCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "refPeriodId",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "refYear",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "refMonth",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "period",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "reporterCode",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "reporterISO",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "reporterDesc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "flowCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "flowDesc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partnerCode",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partnerISO",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partnerDesc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partner2Code",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partner2ISO",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partner2Desc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "classificationCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "classificationSearchCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isOriginalClassification",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "cmdCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "cmdDesc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "aggrLevel",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isLeaf",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "customsCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "customsDesc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "mosCode",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "motCode",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "motDesc",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "qtyUnitCode",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "qtyUnitAbbr",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "qty",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isQtyEstimated",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "altQtyUnitCode",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "altQtyUnitAbbr",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "altQty",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isAltQtyEstimated",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "netWgt",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isNetWgtEstimated",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "grossWgt",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isGrossWgtEstimated",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "cifvalue",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "fobvalue",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "primaryValue",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "legacyEstimationFlag",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isReported",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "isAggregate",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  }
+]

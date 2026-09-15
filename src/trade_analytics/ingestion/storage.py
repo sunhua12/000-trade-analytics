@@ -1,14 +1,20 @@
 """Local filesystem storage for Phase 1 ingestion artifacts."""
 
-import json
 import os
 import tempfile
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Literal
 
-from trade_analytics.ingestion.manifest import build_manifest, serialize_ndjson
+from trade_analytics.ingestion.manifest import (
+    artifact_partition,
+    build_manifest,
+    serialize_manifest,
+    serialize_ndjson,
+    validate_existing_artifacts,
+)
 from trade_analytics.ingestion.service import IngestionDataset
 
 
@@ -20,6 +26,7 @@ class StoredIngestion:
     manifest_path: Path
     row_count: int
     checksum: str
+    status: Literal["success", "already_exists"] = "success"
 
 
 def _utc_now() -> datetime:
@@ -39,35 +46,41 @@ class LocalStorage:
         self._clock = clock
 
     def write(self, dataset: IngestionDataset) -> StoredIngestion:
-        """Serialize and atomically replace the data and manifest files."""
-        target_dir = (
-            self._root
-            / f"period={dataset.query.period}"
-            / f"query_type={dataset.query.query_type.value}"
-        )
+        """Preserve existing artifacts; atomically install each missing file (single writer)."""
+        target_dir = self._root / artifact_partition(dataset.query)
         target_dir.mkdir(parents=True, exist_ok=True)
         data_path = target_dir / "data.ndjson"
         manifest_path = target_dir / "manifest.json"
 
         data = serialize_ndjson(dataset)
         manifest = build_manifest(dataset, data=data, ingested_at=self._clock())
-        manifest_data = (
-            json.dumps(
-                manifest.model_dump(mode="json"),
-                ensure_ascii=False,
-                indent=2,
-                sort_keys=True,
-            )
-            + "\n"
-        ).encode()
+        manifest_data = serialize_manifest(manifest)
+
+        data_existing = data_path.read_bytes() if data_path.exists() else None
+        manifest_existing = manifest_path.read_bytes() if manifest_path.exists() else None
+        validate_existing_artifacts(
+            data=data_existing,
+            manifest_data=manifest_existing,
+            expected=manifest,
+            location=str(target_dir),
+        )
+        status: Literal["success", "already_exists"] = (
+            "already_exists"
+            if data_existing is not None and manifest_existing is not None
+            else "success"
+        )
 
         data_temp: Path | None = None
         manifest_temp: Path | None = None
         try:
-            data_temp = self._write_temporary(target_dir, data)
-            manifest_temp = self._write_temporary(target_dir, manifest_data)
-            os.replace(data_temp, data_path)
-            os.replace(manifest_temp, manifest_path)
+            if data_existing is None:
+                data_temp = self._write_temporary(target_dir, data)
+            if manifest_existing is None:
+                manifest_temp = self._write_temporary(target_dir, manifest_data)
+            if data_temp is not None:
+                os.replace(data_temp, data_path)
+            if manifest_temp is not None:
+                os.replace(manifest_temp, manifest_path)
         except Exception:
             if data_temp is not None:
                 data_temp.unlink(missing_ok=True)
@@ -76,6 +89,7 @@ class LocalStorage:
             raise
 
         return StoredIngestion(
+            status=status,
             data_path=data_path,
             manifest_path=manifest_path,
             row_count=manifest.row_count,

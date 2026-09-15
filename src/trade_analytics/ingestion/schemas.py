@@ -1,5 +1,7 @@
 """Pydantic models for UN Comtrade Preview API responses."""
 
+from decimal import Decimal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -39,19 +41,19 @@ class TradeRecord(BaseModel):
     mot_description: str | None = Field(default=None, alias="motDesc")
     quantity_unit_code: int | None = Field(default=None, alias="qtyUnitCode")
     quantity_unit_abbreviation: str | None = Field(default=None, alias="qtyUnitAbbr")
-    quantity: float | None = Field(default=None, alias="qty")
+    quantity: Decimal | None = Field(default=None, alias="qty")
     is_quantity_estimated: bool | None = Field(default=None, alias="isQtyEstimated")
     alternate_quantity_unit_code: int | None = Field(default=None, alias="altQtyUnitCode")
     alternate_quantity_unit_abbreviation: str | None = Field(default=None, alias="altQtyUnitAbbr")
-    alternate_quantity: float | None = Field(default=None, alias="altQty")
+    alternate_quantity: Decimal | None = Field(default=None, alias="altQty")
     is_alternate_quantity_estimated: bool | None = Field(default=None, alias="isAltQtyEstimated")
-    net_weight: float | None = Field(default=None, alias="netWgt")
+    net_weight: Decimal | None = Field(default=None, alias="netWgt")
     is_net_weight_estimated: bool | None = Field(default=None, alias="isNetWgtEstimated")
-    gross_weight: float | None = Field(default=None, alias="grossWgt")
+    gross_weight: Decimal | None = Field(default=None, alias="grossWgt")
     is_gross_weight_estimated: bool | None = Field(default=None, alias="isGrossWgtEstimated")
-    cif_value: float | None = Field(default=None, alias="cifvalue")
-    fob_value: float | None = Field(default=None, alias="fobvalue")
-    primary_value: float | None = Field(default=None, alias="primaryValue")
+    cif_value: Decimal | None = Field(default=None, alias="cifvalue")
+    fob_value: Decimal | None = Field(default=None, alias="fobvalue")
+    primary_value: Decimal | None = Field(default=None, alias="primaryValue")
     legacy_estimation_flag: int | None = Field(default=None, alias="legacyEstimationFlag")
     is_reported: bool | None = Field(default=None, alias="isReported")
     is_aggregate: bool | None = Field(default=None, alias="isAggregate")

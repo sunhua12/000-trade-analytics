@@ -1,3 +1,6 @@
+import json
+from datetime import UTC, datetime
+from decimal import Decimal
 from typing import Any
 
 import httpx
@@ -12,7 +15,10 @@ from trade_analytics.ingestion.exceptions import (
     ComtradeResponseError,
     ResponseTruncatedError,
 )
+from trade_analytics.ingestion.manifest import build_manifest, serialize_ndjson
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
+from trade_analytics.ingestion.schemas import TradeRecord
+from trade_analytics.ingestion.service import IngestionService
 
 QUERY = ComtradeQuery(
     period="202401",
@@ -186,3 +192,36 @@ def test_invalid_json_is_rejected() -> None:
 
     with httpx.Client() as http_client, pytest.raises(ComtradeResponseError, match="valid JSON"):
         ComtradeClient(http_client=http_client, wait=wait_none()).fetch(QUERY)
+
+
+@respx.mock
+def test_raw_decimal_survives_http_model_storage_and_sum(preview_payload: dict[str, Any]) -> None:
+    for row in preview_payload["data"]:
+        row["primaryValue"] = "DECIMAL_TOKEN"
+    # Deliberately send a JSON number token, never a Python float.
+    raw = json.dumps(preview_payload).replace('"DECIMAL_TOKEN"', "123456789012345678901.123456789")
+    respx.get(ComtradeClient.DEFAULT_BASE_URL).mock(return_value=httpx.Response(200, content=raw))
+    with httpx.Client() as http_client:
+        dataset = IngestionService(ComtradeClient(http_client=http_client)).fetch_dataset(QUERY)
+    expected = Decimal("123456789012345678901.123456789")
+    assert dataset.rows[0].primary_value == expected
+    data = serialize_ndjson(dataset)
+    rows = [json.loads(line) for line in data.splitlines()]
+    assert rows[0]["primaryValue"] == str(expected)
+    assert rows[1]["netWgt"] is None
+    assert TradeRecord.model_validate(rows[0]).primary_value == expected
+    manifest = build_manifest(dataset, data=data, ingested_at=datetime(2026, 9, 10, tzinfo=UTC))
+    assert manifest.primary_value_sum == Decimal("246913578024691357802.246913578")
+
+
+@pytest.mark.parametrize("token", ["NaN", "Infinity", "-Infinity", "null", "-1"])
+@respx.mock
+def test_invalid_primary_amount_never_reaches_storage(
+    preview_payload: dict[str, Any],
+    token: str,
+) -> None:
+    preview_payload["data"][0]["primaryValue"] = "INVALID_TOKEN"
+    raw = json.dumps(preview_payload).replace('"INVALID_TOKEN"', token)
+    respx.get(ComtradeClient.DEFAULT_BASE_URL).mock(return_value=httpx.Response(200, content=raw))
+    with httpx.Client() as http_client, pytest.raises(ComtradeResponseError):
+        IngestionService(ComtradeClient(http_client=http_client)).fetch_dataset(QUERY)
