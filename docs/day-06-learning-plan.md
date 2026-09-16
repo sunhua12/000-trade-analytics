@@ -7,9 +7,42 @@
 | 預計投入 | 約 3～4 小時；前置補課與雲端除錯另記 |
 | 核心目標 | 將 202301／8542／H6 正規化到 raw，能追查來源、安全重跑並拒絕舊版回寫 |
 | 今日交付物 | 正規化 SQL、Manifest gate、load audit、raw MERGE、重跑證據及學習日誌 |
-| 目前狀態 | 待實作；建立本計畫時尚未找到 Day 5 真實入倉驗收紀錄 |
+| 目前狀態 | 2026-09-16 更新：單月基本載入與手動 SQL 練習完成，可進入 Day 7；版本保護與完整驗收延後，M1 保留待驗收 |
 
 今天完成的是「同一個來源檔案再跑一次，資料仍正確，失敗也能查出原因」。先沿用 Day 5 選定的單一載入方案；本日不擴展到 24 個月、dbt 指標或 Airflow。
+
+## 目前進度與 Day 7 銜接（2026-09-16）
+
+以下是實際進度；後續章節保留原始完整驗收規格。未勾選項目表示尚未完整驗收，不代表全部未做。
+
+| 項目 | 目前成果與證據 |
+|---|---|
+| Day 5 前置 | 兩類 landing、Transfer 及 raw 結構已確認；分區期限已取消，見 [Day 5 紀錄](day05-load-record.md) |
+| 真實單月 raw | 本人確認新增 SQL 已執行且結果正確；明細 67 筆、World 1 筆，各自金額 2,799,575,181，兩邊均有 success，見 [Day 6 紀錄](day06-load-record.md) |
+| 來源核對 | 助理於 2026-09-15 下載兩類 S3 原始檔，核對 SHA-256、筆數、Decimal 合計、身分與數值精度，見 [來源核對證據](evidence/day06-source-verification.json)；此證據不等同於 raw 完整快照驗收 |
+| 明細 SQL | 已補真實來源 metadata、gate 失敗中斷、交易內筆數／合計／重複檢查及回滾後 failed audit |
+| World 本機同步 | SQL 與載入紀錄的真實 checksum 已同步；World SQL 擷取時間已對齊 manifest 的 `2026-09-12T12:20:59.992916Z`；本次為本機修改，未重新執行雲端 SQL |
+| 測試結果 | 本人確認既有 SQL 練習結果正確；同版衝突、新版刪列後舊版回放、完整快照與故障復原的完整整合驗收尚未確認 |
+| 驗收文件 | 已確認 [day06-verification.md](evidence/day06-verification.md) 存在，由 SQL 檔改名；目前保存驗證與 World 寫入 SQL，實際結果與完整整合驗收證據仍待補齊 |
+| 學習日誌 | 已追加 Day 6 實際成果、證據來源及延後事項；實際學習工時未提供 |
+
+### 延後事項與恢復時機
+
+為銜接 Day 7，先使用目前已確認的 `202301／8542／H6` raw 快照進行 dbt sources 與 staging 學習。
+
+- **版本保護延後**：正式 MERGE 的 `already_loaded`、`conflict`、`stale_revision` 與成功版本核對，須在處理來源修訂、舊版重送或自動載入前補齊。
+- **完整檢查與追蹤延後**：無損精度檢查接入正式流程、固定維度 NULL／頻率驗證、完整欄位及 lineage 比對、job ID 與每次 attempt 區分，須在擴大到新來源／多月份自動載入前補齊。來源檔本機精度已核對，不能據此宣稱正式 SQL 已有相同保護。
+- **M1 暫不勾選完成**：以上項目與驗收證據仍保留；進入 Day 7 不表示已滿足完整安全重跑規格。
+- **執行方式已統一**：保留獨立的 `merge-raw.sql`，其中已包含明細正規化、gate 與交易。已移除未完成的獨立正規化模板、Python SQL 產生器、雲端執行腳本及其專用 job 工具；保留 `warehouse.gate` 作為唯讀來源檔核對工具，不自動提交 BigQuery 工作。World SQL 保存在驗收 Markdown 中。
+
+### 驗收文件應包含的最小內容
+
+若既有驗收文件已包含以下內容，無須重寫；缺項再補，延後測試明列「未驗收」。
+
+1. 兩類來源的完整 URI、manifest／checksum／revision／擷取時間，可引用來源核對 JSON。
+2. 明細與 World 的實際筆數、金額、grain 檢查結果，以及對應 Transfer run／查詢或 MERGE job ID；缺少的 ID 如實標記。
+3. 每項已跑測試的情境、預期結果、實際結果及截圖或查詢輸出；區分真實來源與人工 fixture，不以 SQL 存在代替執行證據。
+4. 版本保護、完整快照及故障復原等延後項目，以及 M1 仍待驗收的結論。
 
 ## 1. 今天要理解的流程
 
@@ -46,10 +79,10 @@ landing → 正規化暫存結果 → 核對 Manifest／grain／型別
 
 **預計時間：15～20 分鐘。**
 
-- [ ] 真實 BigQuery 已有 202301 的明細與 World landing 表，且可查詢。
+- [x] 真實 BigQuery 已有 202301 的明細與 World landing 表，且可查詢。
 - [ ] 保存兩類來源的完整 S3 URI、manifest、checksum、revision 與載入 job／run ID。
-- [ ] 明細及 World 的筆數與金額各自符合 manifest。
-- [ ] 兩張 raw 表的 schema、月份分區、cluster 與 Dataset location 已確認。
+- [x] 明細及 World 的筆數與金額各自符合 manifest。
+- [x] 兩張 raw 表的 schema、月份分區、cluster 與 Dataset location 已確認。
 - [ ] 已決定使用 Transfer 或 Python adapter，能查詢既有工作的狀態。
 - [ ] 今日採單 writer，從來源檢查至 raw 提交皆串行執行，避免共用 landing 被其他工作覆寫。
 
@@ -107,8 +140,8 @@ BigQuery 支援多陳述式交易；交易與例外處理的行為請參照 [官
 
 先用 Decimal 確認數值可無損表示為 NUMERIC，再轉型。`SAFE_CAST` 回傳非 NULL 不能證明沒有捨入；超出範圍或精度時停止並記錄，沿用 Day 5 的精度規則。不可把非法字串轉成 NULL 後繼續。
 
-- [ ] Data／manifest 齊全，schema version 為 `2.0.0`；路徑、manifest、資料列身分一致。
-- [ ] 原始 bytes 的 SHA-256、非空行數與 Decimal 合計符合 manifest。
+- [x] Data／manifest 齊全，schema version 為 `2.0.0`；路徑、manifest、資料列身分一致。
+- [x] 原始 bytes 的 SHA-256、非空行數與 Decimal 合計符合 manifest。
 - [ ] 載入完成後，landing 與正規化結果的筆數、金額均符合 manifest。
 - [ ] 月份、842、M、8542、H6，以及 `partner2Code=0`、`customsCode=C00`、`motCode=0` 均符合契約，頻率為 M。
 - [ ] Grain 欄位無 NULL，沒有重複 grain；不能用任意 `ROW_NUMBER()` 選一筆掩蓋問題。
@@ -172,16 +205,14 @@ MERGE 的刪除分支必須自己限制目標範圍，不能以為 `ON` 有月�
 
 **預計時間：10 分鐘。**
 
-以下路徑為實作時新增的建議，並非已完成檔案：
+以下為原始交付物清單；目前多數 SQL 與載入紀錄已存在，完成程度以本頁「目前進度」及實際證據為準：
 
 | 建議路徑 | 內容 |
 |---|---|
 | `infrastructure/gcp/audit-ingestion-runs.sql` | Audit DDL 與事件欄位說明 |
-| `infrastructure/gcp/normalize-landing.sql` | 明細及 World 正規化與前置檢查 |
-| `infrastructure/gcp/merge-raw.sql` | 批次版本保護、範圍限制、刪列及交易 |
+| `infrastructure/gcp/merge-raw.sql` | 明細正規化、gate、範圍限制、刪列及交易；版本保護延後 |
 | `docs/day06-load-record.md` | 選定載入方案、來源／job 對應、成功與失敗結果 |
-| `docs/evidence/day06-verification.sql` | Manifest 核對、grain、快照與版本查詢 |
-| `docs/evidence/day06-verification.md` | 真實重跑證據與獨立 fixture 測試摘要 |
+| `docs/evidence/day06-verification.md` | World 正規化／寫入與驗證 SQL；真實重跑結果及獨立 fixture 測試摘要待補齊 |
 | `docs/learning-log.md` | Day 6 實際工時、理解、問題與未完成項目 |
 
 若新增 Python gate／adapter 邏輯，補對應的精度、版本與錯誤復原單元測試，執行專案既有 Ruff、mypy 與相關測試；SQL 行為另以 BigQuery 測試 Dataset 驗證，不能以假 client 測試取代。
@@ -195,11 +226,12 @@ MERGE 的刪除分支必須自己限制目標範圍，不能以為 `ON` 有月�
 5. 為什麼來源擷取時間、載入時間與本次重跑時間要分開？
 6. 客戶端逾時時，如何區分「job 失敗」與「尚未知道 job 結果」？
 
-- [ ] 真實明細與 World 均已進入 raw，且各自符合 manifest。
+- [x] 真實明細與 World 均已進入 raw，筆數與金額各自符合 manifest（依本人執行確認；完整逐欄比對仍待驗收）。
 - [ ] 同檔連跑兩次，raw grain 不重複，值與 lineage 不變。
 - [ ] 同版衝突、舊版回放、新版刪列與範圍隔離測試通過。
 - [ ] Gate 與交易失敗保留原資料，audit 可定位來源及已提交 job。
-- [ ] SQL、設定、驗收證據與實際學習日誌完成。
+- [x] Day 6 學習日誌與目前進度標示已回填。
+- [ ] SQL／設定整合與完整驗收證據完成（驗收 Markdown 已存在，完整結果待補齊）。
 - [ ] M1 的 API／Lambda／S3／BigQuery 真實證據逐項核對；缺項明列待補。
 
-下一步依總規格進入 Day 7 的 dbt 基礎與 staging；只有 fixture 通過時，保留 M1 待驗收狀態。
+下一步可使用已確認的真實單月 raw 進入 Day 7 的 dbt 基礎與 staging；本次版本保護與完整驗收延後，M1 保留待驗收狀態。
