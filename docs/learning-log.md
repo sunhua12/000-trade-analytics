@@ -244,3 +244,45 @@ Day 3 補 H6 與固定維度驗證、版本／商品碼儲存路徑、Decimal �
 ### 下一步
 
 沿用目前已確認的 `202301／8542／H6` raw 快照，進入 Day 7 的 dbt 基礎、sources 與 staging。保留 Day 6 完整規格與待辦，M1 暫不標示完成。
+
+
+## Day 7：dbt sources、staging 與月份日曆
+
+| 項目 | 紀錄 |
+|---|---|
+| 證據日期 | 2026-09-16（dbt JSON UTC 日期） |
+| 狀態 | 三個模型、十個資料測試及重複 grain 反例完成；文件已整理，尚未提交 Git |
+| 實際學習工時 | 未提供，不以終端機起訖或計畫工時代填 |
+| 驗收紀錄 | [Day 7 dbt 驗收](day07-dbt-record.md) |
+| 查核證據 | [驗證摘要](evidence/day07-verification.md)、[唯讀 SQL](evidence/day07-verification.sql) |
+
+### 實作與驗證
+
+本人在 dbt-staging 分支的獨立 worktree 操作，建立 .venv-dbt，安裝 Python 3.14.6、dbt Core 1.12.5 與 BigQuery adapter 1.12.1，pip check 通過並保存依賴版本。設定 Google Cloud CLI、ADC、dev／fixture targets；以 trade_raw 為真實來源，trade_analytics_dev 為輸出，location 為 asia-northeast1。
+
+建立兩個 staging views 與獨立的 dim_months table。十個測試涵蓋月份完整性、非空與唯一、兩類 grain、202301 存在性、固定契約與 raw 保真；清理後 dev build 為 3 個模型成功、10 個測試通過。兩張 staging 的 30 個欄位型別經 Console 核對；模型說明 parse 通過，docs generate 產生 catalog.json，另記 table_owner 警告。
+
+202301 明細 67 筆、World 1 筆，金額各 2,799,575,181；保留 partner 490、重量 NULL 與 lineage。日曆涵蓋 24 個月，閏年月底正確，其餘 23 個月缺交易資料並保留 NULL。隔離 fixture 正常通過，注入重複明細後 grain 測試 FAIL 1，恢復後 PASS=13。
+
+### 問題與處理
+
+- 啟用虛擬環境前沒有 python 指令，改以 python3 建立環境；啟用後可使用 python。
+- gcloud 起初找不到，完成 CLI 設定與 ADC 後連線成功；早期 NoneType.close 錯誤的確切根因未定位，不推斷為特定套件問題。
+- 從子資料夾執行時，相對的 --project-dir dbt 指錯位置；統一從專案根目錄執行。
+- 缺月查詢發現真實 raw 混入 Day 6 的 202302 隔離測試資料；依 lineage 確認後備份並精確移除，重新驗證通過。
+- BigQuery 不允許交易內建立永久表；備份表改在交易外建立，備份與刪除留在同一交易並檢查影響筆數。
+
+### 本次整理的理解
+
+- source() 引用外部載入的 raw，ref() 引用 dbt 模型；source 宣告不負責搬移或建立 raw。
+- staging 固定輸出欄位、日期範圍與依賴，保留來源值；已正規化的 raw 仍需要穩定介面與測試。
+- 月份日曆獨立產生，才能顯示缺月；缺資料的 NULL 不等於零交易。
+- 違規列測試回傳零列才通過，空表也可能通過，因此另加單月存在性檢查。
+- 測試通過只代表已編寫規則通過；二月測試資料可符合欄位契約，仍需追查 lineage。
+- fixture 隔離 raw 與模型輸出；dbt debug 成功不等於來源讀取、模型寫入或業務驗證均完成。
+
+以上為本次討論整理，不代表已逐項測驗本人的理解程度。
+
+### 限制與下一步
+
+實際工時未提供。真實資料保真驗收限於 202301，其他 23 個月未回填；負面測試僅實測重複 grain。人工 Console job IDs 待補，Day 6 延後事項與 M1 仍依原紀錄。下一步檢查提交內容，再進入 Day 8 的國家／商品維度與事實表。

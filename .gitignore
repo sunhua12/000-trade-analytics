@@ -22,3 +22,11 @@ crash.log
 crash.*.log
 infrastructure/aws/bootstrap/backend.tf
 infrastructure/aws/local/
+.venv-dbt/
+profiles.yml
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/**/.user.yml
+dbt/**/logs/
+dbt/**/target/

@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: stg_un_comtrade__partner_trades
+    description: >
+      非 World 夥伴交易明細。
+      每列代表一個月份、夥伴、商品及分類版本。
+      預設範圍為 2023-01-01（含）至 2025-01-01（不含），
+      由 raw_start_date 與 raw_end_date 控制，修改後需重建 view。
+      保留 raw 欄位值、型別與來源追蹤資訊。
+    columns:
+      - name: period
+        description: "YYYYMM 格式的交易月份。"
+      - name: period_start_date
+        description: "交易月份的第一天。"
+      - name: reporter_code
+        description: "申報方代碼，本專案固定為美國 842。"
+      - name: partner_code
+        description: >
+          非 World 夥伴代碼，保留來源特殊代碼（包含 490），
+          不在 staging 轉換為國家名稱。
+      - name: flow_code
+        description: "貿易流向，本專案固定為 M（進口）。"
+      - name: cmd_code
+        description: "商品代碼，本專案固定為 8542。"
+      - name: hs_version
+        description: "商品分類版本，本專案固定為 H6。"
+      - name: primary_value
+        description: "來源 primaryValue 的美元貿易金額，沿用 raw，不重新計算。"
+      - name: net_weight
+        description: "來源淨重，單位為公斤；NULL 表示缺值，不補為零。"
+      - name: quantity
+        description: "來源數量，沿用來源計量單位；允許 NULL，不補為零。"
+      - name: ingested_at
+        description: "沿用 raw 的來源擷取時間，不以 dbt 執行時間覆蓋。"
+      - name: source_file
+        description: "來源檔案位置，沿用 raw 以追溯資料。"
+      - name: checksum
+        description: "来源檔案校驗值，沿用 raw。"
+      - name: run_id
+        description: "來源處理執行識別碼，沿用 raw。"
+      - name: revision
+        description: "目前接受的來源修訂版本，為正整數。"
+
+  - name: stg_un_comtrade__world_totals
+    description: >
+      World 貿易總額，每列代表一個月份、商品及分類版本，
+      partner_code 固定為 0。
+      預設範圍為 2023-01-01（含）至 2025-01-01（不含），
+      由 raw_start_date 與 raw_end_date 控制，修改後需重建 view。
+      總額直接沿用 World 來源，不由夥伴明細加總產生。
+    columns:
+      - name: period
+        description: "YYYYMM 格式的交易月份。"
+      - name: period_start_date
+        description: "交易月份的第一天。"
+      - name: reporter_code
+        description: "申報方代碼，本專案固定為美國 842。"
+      - name: partner_code
+        description: "World 代碼，固定為字串 0。"
+      - name: flow_code
+        description: "貿易流向，本專案固定為 M（進口）。"
+      - name: cmd_code
+        description: "商品代碼，本專案固定為 8542。"
+      - name: hs_version
+        description: "商品分類版本，本專案固定為 H6。"
+      - name: primary_value
+        description: "World 來源的美元貿易總額，必須大於零。"
+      - name: net_weight
+        description: "來源淨重，單位為公斤；NULL 表示缺值，不補為零。"
+      - name: quantity
+        description: "來源數量，沿用來源計量單位；允許 NULL，不補為零。"
+      - name: ingested_at
+        description: "沿用 raw 的來源擷取時間，不以 dbt 執行時間覆蓋。"
+      - name: source_file
+        description: "來源檔案位置，沿用 raw 以追溯資料。"
+      - name: checksum
+        description: "來源檔案校驗值，沿用 raw。"
+      - name: run_id
+        description: "來源處理執行識別碼，沿用 raw。"
+      - name: revision
+        description: "目前接受的來源修訂版本，為正整數。"

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_months
+    description: "2023 年至 2024 年的完整月份日曆，每月一列。"
+    columns:
+      - name: month_start_date
+        description: "每月第一天，也是月份主鍵。"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: period
+        description: "YYYYMM 格式的月份代碼。"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: year_number
+        description: "西元年份。"
+
+      - name: month_number
+        description: "月份數字，範圍為 1 至 12。"
+
+      - name: month_end_date
+        description: "當月最後一天。"

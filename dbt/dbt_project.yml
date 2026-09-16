@@ -1,0 +1,12 @@
+name: trade_analytics
+version: '1.0.0'
+config-version: 2
+
+profile: trade_analytics
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+vars:
+  raw_start_date: '2023-01-01'
+  raw_end_date: '2025-01-01'

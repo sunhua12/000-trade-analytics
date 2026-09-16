@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: un_comtrade
+    description: "Day 6 載入的最新已接受原始資料。"
+    database: "{{ env_var('DBT_RAW_PROJECT') }}"
+    schema: "{{ env_var('DBT_RAW_DATASET', 'trade_raw') }}"
+    tables:
+      - name: partner_detail
+        identifier: un_comtrade_partner_detail
+      - name: world_total
+        identifier: un_comtrade_world_total
