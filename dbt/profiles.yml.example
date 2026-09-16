@@ -1,0 +1,18 @@
+trade_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_PROJECT') }}"
+      dataset: trade_analytics_dev
+      location: asia-northeast1
+      threads: 1
+
+    fixture:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_PROJECT') }}"
+      dataset: trade_analytics_fixture
+      location: asia-northeast1
+      threads: 1
