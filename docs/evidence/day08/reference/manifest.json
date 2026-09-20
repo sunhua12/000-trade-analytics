@@ -1,0 +1,20 @@
+[
+  {
+    "file": "partnerAreas.json",
+    "source_url": "https://comtradeapi.un.org/files/v1/app/reference/partnerAreas.json",
+    "retrieved_at": "2026-09-20T07:14:11.139874+00:00",
+    "sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "file": "H6.json",
+    "source_url": "https://comtradeapi.un.org/files/v1/app/reference/H6.json",
+    "retrieved_at": "2026-09-20T07:14:14.303469+00:00",
+    "sha256": "e266823e1299d1307c5d7986eb738b83aa5e5bd9af675bf19bf372220660be15"
+  },
+  {
+    "file": "m49.html",
+    "source_url": "https://unstats.un.org/unsd/methodology/m49/overview/",
+    "retrieved_at": "2026-09-20T07:16:20.712087+00:00",
+    "sha256": "b9048114f6e7f2abda83bf03d4263c9d7cd1bd7230e3d0461025ee7839a7a1fb"
+  }
+]

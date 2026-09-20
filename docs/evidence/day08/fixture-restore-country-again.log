@@ -1,0 +1,14 @@
+[0m07:53:10  Running with dbt=1.12.5
+[0m07:53:10  Registered adapter: bigquery=1.12.1
+[0m07:53:10  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:53:10  
+[0m07:53:10  Concurrency: 4 threads (target='fixture')
+[0m07:53:10  
+[0m07:53:12  1 of 1 START sql table model trade_analytics_day08_fixture.dim_countries ....... [RUN]
+[0m07:53:13  1 of 1 OK created sql table model trade_analytics_day08_fixture.dim_countries .. [[32mCREATE TABLE (69.0 rows, 36.3 KiB processed)[0m in 1.69s]
+[0m07:53:13  
+[0m07:53:13  Finished running 1 table model in 0 hours 0 minutes and 2.81 seconds (2.81s).
+[0m07:53:13  
+[0m07:53:13  [32mCompleted successfully[0m
+[0m07:53:13  
+[0m07:53:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1

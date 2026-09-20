@@ -1,0 +1,16 @@
+[0m07:50:45  Running with dbt=1.12.5
+[0m07:50:45  Registered adapter: bigquery=1.12.1
+[0m07:50:45  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:50:45  
+[0m07:50:45  Concurrency: 4 threads (target='dev')
+[0m07:50:45  
+[0m07:50:47  1 of 2 START seed file trade_analytics_dev.country_reference ................... [RUN]
+[0m07:50:47  2 of 2 START seed file trade_analytics_dev.hs_code_reference ................... [RUN]
+[0m07:50:50  2 of 2 OK loaded seed file trade_analytics_dev.hs_code_reference ............... [[32mINSERT 1[0m in 2.99s]
+[0m07:50:51  1 of 2 OK loaded seed file trade_analytics_dev.country_reference ............... [[32mINSERT 69[0m in 4.10s]
+[0m07:50:51  
+[0m07:50:51  Finished running 2 seeds in 0 hours 0 minutes and 5.19 seconds (5.19s).
+[0m07:50:51  
+[0m07:50:51  [32mCompleted successfully[0m
+[0m07:50:51  
+[0m07:50:51  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=2

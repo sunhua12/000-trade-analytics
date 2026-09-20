@@ -1,0 +1,52 @@
+[0m07:50:52  Running with dbt=1.12.5
+[0m07:50:52  Registered adapter: bigquery=1.12.1
+[0m07:50:52  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:50:52  
+[0m07:50:52  Concurrency: 4 threads (target='dev')
+[0m07:50:52  
+[0m07:50:53  1 of 20 START test accepted_values_country_reference_classification_status__verified__needs_review  [RUN]
+[0m07:50:53  2 of 20 START test accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [RUN]
+[0m07:50:53  3 of 20 START test accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+[0m07:50:53  4 of 20 START test compound_unique_hs_code_reference_hs_version__cmd_code ...... [RUN]
+[0m07:50:54  4 of 20 PASS compound_unique_hs_code_reference_hs_version__cmd_code ............ [[32mPASS[0m in 0.95s]
+[0m07:50:54  1 of 20 PASS accepted_values_country_reference_classification_status__verified__needs_review  [[32mPASS[0m in 0.96s]
+[0m07:50:54  5 of 20 START test not_null_country_reference_classification_note .............. [RUN]
+[0m07:50:54  6 of 20 START test not_null_country_reference_classification_status ............ [RUN]
+[0m07:50:54  3 of 20 PASS accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [[32mPASS[0m in 1.00s]
+[0m07:50:54  7 of 20 START test not_null_country_reference_partner_code ..................... [RUN]
+[0m07:50:54  2 of 20 PASS accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [[32mPASS[0m in 1.04s]
+[0m07:50:54  8 of 20 START test not_null_country_reference_partner_type ..................... [RUN]
+[0m07:50:55  5 of 20 PASS not_null_country_reference_classification_note .................... [[32mPASS[0m in 0.84s]
+[0m07:50:55  6 of 20 PASS not_null_country_reference_classification_status .................. [[32mPASS[0m in 0.85s]
+[0m07:50:55  9 of 20 START test not_null_country_reference_reconciliation_role .............. [RUN]
+[0m07:50:55  10 of 20 START test not_null_country_reference_retrieved_at .................... [RUN]
+[0m07:50:55  7 of 20 PASS not_null_country_reference_partner_code ........................... [[32mPASS[0m in 0.88s]
+[0m07:50:55  11 of 20 START test not_null_country_reference_source_name ..................... [RUN]
+[0m07:50:55  8 of 20 PASS not_null_country_reference_partner_type ........................... [[32mPASS[0m in 0.96s]
+[0m07:50:55  12 of 20 START test not_null_country_reference_source_url ...................... [RUN]
+[0m07:50:56  9 of 20 PASS not_null_country_reference_reconciliation_role .................... [[32mPASS[0m in 0.73s]
+[0m07:50:56  13 of 20 START test not_null_hs_code_reference_cmd_code ........................ [RUN]
+[0m07:50:56  10 of 20 PASS not_null_country_reference_retrieved_at .......................... [[32mPASS[0m in 0.81s]
+[0m07:50:56  14 of 20 START test not_null_hs_code_reference_code_level ...................... [RUN]
+[0m07:50:56  11 of 20 PASS not_null_country_reference_source_name ........................... [[32mPASS[0m in 0.82s]
+[0m07:50:56  15 of 20 START test not_null_hs_code_reference_hs_description .................. [RUN]
+[0m07:50:56  12 of 20 PASS not_null_country_reference_source_url ............................ [[32mPASS[0m in 0.82s]
+[0m07:50:56  16 of 20 START test not_null_hs_code_reference_hs_version ...................... [RUN]
+[0m07:50:56  13 of 20 PASS not_null_hs_code_reference_cmd_code .............................. [[32mPASS[0m in 0.76s]
+[0m07:50:56  17 of 20 START test not_null_hs_code_reference_parent_code ..................... [RUN]
+[0m07:50:56  14 of 20 PASS not_null_hs_code_reference_code_level ............................ [[32mPASS[0m in 0.76s]
+[0m07:50:56  18 of 20 START test not_null_hs_code_reference_retrieved_at .................... [RUN]
+[0m07:50:57  16 of 20 PASS not_null_hs_code_reference_hs_version ............................ [[32mPASS[0m in 0.74s]
+[0m07:50:57  19 of 20 START test not_null_hs_code_reference_source_url ...................... [RUN]
+[0m07:50:57  15 of 20 PASS not_null_hs_code_reference_hs_description ........................ [[32mPASS[0m in 0.96s]
+[0m07:50:57  20 of 20 START test unique_country_reference_partner_code ...................... [RUN]
+[0m07:50:57  17 of 20 PASS not_null_hs_code_reference_parent_code ........................... [[32mPASS[0m in 0.77s]
+[0m07:50:57  18 of 20 PASS not_null_hs_code_reference_retrieved_at .......................... [[32mPASS[0m in 0.72s]
+[0m07:50:57  19 of 20 PASS not_null_hs_code_reference_source_url ............................ [[32mPASS[0m in 0.79s]
+[0m07:50:58  20 of 20 PASS unique_country_reference_partner_code ............................ [[32mPASS[0m in 0.81s]
+[0m07:50:58  
+[0m07:50:58  Finished running 20 data tests in 0 hours 0 minutes and 5.19 seconds (5.19s).
+[0m07:50:58  
+[0m07:50:58  [32mCompleted successfully[0m
+[0m07:50:58  
+[0m07:50:58  Done. PASS=20 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=20

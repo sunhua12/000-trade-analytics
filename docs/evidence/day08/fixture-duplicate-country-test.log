@@ -1,0 +1,37 @@
+[0m07:52:57  Running with dbt=1.12.5
+[0m07:52:57  Registered adapter: bigquery=1.12.1
+[0m07:52:58  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:52:58  
+[0m07:52:58  Concurrency: 4 threads (target='fixture')
+[0m07:52:58  
+[0m07:52:58  1 of 10 START test accepted_values_dim_countries_classification_status__verified__needs_review  [RUN]
+[0m07:52:58  2 of 10 START test accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [RUN]
+[0m07:52:58  3 of 10 START test accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+[0m07:52:58  4 of 10 START test assert_missing_country_audited .............................. [RUN]
+[0m07:52:59  3 of 10 PASS accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [[32mPASS[0m in 0.87s]
+[0m07:52:59  5 of 10 START test assert_special_partner_contract ............................. [RUN]
+[0m07:52:59  1 of 10 PASS accepted_values_dim_countries_classification_status__verified__needs_review  [[32mPASS[0m in 0.88s]
+[0m07:52:59  6 of 10 START test not_null_dim_countries_classification_status ................ [RUN]
+[0m07:52:59  2 of 10 PASS accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [[32mPASS[0m in 0.89s]
+[0m07:52:59  7 of 10 START test not_null_dim_countries_partner_code ......................... [RUN]
+[0m07:53:00  4 of 10 PASS assert_missing_country_audited .................................... [[32mPASS[0m in 1.15s]
+[0m07:53:00  8 of 10 START test not_null_dim_countries_partner_type ......................... [RUN]
+[0m07:53:00  7 of 10 PASS not_null_dim_countries_partner_code ............................... [[32mPASS[0m in 0.67s]
+[0m07:53:00  9 of 10 START test not_null_dim_countries_reconciliation_role .................. [RUN]
+[0m07:53:00  5 of 10 PASS assert_special_partner_contract ................................... [[32mPASS[0m in 0.75s]
+[0m07:53:00  10 of 10 START test unique_dim_countries_partner_code .......................... [RUN]
+[0m07:53:00  6 of 10 PASS not_null_dim_countries_classification_status ...................... [[32mPASS[0m in 0.89s]
+[0m07:53:00  8 of 10 PASS not_null_dim_countries_partner_type ............................... [[32mPASS[0m in 0.72s]
+[0m07:53:01  9 of 10 PASS not_null_dim_countries_reconciliation_role ........................ [[32mPASS[0m in 0.70s]
+[0m07:53:01  10 of 10 FAIL 1 unique_dim_countries_partner_code .............................. [[31mFAIL 1[0m in 0.68s]
+[0m07:53:01  
+[0m07:53:01  Finished running 10 data tests in 0 hours 0 minutes and 3.07 seconds (3.07s).
+[0m07:53:01  
+[0m07:53:01  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m07:53:01  
+[0m07:53:01  [[31mERROR[0m]: in test unique_dim_countries_partner_code (models/marts/core/_core__models.yml)
+[0m07:53:01    Got 1 result, configured to fail if != 0
+[0m07:53:01  
+[0m07:53:01    compiled code at target/compiled/trade_analytics/models/marts/core/_core__models.yml/unique_dim_countries_partner_code.sql
+[0m07:53:01  
+[0m07:53:01  Done. PASS=9 WARN=0 ERROR=1 SKIP=0 NO-OP=0 REUSED=0 TOTAL=10

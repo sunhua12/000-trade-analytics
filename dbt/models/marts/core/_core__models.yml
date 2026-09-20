@@ -1,26 +1,197 @@
 version: 2
-
 models:
-  - name: dim_months
-    description: "2023 年至 2024 年的完整月份日曆，每月一列。"
-    columns:
-      - name: month_start_date
-        description: "每月第一天，也是月份主鍵。"
-        data_tests:
-          - not_null
-          - unique
-
-      - name: period
-        description: "YYYYMM 格式的月份代碼。"
-        data_tests:
-          - not_null
-          - unique
-
-      - name: year_number
-        description: "西元年份。"
-
-      - name: month_number
-        description: "月份數字，範圍為 1 至 12。"
-
-      - name: month_end_date
-        description: "當月最後一天。"
+- name: dim_months
+  description: 2023 年至 2024 年的完整月份日曆，每月一列。
+  columns:
+  - name: month_start_date
+    description: 每月第一天，也是月份主鍵。
+    data_tests:
+    - not_null
+    - unique
+  - name: period
+    description: YYYYMM 格式的月份代碼。
+    data_tests:
+    - not_null
+    - unique
+  - name: year_number
+    description: 西元年份。
+  - name: month_number
+    description: 月份數字，範圍為 1 至 12。
+  - name: month_end_date
+    description: 當月最後一天。
+- name: dim_countries
+  description: 本次使用的全部夥伴類型；單一夥伴經濟體包含國家及地區，不是主權國家清單。
+  columns:
+  - name: partner_code
+    description: 來源夥伴代碼；字串格式與 staging 一致。
+    data_tests:
+    - not_null
+    - unique
+  - name: source_name
+    description: source name
+  - name: source_note
+    description: source note
+  - name: source_iso_alpha3
+    description: source iso alpha3
+  - name: source_is_group
+    description: source is group
+  - name: partner_type
+    description: partner type
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values: &id001
+          - country
+          - world
+          - aggregate
+          - special
+          - unknown
+  - name: classification_status
+    description: 夥伴類型審核狀態；與對帳、地圖狀態獨立。
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values: &id002
+          - verified
+          - needs_review
+  - name: map_iso3
+    description: 經 M49 交叉核對之 ISO；空值表示尚無映射，地圖幾何覆蓋另驗。
+  - name: reconciliation_role
+    description: 對帳集合角色；unresolved 不可直接納入正式國家總額。
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values: &id003
+          - detail
+          - overlap
+          - world
+          - unresolved
+  - name: source_url
+    description: source url
+  - name: retrieved_at
+    description: retrieved at
+  - name: classification_source_url
+    description: classification source url
+  - name: classification_note
+    description: classification note
+  - name: mapping_source_url
+    description: mapping source url
+  - name: mapping_note
+    description: mapping note
+- name: dim_hs_codes
+  description: HS 版本與商品碼組合維度；目前 H6／8542。
+  columns:
+  - name: hs_version
+    description: hs version
+    data_tests:
+    - not_null
+  - name: cmd_code
+    description: cmd code
+    data_tests:
+    - not_null
+  - name: hs_description
+    description: hs description
+  - name: code_level
+    description: code level
+    data_tests:
+    - not_null
+  - name: parent_code
+    description: parent code
+  - name: source_url
+    description: source url
+  - name: retrieved_at
+    description: retrieved at
+  data_tests:
+  - compound_unique:
+      arguments:
+        columns:
+        - hs_version
+        - cmd_code
+- name: fct_monthly_semiconductor_imports
+  description: 每月 × 夥伴 × 商品 × HS 版本一列；保留全部非 World 明細及 lineage，未分類總和不是正式國家總額。
+  columns:
+  - name: period
+    description: period
+  - name: period_start_date
+    description: period start date
+    data_tests:
+    - not_null
+  - name: reporter_code
+    description: reporter code
+  - name: partner_code
+    description: 來源夥伴代碼；字串格式與 staging 一致。
+    data_tests:
+    - not_null
+  - name: flow_code
+    description: flow code
+  - name: cmd_code
+    description: cmd code
+    data_tests:
+    - not_null
+  - name: hs_version
+    description: hs version
+    data_tests:
+    - not_null
+  - name: primary_value
+    description: primary value
+  - name: net_weight
+    description: net weight
+  - name: quantity
+    description: quantity
+  - name: ingested_at
+    description: ingested at
+  - name: source_file
+    description: source file
+  - name: checksum
+    description: checksum
+  - name: run_id
+    description: run id
+  - name: revision
+    description: revision
+  - name: source_name
+    description: source name
+  - name: partner_type
+    description: partner type
+    data_tests:
+    - accepted_values:
+        arguments:
+          values: *id001
+  - name: classification_status
+    description: 夥伴類型審核狀態；與對帳、地圖狀態獨立。
+    data_tests:
+    - accepted_values:
+        arguments:
+          values: *id002
+  - name: map_iso3
+    description: 經 M49 交叉核對之 ISO；空值表示尚無映射，地圖幾何覆蓋另驗。
+  - name: reconciliation_role
+    description: 對帳集合角色；unresolved 不可直接納入正式國家總額。
+    data_tests:
+    - accepted_values:
+        arguments:
+          values: *id003
+  - name: hs_description
+    description: hs description
+  - name: country_mapping_found
+    description: country mapping found
+    data_tests:
+    - not_null
+  - name: hs_mapping_found
+    description: hs mapping found
+    data_tests:
+    - not_null
+  - name: month_mapping_found
+    description: month mapping found
+    data_tests:
+    - not_null
+  data_tests:
+  - compound_unique:
+      arguments:
+        columns:
+        - period_start_date
+        - partner_code
+        - cmd_code
+        - hs_version
