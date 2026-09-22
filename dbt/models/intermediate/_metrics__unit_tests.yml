@@ -1,0 +1,639 @@
+version: 2
+unit_tests:
+- name: day09_calendar_growth_and_weights
+  model: int_partner_market_share
+  given:
+  - input: ref('fct_monthly_semiconductor_imports')
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_code: '1'
+      primary_value: 50
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_code: '1'
+      primary_value: 100
+      net_weight: 0
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-04-01'
+      partner_code: '1'
+      primary_value: 120
+      net_weight: -1
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2024-01-01'
+      partner_code: '1'
+      primary_value: 75
+      net_weight: null
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2024-02-01'
+      partner_code: '1'
+      primary_value: 150
+      net_weight: 30
+      partner_type: country
+      classification_status: verified
+  - input: ref('stg_un_comtrade__world_totals')
+    rows:
+    - period_start_date: '2023-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-02-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 200
+    - period_start_date: '2023-04-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 200
+    - period_start_date: '2024-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2024-02-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 200
+  expect:
+    rows:
+    - period_start_date: '2023-01-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.5
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 5
+      market_share_status: ok
+    - period_start_date: '2023-02-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.5
+      mom: 1
+      yoy: null
+      unit_value_usd_per_kg: null
+      market_share_status: ok
+    - period_start_date: '2023-04-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.6
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: null
+      market_share_status: ok
+    - period_start_date: '2024-01-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.75
+      mom: null
+      yoy: 0.5
+      unit_value_usd_per_kg: null
+      market_share_status: ok
+    - period_start_date: '2024-02-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.75
+      mom: 1
+      yoy: 0.5
+      unit_value_usd_per_kg: 5
+      market_share_status: ok
+- name: day09_invalid_denominators_and_zero_current
+  model: int_partner_market_share
+  given:
+  - input: ref('fct_monthly_semiconductor_imports')
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_code: '1'
+      primary_value: 0
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_code: '1'
+      primary_value: 10
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-03-01'
+      partner_code: '1'
+      primary_value: 0
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-04-01'
+      partner_code: '1'
+      primary_value: null
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-05-01'
+      partner_code: '1'
+      primary_value: 10
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-06-01'
+      partner_code: '1'
+      primary_value: 10
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2024-01-01'
+      partner_code: '1'
+      primary_value: 10
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+  - input: ref('stg_un_comtrade__world_totals')
+    rows:
+    - period_start_date: '2023-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-02-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 0
+    - period_start_date: '2023-03-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-04-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-05-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: -1
+    - period_start_date: '2024-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+  expect:
+    rows:
+    - period_start_date: '2023-01-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 0
+      market_share_status: ok
+    - period_start_date: '2023-02-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: null
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 1
+      market_share_status: invalid_world
+    - period_start_date: '2023-03-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0
+      mom: -1
+      yoy: null
+      unit_value_usd_per_kg: 0
+      market_share_status: ok
+    - period_start_date: '2023-04-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: null
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: null
+      market_share_status: missing_value
+    - period_start_date: '2023-05-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: null
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 1
+      market_share_status: invalid_world
+    - period_start_date: '2023-06-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: null
+      mom: 0
+      yoy: null
+      unit_value_usd_per_kg: 1
+      market_share_status: missing_world
+    - period_start_date: '2024-01-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.1
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 1
+      market_share_status: ok
+- name: day09_partner_and_version_isolation
+  model: int_partner_market_share
+  given:
+  - input: ref('fct_monthly_semiconductor_imports')
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_code: '1'
+      primary_value: 20
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_code: '1'
+      primary_value: 30
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_code: '2'
+      primary_value: 10
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H5
+      period_start_date: '2023-01-01'
+      partner_code: '1'
+      primary_value: 200
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+    - cmd_code: '8542'
+      hs_version: H5
+      period_start_date: '2023-02-01'
+      partner_code: '1'
+      primary_value: 100
+      net_weight: 10
+      partner_type: country
+      classification_status: verified
+  - input: ref('stg_un_comtrade__world_totals')
+    rows:
+    - period_start_date: '2023-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-02-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-01-01'
+      cmd_code: '8542'
+      hs_version: H5
+      primary_value: 400
+    - period_start_date: '2023-02-01'
+      cmd_code: '8542'
+      hs_version: H5
+      primary_value: 200
+  expect:
+    rows:
+    - period_start_date: '2023-01-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.2
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 2
+      market_share_status: ok
+    - period_start_date: '2023-02-01'
+      partner_code: '1'
+      hs_version: H6
+      market_share: 0.3
+      mom: 0.5
+      yoy: null
+      unit_value_usd_per_kg: 3
+      market_share_status: ok
+    - period_start_date: '2023-01-01'
+      partner_code: '2'
+      hs_version: H6
+      market_share: 0.1
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 1
+      market_share_status: ok
+    - period_start_date: '2023-01-01'
+      partner_code: '1'
+      hs_version: H5
+      market_share: 0.5
+      mom: null
+      yoy: null
+      unit_value_usd_per_kg: 20
+      market_share_status: ok
+    - period_start_date: '2023-02-01'
+      partner_code: '1'
+      hs_version: H5
+      market_share: 0.5
+      mom: -0.5
+      yoy: null
+      unit_value_usd_per_kg: 10
+      market_share_status: ok
+- name: day09_hhi_hand_calculations_and_coverage
+  model: int_market_concentration_hhi
+  given:
+  - input: ref('int_partner_market_share')
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 60
+      market_share: '0.6'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 40
+      market_share: '0.4'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 60
+      market_share: '0.6'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 20
+      market_share: '0.2'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_type: special
+      classification_status: verified
+      primary_value: 20
+      market_share: '0.2'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_type: aggregate
+      classification_status: verified
+      primary_value: 999
+      market_share: '9.99'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_type: world
+      classification_status: verified
+      primary_value: 100
+      market_share: '1'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      partner_type: unknown
+      classification_status: verified
+      primary_value: 0
+      market_share: '0'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-03-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 99.5
+      market_share: '0.995'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-04-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 99.4
+      market_share: '0.994'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-05-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 101
+      market_share: '1.01'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-06-01'
+      partner_type: special
+      classification_status: verified
+      primary_value: 10
+      market_share: '0.1'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-07-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 10
+      market_share: null
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-08-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 10
+      market_share: null
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-09-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 100
+      market_share: '1'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-09-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: null
+      market_share: null
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-10-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: 110
+      market_share: '1.1'
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-10-01'
+      partner_type: country
+      classification_status: verified
+      primary_value: -10
+      market_share: '-0.1'
+  - input: ref('stg_un_comtrade__world_totals')
+    rows:
+    - period_start_date: '2023-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-02-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-03-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-04-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-05-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-06-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-07-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 0
+    - period_start_date: '2023-09-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-10-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+    - period_start_date: '2023-11-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+  expect:
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      country_coverage: 1
+      hhi_raw: 5200
+      hhi: 5200
+      hhi_status: ok
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-02-01'
+      country_coverage: 0.8
+      hhi_raw: 4000
+      hhi: null
+      hhi_status: insufficient_coverage
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-03-01'
+      country_coverage: 0.995
+      hhi_raw: 9900.25
+      hhi: 9900.25
+      hhi_status: ok
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-04-01'
+      country_coverage: 0.994
+      hhi_raw: 9880.36
+      hhi: null
+      hhi_status: insufficient_coverage
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-05-01'
+      country_coverage: 1.01
+      hhi_raw: 10201
+      hhi: null
+      hhi_status: insufficient_coverage
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-06-01'
+      country_coverage: null
+      hhi_raw: null
+      hhi: null
+      hhi_status: no_countries
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-07-01'
+      country_coverage: null
+      hhi_raw: null
+      hhi: null
+      hhi_status: invalid_world
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-08-01'
+      country_coverage: null
+      hhi_raw: null
+      hhi: null
+      hhi_status: missing_world
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-09-01'
+      country_coverage: 1
+      hhi_raw: 10000
+      hhi: null
+      hhi_status: missing_country_value
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-10-01'
+      country_coverage: 1
+      hhi_raw: 12200
+      hhi: null
+      hhi_status: negative_country_value
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-11-01'
+      country_coverage: null
+      hhi_raw: null
+      hhi: null
+      hhi_status: no_countries
+- name: day09_hhi_unreviewed_country
+  model: int_market_concentration_hhi
+  given:
+  - input: ref('int_partner_market_share')
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      partner_type: country
+      classification_status: needs_review
+      primary_value: 100
+      market_share: 1
+  - input: ref('stg_un_comtrade__world_totals')
+    rows:
+    - period_start_date: '2023-01-01'
+      cmd_code: '8542'
+      hs_version: H6
+      primary_value: 100
+  expect:
+    rows:
+    - cmd_code: '8542'
+      hs_version: H6
+      period_start_date: '2023-01-01'
+      hhi_raw: 10000
+      hhi: null
+      hhi_status: unreviewed_country

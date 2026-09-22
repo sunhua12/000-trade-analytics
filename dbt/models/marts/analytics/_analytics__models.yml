@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: mart_us_semiconductor_supply_chain_candidate
+    description: "Day 9 待驗證分析表，粒度同 fact；保留 lineage、指標與 HHI 可用性。尚未執行 Day 10 對帳／發布 gate，不供正式 Dashboard 使用。月份級 HHI 重複於夥伴列，不可跨夥伴 SUM。"
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [period_start_date, partner_code, cmd_code, hs_version]
+    columns:
+      - name: hhi_status
+        data_tests: [not_null]

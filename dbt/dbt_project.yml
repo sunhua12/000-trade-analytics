@@ -8,6 +8,7 @@ model-paths: ["models"]
 test-paths: ["tests"]
 
 vars:
+  hhi_coverage_tolerance: 0.005
   raw_start_date: '2023-01-01'
   raw_end_date: '2025-01-01'
 

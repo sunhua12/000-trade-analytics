@@ -1,0 +1,4 @@
+17:54:14  Running with dbt=1.12.5
+17:54:15  Registered adapter: bigquery=1.12.1
+17:54:15  Unable to do partial parsing because saved manifest not found. Starting full parse.
+17:54:16  Performance info: dbt/target/perf_info.json

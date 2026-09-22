@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: int_partner_market_share
+    description: "Day 9 夥伴月度指標；保留 fact 全部欄位與 NULL，World 僅作分母。"
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [period_start_date, partner_code, cmd_code, hs_version]
+    columns:
+      - name: primary_value
+        description: "月度進口金額，USD，沿用來源 primary_value。"
+      - name: market_share
+        description: "夥伴金額／同月同商品同版本 World 金額；比例 0～1，非百分數。"
+      - name: market_share_status
+        description: "分母缺失、非正值或金額缺失原因；品質阻擋由 Day 10 實作。"
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [ok, missing_world, invalid_world, missing_value]
+      - name: previous_month_value
+        description: "同夥伴、商品及版本的上一日曆月金額；缺月保持 NULL。"
+      - name: previous_year_value
+        description: "同夥伴、商品及版本的去年同月金額；缺月保持 NULL。"
+      - name: mom
+        description: "本月／上一日曆月 − 1；前期缺值或非正值為 NULL，比例值。"
+      - name: yoy
+        description: "本月／去年同月 − 1；前期缺值或非正值為 NULL，比例值。"
+      - name: unit_value_usd_per_kg
+        description: "primary_value／net_weight，僅淨重 > 0 時計算；USD/kg，不是晶片單顆售價。"
+  - name: int_market_concentration_hhi
+    description: "每月、商品及 HS 版本一列，World 為分母；也保留只有 World 或只有明細的月份。"
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [period_start_date, cmd_code, hs_version]
+    columns:
+      - name: country_value
+        description: "僅 partner_type=country 的金額合計；不將缺少國家或缺值補零。"
+      - name: country_coverage
+        description: "國家金額／World；特殊、World、群組與未知代碼不算國家。"
+      - name: hhi_raw
+        description: "SUM((country market_share × 100)^2)，供內部稽核；可能因缺值、覆蓋不足或異常金額而不完整。"
+      - name: hhi
+        description: "僅 hhi_status=ok 時提供的 HHI；覆蓋差距絕對值 ≤ hhi_coverage_tolerance，預設 0.005。未重新正規化或裁切數值。"
+      - name: hhi_status
+        description: "HHI 可用性；未審國家、缺少或負國家金額均不提供正式顯示值。"
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [ok, missing_world, invalid_world, no_countries, missing_country_value, negative_country_value, unreviewed_country, insufficient_coverage]
