@@ -1,0 +1,2045 @@
+{
+  "started_at": "2026-09-20T07:50:44.308637+00:00",
+  "dbt_runs": [
+    {
+      "label": "dev-seed",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "seed.trade_analytics.hs_code_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "seed.trade_analytics.country_reference",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "dev-seed-tests",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "test.trade_analytics.compound_unique_hs_code_reference_hs_version__cmd_code.976acd33d1",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_classification_status__verified__needs_review.b4cccb377f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved.38d5adf5ed",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown.f74cc33683",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_note.f8cee3453a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_status.30407ab873",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_code.98974922a4",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_type.d12941e040",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_reconciliation_role.0c659f9d49",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_retrieved_at.6c4ab211c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_name.cc9241cec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_url.89b09eb7b5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_cmd_code.14c6b02f68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_code_level.7242f6ebe9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_version.c45a7f2c27",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_description.20a4746a68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_parent_code.6a77f4314a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_retrieved_at.404d21a8ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_source_url.2fffd7a83e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_country_reference_partner_code.13103b8380",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "dev-build",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__world_totals",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__partner_trades",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.dim_months",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_world_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_january_2023_exists",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_partner_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "seed.trade_analytics.country_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_month_spine_complete",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_matches_raw",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "seed.trade_analytics.hs_code_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_month_start_date.4f77551339",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_period.38a2f08aeb",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_month_start_date.918fa2b6ec",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_period.07cca867bf",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_classification_status__verified__needs_review.b4cccb377f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown.f74cc33683",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_note.f8cee3453a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved.38d5adf5ed",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_status.30407ab873",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_type.d12941e040",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_reconciliation_role.0c659f9d49",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_code.98974922a4",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_retrieved_at.6c4ab211c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_name.cc9241cec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_url.89b09eb7b5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_country_reference_partner_code.13103b8380",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_hs_code_reference_hs_version__cmd_code.976acd33d1",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_code_level.7242f6ebe9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_cmd_code.14c6b02f68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_description.20a4746a68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_version.c45a7f2c27",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_retrieved_at.404d21a8ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_parent_code.6a77f4314a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_source_url.2fffd7a83e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_countries",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved.2033c6e6ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_classification_status__verified__needs_review.551f9019c3",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown.d718d11b72",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_hs_codes",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_special_partner_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_code.40f3ca3b52",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_classification_status.4dbb8f7d2c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_type.944470be76",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_reconciliation_role.ed3e0747b6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_countries_partner_code.946955c0bc",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_dim_hs_codes_hs_version__cmd_code.85d846d56c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_hs_reference_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_code_level.13e89bcc7c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_cmd_code.63a9dc53d5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_hs_version.bc2859eb5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_observed_at.b11254e23e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_issue_type.2dc6b456c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_partner_code.ab28fe8c07",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_missing_country_audited",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown.4b35d2d6ab",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review.32289b4ab7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved.08690c4f23",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_country_mapping_found.b3d3bd75db",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_cmd_code.baf1d38a2f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version.ab3bce9a5b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_mapping_found.1f6cf90228",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_version.8fafa61a5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_partner_code.802540c135",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_month_mapping_found.d37975743b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_period_start_date.812bcb0ed8",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "dev-rebuild",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__world_totals",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__partner_trades",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.dim_months",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_january_2023_exists",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_partner_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "seed.trade_analytics.hs_code_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_matches_raw",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_world_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "seed.trade_analytics.country_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_month_start_date.4f77551339",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_month_spine_complete",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_period.38a2f08aeb",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_month_start_date.918fa2b6ec",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_period.07cca867bf",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_cmd_code.14c6b02f68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_hs_code_reference_hs_version__cmd_code.976acd33d1",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_code_level.7242f6ebe9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_parent_code.6a77f4314a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_version.c45a7f2c27",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_description.20a4746a68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_retrieved_at.404d21a8ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_source_url.2fffd7a83e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_classification_status__verified__needs_review.b4cccb377f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown.f74cc33683",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved.38d5adf5ed",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_status.30407ab873",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_note.f8cee3453a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_code.98974922a4",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_type.d12941e040",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_reconciliation_role.0c659f9d49",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_retrieved_at.6c4ab211c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_name.cc9241cec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_url.89b09eb7b5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_country_reference_partner_code.13103b8380",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_hs_codes",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.dim_countries",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_hs_reference_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_dim_hs_codes_hs_version__cmd_code.85d846d56c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_cmd_code.63a9dc53d5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_hs_version.bc2859eb5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_code_level.13e89bcc7c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_classification_status__verified__needs_review.551f9019c3",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown.d718d11b72",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_classification_status.4dbb8f7d2c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved.2033c6e6ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_code.40f3ca3b52",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_special_partner_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_countries_partner_code.946955c0bc",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_type.944470be76",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_reconciliation_role.ed3e0747b6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_issue_type.2dc6b456c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_partner_code.ab28fe8c07",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_observed_at.b11254e23e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_missing_country_audited",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review.32289b4ab7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved.08690c4f23",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown.4b35d2d6ab",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_cmd_code.baf1d38a2f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version.ab3bce9a5b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_country_mapping_found.b3d3bd75db",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_mapping_found.1f6cf90228",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_version.8fafa61a5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_month_mapping_found.d37975743b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_partner_code.802540c135",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_period_start_date.812bcb0ed8",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-baseline",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__world_totals",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__partner_trades",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_world_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_months",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_january_2023_exists",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_partner_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "seed.trade_analytics.country_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "seed.trade_analytics.hs_code_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_matches_raw",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_month_spine_complete",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_month_start_date.4f77551339",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_period.38a2f08aeb",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_month_start_date.918fa2b6ec",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_period.07cca867bf",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown.f74cc33683",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_classification_status__verified__needs_review.b4cccb377f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved.38d5adf5ed",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_note.f8cee3453a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_status.30407ab873",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_code.98974922a4",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_type.d12941e040",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_reconciliation_role.0c659f9d49",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_url.89b09eb7b5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_name.cc9241cec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_retrieved_at.6c4ab211c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_country_reference_partner_code.13103b8380",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_hs_code_reference_hs_version__cmd_code.976acd33d1",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_cmd_code.14c6b02f68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_code_level.7242f6ebe9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_description.20a4746a68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_version.c45a7f2c27",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_parent_code.6a77f4314a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_retrieved_at.404d21a8ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_source_url.2fffd7a83e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_countries",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.dim_hs_codes",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved.2033c6e6ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown.d718d11b72",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_classification_status__verified__needs_review.551f9019c3",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_special_partner_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_classification_status.4dbb8f7d2c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_code.40f3ca3b52",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_type.944470be76",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_reconciliation_role.ed3e0747b6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_countries_partner_code.946955c0bc",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_dim_hs_codes_hs_version__cmd_code.85d846d56c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_hs_reference_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_cmd_code.63a9dc53d5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_code_level.13e89bcc7c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_hs_version.bc2859eb5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_issue_type.2dc6b456c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_missing_country_audited",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_observed_at.b11254e23e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_partner_code.ab28fe8c07",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review.32289b4ab7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown.4b35d2d6ab",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved.08690c4f23",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version.ab3bce9a5b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_cmd_code.baf1d38a2f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_country_mapping_found.b3d3bd75db",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_mapping_found.1f6cf90228",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_version.8fafa61a5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_month_mapping_found.d37975743b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_partner_code.802540c135",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_period_start_date.812bcb0ed8",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-country-run",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-country-tests",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_missing_country_audited",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-restore-country",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.dim_countries",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-duplicate-country-test",
+      "returncode": 1,
+      "results": [
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved.2033c6e6ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_classification_status__verified__needs_review.551f9019c3",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown.d718d11b72",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_missing_country_audited",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_code.40f3ca3b52",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_special_partner_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_classification_status.4dbb8f7d2c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_type.944470be76",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_reconciliation_role.ed3e0747b6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_countries_partner_code.946955c0bc",
+          "status": "fail",
+          "failures": 1
+        }
+      ]
+    },
+    {
+      "label": "fixture-duplicate-country-run",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-fanout-test",
+      "returncode": 1,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "fail",
+          "failures": 2
+        }
+      ]
+    },
+    {
+      "label": "fixture-restore-country-again",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.dim_countries",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-other-hs-version-run",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-other-hs-version-tests",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-restore-hs",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.dim_hs_codes",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-month-run",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-month-preserved",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-month-detected",
+      "returncode": 1,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "fail",
+          "failures": 67
+        }
+      ]
+    },
+    {
+      "label": "fixture-restore-month",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.dim_months",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-hs-run",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-hs-preserved",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-missing-hs-detected",
+      "returncode": 1,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "fail",
+          "failures": 67
+        }
+      ]
+    },
+    {
+      "label": "fixture-restore-hs",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.dim_hs_codes",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-unreviewed-special-run",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "label": "fixture-unreviewed-special-tests",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "label": "fixture-restored-build",
+      "returncode": 0,
+      "results": [
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__world_totals",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.stg_un_comtrade__partner_trades",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_world_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_months",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_january_2023_exists",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_partner_grain_unique",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "seed.trade_analytics.country_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "seed.trade_analytics.hs_code_reference",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_staging_matches_raw",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_month_spine_complete",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_month_start_date.4f77551339",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_months_period.38a2f08aeb",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_period.07cca867bf",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_months_month_start_date.918fa2b6ec",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_classification_status__verified__needs_review.b4cccb377f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown.f74cc33683",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved.38d5adf5ed",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_note.f8cee3453a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_code.98974922a4",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_classification_status.30407ab873",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_partner_type.d12941e040",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_reconciliation_role.0c659f9d49",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_retrieved_at.6c4ab211c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_name.cc9241cec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_country_reference_partner_code.13103b8380",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_country_reference_source_url.89b09eb7b5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_cmd_code.14c6b02f68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_hs_code_reference_hs_version__cmd_code.976acd33d1",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_code_level.7242f6ebe9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_description.20a4746a68",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_hs_version.c45a7f2c27",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_parent_code.6a77f4314a",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_retrieved_at.404d21a8ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_hs_code_reference_source_url.2fffd7a83e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.dim_countries",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.dim_hs_codes",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved.2033c6e6ee",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_classification_status__verified__needs_review.551f9019c3",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown.d718d11b72",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_special_partner_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_reconciliation_role.ed3e0747b6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_code.40f3ca3b52",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_classification_status.4dbb8f7d2c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_countries_partner_type.944470be76",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.unique_dim_countries_partner_code.946955c0bc",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_hs_reference_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_dim_hs_codes_hs_version__cmd_code.85d846d56c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_cmd_code.63a9dc53d5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_hs_version.bc2859eb5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_dim_hs_codes_code_level.13e89bcc7c",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "model.trade_analytics.audit_partner_mapping_issues",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "model.trade_analytics.fct_monthly_semiconductor_imports",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_issue_type.2dc6b456c7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_observed_at.b11254e23e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_missing_country_audited",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_audit_partner_mapping_issues_partner_code.ab28fe8c07",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review.32289b4ab7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown.4b35d2d6ab",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved.08690c4f23",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version.ab3bce9a5b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_contract",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_cmd_code.baf1d38a2f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.assert_fact_preserves_staging",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_country_mapping_found.b3d3bd75db",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_mapping_found.1f6cf90228",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_hs_version.8fafa61a5f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_month_mapping_found.d37975743b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_period_start_date.812bcb0ed8",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "id": "test.trade_analytics.not_null_fct_monthly_semiconductor_imports_partner_code.802540c135",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "job_id": "eca0143c-c337-4581-8feb-14031004262e",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_analytics_dev.fct_monthly_semiconductor_imports` t ORDER BY period_start_date, partner_code, cmd_code, hs_version",
+      "row_count": 67
+    },
+    {
+      "job_id": "9a42c761-822d-4b2e-accc-8ef291403341",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` t WHERE period_start_date >= DATE '2023-01-01' AND period_start_date < DATE '2025-01-01' ORDER BY row",
+      "row_count": 1
+    },
+    {
+      "job_id": "d9e568d2-85a8-45d7-8804-41645f80e136",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_analytics_dev.fct_monthly_semiconductor_imports` t ORDER BY period_start_date, partner_code, cmd_code, hs_version",
+      "row_count": 67
+    },
+    {
+      "job_id": "0d60d2c4-9278-44c5-8bdf-17e53f59a951",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_analytics_dev.fct_monthly_semiconductor_imports` t ORDER BY period_start_date, partner_code, cmd_code, hs_version",
+      "row_count": 67
+    },
+    {
+      "job_id": "1db90331-40bd-4cdc-a516-66efdd8c3db3",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` t WHERE period_start_date >= DATE '2023-01-01' AND period_start_date < DATE '2025-01-01' ORDER BY row",
+      "row_count": 1
+    },
+    {
+      "job_id": "24786128-bb65-4e16-a1c5-ee01d7eae631",
+      "sql": "SELECT period, COUNT(*) AS row_count, SUM(primary_value) amount, COUNTIF(net_weight IS NULL) null_weights FROM `trade-analytics-508604.trade_analytics_dev.fct_monthly_semiconductor_imports` GROUP BY period",
+      "row_count": 1
+    },
+    {
+      "job_id": "a8979e5b-42dc-47b7-a3f9-7dc1c2c596de",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_dev.audit_partner_mapping_issues` ORDER BY partner_code, issue_type",
+      "row_count": 2
+    },
+    {
+      "job_id": "5aeb27c5-3495-4ab1-b4f7-653904c01fe6",
+      "sql": "CREATE SCHEMA IF NOT EXISTS `trade-analytics-508604.trade_raw_day08_fixture` OPTIONS(location=\"asia-northeast1\")",
+      "row_count": 0
+    },
+    {
+      "job_id": "e55824c8-b412-41b2-a3c9-a46d54ab8208",
+      "sql": "CREATE SCHEMA IF NOT EXISTS `trade-analytics-508604.trade_analytics_day08_fixture` OPTIONS(location=\"asia-northeast1\")",
+      "row_count": 0
+    },
+    {
+      "job_id": "12c74209-7e12-4c88-b161-18ea6c1f5add",
+      "sql": "CREATE OR REPLACE TABLE `trade-analytics-508604.trade_raw_day08_fixture.un_comtrade_partner_detail` AS SELECT * FROM `trade-analytics-508604.trade_raw.un_comtrade_partner_detail` WHERE period_start_date >= DATE \"2023-01-01\" AND period_start_date < DATE \"2025-01-01\"",
+      "row_count": 0
+    },
+    {
+      "job_id": "7fc408b2-6672-431b-8775-da54f3426d37",
+      "sql": "CREATE OR REPLACE TABLE `trade-analytics-508604.trade_raw_day08_fixture.un_comtrade_world_total` AS SELECT * FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` WHERE period_start_date >= DATE \"2023-01-01\" AND period_start_date < DATE \"2025-01-01\"",
+      "row_count": 0
+    },
+    {
+      "job_id": "d6848a57-d20d-462b-bd67-3d5cc2d3d096",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_analytics_day08_fixture.fct_monthly_semiconductor_imports` t ORDER BY period_start_date, partner_code, cmd_code, hs_version",
+      "row_count": 67
+    },
+    {
+      "job_id": "51eded2f-548a-4f23-9110-38cdbeb2be30",
+      "sql": "DELETE FROM `trade-analytics-508604.trade_analytics_day08_fixture.dim_countries` WHERE partner_code = '32'",
+      "row_count": 0
+    },
+    {
+      "job_id": "2cdc2a3c-5c4d-48f3-bb1a-a2cde89a8820",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_day08_fixture.fct_monthly_semiconductor_imports` WHERE partner_code = '32'",
+      "row_count": 1
+    },
+    {
+      "job_id": "7695016a-bd77-4591-935f-f90f67f37f68",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_day08_fixture.audit_partner_mapping_issues` WHERE partner_code = '32' AND issue_type = 'missing_reference'",
+      "row_count": 1
+    },
+    {
+      "job_id": "4b9fd7d3-bfa9-48d4-a54d-d61c4450367c",
+      "sql": "INSERT INTO `trade-analytics-508604.trade_analytics_day08_fixture.dim_countries` SELECT * FROM `trade-analytics-508604.trade_analytics_day08_fixture.dim_countries` WHERE partner_code = '32'",
+      "row_count": 0
+    },
+    {
+      "job_id": "ec217d73-787a-48eb-b40d-c224575dacba",
+      "sql": "INSERT INTO `trade-analytics-508604.trade_analytics_day08_fixture.dim_hs_codes` SELECT 'H5', cmd_code, hs_description, code_level, parent_code, source_url, retrieved_at FROM `trade-analytics-508604.trade_analytics_day08_fixture.dim_hs_codes` WHERE hs_version = 'H6'",
+      "row_count": 0
+    },
+    {
+      "job_id": "5f548302-5d3c-4643-b348-adfa037c2901",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_analytics_day08_fixture.fct_monthly_semiconductor_imports` t ORDER BY period_start_date, partner_code, cmd_code, hs_version",
+      "row_count": 67
+    },
+    {
+      "job_id": "2576c278-fcee-4814-97f8-0133042278be",
+      "sql": "DELETE FROM `trade-analytics-508604.trade_analytics_day08_fixture.dim_months` WHERE month_start_date = DATE '2023-01-01'",
+      "row_count": 0
+    },
+    {
+      "job_id": "d9ce1445-3278-4180-ab31-8cf5a7178040",
+      "sql": "DELETE FROM `trade-analytics-508604.trade_analytics_day08_fixture.dim_hs_codes` WHERE hs_version = 'H6' AND cmd_code = '8542'",
+      "row_count": 0
+    },
+    {
+      "job_id": "634a8a48-9110-4e4d-8ee1-4307eda19cc3",
+      "sql": "INSERT INTO `trade-analytics-508604.trade_raw_day08_fixture.un_comtrade_partner_detail` SELECT * REPLACE('999999' AS partner_code) FROM `trade-analytics-508604.trade_raw_day08_fixture.un_comtrade_partner_detail` WHERE partner_code = '32'",
+      "row_count": 0
+    },
+    {
+      "job_id": "0badf8f5-21c3-4da0-82cc-8302dd4bb654",
+      "sql": "INSERT INTO `trade-analytics-508604.trade_analytics_day08_fixture.dim_countries` SELECT * REPLACE('999999' AS partner_code, 'Unreviewed fixture' AS source_name, 'special' AS partner_type, 'needs_review' AS classification_status, CAST(NULL AS STRING) AS map_iso3, 'unresolved' AS reconciliation_role) FROM `trade-analytics-508604.trade_analytics_day08_fixture.dim_countries` WHERE partner_code = '32'",
+      "row_count": 0
+    },
+    {
+      "job_id": "d8323731-6dbd-43f2-bac7-329291d04f20",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_day08_fixture.fct_monthly_semiconductor_imports` WHERE partner_code = '999999'",
+      "row_count": 1
+    },
+    {
+      "job_id": "648b8420-4516-4d12-ae80-0a6f48a1a7af",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_day08_fixture.audit_partner_mapping_issues` WHERE partner_code = '999999' AND issue_type = 'classification_needs_review'",
+      "row_count": 1
+    },
+    {
+      "job_id": "206b5312-2d48-4a25-8896-5c2fc40b7d6e",
+      "sql": "DELETE FROM `trade-analytics-508604.trade_raw_day08_fixture.un_comtrade_partner_detail` WHERE partner_code = '999999'",
+      "row_count": 0
+    },
+    {
+      "job_id": "b968e378-2b9a-4588-90e7-fbd863fdc178",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_analytics_day08_fixture.fct_monthly_semiconductor_imports` t ORDER BY period_start_date, partner_code, cmd_code, hs_version",
+      "row_count": 67
+    },
+    {
+      "job_id": "aacfcdd2-55db-4f49-b334-a2048412f1f8",
+      "sql": "SELECT TO_JSON_STRING(t) AS row FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` t WHERE period_start_date >= DATE '2023-01-01' AND period_start_date < DATE '2025-01-01' ORDER BY row",
+      "row_count": 1
+    }
+  ],
+  "dev_rebuild_identical": true,
+  "dev_fact_rows": 67,
+  "dev_fact_sha256": "c5bbc8da6ba84b482729829790db7eb55271b6d49d8d2802d39fc20bab5c0529",
+  "finished_at": "2026-09-20T07:55:03.910673+00:00",
+  "dev_amounts": [
+    {
+      "period": "202301",
+      "row_count": 67,
+      "amount": "2799575181",
+      "null_weights": 31
+    }
+  ],
+  "dev_audit": [
+    {
+      "observed_at": "2026-09-20 07:51:20.385932+00:00",
+      "run_id": "day06-partner-202301",
+      "period_start_date": "2023-01-01",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "partner_code": "490",
+      "issue_type": "map_unavailable",
+      "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=partner_detail/revision=1/data.ndjson",
+      "reason": "No verified mapping for S19; retain NULL",
+      "row_count": 1,
+      "primary_value_sum": "630972428"
+    },
+    {
+      "observed_at": "2026-09-20 07:51:20.385932+00:00",
+      "run_id": "day06-partner-202301",
+      "period_start_date": "2023-01-01",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "partner_code": "490",
+      "issue_type": "reconciliation_unresolved",
+      "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=partner_detail/revision=1/data.ndjson",
+      "reason": "Special code under docs/data-contract.md; S19 is not a verified map ISO; reconciliation unresolved",
+      "row_count": 1,
+      "primary_value_sum": "630972428"
+    }
+  ],
+  "world_unchanged": true,
+  "complete": true
+}

@@ -1,0 +1,20 @@
+# Copy to dbt/local/profiles.yml; credentials remain in Application Default Credentials.
+trade_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: trade-analytics-508604
+      dataset: trade_analytics_dev
+      location: asia-northeast1
+      threads: 4
+      job_execution_timeout_seconds: 180
+    fixture:
+      type: bigquery
+      method: oauth
+      project: trade-analytics-508604
+      dataset: trade_analytics_day08_fixture
+      location: asia-northeast1
+      threads: 4
+      job_execution_timeout_seconds: 180

@@ -1,0 +1,33 @@
+version: 2
+models:
+- name: audit_partner_mapping_issues
+  description: 本次 build 的映射問題快照；非追加歷史。一筆交易可能有多種問題，金額不可跨 issue 加總。
+  columns:
+  - name: observed_at
+    description: observed at
+    data_tests:
+    - not_null
+  - name: run_id
+    description: run id
+  - name: period_start_date
+    description: period start date
+  - name: cmd_code
+    description: cmd code
+  - name: hs_version
+    description: hs version
+  - name: partner_code
+    description: 來源夥伴代碼；字串格式與 staging 一致。
+    data_tests:
+    - not_null
+  - name: issue_type
+    description: issue type
+    data_tests:
+    - not_null
+  - name: source_file
+    description: source file
+  - name: reason
+    description: reason
+  - name: row_count
+    description: row count
+  - name: primary_value_sum
+    description: primary value sum

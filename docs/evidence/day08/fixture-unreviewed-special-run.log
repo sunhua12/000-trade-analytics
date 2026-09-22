@@ -1,0 +1,16 @@
+[0m07:54:04  Running with dbt=1.12.5
+[0m07:54:05  Registered adapter: bigquery=1.12.1
+[0m07:54:05  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:54:05  
+[0m07:54:05  Concurrency: 4 threads (target='fixture')
+[0m07:54:05  
+[0m07:54:06  1 of 2 START sql table model trade_analytics_day08_fixture.audit_partner_mapping_issues  [RUN]
+[0m07:54:06  2 of 2 START sql table model trade_analytics_day08_fixture.fct_monthly_semiconductor_imports  [RUN]
+[0m07:54:08  1 of 2 OK created sql table model trade_analytics_day08_fixture.audit_partner_mapping_issues  [[32mCREATE TABLE (5.0 rows, 30.0 KiB processed)[0m in 2.08s]
+[0m07:54:08  2 of 2 OK created sql table model trade_analytics_day08_fixture.fct_monthly_semiconductor_imports  [[32mCREATE TABLE (68.0 rows, 27.0 KiB processed)[0m in 2.08s]
+[0m07:54:08  
+[0m07:54:08  Finished running 2 table models in 0 hours 0 minutes and 3.10 seconds (3.10s).
+[0m07:54:08  
+[0m07:54:08  [32mCompleted successfully[0m
+[0m07:54:08  
+[0m07:54:08  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=2

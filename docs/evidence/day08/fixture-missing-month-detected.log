@@ -1,0 +1,19 @@
+[0m07:53:38  Running with dbt=1.12.5
+[0m07:53:38  Registered adapter: bigquery=1.12.1
+[0m07:53:38  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:53:38  
+[0m07:53:38  Concurrency: 4 threads (target='fixture')
+[0m07:53:38  
+[0m07:53:39  1 of 1 START test assert_fact_contract ......................................... [RUN]
+[0m07:53:40  1 of 1 FAIL 67 assert_fact_contract ............................................ [[31mFAIL 67[0m in 1.00s]
+[0m07:53:40  
+[0m07:53:40  Finished running 1 test in 0 hours 0 minutes and 1.67 seconds (1.67s).
+[0m07:53:40  
+[0m07:53:40  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m07:53:40  
+[0m07:53:40  [[31mERROR[0m]: in test assert_fact_contract (tests/assert_fact_contract.sql)
+[0m07:53:40    Got 67 results, configured to fail if != 0
+[0m07:53:40  
+[0m07:53:40    compiled code at target/compiled/trade_analytics/tests/assert_fact_contract.sql
+[0m07:53:40  
+[0m07:53:40  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1

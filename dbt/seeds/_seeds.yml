@@ -1,0 +1,135 @@
+version: 2
+seeds:
+- name: country_reference
+  description: 版本控制的已審核官方參考快照。
+  config:
+    column_types:
+      partner_code: string
+      source_name: string
+      source_note: string
+      source_iso_alpha3: string
+      source_is_group: boolean
+      partner_type: string
+      classification_status: string
+      map_iso3: string
+      reconciliation_role: string
+      source_url: string
+      retrieved_at: string
+      classification_source_url: string
+      classification_note: string
+      mapping_source_url: string
+      mapping_note: string
+  columns:
+  - name: partner_code
+    description: 來源夥伴代碼；字串格式與 staging 一致。
+    data_tests:
+    - not_null
+    - unique
+  - name: source_name
+    description: source name
+    data_tests:
+    - not_null
+  - name: source_note
+    description: source note
+  - name: source_iso_alpha3
+    description: source iso alpha3
+  - name: source_is_group
+    description: source is group
+  - name: partner_type
+    description: partner type
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - country
+          - world
+          - aggregate
+          - special
+          - unknown
+  - name: classification_status
+    description: 夥伴類型審核狀態；與對帳、地圖狀態獨立。
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - verified
+          - needs_review
+  - name: map_iso3
+    description: 經 M49 交叉核對之 ISO；空值表示尚無映射，地圖幾何覆蓋另驗。
+  - name: reconciliation_role
+    description: 對帳集合角色；unresolved 不可直接納入正式國家總額。
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - detail
+          - overlap
+          - world
+          - unresolved
+  - name: source_url
+    description: source url
+    data_tests:
+    - not_null
+  - name: retrieved_at
+    description: retrieved at
+    data_tests:
+    - not_null
+  - name: classification_source_url
+    description: classification source url
+  - name: classification_note
+    description: classification note
+    data_tests:
+    - not_null
+  - name: mapping_source_url
+    description: mapping source url
+  - name: mapping_note
+    description: mapping note
+- name: hs_code_reference
+  description: 版本控制的已審核官方參考快照。
+  config:
+    column_types:
+      hs_version: string
+      cmd_code: string
+      hs_description: string
+      code_level: int64
+      parent_code: string
+      source_url: string
+      retrieved_at: string
+  columns:
+  - name: hs_version
+    description: hs version
+    data_tests:
+    - not_null
+  - name: cmd_code
+    description: cmd code
+    data_tests:
+    - not_null
+  - name: hs_description
+    description: hs description
+    data_tests:
+    - not_null
+  - name: code_level
+    description: code level
+    data_tests:
+    - not_null
+  - name: parent_code
+    description: parent code
+    data_tests:
+    - not_null
+  - name: source_url
+    description: source url
+    data_tests:
+    - not_null
+  - name: retrieved_at
+    description: retrieved at
+    data_tests:
+    - not_null
+  data_tests:
+  - compound_unique:
+      arguments:
+        columns:
+        - hs_version
+        - cmd_code

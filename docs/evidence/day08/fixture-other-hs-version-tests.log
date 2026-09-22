@@ -1,0 +1,16 @@
+[0m07:53:21  Running with dbt=1.12.5
+[0m07:53:21  Registered adapter: bigquery=1.12.1
+[0m07:53:21  Found 7 models, 61 data tests, 2 seeds, 2 sources, 563 macros
+[0m07:53:21  
+[0m07:53:21  Concurrency: 4 threads (target='fixture')
+[0m07:53:21  
+[0m07:53:22  1 of 2 START test assert_fact_contract ......................................... [RUN]
+[0m07:53:22  2 of 2 START test assert_fact_preserves_staging ................................ [RUN]
+[0m07:53:23  1 of 2 PASS assert_fact_contract ............................................... [[32mPASS[0m in 0.85s]
+[0m07:53:23  2 of 2 PASS assert_fact_preserves_staging ...................................... [[32mPASS[0m in 1.21s]
+[0m07:53:23  
+[0m07:53:23  Finished running 2 data tests in 0 hours 0 minutes and 1.84 seconds (1.84s).
+[0m07:53:23  
+[0m07:53:23  [32mCompleted successfully[0m
+[0m07:53:23  
+[0m07:53:23  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=2
