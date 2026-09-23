@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "name": "first_failure",
+      "run_id": "a600e78ec7-first_failure",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_world",
+        "load_not_verified_world_total",
+        "unavailable_reconciliation",
+        "world_count"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "baseline",
+      "run_id": "a600e78ec7-baseline",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "idempotent_retry",
+      "result": "passed"
+    },
+    {
+      "name": "transaction_rollback_preserves_all_columns",
+      "result": "passed"
+    },
+    {
+      "name": "frozen_candidate_tampering",
+      "result": "passed"
+    },
+    {
+      "name": "other_month",
+      "run_id": "a600e78ec7-other_month",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "revision_removes_partner",
+      "run_id": "a600e78ec7-revision_removes_partner",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "partition_replace_and_old_retry",
+      "result": "passed"
+    },
+    {
+      "name": "missing_audit_and_partition_mismatch",
+      "result": "passed"
+    },
+    {
+      "name": "upstream_failure_persisted",
+      "result": "passed"
+    }
+  ],
+  "prefix": "a600e78ec7",
+  "summary": [
+    {
+      "period": "202302",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "latest_run_id": "a600e78ec7-other_month",
+      "latest_quality_status": "PASS",
+      "reason_codes": [],
+      "latest_tested_at": "2026-09-22 23:53:08.153442+00:00",
+      "published_run_id": "a600e78ec7-other_month",
+      "published_at": "2026-09-22 23:53:10.414000+00:00",
+      "published_quality_status": "PASS",
+      "latest_publish_run_id": "a600e78ec7-revision_removes_partner",
+      "latest_publish_status": "unknown",
+      "latest_attempted_at": "2026-09-22 23:53:54.173811+00:00"
+    },
+    {
+      "period": "202301",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "latest_run_id": "a600e78ec7-revision_removes_partner",
+      "latest_quality_status": "PASS",
+      "reason_codes": [],
+      "latest_tested_at": "2026-09-22 23:53:32.392320+00:00",
+      "published_run_id": "a600e78ec7-revision_removes_partner",
+      "published_at": "2026-09-22 23:53:34.657000+00:00",
+      "published_quality_status": "PASS",
+      "latest_publish_run_id": "a600e78ec7-missing",
+      "latest_publish_status": "unknown",
+      "latest_attempted_at": "2026-09-22 23:53:51.216573+00:00"
+    },
+    {
+      "period": "202303",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "latest_run_id": "a600e78ec7-upstream-59a5e0",
+      "latest_quality_status": "FAIL",
+      "reason_codes": [
+        "upstream_snapshot_failed"
+      ],
+      "latest_tested_at": "2026-09-22 23:53:58.006530+00:00",
+      "published_run_id": null,
+      "published_at": null,
+      "published_quality_status": null,
+      "latest_publish_run_id": null,
+      "latest_publish_status": null,
+      "latest_attempted_at": null
+    }
+  ],
+  "result": "passed"
+}

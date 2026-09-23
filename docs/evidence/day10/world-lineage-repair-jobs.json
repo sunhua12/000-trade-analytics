@@ -1,0 +1,33 @@
+{
+  "observed_at": "2026-09-22T17:00:04.350801+00:00",
+  "jobs": [
+    {
+      "job_id": "0252fde4-97cc-48a2-9de3-5972e7c7d751",
+      "sql": "SELECT TO_JSON_STRING(w) payload FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` w WHERE period_start_date=DATE '2023-01-01'",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "632dac96-6675-40f2-b420-fa33b25f1ef0",
+      "sql": "CREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_published.legacy_world_lineage_backup` AS\nSELECT w.*,CURRENT_TIMESTAMP() backed_up_at FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` w\nWHERE period_start_date=DATE '2023-01-01';",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "df1508b2-017e-4031-9500-70635983bc56",
+      "sql": "BEGIN TRANSACTION;\nASSERT (SELECT COUNT(*)=1 FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` WHERE period_start_date=DATE '2023-01-01') AS 'world_count';\nASSERT (SELECT TO_JSON_STRING(w) FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` w WHERE period_start_date=DATE '2023-01-01')=@before AS 'raw_changed_since_read';\nUPDATE `trade-analytics-508604.trade_raw.un_comtrade_world_total` SET checksum=@checksum,ingested_at=TIMESTAMP(@ingested)\nWHERE period_start_date=DATE '2023-01-01' AND partner_code='0' AND cmd_code='8542' AND hs_version='H6' AND revision=1;\nCOMMIT TRANSACTION;",
+      "parameters": {
+        "before": "{\"period\":\"202301\",\"reporter_code\":\"842\",\"partner_code\":\"0\",\"flow_code\":\"M\",\"cmd_code\":\"8542\",\"hs_version\":\"H6\",\"period_start_date\":\"2023-01-01\",\"primary_value\":2799575181,\"net_weight\":null,\"quantity\":0,\"ingested_at\":\"2026-09-15T07:48:00Z\",\"source_file\":\"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=world_total/revision=1/data.ndjson\",\"checksum\":\"e3b0c442...\",\"run_id\":\"day06-world-202301\",\"revision\":1}",
+        "checksum": "sha256:34823dc02b117e9c1603d45a5e09d3e37a59991a91a9f26fe38093ae5417d235",
+        "ingested": "2026-09-12T12:20:59.992916Z"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "13ebb236-d497-4ac2-9826-871851e9df0f",
+      "sql": "SELECT TO_JSON_STRING(w) payload FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` w WHERE period_start_date=DATE '2023-01-01'",
+      "parameters": {},
+      "result": "success"
+    }
+  ]
+}

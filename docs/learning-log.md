@@ -332,3 +332,22 @@ Day 3 補 H6 與固定維度驗證、版本／商品碼儲存路徑、Decimal �
 202301 的 66 個實際國家／地區覆蓋率約 77.46%，490 仍保留為 special；內部 HHI 為 992.713039409，可顯示 HHI 為 NULL，狀態 insufficient_coverage。資料不足沒有被誤呈現為低集中度。真實資料仍僅一個月，有效 MoM／YoY 與重量值由合成資料驗證。
 
 實作與驗證由 AI 協助完成，未測驗本人理解程度。Day 10 的對帳與正式發布 gate 尚未實作；本次不宣稱 M2 或 M1 已完成。證據保存於 docs/evidence/day09，後續可接續 Day 10。
+
+
+## Day 10：單月對帳、品質 gate 與正式發布
+
+| 項目 | 結果 |
+|---|---|
+| 完成日期 | 2026-09-23（Asia/Taipei） |
+| 分支 | `quality-release` |
+| 實作 | 固定批次、歷次 audit、PASS／WARN／FAIL、交易式發布與品質摘要 |
+| 真實驗收 | 202301，67 列正式發布；明細／World 同為 2,799,575,181，差異 0 |
+| dbt | 92 項成功：11 models、2 seeds、74 data tests、5 unit tests |
+| Python | 173 passed、2 個既有即時 API tests skipped |
+| 隔離驗證 | 36 個不同案例通過，另有 10 個交易複驗案例 |
+| 個人學習工時 | 未提供；未代填 |
+| 完整紀錄 | [操作與設計](day10-quality-publish-record.md)、[證據摘要](evidence/day10-verification.md) |
+
+490 已依官方語意及非群組標記確認為對帳明細，仍保留 special、不提供單一國家地圖、不納入國家 HHI。查驗原檔時發現舊 World checksum 與來源時間不正確，先保存備份，再僅修正這兩欄；其他值與原檔相符。獨立 snapshot attestation 保存真實查詢 job ID，沒有改寫歷史載入 audit。
+
+M2 的單月分析與發布技術驗收完成；不因此將 M1、既有 IaC／載入延後事項或 24 個月覆蓋標記完成。實作及驗證由 AI 協助，未測驗本人理解程度。下一步 Day 11 先回填 3 個月，再擴充至 24 個月。

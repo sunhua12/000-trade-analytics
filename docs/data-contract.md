@@ -105,3 +105,7 @@
 - HHI 與 490 的業務映射留在 Day 8～10 處理，不在 ingestion 靜默刪除。
 
 驗收詳見 [Day 3 驗證紀錄](evidence/day03-verification.md) 與 [真實 API smoke](evidence/day03-smoke.json)。S3 本日使用假 client 測試；真實 AWS 驗收留待 Day 4。
+
+### Day 10 分類與發布補充（2026-09-23）
+
+依 UN Comtrade [490 官方說明](https://uncomtrade.org/docs/taiwan-province-of-china-trade-data/) 及已保存的非群組標記，490 的 `reconciliation_role` 更新為 `detail`。仍為 `special`，地圖 ISO 維持 NULL，不加入 HHI 國家集合；完整判斷見 [Day 10 紀錄](day10-quality-publish-record.md)。原先未確認的對帳角色由此補充取代，國家覆蓋限制仍保留。
