@@ -1,0 +1,19 @@
+version: 2
+sources:
+  - name: publication
+    database: "{{ env_var('DBT_RAW_PROJECT') }}"
+    schema: "{{ var('publication_dataset', 'trade_analytics_published') }}"
+    tables:
+      - name: audit_world_reconciliation
+        description: Publisher-owned append-only reconciliation history with frozen source evidence.
+models:
+  - name: audit_world_reconciliation
+    description: Read-only facade of persistent reconciliation attempts; build never republishes data.
+    columns:
+      - name: run_id
+        data_tests: [not_null, unique]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PASS', 'WARN', 'FAIL']

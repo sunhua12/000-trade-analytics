@@ -1,0 +1,11 @@
+trade_analytics:
+  target: day10
+  outputs:
+    day10:
+      type: bigquery
+      method: oauth
+      project: trade-analytics-508604
+      dataset: trade_analytics_day10_dev
+      location: asia-northeast1
+      threads: 4
+      job_execution_timeout_seconds: 180

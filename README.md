@@ -238,3 +238,7 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 - [Phase 1 Implementation Plan](docs/superpowers/plans/2026-08-28-un-comtrade-preview-ingestion.md)
 - [Lambda Container and S3 Design](docs/superpowers/specs/2026-08-29-lambda-container-s3-ingestion-design.md)
 - [Lambda Container and S3 Implementation Plan](docs/superpowers/plans/2026-08-29-lambda-container-s3-ingestion.md)
+
+### 對帳與正式發布
+
+Day 10 以固定候選批次、追加品質 audit 及交易式分區替換管理正式資料。一般 dbt build 不會發布；只有 PASS／WARN 才能更新正式表，FAIL 保留舊版。來源原檔查驗、操作命令、Dataset 與失敗復原方式見 [對帳與發布操作紀錄](docs/day10-quality-publish-record.md)，實際結果見 [驗收摘要](docs/evidence/day10-verification.md)。

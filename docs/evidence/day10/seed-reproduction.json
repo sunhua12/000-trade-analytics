@@ -1,0 +1,7 @@
+{
+  "result": "passed",
+  "sha256": {
+    "dbt/seeds/country_reference.csv": "ef06b54fe563c8686912dcc36cff741222b38a84ad757e7304f9410ad214a7f9",
+    "dbt/seeds/hs_code_reference.csv": "5a68d70b77335fe138a076944bdca842a78ce1e9ef226000a201fb62f03c2f06"
+  }
+}

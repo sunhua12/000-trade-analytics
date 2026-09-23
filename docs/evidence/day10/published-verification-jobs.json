@@ -1,0 +1,59 @@
+{
+  "observed_at": "2026-09-23T04:55:31.016092+00:00",
+  "jobs": [
+    {
+      "job_id": "b1f22a69-c2e9-491d-879d-52be5ee95224",
+      "sql": "\nWITH published AS (\n SELECT * FROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain` WHERE period_start_date=DATE '2023-01-01'\n), candidate AS (\n SELECT * FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` WHERE candidate_batch_id='real-202301-quality-v1'\n), differences AS (\n (SELECT * EXCEPT(quality_status,published_at,published_run_id) FROM published\n EXCEPT DISTINCT SELECT * FROM candidate)\n UNION ALL\n (SELECT * FROM candidate EXCEPT DISTINCT\n SELECT * EXCEPT(quality_status,published_at,published_run_id) FROM published)\n)\nSELECT (SELECT COUNT(*) FROM differences) difference_rows,\n COUNT(*) row_count,COUNT(DISTINCT partner_code) partner_count,SUM(primary_value) amount,\n COUNTIF(hhi IS NOT NULL) nonnull_hhi,COUNTIF(mom IS NOT NULL OR yoy IS NOT NULL) nonnull_growth,\n COUNTIF(quality_status!='PASS' OR published_run_id!='real-202301-quality-v1') bad_publication,\n MIN(published_at) published_at,MAX(country_coverage) country_coverage,\n SUM(IF(partner_code='490',primary_value,0)) special_value FROM published\n",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "e4cee154-582c-4401-9087-ff19304ae525",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_published.publication_quality_summary` WHERE period='202301'",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "6c399fa8-d3de-4857-8ccd-ea151be18727",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_published.audit_world_reconciliation` WHERE run_id='real-202301-quality-v1'",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "96e657bc-e08d-4e5f-81eb-b2b161dedd6d",
+      "sql": "\nSELECT TO_JSON_STRING(p) row_json FROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain` p\nWHERE period_start_date=DATE '2023-01-01' ORDER BY row_json\n",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "14933aa2-d46e-44df-860d-476049b2629b",
+      "sql": "-- Real scope: 202301 / 8542 / H6. Month-level metrics must not be summed across partners.\nSELECT run_id, status, partner_sum, country_sum, world_total, difference,\n       difference_rate, country_coverage, reason_codes, tested_at, audit_json\nFROM `trade-analytics-508604.trade_analytics_published.audit_world_reconciliation`\nWHERE period='202301' AND cmd_code='8542' AND hs_version='H6'",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "646318ed-cfe8-4542-bb4f-7ff4bcc4c0f7",
+      "sql": "\n\nSELECT partner_code, source_name, primary_value, market_share, mom, yoy,\n       CASE WHEN previous_month_value IS NULL THEN 'missing_prior_month'\n            WHEN previous_month_value<=0 THEN 'invalid_prior_value' ELSE 'ok' END mom_reason,\n       CASE WHEN previous_year_value IS NULL THEN 'missing_prior_year'\n            WHEN previous_year_value<=0 THEN 'invalid_prior_value' ELSE 'ok' END yoy_reason,\n       unit_value_usd_per_kg,\n       CASE WHEN net_weight IS NULL THEN 'missing_weight'\n            WHEN net_weight<=0 THEN 'invalid_weight' ELSE 'ok' END unit_value_status,\n       quality_status, published_at\nFROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain`\nWHERE period_start_date=DATE '2023-01-01' AND partner_type='country'\nORDER BY primary_value DESC LIMIT 10",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "c4987d3d-c815-4a69-a270-719ee168a9c8",
+      "sql": "\n\nSELECT DISTINCT period, country_coverage, hhi_raw, hhi, hhi_status\nFROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain`\nWHERE period_start_date=DATE '2023-01-01'",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "1e047290-9393-46d7-902b-6f4d9353d500",
+      "sql": "\n\nSELECT partner_code, source_name, partner_type, reconciliation_role,\n       primary_value, map_iso3, checksum, source_file, run_id, revision\nFROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain`\nWHERE period_start_date=DATE '2023-01-01' AND partner_code='490'",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "d11f23e3-1f8e-4be5-be35-398101f9a19c",
+      "sql": "\n\nSELECT *\nFROM `trade-analytics-508604.trade_analytics_published.publication_quality_summary`\nWHERE period='202301'",
+      "parameters": {},
+      "result": "success"
+    }
+  ]
+}

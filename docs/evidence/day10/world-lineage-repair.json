@@ -1,0 +1,65 @@
+{
+  "before": {
+    "period": "202301",
+    "reporter_code": "842",
+    "partner_code": "0",
+    "flow_code": "M",
+    "cmd_code": "8542",
+    "hs_version": "H6",
+    "period_start_date": "2023-01-01",
+    "primary_value": 2799575181,
+    "net_weight": null,
+    "quantity": 0,
+    "ingested_at": "2026-09-15T07:48:00Z",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=world_total/revision=1/data.ndjson",
+    "checksum": "e3b0c442...",
+    "run_id": "day06-world-202301",
+    "revision": 1
+  },
+  "after": {
+    "period": "202301",
+    "reporter_code": "842",
+    "partner_code": "0",
+    "flow_code": "M",
+    "cmd_code": "8542",
+    "hs_version": "H6",
+    "period_start_date": "2023-01-01",
+    "primary_value": 2799575181,
+    "net_weight": null,
+    "quantity": 0,
+    "ingested_at": "2026-09-12T12:20:59.992916Z",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=world_total/revision=1/data.ndjson",
+    "checksum": "sha256:34823dc02b117e9c1603d45a5e09d3e37a59991a91a9f26fe38093ae5417d235",
+    "run_id": "day06-world-202301",
+    "revision": 1
+  },
+  "manifest": {
+    "checksum": "sha256:34823dc02b117e9c1603d45a5e09d3e37a59991a91a9f26fe38093ae5417d235",
+    "cmd_code": "8542",
+    "hs_version": "H6",
+    "ingested_at": "2026-09-12T12:20:59.992916Z",
+    "period": "202301",
+    "primary_value_sum": "2799575181",
+    "query_type": "world_total",
+    "request_parameters": {
+      "cmdCode": "8542",
+      "customsCode": "C00",
+      "flowCode": "M",
+      "motCode": 0,
+      "partner2Code": 0,
+      "partnerCode": 0,
+      "period": "202301",
+      "reporterCode": 842
+    },
+    "revision": 1,
+    "row_count": 1,
+    "schema_version": "2.0.0",
+    "source": "UN Comtrade Preview API"
+  },
+  "backup_table": "`trade-analytics-508604.trade_analytics_published.legacy_world_lineage_backup`",
+  "changed_columns": [
+    "checksum",
+    "ingested_at"
+  ],
+  "result": "passed"
+}

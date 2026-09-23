@@ -101,7 +101,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [ ] | Day 7 | dbt source、staging、型別轉換 | 建立 dbt project、source、兩個 staging models、日期 spine 與 model descriptions | 開發 Dataset 可 build；日期、金額、代碼與 metadata 正確 |
 | [ ] | Day 8 | 維度與事實表、國家代碼 | 建立國家 seed／dimension、HS dimension、fact；標示 World、國家與特殊代碼 | fact grain 唯一；未對應資料可追查，不靜默丟棄 |
 | [x] | Day 9 | SQL 指標、window function | 完成金額、市占率、MoM、YoY、HHI 與有效重量單位價值；補固定資料測試 | 手算結果一致；缺月、缺分母及 0 分母處理正確；見 [驗收紀錄](day09-metrics-record.md) |
-| [ ] | Day 10 | 對帳、PASS／WARN／FAIL、發布門檻 | 建立 audit model 與品質 gate；展示單月完整分析 SQL | 真實單月對帳可追溯；人工異常 fixture 能阻擋發布；里程碑 M2 |
+| [x] | Day 10 | 對帳、PASS／WARN／FAIL、發布門檻 | 建立 audit model 與品質 gate；展示單月完整分析 SQL | 真實單月已發布；異常 fixture 阻擋與回滾驗證通過；M2 技術驗收，見 [紀錄](day10-quality-publish-record.md) |
 | [ ] | Day 11 | 小批次回填、覆蓋率與資料修訂 | 先跑 3 個月，再完成 24 個月；核對每月兩類資料、版本與品質狀態 | 月份覆蓋清單完整；無靜默漏月；異常月份附原因 |
 | [ ] | Day 12 | Streamlit 查詢、參數化 SQL、快取 | 建立 Dashboard 篩選、趨勢、Top N 與品質摘要；先使用已驗證 mart | 篩選生效；查詢有日期限制；空結果不 crash |
 | [ ] | Day 13 | 視覺化與指標解讀 | 完成來源國圖表、YoY／HHI、資料新鮮度；依資料可用性加入地圖與散佈圖 | 本機展示完整；列出 3 項有數據支持的觀察與限制；里程碑 M3 |

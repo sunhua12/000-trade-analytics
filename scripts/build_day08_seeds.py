@@ -87,7 +87,7 @@ REVIEWED = [
 
 def write_csv(name, rows):
     with (ROOT / "dbt/seeds" / name).open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -139,6 +139,8 @@ def main():
         ordinary = code in REVIEWED
         if ordinary:
             assert not r["isGroup"] and iso in m49
+        if code == "490":
+            assert not r["isGroup"], "490 reconciliation decision requires non-group reference"
         kind = "country" if ordinary else ("world" if code == "0" else "special")
         note = (
             "Reviewed single partner economy; includes countries and territories; M49 name: "
@@ -148,7 +150,8 @@ def main():
                 "Global total; separate from partner detail"
                 if code == "0"
                 else "Special code under docs/data-contract.md; "
-                "S19 is not a verified map ISO; reconciliation unresolved"
+                "Residual partner detail per UN Comtrade Taiwan FAQ; "
+                "not an overlapping Asia total; S19 has no verified map ISO"
             )
         )
         rows.append(
@@ -163,10 +166,17 @@ def main():
                 map_iso3=iso if ordinary else "",
                 reconciliation_role="detail"
                 if ordinary
-                else ("world" if code == "0" else "unresolved"),
+                else ("world" if code == "0" else "detail"),
                 source_url=PARTNER_URL,
                 retrieved_at=retrieved["partnerAreas.json"],
-                classification_source_url=PARTNER_URL + (" ; " + M49_URL if ordinary else ""),
+                classification_source_url=PARTNER_URL
+                + (
+                    " ; " + M49_URL
+                    if ordinary
+                    else " ; https://uncomtrade.org/docs/taiwan-province-of-china-trade-data/"
+                    if code == "490"
+                    else ""
+                ),
                 classification_note=note,
                 mapping_source_url=M49_URL if ordinary else "",
                 mapping_note=(

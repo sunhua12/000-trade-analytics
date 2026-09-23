@@ -1,0 +1,96 @@
+{
+  "observed_at": "2026-09-22T16:59:50.811476+00:00",
+  "jobs": [
+    {
+      "job_id": "dd6570cb-be10-405c-8dfb-c0b57c2c900b",
+      "sql": "CREATE SCHEMA IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_inputs_fixture` OPTIONS(location='asia-northeast1')",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "dee0640b-db4c-4306-963e-01a55cf4adf1",
+      "sql": "CREATE OR REPLACE TABLE `trade-analytics-508604.trade_analytics_day10_inputs_fixture.mart_us_semiconductor_supply_chain_candidate` AS SELECT * FROM `trade-analytics-508604.trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate` WHERE FALSE",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "b77bf691-2974-4f9a-af5b-2024e8a0ac4b",
+      "sql": "CREATE OR REPLACE TABLE `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_partner_detail` AS SELECT * FROM `trade-analytics-508604.trade_raw.un_comtrade_partner_detail` WHERE period_start_date=DATE '2023-01-01' AND FALSE",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "63a741cb-284c-47a7-b774-fcc0b66b0d5f",
+      "sql": "CREATE OR REPLACE TABLE `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_world_total` AS SELECT * FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` WHERE period_start_date=DATE '2023-01-01' AND FALSE",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "b0511a18-9cda-4031-82f9-526bb9e3a2d3",
+      "sql": "CREATE OR REPLACE TABLE `trade-analytics-508604.trade_analytics_day10_inputs_fixture.audit_ingestion_runs` AS SELECT * FROM `trade-analytics-508604.trade_raw.audit_ingestion_runs` WHERE FALSE",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "bd833e9f-feed-4493-8598-5d98bb79d47f",
+      "sql": "\nCREATE SCHEMA IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture` OPTIONS(location='asia-northeast1');\nCREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture.candidate_batches`\nPARTITION BY period_start_date CLUSTER BY candidate_batch_id AS\nSELECT c.*, CAST(NULL AS STRING) candidate_batch_id FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.mart_us_semiconductor_supply_chain_candidate` c WHERE FALSE;\nCREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture.source_attestations` (attestation_json STRING, verified_at TIMESTAMP);\nCREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture.batch_inputs` (\n candidate_batch_id STRING, period STRING, cmd_code STRING, hs_version STRING,\n inputs_json STRING, candidate_hash STRING, frozen_at TIMESTAMP);\nCREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture.quality_audit_history` (\n run_id STRING, candidate_batch_id STRING, period STRING, cmd_code STRING, hs_version STRING,\n status STRING, reason_codes ARRAY<STRING>, audit_json STRING, candidate_hash STRING,\n tested_at TIMESTAMP);\nCREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture.publication_attempts` (\n attempt_id STRING, run_id STRING, period STRING, cmd_code STRING, hs_version STRING,\n publish_status STRING, attempted_at TIMESTAMP);\nCREATE TABLE IF NOT EXISTS `trade-analytics-508604.trade_analytics_day10_publish_fixture.mart_us_semiconductor_supply_chain`\nPARTITION BY period_start_date CLUSTER BY partner_code, cmd_code AS\nSELECT c.*, CAST(NULL AS STRING) quality_status, CAST(NULL AS TIMESTAMP) published_at,\n CAST(NULL AS STRING) published_run_id FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.candidate_batches` c WHERE FALSE;\nCREATE OR REPLACE VIEW `trade-analytics-508604.trade_analytics_day10_publish_fixture.audit_world_reconciliation` AS\nSELECT a.* EXCEPT(audit_json),\n SAFE_CAST(JSON_VALUE(audit_json,'$.partner_sum') AS NUMERIC) partner_sum,\n SAFE_CAST(JSON_VALUE(audit_json,'$.country_sum') AS NUMERIC) country_sum,\n SAFE_CAST(JSON_VALUE(audit_json,'$.world_total') AS NUMERIC) world_total,\n SAFE_CAST(JSON_VALUE(audit_json,'$.difference') AS NUMERIC) difference,\n SAFE_CAST(JSON_VALUE(audit_json,'$.difference_rate') AS NUMERIC) difference_rate,\n SAFE_CAST(JSON_VALUE(audit_json,'$.country_coverage') AS NUMERIC) country_coverage,\n audit_json FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.quality_audit_history` a;\nCREATE OR REPLACE VIEW `trade-analytics-508604.trade_analytics_day10_publish_fixture.publication_quality_summary` AS\nWITH latest AS (\n SELECT * FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.quality_audit_history`\n QUALIFY ROW_NUMBER() OVER(PARTITION BY period,cmd_code,hs_version ORDER BY tested_at DESC,run_id DESC)=1\n), published AS (\n SELECT period,cmd_code,hs_version,ANY_VALUE(published_run_id) published_run_id,\n MAX(published_at) published_at,ANY_VALUE(quality_status) published_quality_status\n FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.mart_us_semiconductor_supply_chain` GROUP BY 1,2,3\n), attempts AS (\n SELECT * FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.publication_attempts`\n QUALIFY ROW_NUMBER() OVER(PARTITION BY period,cmd_code,hs_version ORDER BY attempted_at DESC,attempt_id DESC)=1\n)\nSELECT l.period,l.cmd_code,l.hs_version,l.run_id latest_run_id,l.status latest_quality_status,\n l.reason_codes,l.tested_at latest_tested_at,p.published_run_id,p.published_at,p.published_quality_status,\n a.publish_status latest_publish_status,a.attempted_at latest_attempted_at\nFROM latest l LEFT JOIN published p USING(period,cmd_code,hs_version)\nLEFT JOIN attempts a USING(period,cmd_code,hs_version);\n",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "de440934-9ebb-492a-a4af-b590472bf02f",
+      "sql": "DELETE FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.mart_us_semiconductor_supply_chain` WHERE TRUE",
+      "parameters": {},
+      "result": "success"
+    },
+    {
+      "job_id": "05f00658-a18d-4ccc-864b-7e1b7dcf0f91",
+      "sql": "BEGIN TRANSACTION;\nDELETE FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.mart_us_semiconductor_supply_chain_candidate` WHERE TRUE; INSERT INTO `trade-analytics-508604.trade_analytics_day10_inputs_fixture.mart_us_semiconductor_supply_chain_candidate` SELECT JSON_VALUE(row,'$.period'),CAST(JSON_VALUE(row,'$.period_start_date') AS DATE),JSON_VALUE(row,'$.reporter_code'),JSON_VALUE(row,'$.partner_code'),JSON_VALUE(row,'$.flow_code'),JSON_VALUE(row,'$.cmd_code'),JSON_VALUE(row,'$.hs_version'),CAST(JSON_VALUE(row,'$.primary_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.net_weight') AS NUMERIC),CAST(JSON_VALUE(row,'$.quantity') AS NUMERIC),CAST(JSON_VALUE(row,'$.ingested_at') AS TIMESTAMP),JSON_VALUE(row,'$.source_file'),JSON_VALUE(row,'$.checksum'),JSON_VALUE(row,'$.run_id'),CAST(JSON_VALUE(row,'$.revision') AS INT64),JSON_VALUE(row,'$.source_name'),JSON_VALUE(row,'$.partner_type'),JSON_VALUE(row,'$.classification_status'),JSON_VALUE(row,'$.map_iso3'),JSON_VALUE(row,'$.reconciliation_role'),JSON_VALUE(row,'$.hs_description'),CAST(JSON_VALUE(row,'$.country_mapping_found') AS BOOL),CAST(JSON_VALUE(row,'$.hs_mapping_found') AS BOOL),CAST(JSON_VALUE(row,'$.month_mapping_found') AS BOOL),CAST(JSON_VALUE(row,'$.world_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.market_share') AS NUMERIC),JSON_VALUE(row,'$.market_share_status'),CAST(JSON_VALUE(row,'$.previous_month_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.previous_year_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.mom') AS NUMERIC),CAST(JSON_VALUE(row,'$.yoy') AS NUMERIC),CAST(JSON_VALUE(row,'$.unit_value_usd_per_kg') AS NUMERIC),CAST(JSON_VALUE(row,'$.country_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.country_count') AS INT64),CAST(JSON_VALUE(row,'$.country_coverage') AS NUMERIC),CAST(JSON_VALUE(row,'$.hhi_raw') AS NUMERIC),CAST(JSON_VALUE(row,'$.hhi') AS NUMERIC),JSON_VALUE(row,'$.hhi_status') FROM UNNEST(JSON_QUERY_ARRAY(@inputs,'$.candidate')) row;\nDELETE FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_partner_detail` WHERE TRUE; INSERT INTO `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_partner_detail` SELECT JSON_VALUE(row,'$.period'),JSON_VALUE(row,'$.reporter_code'),JSON_VALUE(row,'$.partner_code'),JSON_VALUE(row,'$.flow_code'),JSON_VALUE(row,'$.cmd_code'),JSON_VALUE(row,'$.hs_version'),CAST(JSON_VALUE(row,'$.period_start_date') AS DATE),CAST(JSON_VALUE(row,'$.primary_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.net_weight') AS NUMERIC),CAST(JSON_VALUE(row,'$.quantity') AS NUMERIC),CAST(JSON_VALUE(row,'$.ingested_at') AS TIMESTAMP),JSON_VALUE(row,'$.source_file'),JSON_VALUE(row,'$.checksum'),JSON_VALUE(row,'$.run_id'),CAST(JSON_VALUE(row,'$.revision') AS INT64) FROM UNNEST(JSON_QUERY_ARRAY(@inputs,'$.detail')) row;\nDELETE FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_world_total` WHERE TRUE; INSERT INTO `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_world_total` SELECT JSON_VALUE(row,'$.period'),JSON_VALUE(row,'$.reporter_code'),JSON_VALUE(row,'$.partner_code'),JSON_VALUE(row,'$.flow_code'),JSON_VALUE(row,'$.cmd_code'),JSON_VALUE(row,'$.hs_version'),CAST(JSON_VALUE(row,'$.period_start_date') AS DATE),CAST(JSON_VALUE(row,'$.primary_value') AS NUMERIC),CAST(JSON_VALUE(row,'$.net_weight') AS NUMERIC),CAST(JSON_VALUE(row,'$.quantity') AS NUMERIC),CAST(JSON_VALUE(row,'$.ingested_at') AS TIMESTAMP),JSON_VALUE(row,'$.source_file'),JSON_VALUE(row,'$.checksum'),JSON_VALUE(row,'$.run_id'),CAST(JSON_VALUE(row,'$.revision') AS INT64) FROM UNNEST(JSON_QUERY_ARRAY(@inputs,'$.world')) row;\nDELETE FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.source_attestations` WHERE TRUE;\nINSERT INTO `trade-analytics-508604.trade_analytics_day10_publish_fixture.source_attestations` SELECT TO_JSON_STRING(row),CURRENT_TIMESTAMP() FROM UNNEST(JSON_QUERY_ARRAY(PARSE_JSON(@inputs),'$.loads')) row;\nCOMMIT TRANSACTION;",
+      "parameters": {
+        "inputs": "{\"candidate\": [{\"period\": \"202302\", \"period_start_date\": \"2023-02-01\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"reporter_code\": \"842\", \"flow_code\": \"M\", \"partner_code\": \"1\", \"primary_value\": \"60\", \"net_weight\": null, \"quantity\": null, \"run_id\": \"fixture-detail\", \"revision\": 1, \"checksum\": \"fixture-detail-sha\", \"source_file\": \"s3://fixture/detail/data.ndjson\", \"ingested_at\": \"2026-01-01T00:00:00Z\", \"partner_type\": \"country\", \"reconciliation_role\": \"detail\", \"classification_status\": \"verified\", \"country_mapping_found\": true, \"hs_mapping_found\": true, \"month_mapping_found\": true, \"map_iso3\": null, \"source_name\": \"Fixture\", \"hs_description\": \"Fixture semiconductor\", \"previous_month_value\": null, \"previous_year_value\": null, \"mom\": null, \"yoy\": null, \"unit_value_usd_per_kg\": null, \"world_value\": null, \"market_share\": null, \"market_share_status\": \"invalid_world\", \"country_value\": \"100\", \"country_count\": 2, \"country_coverage\": null, \"hhi_raw\": null, \"hhi\": null, \"hhi_status\": \"insufficient_coverage\"}, {\"period\": \"202302\", \"period_start_date\": \"2023-02-01\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"reporter_code\": \"842\", \"flow_code\": \"M\", \"partner_code\": \"2\", \"primary_value\": \"40\", \"net_weight\": null, \"quantity\": null, \"run_id\": \"fixture-detail\", \"revision\": 1, \"checksum\": \"fixture-detail-sha\", \"source_file\": \"s3://fixture/detail/data.ndjson\", \"ingested_at\": \"2026-01-01T00:00:00Z\", \"partner_type\": \"country\", \"reconciliation_role\": \"detail\", \"classification_status\": \"verified\", \"country_mapping_found\": true, \"hs_mapping_found\": true, \"month_mapping_found\": true, \"map_iso3\": null, \"source_name\": \"Fixture\", \"hs_description\": \"Fixture semiconductor\", \"previous_month_value\": null, \"previous_year_value\": null, \"mom\": null, \"yoy\": null, \"unit_value_usd_per_kg\": null, \"world_value\": null, \"market_share\": null, \"market_share_status\": \"invalid_world\", \"country_value\": \"100\", \"country_count\": 2, \"country_coverage\": null, \"hhi_raw\": null, \"hhi\": null, \"hhi_status\": \"insufficient_coverage\"}], \"world\": [], \"detail\": [{\"period\": \"202302\", \"period_start_date\": \"2023-02-01\", \"reporter_code\": \"842\", \"partner_code\": \"1\", \"flow_code\": \"M\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"primary_value\": \"60\", \"net_weight\": null, \"quantity\": null, \"ingested_at\": \"2026-01-01T00:00:00Z\", \"source_file\": \"s3://fixture/detail/data.ndjson\", \"checksum\": \"fixture-detail-sha\", \"run_id\": \"fixture-detail\", \"revision\": 1}, {\"period\": \"202302\", \"period_start_date\": \"2023-02-01\", \"reporter_code\": \"842\", \"partner_code\": \"2\", \"flow_code\": \"M\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"primary_value\": \"40\", \"net_weight\": null, \"quantity\": null, \"ingested_at\": \"2026-01-01T00:00:00Z\", \"source_file\": \"s3://fixture/detail/data.ndjson\", \"checksum\": \"fixture-detail-sha\", \"run_id\": \"fixture-detail\", \"revision\": 1}], \"loads\": [{\"period\": \"202302\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"run_id\": \"fixture-detail\", \"revision\": 1, \"checksum\": \"fixture-detail-sha\", \"source_file\": \"s3://fixture/detail/data.ndjson\", \"query_type\": \"partner_detail\", \"status\": \"snapshot_verified\", \"expected_row_count\": 2, \"actual_row_count\": 2, \"expected_primary_value_sum\": \"100\", \"actual_primary_value_sum\": \"100\", \"manifest_file\": \"s3://fixture/detail/manifest.json\", \"source_verification_job_id\": \"synthetic-fixture\", \"snapshot_hash\": \"1defa77295e45dc6ad0989121547ea9520dd3f6ebb69492260c63d692cbae07f\"}]}"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "ea0318e9-7c06-432b-b8cc-3c04a5d229ea",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.quality_audit_history` WHERE run_id=@run_id",
+      "parameters": {
+        "run_id": "a0257f6349-first_failure"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "a91a217a-2bc0-4466-a8a6-4585b72abf3b",
+      "sql": "\nBEGIN TRANSACTION;\nIF NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.batch_inputs` WHERE candidate_batch_id=@run_id) THEN\n INSERT INTO `trade-analytics-508604.trade_analytics_day10_publish_fixture.candidate_batches`\n SELECT c.*,@run_id FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.mart_us_semiconductor_supply_chain_candidate` c WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version;\n INSERT INTO `trade-analytics-508604.trade_analytics_day10_publish_fixture.batch_inputs`\n SELECT @run_id,@period,@cmd_code,@hs_version,\n TO_JSON_STRING(STRUCT(\n  ARRAY(SELECT AS STRUCT c.* EXCEPT(candidate_batch_id) FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.candidate_batches` c WHERE candidate_batch_id=@run_id) AS candidate,\n  ARRAY(SELECT AS STRUCT * FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_partner_detail` WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version) AS detail,\n  ARRAY(SELECT AS STRUCT * FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.un_comtrade_world_total` WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version) AS world,\n  ARRAY(SELECT PARSE_JSON(TO_JSON_STRING(a)) FROM `trade-analytics-508604.trade_analytics_day10_inputs_fixture.audit_ingestion_runs` a\n        WHERE period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version\n        UNION ALL SELECT PARSE_JSON(attestation_json) FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.source_attestations`\n        WHERE JSON_VALUE(attestation_json,'$.period')=@period) AS loads\n  )),\n (SELECT TO_HEX(SHA256(COALESCE(STRING_AGG(TO_JSON_STRING(c),'\\n' ORDER BY TO_JSON_STRING(c)),'')))\n  FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.candidate_batches` c WHERE candidate_batch_id=@run_id),CURRENT_TIMESTAMP();\nEND IF;\nCOMMIT TRANSACTION;\nSELECT * FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.batch_inputs` WHERE candidate_batch_id=@run_id;\n",
+      "parameters": {
+        "run_id": "a0257f6349-first_failure",
+        "period": "202302",
+        "cmd_code": "8542",
+        "hs_version": "H6"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "77084b70-4979-44af-af3b-738b8a8bd876",
+      "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.batch_inputs` WHERE candidate_batch_id=@run_id",
+      "parameters": {
+        "run_id": "a0257f6349-first_failure"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "0fa073b3-255d-4de6-bdfa-4ead6c904744",
+      "sql": "INSERT INTO `trade-analytics-508604.trade_analytics_day10_publish_fixture.quality_audit_history`\nSELECT @run_id,@run_id,@period,@cmd_code,@hs_version,@status,\n JSON_VALUE_ARRAY(@audit,'$.reason_codes'),@audit,@hash,CURRENT_TIMESTAMP()\nWHERE NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_day10_publish_fixture.quality_audit_history` WHERE run_id=@run_id)",
+      "parameters": {
+        "run_id": "a0257f6349-first_failure",
+        "period": "202302",
+        "cmd_code": "8542",
+        "hs_version": "H6",
+        "status": "FAIL",
+        "audit": "{\"accepted_load_events\": [{\"actual_primary_value_sum\": \"100\", \"actual_row_count\": 2, \"checksum\": \"fixture-detail-sha\", \"cmd_code\": \"8542\", \"expected_primary_value_sum\": \"100\", \"expected_row_count\": 2, \"hs_version\": \"H6\", \"manifest_file\": \"s3://fixture/detail/manifest.json\", \"period\": \"202302\", \"query_type\": \"partner_detail\", \"revision\": 1, \"run_id\": \"fixture-detail\", \"snapshot_hash\": \"1defa77295e45dc6ad0989121547ea9520dd3f6ebb69492260c63d692cbae07f\", \"source_file\": \"s3://fixture/detail/data.ndjson\", \"source_verification_job_id\": \"synthetic-fixture\", \"status\": \"snapshot_verified\"}], \"candidate_row_count\": 2, \"cmd_code\": \"8542\", \"country_coverage\": null, \"country_sum\": \"100\", \"detail_row_count\": 2, \"difference\": null, \"difference_rate\": null, \"excluded_overlap_count\": 0, \"excluded_overlap_sum\": null, \"hhi_max_coverage_gap\": \"0.005\", \"hs_version\": \"H6\", \"partner_sum\": \"100\", \"pass_max\": \"0.005\", \"period\": \"202302\", \"period_start_date\": \"2023-02-01\", \"reason_codes\": [\"invalid_world\", \"load_not_verified_world_total\", \"unavailable_reconciliation\", \"world_count\"], \"rule_version\": \"reconciliation-v1\", \"status\": \"FAIL\", \"unresolved_count\": 0, \"warn_max\": \"0.02\", \"world_row_count\": 0, \"world_total\": null}",
+        "hash": "c7ce2d48d313dc0f481cc725653ebc739ad063fa284125477d64269a54772c1f"
+      },
+      "result": "failed"
+    }
+  ]
+}

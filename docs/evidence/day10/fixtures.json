@@ -1,0 +1,362 @@
+{
+  "cases": [
+    {
+      "name": "first_failure",
+      "run_id": "b81a94de77-first_failure",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_world",
+        "load_not_verified_world_total",
+        "unavailable_reconciliation",
+        "world_count"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_100",
+      "run_id": "b81a94de77-boundary_100",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_99.5",
+      "run_id": "b81a94de77-boundary_99.5",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_100.5",
+      "run_id": "b81a94de77-boundary_100.5",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_99.49",
+      "run_id": "b81a94de77-boundary_99.49",
+      "status": "WARN",
+      "reasons": [
+        "reconciliation_warning"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_98",
+      "run_id": "b81a94de77-boundary_98",
+      "status": "WARN",
+      "reasons": [
+        "reconciliation_warning"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_102",
+      "run_id": "b81a94de77-boundary_102",
+      "status": "WARN",
+      "reasons": [
+        "reconciliation_warning"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_97.99",
+      "run_id": "b81a94de77-boundary_97.99",
+      "status": "FAIL",
+      "reasons": [
+        "reconciliation_exceeds_tolerance"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "boundary_102.01",
+      "run_id": "b81a94de77-boundary_102.01",
+      "status": "FAIL",
+      "reasons": [
+        "reconciliation_exceeds_tolerance"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "world_None",
+      "run_id": "b81a94de77-world_None",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_world",
+        "load_not_verified_world_total",
+        "unavailable_reconciliation",
+        "world_count"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "world_0",
+      "run_id": "b81a94de77-world_0",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_world",
+        "unavailable_reconciliation"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "world_-1",
+      "run_id": "b81a94de77-world_-1",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_amount",
+        "invalid_world",
+        "unavailable_reconciliation"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "special_coverage",
+      "run_id": "b81a94de77-special_coverage",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "overlap",
+      "run_id": "b81a94de77-overlap",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "duplicate",
+      "run_id": "b81a94de77-duplicate",
+      "status": "FAIL",
+      "reasons": [
+        "duplicate_candidate",
+        "duplicate_detail",
+        "reconciliation_exceeds_tolerance"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "null_amount",
+      "run_id": "b81a94de77-null_amount",
+      "status": "FAIL",
+      "reasons": [
+        "candidate_metric_contract",
+        "invalid_amount",
+        "missing_lineage_or_key",
+        "unavailable_reconciliation"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "negative",
+      "run_id": "b81a94de77-negative",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_amount",
+        "reconciliation_exceeds_tolerance"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "unresolved",
+      "run_id": "b81a94de77-unresolved",
+      "status": "FAIL",
+      "reasons": [
+        "reconciliation_exceeds_tolerance",
+        "unresolved_reconciliation"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "classification",
+      "run_id": "b81a94de77-classification",
+      "status": "FAIL",
+      "reasons": [
+        "unreviewed_classification"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "wrong_version",
+      "run_id": "b81a94de77-wrong_version",
+      "status": "FAIL",
+      "reasons": [
+        "candidate_metric_contract",
+        "candidate_source_mismatch",
+        "reconciliation_exceeds_tolerance"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "missing_dimension",
+      "run_id": "b81a94de77-missing_dimension",
+      "status": "FAIL",
+      "reasons": [
+        "missing_dimension"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "missing_load",
+      "run_id": "b81a94de77-missing_load",
+      "status": "FAIL",
+      "reasons": [
+        "load_not_verified_partner_detail",
+        "load_not_verified_world_total"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "tampered_share",
+      "run_id": "b81a94de77-tampered_share",
+      "status": "FAIL",
+      "reasons": [
+        "candidate_metric_contract"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "world_duplicate",
+      "run_id": "b81a94de77-world_duplicate",
+      "status": "FAIL",
+      "reasons": [
+        "duplicate_world",
+        "invalid_world",
+        "unavailable_reconciliation",
+        "world_count"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "empty",
+      "run_id": "b81a94de77-empty",
+      "status": "FAIL",
+      "reasons": [
+        "invalid_world",
+        "load_not_verified_partner_detail",
+        "load_not_verified_world_total",
+        "missing_detail",
+        "unavailable_reconciliation",
+        "world_count"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "source_mismatch",
+      "run_id": "b81a94de77-source_mismatch",
+      "status": "FAIL",
+      "reasons": [
+        "candidate_source_mismatch",
+        "load_not_verified_partner_detail"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "stale_attestation",
+      "run_id": "b81a94de77-stale_attestation",
+      "status": "FAIL",
+      "reasons": [
+        "load_not_verified_partner_detail"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "baseline",
+      "run_id": "b81a94de77-baseline",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "idempotent_retry",
+      "result": "passed"
+    },
+    {
+      "name": "transaction_rollback_preserves_all_columns",
+      "result": "passed"
+    },
+    {
+      "name": "frozen_candidate_tampering",
+      "result": "passed"
+    },
+    {
+      "name": "other_month",
+      "run_id": "b81a94de77-other_month",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "revision_removes_partner",
+      "run_id": "b81a94de77-revision_removes_partner",
+      "status": "PASS",
+      "reasons": [],
+      "result": "passed"
+    },
+    {
+      "name": "partition_replace_and_old_retry",
+      "result": "passed"
+    },
+    {
+      "name": "missing_audit_and_partition_mismatch",
+      "result": "passed"
+    },
+    {
+      "name": "upstream_failure_persisted",
+      "result": "passed"
+    }
+  ],
+  "prefix": "b81a94de77",
+  "result": "passed",
+  "summary": [
+    {
+      "period": "202301",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "latest_run_id": "b81a94de77-revision_removes_partner",
+      "latest_quality_status": "PASS",
+      "reason_codes": [],
+      "latest_tested_at": "2026-09-23 04:53:21.671009+00:00",
+      "published_run_id": "b81a94de77-revision_removes_partner",
+      "published_at": "2026-09-23 04:53:33.135000+00:00",
+      "published_quality_status": "PASS",
+      "latest_publish_run_id": "b81a94de77-missing",
+      "latest_publish_status": "unknown",
+      "latest_attempted_at": "2026-09-23 04:54:06.348380+00:00"
+    },
+    {
+      "period": "202302",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "latest_run_id": "b81a94de77-other_month",
+      "latest_quality_status": "PASS",
+      "reason_codes": [],
+      "latest_tested_at": "2026-09-22 23:56:52.015121+00:00",
+      "published_run_id": "b81a94de77-other_month",
+      "published_at": "2026-09-22 23:56:54.619000+00:00",
+      "published_quality_status": "PASS",
+      "latest_publish_run_id": "b81a94de77-revision_removes_partner",
+      "latest_publish_status": "unknown",
+      "latest_attempted_at": "2026-09-23 04:54:10.167631+00:00"
+    },
+    {
+      "period": "202303",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "latest_run_id": "b81a94de77-upstream-636b3b",
+      "latest_quality_status": "FAIL",
+      "reason_codes": [
+        "upstream_snapshot_failed"
+      ],
+      "latest_tested_at": "2026-09-23 04:54:14.730894+00:00",
+      "published_run_id": null,
+      "published_at": null,
+      "published_quality_status": null,
+      "latest_publish_run_id": null,
+      "latest_publish_status": null,
+      "latest_attempted_at": null
+    }
+  ],
+  "unique_case_count": 36
+}
