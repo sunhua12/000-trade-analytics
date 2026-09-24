@@ -1,0 +1,27 @@
+{
+  "verified_at": "2026-09-24T04:31:37.024018+00:00",
+  "job_id": "0e9e27bd-93df-4468-801f-f3f4e1573000",
+  "publication_job_id": "88d4d986-7dc5-4bf4-bdc6-7f1456de9c04",
+  "metrics_job_id": "22741700-38f7-49b7-86f0-9eb8fdfe585d",
+  "publication_integrity": {
+    "difference_rows": 0,
+    "published_rows": 1560,
+    "frozen_rows": 1560,
+    "published_months": 24,
+    "duplicate_grain_rows": 0,
+    "invalid_quality_rows": 0
+  },
+  "metric_summary": {
+    "mom_rows": 1265,
+    "yoy_rows": 641,
+    "unit_value_rows": 1304,
+    "visible_hhi_rows": 0,
+    "max_difference_rate": "0",
+    "min_country_coverage": "0.630106975",
+    "max_country_coverage": "0.829243016"
+  },
+  "months": 24,
+  "status_counts": {
+    "published_pass": 24
+  }
+}

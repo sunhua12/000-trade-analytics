@@ -9,14 +9,18 @@ import subprocess
 import sys
 from datetime import UTC, datetime
 from decimal import Decimal
+from importlib import import_module
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from trade_analytics.warehouse.publish import Publisher
 from trade_analytics.warehouse.quality import partition, source_digest
 
 
-def verify(runner, period, directory, *, download=True):
+def verify(
+    runner: Publisher, period: str, directory: Path, *, download: bool = True
+) -> list[dict[str, Any]]:
     if not __debug__:
         raise RuntimeError("Source verification requires Python assertions enabled")
     scope = partition(period)
@@ -71,7 +75,7 @@ SELECT TO_JSON_STRING(r) payload FROM {runner.table(runner.raw, "un_comtrade_" +
         source = [json.loads(line) for line in data.splitlines() if line.strip()]
         assert 0 < len(source) < 500 and len(source) == len(raw) == manifest["row_count"]
         assert len({r["partnerCode"] for r in source}) == len(source)
-        expected = {}
+        expected: dict[str, dict[str, Decimal | None]] = {}
         for r in source:
             assert all(
                 r.get(k) == v
@@ -94,7 +98,7 @@ SELECT TO_JSON_STRING(r) payload FROM {runner.table(runner.raw, "un_comtrade_" +
                     r["partner_code"],
                     key,
                 )
-        amount_sum = sum((v["primary_value"] for v in expected.values()), Decimal(0))
+        amount_sum = sum((Decimal(str(v["primary_value"])) for v in expected.values()), Decimal(0))
         assert amount_sum == Decimal(manifest["primary_value_sum"])
         item = {
             **{k: scope[k] for k in ("period", "cmd_code", "hs_version")},
@@ -125,8 +129,8 @@ INSERT INTO {runner.table(runner.release, "source_attestations")}
     return report
 
 
-def main():
-    from google.cloud import bigquery
+def main() -> None:
+    bigquery = import_module("google.cloud.bigquery")
 
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--period", required=True)
@@ -135,6 +139,7 @@ def main():
     p.add_argument("--raw", default="trade_raw")
     p.add_argument("--release", default="trade_analytics_published")
     p.add_argument("--source-dir", type=Path, default=Path("data/day10-source"))
+    p.add_argument("--evidence-dir", type=Path, default=Path("docs/evidence/day10"))
     p.add_argument("--use-downloaded-files", action="store_true")
     args = p.parse_args()
     runner = Publisher(
@@ -149,12 +154,13 @@ def main():
         report = verify(
             runner, args.period, args.source_dir, download=not args.use_downloaded_files
         )
-        Path("docs/evidence/day10/source-verification.json").write_text(
+        args.evidence_dir.mkdir(parents=True, exist_ok=True)
+        (args.evidence_dir / "source-verification.json").write_text(
             json.dumps(report, indent=2) + "\n"
         )
         print("Source bytes, manifest and all raw source fields verified")
     finally:
-        runner.save_evidence(Path("docs/evidence/day10/source-verification-jobs.json"))
+        runner.save_evidence(args.evidence_dir / "source-verification-jobs.json")
 
 
 if __name__ == "__main__":

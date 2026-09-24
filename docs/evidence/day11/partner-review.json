@@ -1,0 +1,1053 @@
+[
+  {
+    "partner_code": "8",
+    "source_name": "Albania",
+    "source_is_group": false,
+    "source_iso_alpha3": "ALB",
+    "m49_name": "Albania",
+    "effective_full_period": true,
+    "months": [
+      "202311",
+      "202402",
+      "202403",
+      "202404",
+      "202406",
+      "202407",
+      "202408",
+      "202411"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "20",
+    "source_name": "Andorra",
+    "source_is_group": false,
+    "source_iso_alpha3": "AND",
+    "m49_name": "Andorra",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202304",
+      "202403",
+      "202408"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "50",
+    "source_name": "Bangladesh",
+    "source_is_group": false,
+    "source_iso_alpha3": "BGD",
+    "m49_name": "Bangladesh",
+    "effective_full_period": true,
+    "months": [
+      "202304",
+      "202405"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "51",
+    "source_name": "Armenia",
+    "source_is_group": false,
+    "source_iso_alpha3": "ARM",
+    "m49_name": "Armenia",
+    "effective_full_period": true,
+    "months": [
+      "202408"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "52",
+    "source_name": "Barbados",
+    "source_is_group": false,
+    "source_iso_alpha3": "BRB",
+    "m49_name": "Barbados",
+    "effective_full_period": true,
+    "months": [
+      "202304"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "104",
+    "source_name": "Myanmar",
+    "source_is_group": false,
+    "source_iso_alpha3": "MMR",
+    "m49_name": "Myanmar",
+    "effective_full_period": true,
+    "months": [
+      "202304",
+      "202307",
+      "202312",
+      "202403",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "120",
+    "source_name": "Cameroon",
+    "source_is_group": false,
+    "source_iso_alpha3": "CMR",
+    "m49_name": "Cameroon",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202407",
+      "202411"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "136",
+    "source_name": "Cayman Isds",
+    "source_is_group": false,
+    "source_iso_alpha3": "CYM",
+    "m49_name": "Cayman Islands",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202405",
+      "202407"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "184",
+    "source_name": "Cook Isds",
+    "source_is_group": false,
+    "source_iso_alpha3": "COK",
+    "m49_name": "Cook Islands",
+    "effective_full_period": true,
+    "months": [
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "204",
+    "source_name": "Benin",
+    "source_is_group": false,
+    "source_iso_alpha3": "BEN",
+    "m49_name": "Benin",
+    "effective_full_period": true,
+    "months": [
+      "202401"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "212",
+    "source_name": "Dominica",
+    "source_is_group": false,
+    "source_iso_alpha3": "DMA",
+    "m49_name": "Dominica",
+    "effective_full_period": true,
+    "months": [
+      "202403"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "214",
+    "source_name": "Dominican Rep.",
+    "source_is_group": false,
+    "source_iso_alpha3": "DOM",
+    "m49_name": "Dominican Republic",
+    "effective_full_period": true,
+    "months": [
+      "202305",
+      "202308",
+      "202311",
+      "202312",
+      "202401",
+      "202402"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "218",
+    "source_name": "Ecuador",
+    "source_is_group": false,
+    "source_iso_alpha3": "ECU",
+    "m49_name": "Ecuador",
+    "effective_full_period": true,
+    "months": [
+      "202408",
+      "202409",
+      "202411",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "222",
+    "source_name": "El Salvador",
+    "source_is_group": false,
+    "source_iso_alpha3": "SLV",
+    "m49_name": "El Salvador",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202303",
+      "202305",
+      "202310",
+      "202312",
+      "202403"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "231",
+    "source_name": "Ethiopia",
+    "source_is_group": false,
+    "source_iso_alpha3": "ETH",
+    "m49_name": "Ethiopia",
+    "effective_full_period": true,
+    "months": [
+      "202302"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "242",
+    "source_name": "Fiji",
+    "source_is_group": false,
+    "source_iso_alpha3": "FJI",
+    "m49_name": "Fiji",
+    "effective_full_period": true,
+    "months": [
+      "202410"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "260",
+    "source_name": "Fr. South Antarctic Terr.",
+    "source_is_group": false,
+    "source_iso_alpha3": "ATF",
+    "m49_name": "French Southern Territories",
+    "effective_full_period": true,
+    "months": [
+      "202304",
+      "202305",
+      "202410"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "268",
+    "source_name": "Georgia",
+    "source_is_group": false,
+    "source_iso_alpha3": "GEO",
+    "m49_name": "Georgia",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202407"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "270",
+    "source_name": "Gambia",
+    "source_is_group": false,
+    "source_iso_alpha3": "GMB",
+    "m49_name": "Gambia",
+    "effective_full_period": true,
+    "months": [
+      "202308"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "304",
+    "source_name": "Greenland",
+    "source_is_group": false,
+    "source_iso_alpha3": "GRL",
+    "m49_name": "Greenland",
+    "effective_full_period": true,
+    "months": [
+      "202302"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "324",
+    "source_name": "Guinea",
+    "source_is_group": false,
+    "source_iso_alpha3": "GIN",
+    "m49_name": "Guinea",
+    "effective_full_period": true,
+    "months": [
+      "202304"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "328",
+    "source_name": "Guyana",
+    "source_is_group": false,
+    "source_iso_alpha3": "GUY",
+    "m49_name": "Guyana",
+    "effective_full_period": true,
+    "months": [
+      "202309",
+      "202312"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "340",
+    "source_name": "Honduras",
+    "source_is_group": false,
+    "source_iso_alpha3": "HND",
+    "m49_name": "Honduras",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202310",
+      "202312",
+      "202404",
+      "202405",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202411",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "352",
+    "source_name": "Iceland",
+    "source_is_group": false,
+    "source_iso_alpha3": "ISL",
+    "m49_name": "Iceland",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202304",
+      "202305",
+      "202306",
+      "202308",
+      "202309",
+      "202310",
+      "202312",
+      "202401",
+      "202402",
+      "202404",
+      "202405",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "384",
+    "source_name": "C\u00f4te d'Ivoire",
+    "source_is_group": false,
+    "source_iso_alpha3": "CIV",
+    "m49_name": "C\u00f4te d\u2019Ivoire",
+    "effective_full_period": true,
+    "months": [
+      "202306",
+      "202406"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "388",
+    "source_name": "Jamaica",
+    "source_is_group": false,
+    "source_iso_alpha3": "JAM",
+    "m49_name": "Jamaica",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202311",
+      "202401"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "398",
+    "source_name": "Kazakhstan",
+    "source_is_group": false,
+    "source_iso_alpha3": "KAZ",
+    "m49_name": "Kazakhstan",
+    "effective_full_period": true,
+    "months": [
+      "202311"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "400",
+    "source_name": "Jordan",
+    "source_is_group": false,
+    "source_iso_alpha3": "JOR",
+    "m49_name": "Jordan",
+    "effective_full_period": true,
+    "months": [
+      "202309",
+      "202410"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "428",
+    "source_name": "Latvia",
+    "source_is_group": false,
+    "source_iso_alpha3": "LVA",
+    "m49_name": "Latvia",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202303",
+      "202304",
+      "202305",
+      "202306",
+      "202307",
+      "202309",
+      "202310",
+      "202311",
+      "202312",
+      "202401",
+      "202402",
+      "202403",
+      "202404",
+      "202406",
+      "202407",
+      "202409",
+      "202410",
+      "202411",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "430",
+    "source_name": "Liberia",
+    "source_is_group": false,
+    "source_iso_alpha3": "LBR",
+    "m49_name": "Liberia",
+    "effective_full_period": true,
+    "months": [
+      "202302"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "442",
+    "source_name": "Luxembourg",
+    "source_is_group": false,
+    "source_iso_alpha3": "LUX",
+    "m49_name": "Luxembourg",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202304",
+      "202306",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "446",
+    "source_name": "China, Macao SAR",
+    "source_is_group": false,
+    "source_iso_alpha3": "MAC",
+    "m49_name": "China, Macao Special Administrative Region",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202303",
+      "202304",
+      "202305",
+      "202306",
+      "202309",
+      "202310",
+      "202312",
+      "202403",
+      "202405"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "450",
+    "source_name": "Madagascar",
+    "source_is_group": false,
+    "source_iso_alpha3": "MDG",
+    "m49_name": "Madagascar",
+    "effective_full_period": true,
+    "months": [
+      "202312"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "454",
+    "source_name": "Malawi",
+    "source_is_group": false,
+    "source_iso_alpha3": "MWI",
+    "m49_name": "Malawi",
+    "effective_full_period": true,
+    "months": [
+      "202409"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "462",
+    "source_name": "Maldives",
+    "source_is_group": false,
+    "source_iso_alpha3": "MDV",
+    "m49_name": "Maldives",
+    "effective_full_period": true,
+    "months": [
+      "202411"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "466",
+    "source_name": "Mali",
+    "source_is_group": false,
+    "source_iso_alpha3": "MLI",
+    "m49_name": "Mali",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202304",
+      "202305",
+      "202306",
+      "202307",
+      "202309",
+      "202310",
+      "202311",
+      "202312",
+      "202401",
+      "202403",
+      "202404",
+      "202406",
+      "202407",
+      "202408"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "480",
+    "source_name": "Mauritius",
+    "source_is_group": false,
+    "source_iso_alpha3": "MUS",
+    "m49_name": "Mauritius",
+    "effective_full_period": true,
+    "months": [
+      "202307",
+      "202308",
+      "202310",
+      "202403",
+      "202404",
+      "202408",
+      "202409",
+      "202411"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "500",
+    "source_name": "Montserrat",
+    "source_is_group": false,
+    "source_iso_alpha3": "MSR",
+    "m49_name": "Montserrat",
+    "effective_full_period": true,
+    "months": [
+      "202402"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "508",
+    "source_name": "Mozambique",
+    "source_is_group": false,
+    "source_iso_alpha3": "MOZ",
+    "m49_name": "Mozambique",
+    "effective_full_period": true,
+    "months": [
+      "202304",
+      "202406"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "512",
+    "source_name": "Oman",
+    "source_is_group": false,
+    "source_iso_alpha3": "OMN",
+    "m49_name": "Oman",
+    "effective_full_period": true,
+    "months": [
+      "202407"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "516",
+    "source_name": "Namibia",
+    "source_is_group": false,
+    "source_iso_alpha3": "NAM",
+    "m49_name": "Namibia",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202305",
+      "202310",
+      "202406"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "520",
+    "source_name": "Naoero",
+    "source_is_group": false,
+    "source_iso_alpha3": "NRU",
+    "m49_name": "Naoero",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202311"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "531",
+    "source_name": "Cura\u00e7ao",
+    "source_is_group": false,
+    "source_iso_alpha3": "CUW",
+    "m49_name": "Cura\u00e7ao",
+    "effective_full_period": true,
+    "months": [
+      "202309"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "540",
+    "source_name": "New Caledonia",
+    "source_is_group": false,
+    "source_iso_alpha3": "NCL",
+    "m49_name": "New Caledonia",
+    "effective_full_period": true,
+    "months": [
+      "202407"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "583",
+    "source_name": "FS Micronesia",
+    "source_is_group": false,
+    "source_iso_alpha3": "FSM",
+    "m49_name": "Micronesia (Federated States of)",
+    "effective_full_period": true,
+    "months": [
+      "202401"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "586",
+    "source_name": "Pakistan",
+    "source_is_group": false,
+    "source_iso_alpha3": "PAK",
+    "m49_name": "Pakistan",
+    "effective_full_period": true,
+    "months": [
+      "202312"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "591",
+    "source_name": "Panama",
+    "source_is_group": false,
+    "source_iso_alpha3": "PAN",
+    "m49_name": "Panama",
+    "effective_full_period": true,
+    "months": [
+      "202305",
+      "202309",
+      "202311",
+      "202401",
+      "202402",
+      "202405",
+      "202408",
+      "202409"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "604",
+    "source_name": "Peru",
+    "source_is_group": false,
+    "source_iso_alpha3": "PER",
+    "m49_name": "Peru",
+    "effective_full_period": true,
+    "months": [
+      "202403",
+      "202407"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "626",
+    "source_name": "Timor-Leste",
+    "source_is_group": false,
+    "source_iso_alpha3": "TLS",
+    "m49_name": "Timor-Leste",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202308",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "646",
+    "source_name": "Rwanda",
+    "source_is_group": false,
+    "source_iso_alpha3": "RWA",
+    "m49_name": "Rwanda",
+    "effective_full_period": true,
+    "months": [
+      "202302"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "654",
+    "source_name": "Saint Helena",
+    "source_is_group": false,
+    "source_iso_alpha3": "SHN",
+    "m49_name": "Saint Helena",
+    "effective_full_period": true,
+    "months": [
+      "202307"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "659",
+    "source_name": "Saint Kitts and Nevis",
+    "source_is_group": false,
+    "source_iso_alpha3": "KNA",
+    "m49_name": "Saint Kitts and Nevis",
+    "effective_full_period": true,
+    "months": [
+      "202406"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "662",
+    "source_name": "Saint Lucia",
+    "source_is_group": false,
+    "source_iso_alpha3": "LCA",
+    "m49_name": "Saint Lucia",
+    "effective_full_period": true,
+    "months": [
+      "202308",
+      "202404"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "674",
+    "source_name": "San Marino",
+    "source_is_group": false,
+    "source_iso_alpha3": "SMR",
+    "m49_name": "San Marino",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202311",
+      "202401",
+      "202404"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "678",
+    "source_name": "Sao Tome and Principe",
+    "source_is_group": false,
+    "source_iso_alpha3": "STP",
+    "m49_name": "Sao Tome and Principe",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202303"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "688",
+    "source_name": "Serbia",
+    "source_is_group": false,
+    "source_iso_alpha3": "SRB",
+    "m49_name": "Serbia",
+    "effective_full_period": true,
+    "months": [
+      "202304",
+      "202306",
+      "202307",
+      "202310",
+      "202401",
+      "202402",
+      "202403",
+      "202404",
+      "202405",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "690",
+    "source_name": "Seychelles",
+    "source_is_group": false,
+    "source_iso_alpha3": "SYC",
+    "m49_name": "Seychelles",
+    "effective_full_period": true,
+    "months": [
+      "202307"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "694",
+    "source_name": "Sierra Leone",
+    "source_is_group": false,
+    "source_iso_alpha3": "SLE",
+    "m49_name": "Sierra Leone",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202307",
+      "202309"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "748",
+    "source_name": "Eswatini",
+    "source_is_group": false,
+    "source_iso_alpha3": "SWZ",
+    "m49_name": "Eswatini",
+    "effective_full_period": true,
+    "months": [
+      "202312"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "762",
+    "source_name": "Tajikistan",
+    "source_is_group": false,
+    "source_iso_alpha3": "TJK",
+    "m49_name": "Tajikistan",
+    "effective_full_period": true,
+    "months": [
+      "202308",
+      "202408"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "768",
+    "source_name": "Togo",
+    "source_is_group": false,
+    "source_iso_alpha3": "TGO",
+    "m49_name": "Togo",
+    "effective_full_period": true,
+    "months": [
+      "202310"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "776",
+    "source_name": "Tonga",
+    "source_is_group": false,
+    "source_iso_alpha3": "TON",
+    "m49_name": "Tonga",
+    "effective_full_period": true,
+    "months": [
+      "202307"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "788",
+    "source_name": "Tunisia",
+    "source_is_group": false,
+    "source_iso_alpha3": "TUN",
+    "m49_name": "Tunisia",
+    "effective_full_period": true,
+    "months": [
+      "202303",
+      "202305",
+      "202307",
+      "202308",
+      "202309",
+      "202310",
+      "202404",
+      "202405",
+      "202406"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "796",
+    "source_name": "Turks and Caicos Isds",
+    "source_is_group": false,
+    "source_iso_alpha3": "TCA",
+    "m49_name": "Turks and Caicos Islands",
+    "effective_full_period": true,
+    "months": [
+      "202408"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "798",
+    "source_name": "Tuvalu",
+    "source_is_group": false,
+    "source_iso_alpha3": "TUV",
+    "m49_name": "Tuvalu",
+    "effective_full_period": true,
+    "months": [
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "800",
+    "source_name": "Uganda",
+    "source_is_group": false,
+    "source_iso_alpha3": "UGA",
+    "m49_name": "Uganda",
+    "effective_full_period": true,
+    "months": [
+      "202403",
+      "202408",
+      "202409"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "804",
+    "source_name": "Ukraine",
+    "source_is_group": false,
+    "source_iso_alpha3": "UKR",
+    "m49_name": "Ukraine",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202303",
+      "202304"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "818",
+    "source_name": "Egypt",
+    "source_is_group": false,
+    "source_iso_alpha3": "EGY",
+    "m49_name": "Egypt",
+    "effective_full_period": true,
+    "months": [
+      "202312"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "858",
+    "source_name": "Uruguay",
+    "source_is_group": false,
+    "source_iso_alpha3": "URY",
+    "m49_name": "Uruguay",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202402"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "860",
+    "source_name": "Uzbekistan",
+    "source_is_group": false,
+    "source_iso_alpha3": "UZB",
+    "m49_name": "Uzbekistan",
+    "effective_full_period": true,
+    "months": [
+      "202406",
+      "202409"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "862",
+    "source_name": "Venezuela",
+    "source_is_group": false,
+    "source_iso_alpha3": "VEN",
+    "m49_name": "Venezuela (Bolivarian Republic of)",
+    "effective_full_period": true,
+    "months": [
+      "202402",
+      "202406",
+      "202412"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "876",
+    "source_name": "Wallis and Futuna Isds",
+    "source_is_group": false,
+    "source_iso_alpha3": "WLF",
+    "m49_name": "Wallis and Futuna Islands",
+    "effective_full_period": true,
+    "months": [
+      "202302",
+      "202309"
+    ],
+    "suggested_role": "country_detail"
+  },
+  {
+    "partner_code": "887",
+    "source_name": "Yemen",
+    "source_is_group": false,
+    "source_iso_alpha3": "YEM",
+    "m49_name": "Yemen",
+    "effective_full_period": true,
+    "months": [
+      "202310",
+      "202406"
+    ],
+    "suggested_role": "country_detail"
+  }
+]

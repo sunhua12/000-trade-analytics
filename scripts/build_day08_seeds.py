@@ -126,8 +126,15 @@ def main():
             m49.setdefault(cells[11], cells[8])
     source = json.loads((REF / "partnerAreas.json").read_text())["results"]
     baseline = json.loads((ROOT / "docs/evidence/day08/partner-baseline.json").read_text())
-    codes = {r["partner_code"] for r in baseline} | {"0", "842"}
-    assert codes <= set(REVIEWED) | {"0", "490"}, "New code needs review"
+    day11_review = ROOT / "docs/evidence/day11/partner-review.json"
+    reviewed = set(REVIEWED)
+    if day11_review.exists():
+        for item in json.loads(day11_review.read_text()):
+            assert item["suggested_role"] == "country_detail", "New code needs review"
+            assert item["effective_full_period"] is True, "Partner validity needs review"
+            reviewed.add(item["partner_code"])
+    codes = {r["partner_code"] for r in baseline} | reviewed | {"0", "842"}
+    assert codes <= reviewed | {"0", "490"}, "New code needs review"
     rows = []
     for code in sorted(codes, key=int):
         matches = [r for r in source if str(r["PartnerCode"]) == code]
@@ -136,7 +143,7 @@ def main():
         assert r["entryEffectiveDate"][:10] <= "2023-01-01"
         assert not r.get("entryExpiredDate") or r["entryExpiredDate"][:10] >= "2024-12-31"
         iso = r.get("PartnerCodeIsoAlpha3", "")
-        ordinary = code in REVIEWED
+        ordinary = code in reviewed
         if ordinary:
             assert not r["isGroup"] and iso in m49
         if code == "490":

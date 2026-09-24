@@ -1,0 +1,123 @@
+{
+  "period": "202306",
+  "status": "verified",
+  "sources": [
+    {
+      "period": "202306",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "query_type": "partner_detail",
+      "status": "snapshot_verified",
+      "run_id": "day11-202306-partner_detail-r1",
+      "revision": 1,
+      "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/data.ndjson",
+      "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/manifest.json",
+      "checksum": "sha256:87fdd540a03dce114c54b32509b1fe13514c79c02af41e6b39738e99108d2e58",
+      "expected_row_count": 61,
+      "actual_row_count": 61,
+      "expected_primary_value_sum": "3156758175",
+      "actual_primary_value_sum": "3156758175",
+      "source_verification_job_id": "834cee43-b05f-48df-a4c0-89d8a5d7dd43",
+      "snapshot_hash": "3612eaec4c92606172dfda843b343a089d7cc2b0b6fd742af6e29505a24fe852",
+      "event_at": "2026-09-23T16:47:16.770381+00:00",
+      "manifest": {
+        "checksum": "sha256:87fdd540a03dce114c54b32509b1fe13514c79c02af41e6b39738e99108d2e58",
+        "cmd_code": "8542",
+        "hs_version": "H6",
+        "ingested_at": "2026-09-23T16:36:56.340714Z",
+        "period": "202306",
+        "primary_value_sum": "3156758175",
+        "query_type": "partner_detail",
+        "request_parameters": {
+          "cmdCode": "8542",
+          "customsCode": "C00",
+          "flowCode": "M",
+          "motCode": 0,
+          "partner2Code": 0,
+          "period": "202306",
+          "reporterCode": 842
+        },
+        "revision": 1,
+        "row_count": 61,
+        "schema_version": "2.0.0",
+        "source": "UN Comtrade Preview API"
+      }
+    },
+    {
+      "period": "202306",
+      "cmd_code": "8542",
+      "hs_version": "H6",
+      "query_type": "world_total",
+      "status": "snapshot_verified",
+      "run_id": "day11-202306-world_total-r1",
+      "revision": 1,
+      "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/data.ndjson",
+      "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/manifest.json",
+      "checksum": "sha256:942c572b4bf5959f2acacd1ffa7d123be0d44c9092660ca4b933d3a6a95c7c5c",
+      "expected_row_count": 1,
+      "actual_row_count": 1,
+      "expected_primary_value_sum": "3156758175",
+      "actual_primary_value_sum": "3156758175",
+      "source_verification_job_id": "4f3fc0f0-0a80-4c6d-9096-664901df0199",
+      "snapshot_hash": "80519b5f34abfc007952794a4e8fe84ad952f58b02c8adc86c7a61cc092bdd1a",
+      "event_at": "2026-09-23T16:47:18.236320+00:00",
+      "manifest": {
+        "checksum": "sha256:942c572b4bf5959f2acacd1ffa7d123be0d44c9092660ca4b933d3a6a95c7c5c",
+        "cmd_code": "8542",
+        "hs_version": "H6",
+        "ingested_at": "2026-09-23T16:37:00.156598Z",
+        "period": "202306",
+        "primary_value_sum": "3156758175",
+        "query_type": "world_total",
+        "request_parameters": {
+          "cmdCode": "8542",
+          "customsCode": "C00",
+          "flowCode": "M",
+          "motCode": 0,
+          "partner2Code": 0,
+          "partnerCode": 0,
+          "period": "202306",
+          "reporterCode": 842
+        },
+        "revision": 1,
+        "row_count": 1,
+        "schema_version": "2.0.0",
+        "source": "UN Comtrade Preview API"
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "834cee43-b05f-48df-a4c0-89d8a5d7dd43",
+      "sql": "\nSELECT TO_JSON_STRING(r) payload FROM `trade-analytics-508604.trade_raw.un_comtrade_partner_detail` r\n WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6'\n        ",
+      "parameters": {
+        "period": "202306"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "c3c5e94d-0282-4770-9679-4272fad94d78",
+      "sql": "\nINSERT INTO `trade-analytics-508604.trade_analytics_published.source_attestations`\n VALUES(@attestation,CURRENT_TIMESTAMP())\n            ",
+      "parameters": {
+        "attestation": "{\"period\": \"202306\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"query_type\": \"partner_detail\", \"status\": \"snapshot_verified\", \"run_id\": \"day11-202306-partner_detail-r1\", \"revision\": 1, \"source_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/data.ndjson\", \"manifest_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/manifest.json\", \"checksum\": \"sha256:87fdd540a03dce114c54b32509b1fe13514c79c02af41e6b39738e99108d2e58\", \"expected_row_count\": 61, \"actual_row_count\": 61, \"expected_primary_value_sum\": \"3156758175\", \"actual_primary_value_sum\": \"3156758175\", \"source_verification_job_id\": \"834cee43-b05f-48df-a4c0-89d8a5d7dd43\", \"snapshot_hash\": \"3612eaec4c92606172dfda843b343a089d7cc2b0b6fd742af6e29505a24fe852\", \"event_at\": \"2026-09-23T16:47:16.770381+00:00\", \"manifest\": {\"checksum\": \"sha256:87fdd540a03dce114c54b32509b1fe13514c79c02af41e6b39738e99108d2e58\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"ingested_at\": \"2026-09-23T16:36:56.340714Z\", \"period\": \"202306\", \"primary_value_sum\": \"3156758175\", \"query_type\": \"partner_detail\", \"request_parameters\": {\"cmdCode\": \"8542\", \"customsCode\": \"C00\", \"flowCode\": \"M\", \"motCode\": 0, \"partner2Code\": 0, \"period\": \"202306\", \"reporterCode\": 842}, \"revision\": 1, \"row_count\": 61, \"schema_version\": \"2.0.0\", \"source\": \"UN Comtrade Preview API\"}}"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "4f3fc0f0-0a80-4c6d-9096-664901df0199",
+      "sql": "\nSELECT TO_JSON_STRING(r) payload FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` r\n WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6'\n        ",
+      "parameters": {
+        "period": "202306"
+      },
+      "result": "success"
+    },
+    {
+      "job_id": "bd5a92f9-5703-4397-93da-4733e30c2bfe",
+      "sql": "\nINSERT INTO `trade-analytics-508604.trade_analytics_published.source_attestations`\n VALUES(@attestation,CURRENT_TIMESTAMP())\n            ",
+      "parameters": {
+        "attestation": "{\"period\": \"202306\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"query_type\": \"world_total\", \"status\": \"snapshot_verified\", \"run_id\": \"day11-202306-world_total-r1\", \"revision\": 1, \"source_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/data.ndjson\", \"manifest_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/manifest.json\", \"checksum\": \"sha256:942c572b4bf5959f2acacd1ffa7d123be0d44c9092660ca4b933d3a6a95c7c5c\", \"expected_row_count\": 1, \"actual_row_count\": 1, \"expected_primary_value_sum\": \"3156758175\", \"actual_primary_value_sum\": \"3156758175\", \"source_verification_job_id\": \"4f3fc0f0-0a80-4c6d-9096-664901df0199\", \"snapshot_hash\": \"80519b5f34abfc007952794a4e8fe84ad952f58b02c8adc86c7a61cc092bdd1a\", \"event_at\": \"2026-09-23T16:47:18.236320+00:00\", \"manifest\": {\"checksum\": \"sha256:942c572b4bf5959f2acacd1ffa7d123be0d44c9092660ca4b933d3a6a95c7c5c\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"ingested_at\": \"2026-09-23T16:37:00.156598Z\", \"period\": \"202306\", \"primary_value_sum\": \"3156758175\", \"query_type\": \"world_total\", \"request_parameters\": {\"cmdCode\": \"8542\", \"customsCode\": \"C00\", \"flowCode\": \"M\", \"motCode\": 0, \"partner2Code\": 0, \"partnerCode\": 0, \"period\": \"202306\", \"reporterCode\": 842}, \"revision\": 1, \"row_count\": 1, \"schema_version\": \"2.0.0\", \"source\": \"UN Comtrade Preview API\"}}"
+      },
+      "result": "success"
+    }
+  ]
+}
