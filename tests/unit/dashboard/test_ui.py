@@ -12,7 +12,7 @@ import streamlit as st
 from google.api_core.exceptions import BadRequest, Forbidden
 from streamlit.testing.v1 import AppTest
 
-from dashboard import error_message, quality_table_rows
+from dashboard import error_message, quality_table_rows, world_yoy
 from trade_analytics.dashboard.queries import PublishedQueries
 
 APP = Path(__file__).resolve().parents[3] / "dashboard.py"
@@ -39,6 +39,16 @@ def test_query_failures_have_distinct_messages() -> None:
     assert "處理量上限" in error_message(BadRequest("maximum bytes billed exceeded"))
 
 
+def test_world_yoy_uses_same_calendar_month_and_keeps_missing_baseline() -> None:
+    rows = [
+        {"month": date(2023, 1, 1), "world_value": 100},
+        {"month": date(2024, 1, 1), "world_value": 125},
+    ]
+    result = world_yoy(rows, date(2023, 1, 1), date(2024, 1, 1))
+    assert result[0]["YoY"] is None
+    assert result[12]["YoY"] == 0.25
+
+
 def test_empty_dashboard_results_do_not_crash(monkeypatch: pytest.MonkeyPatch) -> None:
     st.cache_data.clear()
     monkeypatch.setattr(PublishedQueries, "months", lambda self: [date(2023, 1, 1)])
@@ -56,10 +66,13 @@ def test_empty_dashboard_results_do_not_crash(monkeypatch: pytest.MonkeyPatch) -
         },
     )
     monkeypatch.setattr(PublishedQueries, "quality", lambda self, start, end: [])
+    monkeypatch.setattr(PublishedQueries, "monthly_metrics", lambda self, start, end: [])
+    monkeypatch.setattr(PublishedQueries, "scatter", lambda self, month, partners: [])
+    monkeypatch.setattr(PublishedQueries, "map_values", lambda self, start, end, partners: [])
     app = AppTest.from_file(APP, default_timeout=10).run()
     assert not app.exception
     assert not app.error
-    assert len(app.info) == 3
+    assert len(app.info) == 6
 
 
 def test_query_failure_shows_error_instead_of_stale_results(

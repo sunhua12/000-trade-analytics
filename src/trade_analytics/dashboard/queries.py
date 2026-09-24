@@ -177,6 +177,87 @@ class PublishedQueries:
         )
         return rows[0]
 
+    def monthly_metrics(self, start: date, end: date) -> list[dict[str, Any]]:
+        """Read month-grain values once, including the prior year for World YoY."""
+        validate_range(start, end)
+        table = self.settings.table("mart_us_semiconductor_supply_chain")
+        scalar = self.bigquery.ScalarQueryParameter
+        # The lower bound is fixed so the display range remains partition-pruned.
+        rows = self._run(
+            f"""SELECT period_start_date AS month,
+                       MAX(world_value) AS world_value,
+                       MAX(country_coverage) AS country_coverage,
+                       MAX(hhi) AS hhi,
+                       ANY_VALUE(hhi_status) AS hhi_status
+                FROM {table}
+                WHERE period_start_date >= @first_month
+                  AND period_start_date < @end_exclusive
+                  AND cmd_code=@cmd_code AND hs_version=@hs_version
+                GROUP BY month ORDER BY month""",
+            [
+                scalar("first_month", "DATE", FIRST_MONTH),
+                scalar("end_exclusive", "DATE", next_month(end)),
+                scalar("cmd_code", "STRING", CMD_CODE),
+                scalar("hs_version", "STRING", HS_VERSION),
+            ],
+        )
+        return rows
+
+    def partner_metrics(self, start: date, end: date, partner: str) -> list[dict[str, Any]]:
+        """Use the mart's calendar-matched YoY for one verified partner."""
+        table = self.settings.table("mart_us_semiconductor_supply_chain")
+        params = self._scope(start, end) + [
+            self.bigquery.ScalarQueryParameter("partner", "STRING", partner)
+        ]
+        return self._run(
+            f"""SELECT period_start_date AS month, primary_value AS import_value,
+                       previous_year_value, yoy
+                FROM {table}
+                WHERE period_start_date >= @start_date AND period_start_date < @end_exclusive
+                  AND cmd_code=@cmd_code AND hs_version=@hs_version
+                  AND partner_type='country' AND partner_code=@partner
+                ORDER BY month""",
+            params,
+        )
+
+    def scatter(self, month: date, partners: list[str]) -> list[dict[str, Any]]:
+        """Comparable month-country points for the amount/YoY scatter plot."""
+        table = self.settings.table("mart_us_semiconductor_supply_chain")
+        params = self._scope(month, month) + [
+            self.bigquery.ArrayQueryParameter("partners", "STRING", partners),
+            self.bigquery.ScalarQueryParameter("all_partners", "BOOL", not partners),
+        ]
+        return self._run(
+            f"""SELECT partner_code, source_name, primary_value AS import_value, yoy
+                FROM {table}
+                WHERE period_start_date >= @start_date AND period_start_date < @end_exclusive
+                  AND cmd_code=@cmd_code AND hs_version=@hs_version
+                  AND partner_type='country'
+                  AND (@all_partners OR partner_code IN UNNEST(@partners))
+                  AND primary_value IS NOT NULL AND yoy IS NOT NULL
+                ORDER BY partner_code""",
+            params,
+        )
+
+    def map_values(self, start: date, end: date, partners: list[str]) -> list[dict[str, Any]]:
+        """Sum country values by reviewed map code, retaining unmapped rows."""
+        table = self.settings.table("mart_us_semiconductor_supply_chain")
+        params = self._scope(start, end) + [
+            self.bigquery.ArrayQueryParameter("partners", "STRING", partners),
+            self.bigquery.ScalarQueryParameter("all_partners", "BOOL", not partners),
+        ]
+        return self._run(
+            f"""SELECT map_iso3, SUM(primary_value) AS import_value,
+                       COUNT(*) AS source_rows
+                FROM {table}
+                WHERE period_start_date >= @start_date AND period_start_date < @end_exclusive
+                  AND cmd_code=@cmd_code AND hs_version=@hs_version
+                  AND partner_type='country'
+                  AND (@all_partners OR partner_code IN UNNEST(@partners))
+                GROUP BY map_iso3 ORDER BY map_iso3""",
+            params,
+        )
+
     def quality(self, start: date, end: date) -> list[dict[str, Any]]:
         validate_range(start, end)
         table = self.settings.table("publication_quality_summary")

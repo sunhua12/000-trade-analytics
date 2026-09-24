@@ -1,0 +1,23 @@
+{
+  "verified_at_utc": "2026-09-24T12:18:20.737994+00:00",
+  "default_table_rows": [
+    10,
+    24,
+    24,
+    10,
+    24
+  ],
+  "filtered_table_rows": [
+    1,
+    12,
+    12,
+    1,
+    12
+  ],
+  "partner": "458",
+  "filtered_months": "202401-202412",
+  "hhi_unavailable_message": true,
+  "freshness_section": true,
+  "country_map": true,
+  "streamlit_exceptions": 0
+}

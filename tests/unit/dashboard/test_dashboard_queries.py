@@ -93,6 +93,38 @@ def test_quality_preserves_published_and_latest_attempt(setup_bigquery: FakeClie
     assert config.query_parameters[1][2] == "202302"
 
 
+def test_monthly_metrics_deduplicates_month_grain(setup_bigquery: FakeClient) -> None:
+    reader = queries.PublishedQueries(queries.Settings("trade-analytics-508604"), setup_bigquery)
+    reader.monthly_metrics(date(2024, 1, 1), date(2024, 12, 1))
+    sql, config, _ = setup_bigquery.calls[0]
+    assert "MAX(world_value)" in sql
+    assert "MAX(country_coverage)" in sql
+    assert "GROUP BY month" in sql
+    assert "hhi_status" in sql
+    assert config.query_parameters[0][2] == date(2023, 1, 1)
+
+
+def test_scatter_excludes_missing_yoy_and_special_partners(setup_bigquery: FakeClient) -> None:
+    reader = queries.PublishedQueries(queries.Settings("trade-analytics-508604"), setup_bigquery)
+    reader.scatter(date(2024, 12, 1), [])
+    sql, config, _ = setup_bigquery.calls[0]
+    params = {param[0]: param[2] for param in config.query_parameters}
+    assert "partner_type='country'" in sql
+    assert "yoy IS NOT NULL" in sql
+    assert params["all_partners"] is True
+
+
+def test_map_query_retains_unmapped_country_values(setup_bigquery: FakeClient) -> None:
+    reader = queries.PublishedQueries(queries.Settings("trade-analytics-508604"), setup_bigquery)
+    reader.map_values(date(2024, 1, 1), date(2024, 12, 1), ["458"])
+    sql, config, _ = setup_bigquery.calls[0]
+    params = {param[0]: param[2] for param in config.query_parameters}
+    assert "GROUP BY map_iso3" in sql
+    assert "map_iso3 IS NOT NULL" not in sql
+    assert "partner_type='country'" in sql
+    assert params["partners"] == ["458"]
+
+
 @pytest.mark.parametrize(
     ("start", "end"),
     [
