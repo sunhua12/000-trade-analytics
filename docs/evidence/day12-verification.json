@@ -1,0 +1,46 @@
+{
+  "verified_at_utc": "2026-09-24T05:43:48.942157+00:00",
+  "scope": "202301-202412 / 8542 / H6 / partner 458",
+  "published_months": 24,
+  "quality_rows": 24,
+  "partner_months": 24,
+  "partner_value": "19277096395",
+  "independent_value": "19277096395",
+  "world_value": "76449272983",
+  "empty_partner_rows": 0,
+  "reference_job_id": "6dca4e33-6c56-4949-952f-d81ce25574ad",
+  "reference_bytes_processed": 73596,
+  "reference_bytes_billed": 10485760,
+  "dashboard_jobs": [
+    {
+      "job_id": "a26e461f-3243-4503-8a4e-548513abfc1f",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "a61319ff-f6dc-4ba4-aa1d-dc1888e85cea",
+      "bytes_processed": 89567,
+      "bytes_billed": 10485760
+    },
+    {
+      "job_id": "9f133892-9f5a-487f-9ab7-c2c91d2e7fbb",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "3a8a3a9e-f52e-4cec-855d-0512731eec5d",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "a29f482b-9bf8-445b-bf09-4a7e6adcb468",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "e3bcee4c-d729-4934-aa11-9e333f37be08",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    }
+  ]
+}

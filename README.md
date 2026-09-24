@@ -224,6 +224,25 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 - Phase 1 使用月度端點 `C/M/HS`，不使用年度端點 `C/A/HS`。
 - 目前 Lambda Image 仍使用 Preview API，尚未包含正式 API Key、BigQuery、dbt 或 Airflow。
 
+## 本機 Streamlit Dashboard
+
+Day 12 的 Dashboard 從 BigQuery 的 `trade_analytics_published.mart_us_semiconductor_supply_chain` 與 `publication_quality_summary` 唯讀取數。它提供日期、Partner 與 Top N 篩選、來源國／地區金額排名、月度趨勢及品質摘要；商品與分類固定為 `8542／H6`。需先有可查詢正式 Dataset 的 Google ADC 身分，以及執行 BigQuery job 的權限。
+
+```bash
+.venv-dbt/bin/python -m pip install -e '.[dashboard]'
+.venv-dbt/bin/streamlit run dashboard.py
+```
+
+從專案根目錄執行。預設 GCP 專案為 `trade-analytics-508604`、location 為 `asia-northeast1`；可用 `TRADE_BQ_PROJECT` 與 `TRADE_BQ_LOCATION` 指定其他同結構環境。`TRADE_BQ_MAX_BYTES_BILLED` 預設 `1000000000`，限制每次 BigQuery 查詢的處理量；`TRADE_DASHBOARD_CACHE_TTL` 預設 `3600` 秒。畫面提供「重新讀取已發布資料」以清除快取。憑證由 ADC 提供，勿將金鑰放進 repository。
+
+Dashboard 僅讀正式表與品質摘要，不讀 candidate／raw，也不修改資料。期間 World 金額按月只取一次，不能加總重複在夥伴列上的 `world_value`；來源國排名排除特殊代碼 490。對固定條件重跑唯讀核對：
+
+```bash
+.venv-dbt/bin/python scripts/verify_day12.py
+```
+
+實測結果與 BigQuery job IDs 見 [Day 12 查詢驗證](docs/evidence/day12-verification.json)，篩選畫面數值見 [UI 驗證](docs/evidence/day12-ui-verification.json)。圖表以浮點數顯示趨勢，精確金額核對使用 BigQuery `NUMERIC`；HHI、YoY 與深入解讀留待 Day 13。
+
 ## 設計與實作計畫
 
 - [AWS Terraform 管理與接管流程](infrastructure/aws/README.md)
