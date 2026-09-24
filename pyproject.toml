@@ -16,6 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 warehouse = ["google-cloud-bigquery==3.45.2"]
+dashboard = ["google-cloud-bigquery==3.45.2", "streamlit==1.64.0", "pandas>=2.2,<3"]
 dev = [
     "boto3-stubs[s3]>=1.35,<2",
     "mypy>=1.13,<2",

@@ -1,0 +1,19 @@
+{
+  "verified_at_utc": "2026-09-24T05:52:12.032800+00:00",
+  "default_metrics": {
+    "已發布月份": "24",
+    "最新成功發布月份": "2024-12",
+    "期間 World 金額": "USD 76,449,272,983"
+  },
+  "filtered_metrics": {
+    "已發布月份": "12",
+    "最新成功發布月份": "2024-12",
+    "期間 World 金額": "USD 40,386,451,682"
+  },
+  "filtered_partner": "458",
+  "filtered_top_n": 5,
+  "filtered_ranking_rows": 1,
+  "filtered_quality_rows": 12,
+  "reverse_date_rejected": true,
+  "streamlit_exceptions": 0
+}
