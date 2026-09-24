@@ -1,0 +1,84 @@
+{
+  "verified_at_utc": "2026-09-24T07:17:23.233197+00:00",
+  "scope": "202301-202412 / 8542 / H6; partner YoY 458",
+  "monthly_summary": {
+    "months": 24,
+    "world_2023": "36062821301",
+    "world_2024": "40386451682",
+    "min_coverage": "0.630106975",
+    "max_coverage": "0.829243016",
+    "visible_hhi_months": 0,
+    "insufficient_coverage_months": 24
+  },
+  "world_yoy_2024": "0.119891628691849141911372055",
+  "partner_458_2024_yoy_rows": 12,
+  "partner_458_december_yoy": "-0.086277422",
+  "top_2024_partners": [
+    {
+      "partner_code": "458",
+      "source_name": "Malaysia",
+      "value_2023": "9678752496",
+      "value_2024": "9598343899"
+    },
+    {
+      "partner_code": "376",
+      "source_name": "Israel",
+      "value_2023": "2095163021",
+      "value_2024": "4195233049"
+    },
+    {
+      "partner_code": "410",
+      "source_name": "Rep. of Korea",
+      "value_2023": "2400493160",
+      "value_2024": "2422182840"
+    },
+    {
+      "partner_code": "372",
+      "source_name": "Ireland",
+      "value_2023": "1703615223",
+      "value_2024": "1917728859"
+    },
+    {
+      "partner_code": "484",
+      "source_name": "Mexico",
+      "value_2023": "1686573542",
+      "value_2024": "1485684565"
+    }
+  ],
+  "december_map_mapping": {
+    "country_rows": 66,
+    "unmapped_rows": 0,
+    "country_value": "2903154248",
+    "unmapped_value": "0"
+  },
+  "december_scatter_points": 55,
+  "quality_rows": 24,
+  "reference_job_id": "336a8df5-0be2-4f94-9231-913ea56c3444",
+  "reference_bytes_processed": 0,
+  "partner_reference_job_id": "9f573565-0520-4302-9efc-b1052bf773ac",
+  "partner_reference_bytes_processed": 0,
+  "ranking_reference_job_id": "17285a41-7ba5-45fb-a7c1-083cffb44876",
+  "mapping_reference_job_id": "d62b0395-5afa-45f6-bdb0-4ce709cba375",
+  "dashboard_jobs": [
+    {
+      "job_id": "88d85c11-1383-4098-a5f3-3d9111163ef7",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "6aef4665-ffaf-41bb-8471-2b7e2fb118d7",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "9bcaa3c8-dc3c-4a3a-8cf1-6aeb51919790",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    },
+    {
+      "job_id": "7997c528-d093-4e47-a302-a0748ccc2b8c",
+      "bytes_processed": 0,
+      "bytes_billed": 0
+    }
+  ]
+}

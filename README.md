@@ -226,7 +226,7 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 
 ## 本機 Streamlit Dashboard
 
-Day 12 的 Dashboard 從 BigQuery 的 `trade_analytics_published.mart_us_semiconductor_supply_chain` 與 `publication_quality_summary` 唯讀取數。它提供日期、Partner 與 Top N 篩選、來源國／地區金額排名、月度趨勢及品質摘要；商品與分類固定為 `8542／H6`。需先有可查詢正式 Dataset 的 Google ADC 身分，以及執行 BigQuery job 的權限。
+Dashboard 從 BigQuery 的 `trade_analytics_published.mart_us_semiconductor_supply_chain` 與 `publication_quality_summary` 唯讀取數。它提供日期、Partner 與 Top N 篩選、來源國／地區金額排名及地圖、月度趨勢、YoY、國家覆蓋與 HHI 狀態、最新月份金額／YoY 散佈圖、資料新鮮度及品質摘要；商品與分類固定為 `8542／H6`。需先有可查詢正式 Dataset 的 Google ADC 身分，以及執行 BigQuery job 的權限。
 
 ```bash
 .venv-dbt/bin/python -m pip install -e '.[dashboard]'
@@ -241,7 +241,14 @@ Dashboard 僅讀正式表與品質摘要，不讀 candidate／raw，也不修改
 .venv-dbt/bin/python scripts/verify_day12.py
 ```
 
-實測結果與 BigQuery job IDs 見 [Day 12 查詢驗證](docs/evidence/day12-verification.json)，篩選畫面數值見 [UI 驗證](docs/evidence/day12-ui-verification.json)。圖表以浮點數顯示趨勢，精確金額核對使用 BigQuery `NUMERIC`；HHI、YoY 與深入解讀留待 Day 13。
+Day 12 基本查詢的實測結果見 [查詢驗證](docs/evidence/day12-verification.json)與 [UI 驗證](docs/evidence/day12-ui-verification.json)。Day 13 的年度 World、單一來源國 YoY、覆蓋／HHI 與地圖映射核對見 [查詢驗證](docs/evidence/day13-verification.json)，篩選畫面見 [UI 驗證](docs/evidence/day13-ui-verification.json)。固定條件可重跑：
+
+```bash
+.venv-dbt/bin/python scripts/verify_day13.py
+.venv-dbt/bin/python scripts/verify_day13_ui.py
+```
+
+未選或多選 Partner 時，YoY 區塊顯示 World 月度 YoY；只選一個 Partner 時顯示該來源國／地區的 YoY。2023 年沒有 2022 年基期，顯示「無可比較基期」。目前 24 個月國家覆蓋率為 63.01%～82.92%，HHI 均為 `insufficient_coverage`，不畫成 0。地圖僅含有 `map_iso3` 的已確認國家／地區，畫面另列未映射筆數與金額；特殊代碼 490 不畫入地圖。圖表以浮點數顯示，精確金額以 BigQuery `NUMERIC` 核對。詳見 [Day 13 展示與分析紀錄](docs/day13-dashboard-record.md)。
 
 ## 設計與實作計畫
 

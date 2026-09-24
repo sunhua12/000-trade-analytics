@@ -104,7 +104,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [x] | Day 10 | 對帳、PASS／WARN／FAIL、發布門檻 | 建立 audit model 與品質 gate；展示單月完整分析 SQL | 真實單月已發布；異常 fixture 阻擋與回滾驗證通過；M2 技術驗收，見 [紀錄](day10-quality-publish-record.md) |
 | [x] | Day 11 | 小批次回填、覆蓋率與資料修訂 | 先跑 3 個月，再完成 24 個月；核對每月兩類資料、版本與品質狀態 | 24 個月均 PASS／已發布；修訂於隔離 fixture 驗證，真實修訂尚未發生；見[執行紀錄](day11-backfill-record.md) |
 | [x] | Day 12 | Streamlit 查詢、參數化 SQL、快取 | 建立 Dashboard 篩選、趨勢、Top N 與品質摘要；使用已發布 mart | 真實資料與 UI 驗證通過；見[執行紀錄](day12-dashboard-record.md) |
-| [ ] | Day 13 | 視覺化與指標解讀 | 完成來源國圖表、YoY／HHI、資料新鮮度；依資料可用性加入地圖與散佈圖 | 本機展示完整；列出 3 項有數據支持的觀察與限制；里程碑 M3 |
+| [x] | Day 13 | 視覺化與指標解讀 | 完成來源國圖表、YoY／HHI、資料新鮮度；依資料可用性加入地圖與散佈圖 | 本機展示與真實資料核對通過；3 項觀察及限制見[展示紀錄](day13-dashboard-record.md)；里程碑 M3 |
 | [ ] | Day 14 | Airflow DAG、task 邊界與 logical date | 建立 Docker Compose、固定版本與 monthly DAG；包裝已完成的 ingestion／load／dbt 操作 | DAG 無 import error；單月可完成；XCom 只含 metadata |
 | [ ] | Day 15 | 排程、限流、CloudWatch／SNS | 完成月度執行、有限期數檢查與重試；補結構化失敗日誌；以 Terraform 建立 Metric Filters、Alarms、SNS 並確認訂閱 | 缺資料有明確狀態；驗證三類錯誤 filter 與耗時門檻；真實失敗觸發 SNS，依 run_id 找到日誌 |
 | [ ] | Day 16 | 參數化回填、復原 | 建立獨立 backfill DAG；回填 3 個月；故意中斷載入後重跑 | 不混用原生 Backfill 語意；復原後無重複 grain；里程碑 M4 |
