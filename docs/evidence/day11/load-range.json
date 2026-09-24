@@ -1,0 +1,2156 @@
+[
+  {
+    "period": "202301",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:41:11.308722+00:00",
+    "status": "already_loaded",
+    "rows": 67,
+    "jobs": [
+      {
+        "job_id": "day11_dc32b40740624b889afc6e3306101521",
+        "params": {
+          "period": "202301"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202301",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:41:13.624631+00:00",
+    "status": "already_loaded",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_6d4198e24569418080297fa7ed2f42c0",
+        "params": {
+          "period": "202301"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202302",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:41:15.504784+00:00",
+    "status": "already_loaded",
+    "rows": 73,
+    "jobs": [
+      {
+        "job_id": "day11_8d89185db0d84e99acdd35e43cd72b67",
+        "params": {
+          "period": "202302"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202302",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:41:17.416481+00:00",
+    "status": "already_loaded",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_f8721a57ef1b44b7a0957554a518d6bf",
+        "params": {
+          "period": "202302"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202303",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:41:19.434043+00:00",
+    "status": "success",
+    "rows": 70,
+    "jobs": [
+      {
+        "job_id": "day11_2f7717f05c814e22b898dd0d2eb889d2",
+        "params": {
+          "period": "202303"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_35ddcf2b9ba449b29ae1b578df677c55",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_15a17e6cb8ee4d7aa0d82fd1682dcbf3",
+        "params": {
+          "period": "202303",
+          "row_count": "70",
+          "amount": "3379107698",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "787f8ab7-5bc0-480e-be90-d593e8faa682",
+          "run_id": "day11-202303-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202303/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202303/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:3c82a2f922f0b8cdde272f167ae581619236835d9c34c055e9f6949c58eb7b04",
+          "ingested_at": "2026-09-23T16:36:24.161046Z",
+          "fingerprint": "7ba66bfe47e5b289c1b43ed7b37bf83636b517393256b04d19d7ec1ee7755b2c",
+          "snapshot_hash": "7a959aef037a3f5054aea54c7790d16119ce2cfe03a78c97f41fabd4ca977dec"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_99cdb64dd25f43b9bbf457941ff0139c",
+        "params": {
+          "period": "202303"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202303",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:41:33.249352+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_ac30d4edf59c499c9f905091ad153233",
+        "params": {
+          "period": "202303"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_9399fac4c6614f459fbbb7d068a85728",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_71dfef38eed94b2c8e70b9861ece0f96",
+        "params": {
+          "period": "202303",
+          "row_count": "1",
+          "amount": "3379107698",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "8082d25b-d1c4-418c-b311-a180ba9175b8",
+          "run_id": "day11-202303-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202303/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202303/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:088d0ba8a5e2460b014cdb0320a3d0c3b954c9218a443c12b55ccc9fbbc11464",
+          "ingested_at": "2026-09-23T16:36:30.713805Z",
+          "fingerprint": "b8a11afa4b942e0dfc3b97726827e759296f2ab284662ad51240d72a79780a64",
+          "snapshot_hash": "503a33fb5ae6114f10c7a6099f1e54b50be455f2f86be1ecf4317d9e850a43c1"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_fe7e4711954744cf93ba23665532067b",
+        "params": {
+          "period": "202303"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202304",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:41:48.161040+00:00",
+    "status": "success",
+    "rows": 68,
+    "jobs": [
+      {
+        "job_id": "day11_4855254ae3e448b4a182dcc52ce54e99",
+        "params": {
+          "period": "202304"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_01ffa00dcf7649cfba0fe92a09c5c409",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_763164114d8e40cfad184ac47e67b0b2",
+        "params": {
+          "period": "202304",
+          "row_count": "68",
+          "amount": "2689984431",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "72713a15-2c02-4c3b-a0ca-74d092da6403",
+          "run_id": "day11-202304-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202304/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202304/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:bdfddd2a9dc921d33ae85a1af60eae73dd70812b5e1084d40044eb8c2e03bee0",
+          "ingested_at": "2026-09-23T16:36:37.680660Z",
+          "fingerprint": "c0fcd01cb3796f267c48733d2fc57790872ec89201c8a7546c960f2d72a3160c",
+          "snapshot_hash": "19d903d77d3fadf8e36d56e84b80efab94e660397507fa2526b1461139967b62"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_8168be1dcdab4d5fbf509894c3cefe82",
+        "params": {
+          "period": "202304"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202304",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:42:01.881878+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_17b175ff76b142e9b7c05988fd57471a",
+        "params": {
+          "period": "202304"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d08351c695d741f39d8c1028df79cd5b",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_361eb23933124eb1b28744ed70028d7b",
+        "params": {
+          "period": "202304",
+          "row_count": "1",
+          "amount": "2689984431",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "910b9671-628e-4ec8-a3a4-9a2fa5035c66",
+          "run_id": "day11-202304-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202304/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202304/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:cc56bd007bbf23c023bbe13457bb49047747e79a9df5b527d093bebcbc7c49c8",
+          "ingested_at": "2026-09-23T16:36:43.163798Z",
+          "fingerprint": "65e73bad14727ca53f14cb736a0674d7ce97eed5ba81f62322bf71c27ae3aad2",
+          "snapshot_hash": "3cdd5d44ce0b01f4d186bcca21d995f413e2fd9a98f988be3ea4bd929b8b32c7"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c7f331ba44e74eb29450c6165c214edf",
+        "params": {
+          "period": "202304"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202305",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:42:15.500633+00:00",
+    "status": "success",
+    "rows": 63,
+    "jobs": [
+      {
+        "job_id": "day11_5aa3299e2b41403f93c62d8e98c4b080",
+        "params": {
+          "period": "202305"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_418f7645f31543949b29b3c97369a257",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d8692f10d7ce43feadf4506835d4f958",
+        "params": {
+          "period": "202305",
+          "row_count": "63",
+          "amount": "3162642177",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "cf261f75-e24b-42fc-a2ab-77c8db69e6a8",
+          "run_id": "day11-202305-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202305/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202305/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:d083f55bac901c7731cb2757acfd542aaba203c892b468922ed28ed471f7f1b2",
+          "ingested_at": "2026-09-23T16:36:47.739827Z",
+          "fingerprint": "52c518c3f42518bb7ac38ff47248ed370d07b61724b1d56513054e6e787ad7f7",
+          "snapshot_hash": "7480647bae7aa6567aab322d20d51ab9769851a1a33a3f28a58180c604baa13d"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ce85b3ef950445fab0606046e0688b70",
+        "params": {
+          "period": "202305"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202305",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:42:29.535956+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_c57e27ee71d5426e8ec5884efe398f2b",
+        "params": {
+          "period": "202305"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6fbeba06d158473aabe9a57a116ea2ea",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_94512ec747734a6783bb5e5a0c9f6dd4",
+        "params": {
+          "period": "202305",
+          "row_count": "1",
+          "amount": "3162642177",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "10367a3e-7e3a-45ca-bd3b-f2e603d05b92",
+          "run_id": "day11-202305-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202305/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202305/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:2af68ab13c96a36adb7e3381cf4748f4dc9a580486aab1b592089d7a6b0f228e",
+          "ingested_at": "2026-09-23T16:36:51.555938Z",
+          "fingerprint": "46d56db248c489e97b423ebbaf0ef43c4293e1243d4a3a038e55888e482a69d6",
+          "snapshot_hash": "b85bad92c7a7fc5fe177473982507e3eb2d6b8a5bd985a57cf1136616d520241"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_f248ee05ea1c4e4c93a94c408cbfea73",
+        "params": {
+          "period": "202305"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202306",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:42:42.844229+00:00",
+    "status": "success",
+    "rows": 61,
+    "jobs": [
+      {
+        "job_id": "day11_6eb32406ede24f409246dba63025878d",
+        "params": {
+          "period": "202306"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_a08fc239654c48d1975b39d944fbdff3",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_8986caf28a4d4748a1edecb16c935867",
+        "params": {
+          "period": "202306",
+          "row_count": "61",
+          "amount": "3156758175",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "7d5e2930-7284-4d7f-b407-41cbdc6e473f",
+          "run_id": "day11-202306-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:87fdd540a03dce114c54b32509b1fe13514c79c02af41e6b39738e99108d2e58",
+          "ingested_at": "2026-09-23T16:36:56.340714Z",
+          "fingerprint": "c11dbef849e85ad39886f577c39b1cf60d643b649080661470c6efbfaeffeb6b",
+          "snapshot_hash": "19fffd0cf47d8de2393cfc3171f7fa7f8693a220b2eecc3f525254eacb55b03e"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d96b87ad7d6542afb51e0888b275ad94",
+        "params": {
+          "period": "202306"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202306",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:42:56.277328+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_d06c314a67d94f89b5ec1b191bc9d476",
+        "params": {
+          "period": "202306"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_97674f7549aa4b29867d13b6a6020299",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_f0daced36a2e4450bda5ebe09208c19b",
+        "params": {
+          "period": "202306",
+          "row_count": "1",
+          "amount": "3156758175",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "3a567a97-376e-481d-9267-7a635ef5ddf3",
+          "run_id": "day11-202306-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:942c572b4bf5959f2acacd1ffa7d123be0d44c9092660ca4b933d3a6a95c7c5c",
+          "ingested_at": "2026-09-23T16:37:00.156598Z",
+          "fingerprint": "eb8a4548db82ba00e9ef7efa6f48079d2c9c040b8c5e2e5334118670b8986acf",
+          "snapshot_hash": "3d289c071cc90401fb0d0590cbd2fd0bba61dc5d4c03341ec9ce7d0de86778d1"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6133be0cd87e407aa2c03612ee452899",
+        "params": {
+          "period": "202306"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202307",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:43:09.769946+00:00",
+    "status": "success",
+    "rows": 65,
+    "jobs": [
+      {
+        "job_id": "day11_1105b470db1742e6a4b5ab5e1a951823",
+        "params": {
+          "period": "202307"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_3221194225d449dfab56ac291ec5801c",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_fd3671dc19b14a7da6155952c2224f81",
+        "params": {
+          "period": "202307",
+          "row_count": "65",
+          "amount": "3124596099",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "33370a36-ba68-43cf-af7f-1e15650681c6",
+          "run_id": "day11-202307-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202307/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202307/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:f265bb62d71157522c38d4d51581eb51889103743d736f37a706f9aec706af50",
+          "ingested_at": "2026-09-23T16:37:04.398639Z",
+          "fingerprint": "9f6cd2bb0ab80662d21611adb868c00be7f22e0997a057b77cd48a90dcfff096",
+          "snapshot_hash": "d7f8464fc8f8906f614ecc2ae88b71b23522114623f7bdf54745ce5843ce4821"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_e6b3d892768848e0a5ee44a275d3e4fb",
+        "params": {
+          "period": "202307"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202307",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:43:22.897371+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_8622bca9d5a24bffa116ebabdd6c3e44",
+        "params": {
+          "period": "202307"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_a7c43c5dec764141a57fe1d22ce0036f",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_bbac93d78ccd4e50901ac34f8af93ebf",
+        "params": {
+          "period": "202307",
+          "row_count": "1",
+          "amount": "3124596099",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "8d5c01c8-733c-4dd4-b460-b468299f0bca",
+          "run_id": "day11-202307-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202307/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202307/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:9cc386cc74bda1acd2202954a408624d251dea353a62cfe5f9beea88fe31b629",
+          "ingested_at": "2026-09-23T16:37:14.095108Z",
+          "fingerprint": "46f5099a265f5751702afeeb928f951b823a2dc6a2a4fc00e74b7e87a707476a",
+          "snapshot_hash": "4def94af4ba338907bcda2625d13124a34e1f4499a25db6f03269febcd6af2c0"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_23a030610cce46b0b198c77f07504295",
+        "params": {
+          "period": "202307"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202308",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:43:36.409527+00:00",
+    "status": "success",
+    "rows": 62,
+    "jobs": [
+      {
+        "job_id": "day11_caa4c00aba644f19ba663902a23c2834",
+        "params": {
+          "period": "202308"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_e72db5e4618a4e6c8d7b4b4c5d9b7062",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_25ccd4b34baf4874b225c5138f52cf14",
+        "params": {
+          "period": "202308",
+          "row_count": "62",
+          "amount": "2928869980",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "83a2419e-7ca1-4236-bc86-378d3e8e186c",
+          "run_id": "day11-202308-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202308/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202308/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:86bdf7fb59d989e465ffabbbe1852dafca285fd7ebab4e625c4ff2a825cf793a",
+          "ingested_at": "2026-09-23T16:37:18.320511Z",
+          "fingerprint": "5a5ffcb7026d627060f5b2384a394dbdf9d56d80283895558da086f82b7ab3cb",
+          "snapshot_hash": "93dd5b033086e9413b4ac410ea6baa8cfb68ea8ec3c3e9158b08b106a7d6fb3d"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ed24b79d3bc74a1db0c0986dd67372d2",
+        "params": {
+          "period": "202308"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202308",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:43:50.537530+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_3e2cd380c26e434d99559ca5d52f7828",
+        "params": {
+          "period": "202308"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_37cbe4aa41094a7ca21c9af2012a2277",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6a655ff966bf4a60b942cad7f0ae2925",
+        "params": {
+          "period": "202308",
+          "row_count": "1",
+          "amount": "2928869980",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "cd646ba6-decf-4740-920c-3aaf4209a90b",
+          "run_id": "day11-202308-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202308/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202308/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:87c8f7eb12702ed0676161c4558ab4cab07b703cdd701c372cef85068521ac51",
+          "ingested_at": "2026-09-23T16:37:22.477167Z",
+          "fingerprint": "dc52dbe79af38bdf1e8c7445685ba38f619f9a68e83db3a6db816c22b32ac7e7",
+          "snapshot_hash": "baecb88f498abb4ea3bf69633cfc9bd1873bad00e2c4fb9915a94b77d3ae7aec"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_4c61bb85549148e88ac74591e41fa9a4",
+        "params": {
+          "period": "202308"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202309",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:44:03.961717+00:00",
+    "status": "success",
+    "rows": 64,
+    "jobs": [
+      {
+        "job_id": "day11_4b9499a9d5124976b33cca13e2e84832",
+        "params": {
+          "period": "202309"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_a98fb43d49d24ba8b9d16f1fd47b397b",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_2e89680b4beb437f889e06fc5f94826e",
+        "params": {
+          "period": "202309",
+          "row_count": "64",
+          "amount": "3089289845",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "c58fcbea-1723-4b06-8414-770540fb9aa7",
+          "run_id": "day11-202309-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202309/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202309/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:d2b6b884c5ba390519f7115bb48706d819884c5a3a99f6093eac8d9f19b2e5f3",
+          "ingested_at": "2026-09-23T16:37:26.857889Z",
+          "fingerprint": "ce5a66af90908c74e275f68196520cdf6ea15421123f519cfcfa12cd044ab102",
+          "snapshot_hash": "715015a7811fa2538b0e47bcad186fa8356b8c747f86bf40ffdeff91e2283421"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_cb5750b25e7846f6937a803f97cbad8a",
+        "params": {
+          "period": "202309"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202309",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:44:17.561649+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_08a490a3918f40e0bbb601f79c118b81",
+        "params": {
+          "period": "202309"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_fbb2cf1b5b754bfd8173fe96aba3be25",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_059b6acc5aa9435399f576ce69a57fb4",
+        "params": {
+          "period": "202309",
+          "row_count": "1",
+          "amount": "3089289845",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "b25e113f-12f4-4149-8d5f-649d0f9361c7",
+          "run_id": "day11-202309-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202309/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202309/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:f792360ea880d37850a66271af7fe47d24c874b137c9bd3ad5049aa7b23668ca",
+          "ingested_at": "2026-09-23T16:37:30.153923Z",
+          "fingerprint": "b94ae55b77d8feaafea8b20ae62f6dbee99d765749e9dfbbec622dc1bd2ceea9",
+          "snapshot_hash": "02b96643208bd68c683a5ec73f24ed754f3058a4448b315e94355c56f98ce41b"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_7eb59d8ad23f4cc5a422cf507bd91550",
+        "params": {
+          "period": "202309"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202310",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:44:30.759102+00:00",
+    "status": "success",
+    "rows": 68,
+    "jobs": [
+      {
+        "job_id": "day11_24b450e948204cf8b6326524818e9c31",
+        "params": {
+          "period": "202310"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_40f54d7dfec648b3a33f551f2cd2eff1",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_8040836a913c4f48825f18d10f25254a",
+        "params": {
+          "period": "202310",
+          "row_count": "68",
+          "amount": "2930941997",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "0aa8b080-e452-436e-8990-8958f91c2a41",
+          "run_id": "day11-202310-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202310/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202310/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:7f8dbb5582df607e6c9ec759db2b2674c8be30f69b00364e41cf2703a7045eda",
+          "ingested_at": "2026-09-23T16:37:34.841130Z",
+          "fingerprint": "dfb25f5d2398e03cfaed6e0627ce5000785812ebfad8aa870331fc18c5839e70",
+          "snapshot_hash": "9d517be06c310031c0fff14a718e533475c2117623d7480a777ddffd49c0f8b9"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ee5faf161540469a8da68e54c95a4818",
+        "params": {
+          "period": "202310"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202310",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:44:43.871168+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_ddb307787102415783b7338cf06efaaf",
+        "params": {
+          "period": "202310"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_3f72a43d6c01411aa36633c8c675c2c2",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_f8afaa51d63846c69b1e5493a8e18211",
+        "params": {
+          "period": "202310",
+          "row_count": "1",
+          "amount": "2930941997",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "a57ca8e6-87cb-4e23-807a-f62bfffeb267",
+          "run_id": "day11-202310-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202310/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202310/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:a607d1b99dc588f615ca42f9b3e3c0259b511d4f0b77c0af096de74a52aceabb",
+          "ingested_at": "2026-09-23T16:37:38.368128Z",
+          "fingerprint": "c08e50cb72e39e01f7995fe71678a01dd2c9c66184718022b595a4692afbe8ea",
+          "snapshot_hash": "af347f3eae08ab8ff62234faa4760b6aff6f49729c627a4d04dd839161395c1c"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_bf3d688b548240b19fb953cf7235a438",
+        "params": {
+          "period": "202310"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202311",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:44:56.841196+00:00",
+    "status": "success",
+    "rows": 66,
+    "jobs": [
+      {
+        "job_id": "day11_25a9fee12f834d349a93c62a33ba53e6",
+        "params": {
+          "period": "202311"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_dd63cb6118d142d88bdc6e2da92a0827",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_dac8f19df7e141208d856be2c7ba0fc4",
+        "params": {
+          "period": "202311",
+          "row_count": "66",
+          "amount": "2843597323",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "4e7a71f3-74d7-4e48-b4d9-fa31e4fc3614",
+          "run_id": "day11-202311-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202311/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202311/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:93ce8453a299931fb4e3ba369c3ecf81bbd619c9bb02a5f54b5684bd21066948",
+          "ingested_at": "2026-09-23T16:37:42.500842Z",
+          "fingerprint": "973ff3291fb0e0ff1d1f477970521afdc487fc75006d54ab748e68d79fcc7e3f",
+          "snapshot_hash": "5d9de44f76312631ec4b899323c9bd3ca83fc328a34a6138477b31391b64fd4e"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_7eec76b69cb04e77bd3aa6c3cd26b588",
+        "params": {
+          "period": "202311"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202311",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:45:10.248952+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_0c92ea17c05d4b0e8413a5464e1c100a",
+        "params": {
+          "period": "202311"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c3701bb10e644ab1b972801b8e197dbb",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_bce1b0e0c4d245f4a07f696f257a0dbe",
+        "params": {
+          "period": "202311",
+          "row_count": "1",
+          "amount": "2843597323",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "427a6ba5-34cc-48a1-b4b6-5150f1daa3f9",
+          "run_id": "day11-202311-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202311/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202311/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:a45e353d12ca2f9cd62c35e82253423231a3c997d3c4c5709b3a1d78403998b5",
+          "ingested_at": "2026-09-23T16:37:46.111838Z",
+          "fingerprint": "58e92a31d43fd2a918e994d4c5f098baa371cf1fa8b1460f172b41087b868426",
+          "snapshot_hash": "fe71550fe0c96cdf690e14568491f456c77fdd79beaa728b8bc72c736789bd2c"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_a837d36ee5de4f01bf82e5e918e6c751",
+        "params": {
+          "period": "202311"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202312",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:45:24.323284+00:00",
+    "status": "success",
+    "rows": 67,
+    "jobs": [
+      {
+        "job_id": "day11_bb82aa68097e4885919a22bfe9852eaa",
+        "params": {
+          "period": "202312"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_5dc767fe7cfd4e068af1200298b37942",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d7e669c8d4774090bed146e145c9cbe0",
+        "params": {
+          "period": "202312",
+          "row_count": "67",
+          "amount": "3013313347",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "8e43acf8-bcc6-4453-af27-5c1b6380a59f",
+          "run_id": "day11-202312-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202312/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202312/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:219d8256b6904642b07793aa136519692d651b673bd2b70c4d40c2bb06935b24",
+          "ingested_at": "2026-09-23T16:37:50.799701Z",
+          "fingerprint": "17c49260fc36c907b96ce99f4c7954b6001bd7811d794253b6ce7583478ab0a7",
+          "snapshot_hash": "17aae255b30f3055644b4b37e4a9cc96f74b38ebf3cf4acfdae91fdd4d5810e1"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_50e089b9f2444ac1957b690b0c88309a",
+        "params": {
+          "period": "202312"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202312",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:45:37.757703+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_100888faa7c04dbcb0f54c322e85414d",
+        "params": {
+          "period": "202312"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_10cc9a9284fd4a4289d817c4e0b1dbd3",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_45e22289211841a1975c726ea8f82598",
+        "params": {
+          "period": "202312",
+          "row_count": "1",
+          "amount": "3013313347",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "2dff3873-2b40-45bc-b1e8-08891bee3707",
+          "run_id": "day11-202312-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202312/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202312/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:0011155f16cd19be6c402c192fc1933d551c21509701218855fac4eb7d30adbd",
+          "ingested_at": "2026-09-23T16:37:54.107018Z",
+          "fingerprint": "17077bf2fc81a330200925f83f2fa81e50a2267e2b46ea7f39414878bdab6e5a",
+          "snapshot_hash": "46e509e7b79637f21d907a834dce94665faf6c7acba6a08bba8e4fda361652dd"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6ef254f5ca8941218d600b3edb52e186",
+        "params": {
+          "period": "202312"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202401",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:45:51.383138+00:00",
+    "status": "already_loaded",
+    "rows": 62,
+    "jobs": [
+      {
+        "job_id": "day11_b59401ea02b341b3b3a3275a29ea3a97",
+        "params": {
+          "period": "202401"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202401",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:45:53.097870+00:00",
+    "status": "already_loaded",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_82d3d77d743249668304d1c768dff27d",
+        "params": {
+          "period": "202401"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202402",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:45:54.854338+00:00",
+    "status": "success",
+    "rows": 61,
+    "jobs": [
+      {
+        "job_id": "day11_a76756f17f374deeb1c02087151608fe",
+        "params": {
+          "period": "202402"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_7069370fbbc94201bf91e530ad2b86ea",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_4c0b893553974a5ba457eb5ebfaf5eaf",
+        "params": {
+          "period": "202402",
+          "row_count": "61",
+          "amount": "2381713667",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "39821bc7-a749-43c6-82eb-6600c43530aa",
+          "run_id": "day11-202402-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202402/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202402/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:ed6f7177ca0bbd2a263d959a8c4512e7456183b3dc8562a165eb40ec7402256e",
+          "ingested_at": "2026-09-23T16:38:06.038093Z",
+          "fingerprint": "55298296edd8e094ba9d3a6d4228b2b3bb4cceb7b17be1d5d433ef3170f758ed",
+          "snapshot_hash": "33035a8391acc4b740b882e936bae3908cfe2a70712d335088da809dc61d338f"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c765133a32714a6eafb74b49a3c7348a",
+        "params": {
+          "period": "202402"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202402",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:46:07.994174+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_8c1384a382654afb8ea03f6507dccae6",
+        "params": {
+          "period": "202402"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_2a8cfe5905494c72858294948064955f",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_2a9f34e492284a19add37addaaec8a89",
+        "params": {
+          "period": "202402",
+          "row_count": "1",
+          "amount": "2381713667",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "4832e343-6062-41c9-b094-2b9d00a2e8b7",
+          "run_id": "day11-202402-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202402/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202402/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:bd05e9a2caf8a4b2297a73d71dc77dde6b56fb5a65b5714adfcd9023e7a1e5f0",
+          "ingested_at": "2026-09-23T16:38:10.918601Z",
+          "fingerprint": "d255604102510f7bdb83227f5b5791de276162e43d216aceb3c2fc0031765c98",
+          "snapshot_hash": "20443cae46c37f11839edf07b3d4f456e99625843d61893674eae4d30f6c68f9"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_b4ee99f7ab814de6be38ae11b44d0808",
+        "params": {
+          "period": "202402"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202403",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:46:20.924273+00:00",
+    "status": "success",
+    "rows": 67,
+    "jobs": [
+      {
+        "job_id": "day11_18799c524a3e43febddba364720b620e",
+        "params": {
+          "period": "202403"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c0355aba399a4e5da5f566873f7d5725",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_411950119bc141f9859ad4f14d58c8b5",
+        "params": {
+          "period": "202403",
+          "row_count": "67",
+          "amount": "3280964943",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "00c1744f-8d84-4da8-bcda-ab3040f04cff",
+          "run_id": "day11-202403-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202403/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202403/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:153bb5c82680751375a14a74591fa3b9bfc32cd9608005159a846e31a3fffa9e",
+          "ingested_at": "2026-09-23T16:38:17.239995Z",
+          "fingerprint": "c17605e86fcc6ba179f5361d21362b5f8b78e070bfc14883c66dc01c4d58f1b6",
+          "snapshot_hash": "aef3ce84a83a64c3e7afe6b2f2ead9cb622810ecfbe0eb02488e10c8e03854cf"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_3ceb8ac318e34a1492192b80ab429a92",
+        "params": {
+          "period": "202403"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202403",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:46:35.530623+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_8ef7143b70e941f48efafa0ef5d3ff15",
+        "params": {
+          "period": "202403"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_b610a953f8a24651a26152ca6963ad2e",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_052ad4ddad344b00a581b85463658c3a",
+        "params": {
+          "period": "202403",
+          "row_count": "1",
+          "amount": "3280964943",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "31aeb754-b370-4e51-a2db-4e9a211eecbd",
+          "run_id": "day11-202403-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202403/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202403/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:184f67e31823093b661d57dc48b73b9aa9aae327dbc1099df313dca3de17133a",
+          "ingested_at": "2026-09-23T16:38:21.143745Z",
+          "fingerprint": "acc4bdcb64017406f67e3b4a2f6f0a6e8f541dfe747803adca3f4d4a890b12f1",
+          "snapshot_hash": "ffb22dd5ead50cc06be6af20a1ad0ef4cee89476d565386a56f4461a8c7fefb9"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_938ac5c288df4a0893790d81bc90d9ba",
+        "params": {
+          "period": "202403"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202404",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:46:48.847829+00:00",
+    "status": "success",
+    "rows": 61,
+    "jobs": [
+      {
+        "job_id": "day11_ffe647a89a854d25be46e74684193d18",
+        "params": {
+          "period": "202404"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_1d613bfcccfb47eca92bff21f5045d61",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_f69c7d2839a641a08f21c05a07ed6a03",
+        "params": {
+          "period": "202404",
+          "row_count": "61",
+          "amount": "2866042872",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "c5ae3c08-6e5c-40c5-b6ca-13fb360d1279",
+          "run_id": "day11-202404-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202404/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202404/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:36f1eabf81852031fa90cadac366ea5deec8b6ec2d1f896fcf678794384dafa8",
+          "ingested_at": "2026-09-23T16:38:26.198386Z",
+          "fingerprint": "ebd9e058aaf2cd1dd2f76d37ffce06de7fe55651ecbe1c4f5096994c75d5d34a",
+          "snapshot_hash": "084740a8caa721436585655ed124684947cc1945e26bbed92901892a9a88603d"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_33fb85dd79344097a760cbde921f1adb",
+        "params": {
+          "period": "202404"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202404",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:47:02.601010+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_a203d4773d78435b95935de8fa61054b",
+        "params": {
+          "period": "202404"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ece5a32454704eadbb38758c19e203b5",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6206dc9e058a4ce6a61626fe6c6036e3",
+        "params": {
+          "period": "202404",
+          "row_count": "1",
+          "amount": "2866042872",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "df78ca45-fcbc-4e40-963e-a4f7c518f734",
+          "run_id": "day11-202404-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202404/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202404/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:45bb02beec008be5fa6a1e2370e543fb01cfe9bcd3ced0e81e163f19d8c9d960",
+          "ingested_at": "2026-09-23T16:38:29.697944Z",
+          "fingerprint": "0bb25bd679e01edfcb34146cac282ffdacb59566539d3c0aa3ee1d5399663c3a",
+          "snapshot_hash": "53eb7e99a6003a61d5b61e2b8175cd38fc8c7c89d87001a83b8961d82facd1b2"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_5f33e28a67474ebf84dec742e5ef6949",
+        "params": {
+          "period": "202404"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202405",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:47:15.652132+00:00",
+    "status": "success",
+    "rows": 62,
+    "jobs": [
+      {
+        "job_id": "day11_85bf2926137d434696070cfb9b14a49f",
+        "params": {
+          "period": "202405"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_41c899bc238840ae985a0e10fcc5308a",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c6f134f7145e4b449f0a6d0474eeb501",
+        "params": {
+          "period": "202405",
+          "row_count": "62",
+          "amount": "3171305458",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "18c2e6e4-b299-4964-bbf2-f8a12b134c1a",
+          "run_id": "day11-202405-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202405/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202405/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:fe904db22eaaae514761dbc20eabe3ac5e48713e5577c54e208fee82e2a0639d",
+          "ingested_at": "2026-09-23T16:38:34.238135Z",
+          "fingerprint": "7103af8897e7159a055f917d1131e72dc37d6572236109da12a4d3a892ad2e5e",
+          "snapshot_hash": "65896eed63d690addb1848c54a149e7c57f7384f68c33a9e966979fe6a61e9cd"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_29fc0d4501104722a335eb6f4142f793",
+        "params": {
+          "period": "202405"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202405",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:47:28.430261+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_bb0e62906f0a4354b13208c3817bdd98",
+        "params": {
+          "period": "202405"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_f13eedd971c24350b77327294d512555",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_fb02ac923bf144b8bd8c9df65372d8b4",
+        "params": {
+          "period": "202405",
+          "row_count": "1",
+          "amount": "3171305458",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "df95b5b5-ac03-4253-8487-43ef11a5a0ea",
+          "run_id": "day11-202405-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202405/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202405/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:43e4c9e6ece8544d183131a923f9ddcdac9bd38d8a5cf342467a30acc24f4e1b",
+          "ingested_at": "2026-09-23T16:38:37.737862Z",
+          "fingerprint": "d02ca5976515b948856ec5378493a0adba80d46b4798a6eaa4d5ab64df9ff09c",
+          "snapshot_hash": "e15417f1048287ded862c0d062c5a154ccfd46a00100194892d87d912b2a8499"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ce858bb1e6674b178278811028c89fcb",
+        "params": {
+          "period": "202405"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202406",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:47:41.419640+00:00",
+    "status": "success",
+    "rows": 70,
+    "jobs": [
+      {
+        "job_id": "day11_7afa5c4a86e14149a6a4a6a0f0755d8b",
+        "params": {
+          "period": "202406"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ba71c1ea7cc4424491773f90271e7a01",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_5d13e2f733f646e8b428a3747351d1a8",
+        "params": {
+          "period": "202406",
+          "row_count": "70",
+          "amount": "3714879517",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "f16ea09a-052d-42b2-8563-e46d5df7ece5",
+          "run_id": "day11-202406-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202406/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202406/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:c37bc6e35c990507bb0e7252a1d3ada7698775bcb52219d77517699a905cc7c1",
+          "ingested_at": "2026-09-23T16:38:41.881873Z",
+          "fingerprint": "9beabcbaa2d3184ef4ea7e92d8de64ce058afc5571e800b08f547b8ec611cbb0",
+          "snapshot_hash": "909b16c31a1cf8cc30e6d941979c9586ea3e86b6f3a9780ecad2959a4b2fbc26"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d4ed67e24412432e9f76de08918aad88",
+        "params": {
+          "period": "202406"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202406",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:47:54.809835+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_3be73131b04c44d1a8e71d5f483228b9",
+        "params": {
+          "period": "202406"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_8e646ad7a9984205a90eb438fbf87b20",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_321f7a67c2934ca59ffd5889ba23392f",
+        "params": {
+          "period": "202406",
+          "row_count": "1",
+          "amount": "3714879517",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "e1e171da-7151-4120-a2bf-24b50096a4db",
+          "run_id": "day11-202406-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202406/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202406/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:ffda5ea6ed53305a114d813c4d849b62b492b2ef56a0c182b9eb549d20bfca3b",
+          "ingested_at": "2026-09-23T16:38:45.082203Z",
+          "fingerprint": "d6f5d7ea7d6e49c199dfd6f861d8a76f8a68fc01ad1844eed49d0de7a211b4df",
+          "snapshot_hash": "74b07b0146005203da6424382700a2ba9e1bf887d7f663b094b55b21461960d6"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d8d685280507451ebfcf792f924bc7e4",
+        "params": {
+          "period": "202406"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202407",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:48:07.729025+00:00",
+    "status": "success",
+    "rows": 68,
+    "jobs": [
+      {
+        "job_id": "day11_9b2284e1876b4400b9e437b478aa2560",
+        "params": {
+          "period": "202407"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_2474067a39784ba5bd4f95007c1d2144",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c194e95f61bd4f42ae9c9c7029fac811",
+        "params": {
+          "period": "202407",
+          "row_count": "68",
+          "amount": "3475251694",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "cc3757c7-0260-4c88-9060-3e2dfc35bf9a",
+          "run_id": "day11-202407-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202407/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202407/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:e29a1942601edad80771f920f06d7809f9e75820b505c937cb3b95796239e544",
+          "ingested_at": "2026-09-23T16:38:49.138945Z",
+          "fingerprint": "31a8577eea7d6bd135fe37afca3015c647d74b732623758be3556ef64825a1e5",
+          "snapshot_hash": "be16bb8445c2fa14739718ba31f4e80262af077f5231d0ee46f4cb897e39729c"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_304539346d9046ce9de87507f98e9e37",
+        "params": {
+          "period": "202407"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202407",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:48:20.801076+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_3fa34533b02142f791add0387ddec84a",
+        "params": {
+          "period": "202407"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_42b252be4de24f11b7336f92c83fc432",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_a2ecdbb4b30942c8873e44beef9e49a3",
+        "params": {
+          "period": "202407",
+          "row_count": "1",
+          "amount": "3475251694",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "1eb1df85-06d5-41b7-b15a-891fe9a2d062",
+          "run_id": "day11-202407-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202407/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202407/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:759a0baf5ee3da91bf8bd9bad740a89484dc6e9321652e8e3ddc320b4d036fbe",
+          "ingested_at": "2026-09-23T16:38:53.297678Z",
+          "fingerprint": "d162cdb28c30fe45a59d71291850673d1a3a58c122b139257574310d4604657c",
+          "snapshot_hash": "745efa70fe4b8a0ccc5d60bde95ca16825ab92ff817ff1eab447b68bd39ba038"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_5f641b6d61f74521b4764eb2a2b86b12",
+        "params": {
+          "period": "202407"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202408",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:48:34.566035+00:00",
+    "status": "success",
+    "rows": 66,
+    "jobs": [
+      {
+        "job_id": "day11_b97cf7fd1e184a6398f68560ff679822",
+        "params": {
+          "period": "202408"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_b863c4cc75c54addbc9939bc369b3abe",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6d87133743de4ba3b3f73dc7d4faf621",
+        "params": {
+          "period": "202408",
+          "row_count": "66",
+          "amount": "3348665576",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "27c9b7e5-5058-4b09-9d89-ba1eaa52f1aa",
+          "run_id": "day11-202408-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202408/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202408/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:c5786f128c15b1cb563b97b72a10696f789aaee8370fdcfaff9dc9697ee691ff",
+          "ingested_at": "2026-09-23T16:38:57.241730Z",
+          "fingerprint": "7f9bfa7f2fbabdbf0d1adc43727e564ebd3aa647db80c0655f582de9e204b295",
+          "snapshot_hash": "a448569cc7e1029257f37cbcec6155363ad818690caf565bacd42d97b509e05c"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_e834874835f544b4869aa7abb555c0ef",
+        "params": {
+          "period": "202408"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202408",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:48:48.102739+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_7322d3784e2d4e0e9249782ed8ac9619",
+        "params": {
+          "period": "202408"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_ea668c3ad2c84e8c975394a2e83cf4ad",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6706fffe39ea4732acb72b65b3dba635",
+        "params": {
+          "period": "202408",
+          "row_count": "1",
+          "amount": "3348665576",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "b4df83e6-a905-46e1-b31b-af26ed9346e8",
+          "run_id": "day11-202408-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202408/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202408/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:db1a0528ba3614a8a596e2a71d52cf474dda2b3bf9fc514766463b61ed30ce56",
+          "ingested_at": "2026-09-23T16:39:00.925869Z",
+          "fingerprint": "1b6601ee7a5890323af221c0a4e7d97b2e4b689293388294ca20bf9af7a1394b",
+          "snapshot_hash": "e871d4c43aa6016cc00b5d5ee0b94a460c1beec4b3a2afe81f6e6a245aa27e60"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_8c2072b38f484c91a63f55e9abdafcc7",
+        "params": {
+          "period": "202408"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202409",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:49:01.630259+00:00",
+    "status": "success",
+    "rows": 62,
+    "jobs": [
+      {
+        "job_id": "day11_472a03f3ae5540f08021dae545df2ca9",
+        "params": {
+          "period": "202409"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_f851f1e401c84218b407f360cd4946b1",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c10759cb0e1c46729a7f4b68b801bda5",
+        "params": {
+          "period": "202409",
+          "row_count": "62",
+          "amount": "4314638299",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "642bdc03-6e5c-415e-ad60-413f1d84394b",
+          "run_id": "day11-202409-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202409/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202409/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:d53dec423b9e3bf9e81b9ab6eae35addbd582139bd5c5abb738bd572dff7ee9b",
+          "ingested_at": "2026-09-23T16:39:06.560014Z",
+          "fingerprint": "007f1c573a498e6c15f08ceabf6ae87ac743f17ff55c1360ec43ee30c686f159",
+          "snapshot_hash": "3009ca73c785ba163e85406f53c6724060dd597dc9e1292548bc0ab0e648cb3e"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_d6f5582c743e43999696c4fae5f2ed42",
+        "params": {
+          "period": "202409"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202409",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:49:14.333580+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_7e657744ce774f9d8611fdb2ebf11608",
+        "params": {
+          "period": "202409"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_5b6ead35337f46ce99ea433979b65677",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_6efc197b56404d6a9e2cde6cde009010",
+        "params": {
+          "period": "202409",
+          "row_count": "1",
+          "amount": "4314638299",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "797efacd-a002-4158-8206-9434b67652c7",
+          "run_id": "day11-202409-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202409/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202409/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:ea06835bcacc15f5d1e49646995b2f865c2fb065b99b36d352b1f128e6c1f91e",
+          "ingested_at": "2026-09-23T16:39:10.278617Z",
+          "fingerprint": "ea0566b501b6afec2b775ec1b295bd54f465ec3ef2503979c26be8be5a35059a",
+          "snapshot_hash": "33fa3fa7fd6ab86fd8d1094fa0c34e7d8c331ce5c09be623b5c9233b07de0d4e"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_fbd1be66036542308c715c446af4fd83",
+        "params": {
+          "period": "202409"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202410",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:49:27.916085+00:00",
+    "status": "success",
+    "rows": 60,
+    "jobs": [
+      {
+        "job_id": "day11_15f8763b5aca441aaf998545a37d9de7",
+        "params": {
+          "period": "202410"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_c081dffc79d6439db5d712a384b7b997",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_e07743e1c4e5420d8691c09551be2673",
+        "params": {
+          "period": "202410",
+          "row_count": "60",
+          "amount": "3551796876",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "ec93e44f-3a66-4106-ac4c-07f6f8f0926a",
+          "run_id": "day11-202410-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202410/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202410/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:3f200a06de5d0e7f330990204164138abddfcb878b8d7450f7c677854dcd0ebc",
+          "ingested_at": "2026-09-23T16:39:16.119116Z",
+          "fingerprint": "29a7faa7eebc691e8ddcd5b836cca864a8e215575a2d418ad649cc6ea89f6356",
+          "snapshot_hash": "a1ad35856c1d1061a3a01c47da31fe04052f73205edcd9a4296d176f5e90fda1"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_831781e7651345d4873a2f45d105e18c",
+        "params": {
+          "period": "202410"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202410",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:49:41.248636+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_ca907387672846228635278816fbe23e",
+        "params": {
+          "period": "202410"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_faf02837c4384d6dbe4ab3b5648a1142",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_a23dcf2f40de4bcd9c409485000a74d7",
+        "params": {
+          "period": "202410",
+          "row_count": "1",
+          "amount": "3551796876",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "f43dff2a-36d7-47d5-ae26-bcb366f9c6f5",
+          "run_id": "day11-202410-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202410/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202410/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:a40577e3e6fe3dac90847b433cfb19aebb7992f0f003abcc343195840d431bbc",
+          "ingested_at": "2026-09-23T16:39:20.055551Z",
+          "fingerprint": "ab52c47532070fd494781f5570ed0064fb550520418aa5824ff0db16130fe883",
+          "snapshot_hash": "ee6769edb9eee912fd12a92b9cfaa8dbde5724e6cd1d563cc128d844509db488"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_00f75e7f389b4893b18ac35d76a5ad56",
+        "params": {
+          "period": "202410"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202411",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:49:54.268297+00:00",
+    "status": "success",
+    "rows": 60,
+    "jobs": [
+      {
+        "job_id": "day11_27cba71ec70840c1b6d6587de49a52ac",
+        "params": {
+          "period": "202411"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_efe9d80a6895453989201b537a9a049b",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_37a17873386d4877b36a3fb9a1adc5fa",
+        "params": {
+          "period": "202411",
+          "row_count": "60",
+          "amount": "3417361071",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "df5868d6-5ced-4406-b5dc-78373819492f",
+          "run_id": "day11-202411-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202411/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202411/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:316de9876c73d7fb2c8fb9e431690b0b1b24a1920b15eb44b5307b76066b84b2",
+          "ingested_at": "2026-09-23T16:39:24.421266Z",
+          "fingerprint": "3a745af3763bc0af155a632c13a6a226f7800a73aef4f7f9f92e432e45a2e7c1",
+          "snapshot_hash": "06c259d0d0493a39a1b170f27b0034e00d18a5bda3a2c31bf76a20e452f84147"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_28751ba0caa746d79efe5159485de4b9",
+        "params": {
+          "period": "202411"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202411",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:50:08.100686+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_f6fbdfd9eb054ac7b2873c024509d1ce",
+        "params": {
+          "period": "202411"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_8714d99a2d5e439d97dfe79d4ad201e1",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_92f826f233a84da9b18c17b552fb3ab9",
+        "params": {
+          "period": "202411",
+          "row_count": "1",
+          "amount": "3417361071",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "0c7f80f7-e6a9-4cd1-b0de-1acd73839cd5",
+          "run_id": "day11-202411-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202411/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202411/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:62da249177e850a05dfd84ad84b98e6204cdc80ef9f9138675639e173d753ffd",
+          "ingested_at": "2026-09-23T16:39:28.348026Z",
+          "fingerprint": "88a102d16c2d3dd231c0b7a0d0818b9e8c121877fc9904a6b2f890a20e120662",
+          "snapshot_hash": "1ea74a8f3c4cfd6f2765a5dbaa6acbaf39aaa7e1dec50fdb45da7a5f84594ff3"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_838f4de7ce8245ac8a06f4e44f194a11",
+        "params": {
+          "period": "202411"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202412",
+    "kind": "partner_detail",
+    "attempted_at": "2026-09-23T16:50:21.408178+00:00",
+    "status": "success",
+    "rows": 67,
+    "jobs": [
+      {
+        "job_id": "day11_460479b0e7474ba69b86d6ffe03463da",
+        "params": {
+          "period": "202412"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_26f6ef5603dd45ad8ab2d5c897d93a11",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_4702125a8b984eec850d59f361714c4d",
+        "params": {
+          "period": "202412",
+          "row_count": "67",
+          "amount": "4054690213",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "b305d609-7e15-4470-a765-a566eae08d6a",
+          "run_id": "day11-202412-partner_detail-r1",
+          "kind": "partner_detail",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202412/query_type=partner_detail/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202412/query_type=partner_detail/revision=1/manifest.json",
+          "checksum": "sha256:a00dde628667ea7dc608e022d0bb7c8e9f63cf828ad5b51844fbf85f062d92c1",
+          "ingested_at": "2026-09-23T16:39:32.562800Z",
+          "fingerprint": "79e81f6ddcb6f2cc364ff280ee6c052c3e72f27794410ebc42ebb977d2a61c39",
+          "snapshot_hash": "5d109d9aaa0de1d54c1cf5a61044a457af5f8bda7aabe07f595ea2ebc1ae0ac3"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_2b930a01f97e4a47be440a1b69fa1cda",
+        "params": {
+          "period": "202412"
+        },
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "period": "202412",
+    "kind": "world_total",
+    "attempted_at": "2026-09-23T16:50:35.398040+00:00",
+    "status": "success",
+    "rows": 1,
+    "jobs": [
+      {
+        "job_id": "day11_5d8264854f9344558e112b286c7a427c",
+        "params": {
+          "period": "202412"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_0e04703127c84569ab6e66d988b15a9e",
+        "params": {},
+        "status": "success"
+      },
+      {
+        "job_id": "day11_81610ec361e24cd3acfaa715e0684411",
+        "params": {
+          "period": "202412",
+          "row_count": "1",
+          "amount": "4054690213",
+          "old_revision": "0",
+          "old_checksum": "",
+          "event_id": "7a8c7476-c180-4c89-8d94-eb5031044329",
+          "run_id": "day11-202412-world_total-r1",
+          "kind": "world_total",
+          "revision": "1",
+          "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202412/query_type=world_total/revision=1/data.ndjson",
+          "manifest_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202412/query_type=world_total/revision=1/manifest.json",
+          "checksum": "sha256:1d6d9c4dad99e6bc050d9171c1f4676f8191c2f8087e83767efc48747e8b6a1f",
+          "ingested_at": "2026-09-23T16:39:38.939873Z",
+          "fingerprint": "c2438b2cf63cf92af00d049ff825412ba874710810ba6d9fcd4c6229482b196b",
+          "snapshot_hash": "3366259c62a1e93855fa135ba96cd1a205bdf2b2488c5f7b5a03ed9914e9cf1b"
+        },
+        "status": "success"
+      },
+      {
+        "job_id": "day11_aa288d86448246d9ba9a9bd69dc7c72a",
+        "params": {
+          "period": "202412"
+        },
+        "status": "success"
+      }
+    ]
+  }
+]

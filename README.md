@@ -242,3 +242,7 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 ### 對帳與正式發布
 
 Day 10 以固定候選批次、追加品質 audit 及交易式分區替換管理正式資料。一般 dbt build 不會發布；只有 PASS／WARN 才能更新正式表，FAIL 保留舊版。來源原檔查驗、操作命令、Dataset 與失敗復原方式見 [對帳與發布操作紀錄](docs/day10-quality-publish-record.md)，實際結果見 [驗收摘要](docs/evidence/day10-verification.md)。
+
+### 24 個月回填
+
+Day 11 已將 202301～202412 的兩類來源逐月載入、查驗、建置與發布；24 個月份皆為品質 PASS。實際操作採 S3 原檔驗證後的 Python／BigQuery 交易式 raw 載入，不沿用早期單月 Transfer PoC。指令、修訂 fixture、品質限制與證據見 [Day 11 執行紀錄](docs/day11-backfill-record.md)及[覆蓋清單](docs/evidence/day11/coverage.csv)。

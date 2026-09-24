@@ -1,0 +1,112 @@
+[
+  {
+    "period": "202302",
+    "run_id": "day11-202302-release-v1",
+    "attempted_at": "2026-09-23T16:46:12.920502+00:00",
+    "quality_status": "PASS",
+    "reason_codes": [],
+    "publish_status": "published",
+    "jobs": [
+      {
+        "job_id": "868d6bcf-64e9-475f-952b-72d0738a8005",
+        "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id",
+        "parameters": {
+          "run_id": "day11-202302-release-v1"
+        },
+        "result": "success"
+      },
+      {
+        "job_id": "70a2e6c4-4c81-43c0-a39d-564f2f9345f8",
+        "sql": "\nBEGIN TRANSACTION;\nIF NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.batch_inputs` WHERE candidate_batch_id=@run_id) THEN\n INSERT INTO `trade-analytics-508604.trade_analytics_published.candidate_batches`\n SELECT c.*,@run_id FROM `trade-analytics-508604.trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate` c WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version;\n INSERT INTO `trade-analytics-508604.trade_analytics_published.batch_inputs`\n SELECT @run_id,@period,@cmd_code,@hs_version,\n TO_JSON_STRING(STRUCT(\n  ARRAY(SELECT AS STRUCT c.* EXCEPT(candidate_batch_id) FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c WHERE\n candidate_batch_id=@run_id) AS candidate,\n  ARRAY(SELECT AS STRUCT * FROM `trade-analytics-508604.trade_raw.un_comtrade_partner_detail` WHERE\n period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version) AS detail,\n  ARRAY(SELECT AS STRUCT * FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` WHERE\n period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version) AS world,\n  ARRAY(SELECT PARSE_JSON(TO_JSON_STRING(a)) FROM `trade-analytics-508604.trade_raw.audit_ingestion_runs` a\n        WHERE period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version\n        UNION ALL SELECT PARSE_JSON(attestation_json) FROM `trade-analytics-508604.trade_analytics_published.source_attestations`\n        WHERE JSON_VALUE(attestation_json,'$.period')=@period) AS loads\n  )),\n (SELECT TO_HEX(SHA256(COALESCE(STRING_AGG(TO_JSON_STRING(c),'\\n' ORDER BY TO_JSON_STRING(c)),'')))\n  FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c WHERE candidate_batch_id=@run_id),CURRENT_TIMESTAMP();\nEND IF;\nCOMMIT TRANSACTION;\nSELECT * FROM `trade-analytics-508604.trade_analytics_published.batch_inputs` WHERE candidate_batch_id=@run_id;\n",
+        "parameters": {
+          "run_id": "day11-202302-release-v1",
+          "period": "202302",
+          "cmd_code": "8542",
+          "hs_version": "H6"
+        },
+        "result": "success"
+      },
+      {
+        "job_id": "4ba157a2-452f-4808-8e7a-6cf56cf180ff",
+        "sql": "\nINSERT INTO `trade-analytics-508604.trade_analytics_published.quality_audit_history`\nSELECT @run_id,@run_id,@period,@cmd_code,@hs_version,@status,\n JSON_VALUE_ARRAY(@audit,'$.reason_codes'),@audit,@hash,CURRENT_TIMESTAMP()\nFROM UNNEST([1])\nWHERE NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history`\n WHERE run_id=@run_id);\nSELECT * FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id;\n",
+        "parameters": {
+          "run_id": "day11-202302-release-v1",
+          "period": "202302",
+          "cmd_code": "8542",
+          "hs_version": "H6",
+          "status": "PASS",
+          "audit": "{\"accepted_load_events\": [{\"actual_primary_value_sum\": \"2944145048\", \"actual_row_count\": 73, \"checksum\": \"sha256:c2277e9fabbf1d35f8100d8f624a1bd0a37ecbc9db0decbda616ec18d972d39d\", \"cmd_code\": \"8542\", \"event_at\": \"2026-09-23T16:32:44.396463+00:00\", \"expected_primary_value_sum\": \"2944145048\", \"expected_row_count\": 73, \"hs_version\": \"H6\", \"manifest\": {\"checksum\": \"sha256:c2277e9fabbf1d35f8100d8f624a1bd0a37ecbc9db0decbda616ec18d972d39d\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"ingested_at\": \"2026-09-23T05:25:16.876106Z\", \"period\": \"202302\", \"primary_value_sum\": \"2944145048\", \"query_type\": \"partner_detail\", \"request_parameters\": {\"cmdCode\": \"8542\", \"customsCode\": \"C00\", \"flowCode\": \"M\", \"motCode\": 0, \"partner2Code\": 0, \"period\": \"202302\", \"reporterCode\": 842}, \"revision\": 1, \"row_count\": 73, \"schema_version\": \"2.0.0\", \"source\": \"UN Comtrade Preview API\"}, \"manifest_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202302/query_type=partner_detail/revision=1/manifest.json\", \"period\": \"202302\", \"query_type\": \"partner_detail\", \"revision\": 1, \"run_id\": \"day11-202302-partner_detail-r1\", \"snapshot_hash\": \"b3d84a281c988c079159d5e665a7d5fbd20793efad2ebe779ee35ae0a0b36edc\", \"source_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202302/query_type=partner_detail/revision=1/data.ndjson\", \"source_verification_job_id\": \"87b6aa4b-8cbe-410b-a68e-09b3b380c390\", \"status\": \"snapshot_verified\"}, {\"actual_primary_value_sum\": \"2944145048\", \"actual_row_count\": 1, \"checksum\": \"sha256:04fec47312aed3eb08b155cd17c9c8fcf8bf0f10a21096729ef098e3339c33b7\", \"cmd_code\": \"8542\", \"event_at\": \"2026-09-23T16:32:48.290533+00:00\", \"expected_primary_value_sum\": \"2944145048\", \"expected_row_count\": 1, \"hs_version\": \"H6\", \"manifest\": {\"checksum\": \"sha256:04fec47312aed3eb08b155cd17c9c8fcf8bf0f10a21096729ef098e3339c33b7\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"ingested_at\": \"2026-09-23T05:25:36.354746Z\", \"period\": \"202302\", \"primary_value_sum\": \"2944145048\", \"query_type\": \"world_total\", \"request_parameters\": {\"cmdCode\": \"8542\", \"customsCode\": \"C00\", \"flowCode\": \"M\", \"motCode\": 0, \"partner2Code\": 0, \"partnerCode\": 0, \"period\": \"202302\", \"reporterCode\": 842}, \"revision\": 1, \"row_count\": 1, \"schema_version\": \"2.0.0\", \"source\": \"UN Comtrade Preview API\"}, \"manifest_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202302/query_type=world_total/revision=1/manifest.json\", \"period\": \"202302\", \"query_type\": \"world_total\", \"revision\": 1, \"run_id\": \"day11-202302-world_total-r1\", \"snapshot_hash\": \"d9cd002f6a22c645f1b56eeabcaa013bd23a09460bca3fde1d24d05ef81ee89b\", \"source_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202302/query_type=world_total/revision=1/data.ndjson\", \"source_verification_job_id\": \"62468ef3-f211-4a77-a5af-cf1f94a0a662\", \"status\": \"snapshot_verified\"}], \"candidate_row_count\": 73, \"cmd_code\": \"8542\", \"country_coverage\": \"0.773748722586714076867044357659650198049617289100356851711744\", \"country_sum\": \"2278028470\", \"detail_row_count\": 73, \"difference\": \"0\", \"difference_rate\": \"0\", \"excluded_overlap_count\": 0, \"excluded_overlap_sum\": null, \"hhi_max_coverage_gap\": \"0.005\", \"hs_version\": \"H6\", \"partner_sum\": \"2944145048\", \"pass_max\": \"0.005\", \"period\": \"202302\", \"period_start_date\": \"2023-02-01\", \"reason_codes\": [], \"rule_version\": \"reconciliation-v1\", \"status\": \"PASS\", \"unresolved_count\": 0, \"warn_max\": \"0.02\", \"world_row_count\": 1, \"world_total\": \"2944145048\"}",
+          "hash": "5e8721603a1dbebe5760225526fd690041abf6922d0e1880db2a56a25820f2ad"
+        },
+        "result": "success"
+      },
+      {
+        "job_id": "bcb1b7de-72cf-4ea3-b219-77d2e9a75c8a",
+        "sql": "\nBEGIN TRANSACTION;\nASSERT (SELECT COUNT(*)=1 FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id AND period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version\n AND candidate_batch_id=@run_id AND status IN ('PASS','WARN')) AS 'gate_missing_or_failed';\nASSERT (SELECT COUNT(*)=1 FROM `trade-analytics-508604.trade_analytics_published.batch_inputs` WHERE candidate_batch_id=@run_id AND\n period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version) AS 'batch_mismatch';\nASSERT (SELECT candidate_hash FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id) =\n (SELECT TO_HEX(SHA256(COALESCE(STRING_AGG(TO_JSON_STRING(c),'\\n' ORDER BY TO_JSON_STRING(c)),'')))\n FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c WHERE candidate_batch_id=@run_id) AS 'candidate_changed';\nASSERT (SELECT COUNT(*)>0 AND COUNT(*)=COUNT(DISTINCT partner_code)\n AND COUNTIF(NOT (period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version))=0\n FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` WHERE candidate_batch_id=@run_id) AS 'candidate_grain';\nIF NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.publication_attempts` WHERE run_id=@run_id AND\n publish_status='published') THEN\n ASSERT NOT EXISTS(\n SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` a JOIN `trade-analytics-508604.trade_analytics_published.publication_attempts` p USING(run_id)\n WHERE a.period=@period AND a.cmd_code=@cmd_code AND a.hs_version=@hs_version AND\n p.publish_status='published'\n AND a.tested_at>(SELECT tested_at FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id)\n ) AS 'superseded_batch';\n DELETE FROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain` WHERE period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version;\n \n INSERT INTO `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain`\n SELECT c.*,a.status,CURRENT_TIMESTAMP(),@run_id FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c\n JOIN `trade-analytics-508604.trade_analytics_published.quality_audit_history` a ON c.candidate_batch_id=a.run_id\n WHERE c.candidate_batch_id=@run_id;\n INSERT INTO `trade-analytics-508604.trade_analytics_published.publication_attempts`\n VALUES(@attempt_id,@run_id,@period,@cmd_code,@hs_version,'published',CURRENT_TIMESTAMP());\nELSE\n INSERT INTO `trade-analytics-508604.trade_analytics_published.publication_attempts`\n VALUES(@attempt_id,@run_id,@period,@cmd_code,@hs_version,'already_published',CURRENT_TIMESTAMP());\nEND IF;\nCOMMIT TRANSACTION;\n",
+        "parameters": {
+          "run_id": "day11-202302-release-v1",
+          "attempt_id": "fffd1e55-2344-490d-ae04-3124a9c47e9c",
+          "period": "202302",
+          "cmd_code": "8542",
+          "hs_version": "H6"
+        },
+        "result": "success"
+      }
+    ]
+  },
+  {
+    "period": "202401",
+    "run_id": "day11-202401-release-v1",
+    "attempted_at": "2026-09-23T16:46:25.648996+00:00",
+    "quality_status": "PASS",
+    "reason_codes": [],
+    "publish_status": "published",
+    "jobs": [
+      {
+        "job_id": "1e6542b7-fb48-43d0-8b67-1eb35d407610",
+        "sql": "SELECT * FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id",
+        "parameters": {
+          "run_id": "day11-202401-release-v1"
+        },
+        "result": "success"
+      },
+      {
+        "job_id": "5543e3ef-364f-48d9-808f-3519a9786818",
+        "sql": "\nBEGIN TRANSACTION;\nIF NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.batch_inputs` WHERE candidate_batch_id=@run_id) THEN\n INSERT INTO `trade-analytics-508604.trade_analytics_published.candidate_batches`\n SELECT c.*,@run_id FROM `trade-analytics-508604.trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate` c WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version;\n INSERT INTO `trade-analytics-508604.trade_analytics_published.batch_inputs`\n SELECT @run_id,@period,@cmd_code,@hs_version,\n TO_JSON_STRING(STRUCT(\n  ARRAY(SELECT AS STRUCT c.* EXCEPT(candidate_batch_id) FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c WHERE\n candidate_batch_id=@run_id) AS candidate,\n  ARRAY(SELECT AS STRUCT * FROM `trade-analytics-508604.trade_raw.un_comtrade_partner_detail` WHERE\n period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version) AS detail,\n  ARRAY(SELECT AS STRUCT * FROM `trade-analytics-508604.trade_raw.un_comtrade_world_total` WHERE\n period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code=@cmd_code AND hs_version=@hs_version) AS world,\n  ARRAY(SELECT PARSE_JSON(TO_JSON_STRING(a)) FROM `trade-analytics-508604.trade_raw.audit_ingestion_runs` a\n        WHERE period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version\n        UNION ALL SELECT PARSE_JSON(attestation_json) FROM `trade-analytics-508604.trade_analytics_published.source_attestations`\n        WHERE JSON_VALUE(attestation_json,'$.period')=@period) AS loads\n  )),\n (SELECT TO_HEX(SHA256(COALESCE(STRING_AGG(TO_JSON_STRING(c),'\\n' ORDER BY TO_JSON_STRING(c)),'')))\n  FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c WHERE candidate_batch_id=@run_id),CURRENT_TIMESTAMP();\nEND IF;\nCOMMIT TRANSACTION;\nSELECT * FROM `trade-analytics-508604.trade_analytics_published.batch_inputs` WHERE candidate_batch_id=@run_id;\n",
+        "parameters": {
+          "run_id": "day11-202401-release-v1",
+          "period": "202401",
+          "cmd_code": "8542",
+          "hs_version": "H6"
+        },
+        "result": "success"
+      },
+      {
+        "job_id": "a84bc380-22e3-4745-bf71-f6d2d2d9783f",
+        "sql": "\nINSERT INTO `trade-analytics-508604.trade_analytics_published.quality_audit_history`\nSELECT @run_id,@run_id,@period,@cmd_code,@hs_version,@status,\n JSON_VALUE_ARRAY(@audit,'$.reason_codes'),@audit,@hash,CURRENT_TIMESTAMP()\nFROM UNNEST([1])\nWHERE NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history`\n WHERE run_id=@run_id);\nSELECT * FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id;\n",
+        "parameters": {
+          "run_id": "day11-202401-release-v1",
+          "period": "202401",
+          "cmd_code": "8542",
+          "hs_version": "H6",
+          "status": "PASS",
+          "audit": "{\"accepted_load_events\": [{\"actual_primary_value_sum\": \"2809141496\", \"actual_row_count\": 62, \"checksum\": \"sha256:a8109afd292c4b26b2cfb22c54b80067b19b7e293469e48eff29b40dea63ded3\", \"cmd_code\": \"8542\", \"event_at\": \"2026-09-23T16:43:54.416071+00:00\", \"expected_primary_value_sum\": \"2809141496\", \"expected_row_count\": 62, \"hs_version\": \"H6\", \"manifest\": {\"checksum\": \"sha256:a8109afd292c4b26b2cfb22c54b80067b19b7e293469e48eff29b40dea63ded3\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"ingested_at\": \"2026-09-23T16:37:58.138250Z\", \"period\": \"202401\", \"primary_value_sum\": \"2809141496\", \"query_type\": \"partner_detail\", \"request_parameters\": {\"cmdCode\": \"8542\", \"customsCode\": \"C00\", \"flowCode\": \"M\", \"motCode\": 0, \"partner2Code\": 0, \"period\": \"202401\", \"reporterCode\": 842}, \"revision\": 1, \"row_count\": 62, \"schema_version\": \"2.0.0\", \"source\": \"UN Comtrade Preview API\"}, \"manifest_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/manifest.json\", \"period\": \"202401\", \"query_type\": \"partner_detail\", \"revision\": 1, \"run_id\": \"day11-202401-partner_detail-r1\", \"snapshot_hash\": \"c33d9bade7dc7de50d235300449ab0fd471ff8b35a7881a551e29c4613e0f95e\", \"source_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/data.ndjson\", \"source_verification_job_id\": \"344000fb-2a10-4bc1-aa3d-32a93a32358c\", \"status\": \"snapshot_verified\"}, {\"actual_primary_value_sum\": \"2809141496\", \"actual_row_count\": 1, \"checksum\": \"sha256:5cec147d40e065b5e23505ca57b5d34c767669cd8a4382dca11012f836bff0bb\", \"cmd_code\": \"8542\", \"event_at\": \"2026-09-23T16:43:56.090593+00:00\", \"expected_primary_value_sum\": \"2809141496\", \"expected_row_count\": 1, \"hs_version\": \"H6\", \"manifest\": {\"checksum\": \"sha256:5cec147d40e065b5e23505ca57b5d34c767669cd8a4382dca11012f836bff0bb\", \"cmd_code\": \"8542\", \"hs_version\": \"H6\", \"ingested_at\": \"2026-09-23T16:38:01.706072Z\", \"period\": \"202401\", \"primary_value_sum\": \"2809141496\", \"query_type\": \"world_total\", \"request_parameters\": {\"cmdCode\": \"8542\", \"customsCode\": \"C00\", \"flowCode\": \"M\", \"motCode\": 0, \"partner2Code\": 0, \"partnerCode\": 0, \"period\": \"202401\", \"reporterCode\": 842}, \"revision\": 1, \"row_count\": 1, \"schema_version\": \"2.0.0\", \"source\": \"UN Comtrade Preview API\"}, \"manifest_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=world_total/revision=1/manifest.json\", \"period\": \"202401\", \"query_type\": \"world_total\", \"revision\": 1, \"run_id\": \"day11-202401-world_total-r1\", \"snapshot_hash\": \"c67dac9bacadb46ae0e3b5f00480f1067a1a7ed8beb500bc198ea59ef3d276d6\", \"source_file\": \"s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=world_total/revision=1/data.ndjson\", \"source_verification_job_id\": \"4a78d204-ef02-4d66-a53c-49fab6aff812\", \"status\": \"snapshot_verified\"}], \"candidate_row_count\": 62, \"cmd_code\": \"8542\", \"country_coverage\": \"0.753845910579934703296269986109663733364323204600869275685642\", \"country_sum\": \"2117659829\", \"detail_row_count\": 62, \"difference\": \"0\", \"difference_rate\": \"0\", \"excluded_overlap_count\": 0, \"excluded_overlap_sum\": null, \"hhi_max_coverage_gap\": \"0.005\", \"hs_version\": \"H6\", \"partner_sum\": \"2809141496\", \"pass_max\": \"0.005\", \"period\": \"202401\", \"period_start_date\": \"2024-01-01\", \"reason_codes\": [], \"rule_version\": \"reconciliation-v1\", \"status\": \"PASS\", \"unresolved_count\": 0, \"warn_max\": \"0.02\", \"world_row_count\": 1, \"world_total\": \"2809141496\"}",
+          "hash": "d46a9ba867856230f9d4d15bde36524f2639cba2bbf1e418c72c289bb40a768b"
+        },
+        "result": "success"
+      },
+      {
+        "job_id": "bcffa283-4156-46c1-86ea-0b2e7b6168d9",
+        "sql": "\nBEGIN TRANSACTION;\nASSERT (SELECT COUNT(*)=1 FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id AND period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version\n AND candidate_batch_id=@run_id AND status IN ('PASS','WARN')) AS 'gate_missing_or_failed';\nASSERT (SELECT COUNT(*)=1 FROM `trade-analytics-508604.trade_analytics_published.batch_inputs` WHERE candidate_batch_id=@run_id AND\n period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version) AS 'batch_mismatch';\nASSERT (SELECT candidate_hash FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id) =\n (SELECT TO_HEX(SHA256(COALESCE(STRING_AGG(TO_JSON_STRING(c),'\\n' ORDER BY TO_JSON_STRING(c)),'')))\n FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c WHERE candidate_batch_id=@run_id) AS 'candidate_changed';\nASSERT (SELECT COUNT(*)>0 AND COUNT(*)=COUNT(DISTINCT partner_code)\n AND COUNTIF(NOT (period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version))=0\n FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` WHERE candidate_batch_id=@run_id) AS 'candidate_grain';\nIF NOT EXISTS(SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.publication_attempts` WHERE run_id=@run_id AND\n publish_status='published') THEN\n ASSERT NOT EXISTS(\n SELECT 1 FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` a JOIN `trade-analytics-508604.trade_analytics_published.publication_attempts` p USING(run_id)\n WHERE a.period=@period AND a.cmd_code=@cmd_code AND a.hs_version=@hs_version AND\n p.publish_status='published'\n AND a.tested_at>(SELECT tested_at FROM `trade-analytics-508604.trade_analytics_published.quality_audit_history` WHERE run_id=@run_id)\n ) AS 'superseded_batch';\n DELETE FROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain` WHERE period=@period AND cmd_code=@cmd_code AND hs_version=@hs_version;\n \n INSERT INTO `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain`\n SELECT c.*,a.status,CURRENT_TIMESTAMP(),@run_id FROM `trade-analytics-508604.trade_analytics_published.candidate_batches` c\n JOIN `trade-analytics-508604.trade_analytics_published.quality_audit_history` a ON c.candidate_batch_id=a.run_id\n WHERE c.candidate_batch_id=@run_id;\n INSERT INTO `trade-analytics-508604.trade_analytics_published.publication_attempts`\n VALUES(@attempt_id,@run_id,@period,@cmd_code,@hs_version,'published',CURRENT_TIMESTAMP());\nELSE\n INSERT INTO `trade-analytics-508604.trade_analytics_published.publication_attempts`\n VALUES(@attempt_id,@run_id,@period,@cmd_code,@hs_version,'already_published',CURRENT_TIMESTAMP());\nEND IF;\nCOMMIT TRANSACTION;\n",
+        "parameters": {
+          "run_id": "day11-202401-release-v1",
+          "attempt_id": "9d26afca-e731-40f5-879f-7152d2248d58",
+          "period": "202401",
+          "cmd_code": "8542",
+          "hs_version": "H6"
+        },
+        "result": "success"
+      }
+    ]
+  }
+]

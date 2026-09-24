@@ -1,0 +1,434 @@
+[
+  {
+    "period": "202301",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 67,
+    "primary_value_sum": "2799575181",
+    "checksum": "sha256:90002d6c1374e9e48fe946e22613a9c0629766e87a1674eab11a7404a461abcf",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202301",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2799575181",
+    "checksum": "sha256:34823dc02b117e9c1603d45a5e09d3e37a59991a91a9f26fe38093ae5417d235",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202301/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202302",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 73,
+    "primary_value_sum": "2944145048",
+    "checksum": "sha256:c2277e9fabbf1d35f8100d8f624a1bd0a37ecbc9db0decbda616ec18d972d39d",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202302/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202302",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2944145048",
+    "checksum": "sha256:04fec47312aed3eb08b155cd17c9c8fcf8bf0f10a21096729ef098e3339c33b7",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202302/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202303",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 70,
+    "primary_value_sum": "3379107698",
+    "checksum": "sha256:3c82a2f922f0b8cdde272f167ae581619236835d9c34c055e9f6949c58eb7b04",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202303/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202303",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3379107698",
+    "checksum": "sha256:088d0ba8a5e2460b014cdb0320a3d0c3b954c9218a443c12b55ccc9fbbc11464",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202303/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202304",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 68,
+    "primary_value_sum": "2689984431",
+    "checksum": "sha256:bdfddd2a9dc921d33ae85a1af60eae73dd70812b5e1084d40044eb8c2e03bee0",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202304/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202304",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2689984431",
+    "checksum": "sha256:cc56bd007bbf23c023bbe13457bb49047747e79a9df5b527d093bebcbc7c49c8",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202304/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202305",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 63,
+    "primary_value_sum": "3162642177",
+    "checksum": "sha256:d083f55bac901c7731cb2757acfd542aaba203c892b468922ed28ed471f7f1b2",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202305/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202305",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3162642177",
+    "checksum": "sha256:2af68ab13c96a36adb7e3381cf4748f4dc9a580486aab1b592089d7a6b0f228e",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202305/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202306",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 61,
+    "primary_value_sum": "3156758175",
+    "checksum": "sha256:87fdd540a03dce114c54b32509b1fe13514c79c02af41e6b39738e99108d2e58",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202306",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3156758175",
+    "checksum": "sha256:942c572b4bf5959f2acacd1ffa7d123be0d44c9092660ca4b933d3a6a95c7c5c",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202306/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202307",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 65,
+    "primary_value_sum": "3124596099",
+    "checksum": "sha256:f265bb62d71157522c38d4d51581eb51889103743d736f37a706f9aec706af50",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202307/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202307",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3124596099",
+    "checksum": "sha256:9cc386cc74bda1acd2202954a408624d251dea353a62cfe5f9beea88fe31b629",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202307/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202308",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 62,
+    "primary_value_sum": "2928869980",
+    "checksum": "sha256:86bdf7fb59d989e465ffabbbe1852dafca285fd7ebab4e625c4ff2a825cf793a",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202308/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202308",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2928869980",
+    "checksum": "sha256:87c8f7eb12702ed0676161c4558ab4cab07b703cdd701c372cef85068521ac51",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202308/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202309",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 64,
+    "primary_value_sum": "3089289845",
+    "checksum": "sha256:d2b6b884c5ba390519f7115bb48706d819884c5a3a99f6093eac8d9f19b2e5f3",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202309/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202309",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3089289845",
+    "checksum": "sha256:f792360ea880d37850a66271af7fe47d24c874b137c9bd3ad5049aa7b23668ca",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202309/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202310",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 68,
+    "primary_value_sum": "2930941997",
+    "checksum": "sha256:7f8dbb5582df607e6c9ec759db2b2674c8be30f69b00364e41cf2703a7045eda",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202310/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202310",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2930941997",
+    "checksum": "sha256:a607d1b99dc588f615ca42f9b3e3c0259b511d4f0b77c0af096de74a52aceabb",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202310/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202311",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 66,
+    "primary_value_sum": "2843597323",
+    "checksum": "sha256:93ce8453a299931fb4e3ba369c3ecf81bbd619c9bb02a5f54b5684bd21066948",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202311/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202311",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2843597323",
+    "checksum": "sha256:a45e353d12ca2f9cd62c35e82253423231a3c997d3c4c5709b3a1d78403998b5",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202311/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202312",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 67,
+    "primary_value_sum": "3013313347",
+    "checksum": "sha256:219d8256b6904642b07793aa136519692d651b673bd2b70c4d40c2bb06935b24",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202312/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202312",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3013313347",
+    "checksum": "sha256:0011155f16cd19be6c402c192fc1933d551c21509701218855fac4eb7d30adbd",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202312/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202401",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 62,
+    "primary_value_sum": "2809141496",
+    "checksum": "sha256:a8109afd292c4b26b2cfb22c54b80067b19b7e293469e48eff29b40dea63ded3",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202401",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2809141496",
+    "checksum": "sha256:5cec147d40e065b5e23505ca57b5d34c767669cd8a4382dca11012f836bff0bb",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202402",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 61,
+    "primary_value_sum": "2381713667",
+    "checksum": "sha256:ed6f7177ca0bbd2a263d959a8c4512e7456183b3dc8562a165eb40ec7402256e",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202402/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202402",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2381713667",
+    "checksum": "sha256:bd05e9a2caf8a4b2297a73d71dc77dde6b56fb5a65b5714adfcd9023e7a1e5f0",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202402/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202403",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 67,
+    "primary_value_sum": "3280964943",
+    "checksum": "sha256:153bb5c82680751375a14a74591fa3b9bfc32cd9608005159a846e31a3fffa9e",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202403/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202403",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3280964943",
+    "checksum": "sha256:184f67e31823093b661d57dc48b73b9aa9aae327dbc1099df313dca3de17133a",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202403/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202404",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 61,
+    "primary_value_sum": "2866042872",
+    "checksum": "sha256:36f1eabf81852031fa90cadac366ea5deec8b6ec2d1f896fcf678794384dafa8",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202404/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202404",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "2866042872",
+    "checksum": "sha256:45bb02beec008be5fa6a1e2370e543fb01cfe9bcd3ced0e81e163f19d8c9d960",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202404/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202405",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 62,
+    "primary_value_sum": "3171305458",
+    "checksum": "sha256:fe904db22eaaae514761dbc20eabe3ac5e48713e5577c54e208fee82e2a0639d",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202405/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202405",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3171305458",
+    "checksum": "sha256:43e4c9e6ece8544d183131a923f9ddcdac9bd38d8a5cf342467a30acc24f4e1b",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202405/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202406",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 70,
+    "primary_value_sum": "3714879517",
+    "checksum": "sha256:c37bc6e35c990507bb0e7252a1d3ada7698775bcb52219d77517699a905cc7c1",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202406/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202406",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3714879517",
+    "checksum": "sha256:ffda5ea6ed53305a114d813c4d849b62b492b2ef56a0c182b9eb549d20bfca3b",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202406/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202407",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 68,
+    "primary_value_sum": "3475251694",
+    "checksum": "sha256:e29a1942601edad80771f920f06d7809f9e75820b505c937cb3b95796239e544",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202407/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202407",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3475251694",
+    "checksum": "sha256:759a0baf5ee3da91bf8bd9bad740a89484dc6e9321652e8e3ddc320b4d036fbe",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202407/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202408",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 66,
+    "primary_value_sum": "3348665576",
+    "checksum": "sha256:c5786f128c15b1cb563b97b72a10696f789aaee8370fdcfaff9dc9697ee691ff",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202408/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202408",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3348665576",
+    "checksum": "sha256:db1a0528ba3614a8a596e2a71d52cf474dda2b3bf9fc514766463b61ed30ce56",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202408/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202409",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 62,
+    "primary_value_sum": "4314638299",
+    "checksum": "sha256:d53dec423b9e3bf9e81b9ab6eae35addbd582139bd5c5abb738bd572dff7ee9b",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202409/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202409",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "4314638299",
+    "checksum": "sha256:ea06835bcacc15f5d1e49646995b2f865c2fb065b99b36d352b1f128e6c1f91e",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202409/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202410",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 60,
+    "primary_value_sum": "3551796876",
+    "checksum": "sha256:3f200a06de5d0e7f330990204164138abddfcb878b8d7450f7c677854dcd0ebc",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202410/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202410",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3551796876",
+    "checksum": "sha256:a40577e3e6fe3dac90847b433cfb19aebb7992f0f003abcc343195840d431bbc",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202410/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202411",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 60,
+    "primary_value_sum": "3417361071",
+    "checksum": "sha256:316de9876c73d7fb2c8fb9e431690b0b1b24a1920b15eb44b5307b76066b84b2",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202411/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202411",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "3417361071",
+    "checksum": "sha256:62da249177e850a05dfd84ad84b98e6204cdc80ef9f9138675639e173d753ffd",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202411/query_type=world_total/revision=1/data.ndjson"
+  },
+  {
+    "period": "202412",
+    "kind": "partner_detail",
+    "revision": 1,
+    "row_count": 67,
+    "primary_value_sum": "4054690213",
+    "checksum": "sha256:a00dde628667ea7dc608e022d0bb7c8e9f63cf828ad5b51844fbf85f062d92c1",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202412/query_type=partner_detail/revision=1/data.ndjson"
+  },
+  {
+    "period": "202412",
+    "kind": "world_total",
+    "revision": 1,
+    "row_count": 1,
+    "primary_value_sum": "4054690213",
+    "checksum": "sha256:1d6d9c4dad99e6bc050d9171c1f4676f8191c2f8087e83767efc48747e8b6a1f",
+    "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202412/query_type=world_total/revision=1/data.ndjson"
+  }
+]

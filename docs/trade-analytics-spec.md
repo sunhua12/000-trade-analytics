@@ -102,7 +102,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [ ] | Day 8 | 維度與事實表、國家代碼 | 建立國家 seed／dimension、HS dimension、fact；標示 World、國家與特殊代碼 | fact grain 唯一；未對應資料可追查，不靜默丟棄 |
 | [x] | Day 9 | SQL 指標、window function | 完成金額、市占率、MoM、YoY、HHI 與有效重量單位價值；補固定資料測試 | 手算結果一致；缺月、缺分母及 0 分母處理正確；見 [驗收紀錄](day09-metrics-record.md) |
 | [x] | Day 10 | 對帳、PASS／WARN／FAIL、發布門檻 | 建立 audit model 與品質 gate；展示單月完整分析 SQL | 真實單月已發布；異常 fixture 阻擋與回滾驗證通過；M2 技術驗收，見 [紀錄](day10-quality-publish-record.md) |
-| [ ] | Day 11 | 小批次回填、覆蓋率與資料修訂 | 先跑 3 個月，再完成 24 個月；核對每月兩類資料、版本與品質狀態 | 月份覆蓋清單完整；無靜默漏月；異常月份附原因 |
+| [x] | Day 11 | 小批次回填、覆蓋率與資料修訂 | 先跑 3 個月，再完成 24 個月；核對每月兩類資料、版本與品質狀態 | 24 個月均 PASS／已發布；修訂於隔離 fixture 驗證，真實修訂尚未發生；見[執行紀錄](day11-backfill-record.md) |
 | [ ] | Day 12 | Streamlit 查詢、參數化 SQL、快取 | 建立 Dashboard 篩選、趨勢、Top N 與品質摘要；先使用已驗證 mart | 篩選生效；查詢有日期限制；空結果不 crash |
 | [ ] | Day 13 | 視覺化與指標解讀 | 完成來源國圖表、YoY／HHI、資料新鮮度；依資料可用性加入地圖與散佈圖 | 本機展示完整；列出 3 項有數據支持的觀察與限制；里程碑 M3 |
 | [ ] | Day 14 | Airflow DAG、task 邊界與 logical date | 建立 Docker Compose、固定版本與 monthly DAG；包裝已完成的 ingestion／load／dbt 操作 | DAG 無 import error；單月可完成；XCom 只含 metadata |
@@ -156,6 +156,8 @@ Lambda Errors／Duration → CloudWatch Alarms → SNS
 來源檔案名不能假設會自動出現在 Transfer 匯入資料中；透過單次明確檔案集合及 load audit 連結來源，正規化時補上 lineage 欄位。一次只執行一個載入 partition，避免共用 landing table 相互覆蓋。
 
 BigQuery 的 S3 Transfer 支援排程載入，但其檔案匹配與寫入行為仍須依選定設定驗證。[官方介紹](https://docs.cloud.google.com/bigquery/docs/s3-transfer-intro)
+
+Day 11 實際多月份作業採用單一 Python 載入 adapter，先從 S3 取得並驗證來源與 manifest，再於 BigQuery 以暫存資料和交易式分區替換更新 raw；不沿用 Day 5 的手動 Transfer PoC，也不使用共用 landing 表。這是上述預設路徑的實作調整，包含版本保護、load audit 與重跑證據；詳見[Day 11 執行紀錄](day11-backfill-record.md)。
 
 ## 6. 資料契約與儲存規格
 

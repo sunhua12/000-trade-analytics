@@ -24,6 +24,7 @@ infrastructure/aws/bootstrap/backend.tf
 infrastructure/aws/local/
 .venv-dbt/
 profiles.yml
+!dbt/day11-profile/profiles.yml
 dbt/target/
 dbt/logs/
 dbt/dbt_packages/
