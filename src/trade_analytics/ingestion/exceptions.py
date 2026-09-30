@@ -9,6 +9,10 @@ class ComtradeRequestError(ComtradeError):
     """The HTTP request failed or exhausted its retries."""
 
 
+class ComtradeTransientError(ComtradeRequestError):
+    """A retryable HTTP or transport error persisted after client retries."""
+
+
 class ComtradeAuthenticationError(ComtradeRequestError):
     """The remote service rejected authentication or authorization."""
 

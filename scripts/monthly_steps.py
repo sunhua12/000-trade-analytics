@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from datetime import date, datetime
 from importlib import import_module
 from pathlib import Path
@@ -18,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT))
 
+from scripts.pipeline_exit import RetryablePipelineError, exit_for_error  # noqa: E402
 from scripts.verify_publication_sources import verify as verify_sources  # noqa: E402
 from trade_analytics.warehouse.backfill import (  # noqa: E402
     BUCKET,
@@ -32,6 +34,7 @@ from trade_analytics.warehouse.publish import Publisher  # noqa: E402
 LAMBDA_FUNCTION = "trade-analytics-ingestion"
 AWS_REGION = "ap-northeast-1"
 LOCATION = "asia-northeast1"
+API_REQUEST_SPACING_SECONDS = 1.0
 
 
 def next_month(period: str) -> date:
@@ -102,14 +105,22 @@ def invoke_lambda(period: str, kind: str, revision: int, run_id: str) -> dict[st
             "run_id": run_id,
         }
     )
+    # The Pool serializes task execution; this pause also separates fresh API calls.
+    time.sleep(API_REQUEST_SPACING_SECONDS)
     invocation = boto3.client("lambda", region_name=AWS_REGION).invoke(
         FunctionName=LAMBDA_FUNCTION,
         InvocationType="RequestResponse",
         Payload=payload.encode(),
     )
     body = json.loads(invocation["Payload"].read())
-    if invocation.get("StatusCode") != 200 or invocation.get("FunctionError"):
+    if invocation.get("StatusCode") != 200:
+        if int(invocation.get("StatusCode", 0)) >= 500:
+            raise RetryablePipelineError("Lambda service failed; inspect its log")
         raise RuntimeError("Lambda invocation failed; inspect the Lambda log for this run")
+    if invocation.get("FunctionError"):
+        if body.get("errorType") == "ComtradeTransientError":
+            raise RetryablePipelineError("Comtrade request exhausted Lambda retries")
+        raise RuntimeError("Lambda ingestion failed; inspect the Lambda log for this run")
     if body.get("status") not in ("success", "already_exists"):
         raise RuntimeError(f"Lambda ingestion failed: {body.get('status')}")
     expected_uri = f"s3://{BUCKET}/{prefix}"
@@ -334,4 +345,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as error:
+        raise SystemExit(exit_for_error(error)) from error
