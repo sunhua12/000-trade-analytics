@@ -54,7 +54,7 @@ docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-dag-proce
 
 ## 3. monthly DAG 的排程與驗證
 
-正式 DAG 採台北時間每月 1 日的 `CronDataIntervalTimetable`、`catchup=False`、`max_active_runs=1` 與 `max_active_tasks=1`。排程 run 依 `data_interval_end` 確定已結束的月份；例如 2026-10-01 的 interval 結束時，最近一個完整月份為 202609。檢查最多 3 個候選月，按最早月份優先，但每次 run 只處理一個可用月份；其他待處理月份需再次手動觸發。Airflow 3 的手動觸發要明確提供 `conf.period`。[官方模板說明](https://airflow.apache.org/docs/apache-airflow/3.3.2/templates-ref.html)可對照日期欄位。
+正式 DAG 採台北時間每月 1 日的 `CronDataIntervalTimetable`、`catchup=False`、`max_active_runs=1` 與 `max_active_tasks=1`。排程 run 依 `data_interval_end` 確定已結束的月份；例如 2026-10-01 的 interval 結束時，最近一個完整月份為 202609。Day 15 的 DAG 已改成按最早月份優先，串行處理最多 3 個候選月中的可用月份；超過三期範圍的未發布月份另列為 `older_unpublished`。Airflow 3 的手動觸發要明確提供 `conf.period`。[官方模板說明](https://airflow.apache.org/docs/apache-airflow/3.3.2/templates-ref.html)可對照日期欄位。
 
 建立 `trade_pipeline` Pool、slot 設為 1，讓 monthly 與 Day 16 backfill 共用。可用 CLI：
 
@@ -64,7 +64,7 @@ docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-dag-proce
 docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow dags list-runs trade_monthly_pipeline
 ```
 
-`scripts/monthly_plan.py` 在 S3 來源成對存在時直接認定可用；來源不存在時詢問 Comtrade Preview API。空結果為 `not_available`，HTTP／解析／不完整 S3 配對為錯誤。月份上限與未就緒分支已用隔離測試驗證；真實雲端的已發布月份完整重跑結果見 [執行紀錄](day14-run-record.md)。重試、告警與自動清空多月積欠屬 Day 15；獨立 backfill DAG 與故障復原驗收屬 Day 16。
+`scripts/monthly_plan.py` 在 S3 來源成對存在時直接認定可用；來源不存在時詢問 Comtrade Preview API。空結果為 `not_available`，HTTP／解析／不完整 S3 配對為錯誤。月份上限與未就緒分支已用隔離測試驗證；真實雲端的已發布月份完整重跑結果見 [執行紀錄](day14-run-record.md)。Day 15 重試與告警操作見 [操作手冊](day15-operations-manual.md)；獨立 backfill DAG 與故障復原驗收屬 Day 16。
 
 手動執行已發布月份時，指定原本的發布 run ID 才會重跑同一批次。只有 `period` 時，已發布月份會略過；未發布月份會產生新的 run ID。先在 UI 確認 DAG 仍為暫停，然後使用：
 

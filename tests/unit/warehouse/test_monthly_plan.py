@@ -58,6 +58,7 @@ def test_empty_source_is_not_available(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(monthly_plan, "bigquery_client", lambda: object())
     monkeypatch.setattr(boto3, "client", lambda *args, **kwargs: object())
     monkeypatch.setattr(monthly_plan, "current_published", lambda client, period: None)
+    monkeypatch.setattr(monthly_plan, "older_unpublished", lambda client, oldest: ["202601"])
     monkeypatch.setattr(monthly_plan, "source_available", lambda *args: False)
     result = monthly_plan.plan(
         interval_end=datetime(2026, 10, 1, tzinfo=ZoneInfo("Asia/Taipei")),
@@ -66,6 +67,25 @@ def test_empty_source_is_not_available(monkeypatch: pytest.MonkeyPatch) -> None:
     assert len(result["checks"]) == 3
     assert {check["status"] for check in result["checks"]} == {"not_available"}
     assert result["selected"] == []
+    assert result["older_unpublished"] == ["202601"]
+    unavailable = {"partner_detail": False, "world_total": False}
+    assert all(check["sources"] == unavailable for check in result["checks"])
+
+
+def test_multiple_ready_months_remain_in_old_to_new_order(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(monthly_plan, "bigquery_client", lambda: object())
+    monkeypatch.setattr(boto3, "client", lambda *args, **kwargs: object())
+    monkeypatch.setattr(monthly_plan, "current_published", lambda client, period: None)
+    monkeypatch.setattr(monthly_plan, "older_unpublished", lambda client, oldest: [])
+    monkeypatch.setattr(monthly_plan, "source_available", lambda *args: True)
+    result = monthly_plan.plan(
+        interval_end=datetime(2026, 10, 1, tzinfo=ZoneInfo("Asia/Taipei")),
+        dag_run_id="scheduled-1",
+    )
+    assert [item["period"] for item in result["selected"]] == ["202607", "202608", "202609"]
+    assert len({item["run_id"] for item in result["selected"]}) == 3
 
 
 def test_missing_pair_with_empty_api_response_is_not_available(
@@ -83,6 +103,7 @@ def test_missing_pair_with_empty_api_response_is_not_available(
             return type("Response", (), {"count": 0, "data": []})()
 
     monkeypatch.setattr(monthly_plan, "ComtradeClient", EmptyClient)
+    monkeypatch.setattr("scripts.monthly_plan.time.sleep", lambda seconds: None)
     assert not monthly_plan.source_available(EmptyS3(), object(), "202608", "world_total", 1)
 
 

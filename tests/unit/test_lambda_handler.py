@@ -1,8 +1,14 @@
+import json
 from typing import Any
 
 import pytest
 from pydantic import ValidationError
 
+from trade_analytics.ingestion.exceptions import (
+    ComtradeResponseError,
+    ResponseTruncatedError,
+    StorageConflictError,
+)
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
 from trade_analytics.ingestion.s3_storage import StoredS3Ingestion
 from trade_analytics.lambda_handler import handler
@@ -129,3 +135,37 @@ def test_handler_requires_raw_bucket_after_event_validation(
         )
 
     assert runner.calls == []
+
+
+@pytest.mark.parametrize(
+    ("failure", "category"),
+    [
+        (ComtradeResponseError("secret URL"), "ComtradeResponseError"),
+        (ResponseTruncatedError("limit"), "ResponseTruncatedError"),
+        (StorageConflictError("secret path"), "StorageConflictError"),
+    ],
+)
+def test_handler_emits_one_structured_failure_and_reraises(
+    failure: Exception,
+    category: str,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    class FailingRunner:
+        def __call__(self, *args: Any, **kwargs: Any) -> StoredS3Ingestion:
+            raise failure
+
+    monkeypatch.setenv("RAW_BUCKET", "raw-bucket")
+    with pytest.raises(type(failure)):
+        handler(
+            {"action": "ingest", "period": "202401", "query_type": "world_total"},
+            type("Context", (), {"aws_request_id": "request-1"})(),
+            runner=FailingRunner(),
+        )
+    records = [json.loads(line) for line in capsys.readouterr().out.splitlines()]
+    assert [record["event"] for record in records] == ["ingestion_started", "ingestion_failed"]
+    assert records[0]["run_id"].startswith("lambda-")
+    assert records[1]["run_id"] == records[0]["run_id"]
+    assert records[1]["aws_request_id"] == "request-1"
+    assert records[1]["error_category"] == category
+    assert "secret" not in records[1]["message"]

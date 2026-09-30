@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -14,9 +15,11 @@ import httpx
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT))
 
+from scripts.pipeline_exit import exit_for_error  # noqa: E402
 from trade_analytics.ingestion.client import ComtradeClient  # noqa: E402
-from trade_analytics.ingestion.queries import ComtradeQuery  # noqa: E402
+from trade_analytics.ingestion.queries import ComtradeQuery, QueryType  # noqa: E402
 from trade_analytics.warehouse.backfill import (  # noqa: E402
     BUCKET,
     KINDS,
@@ -26,6 +29,7 @@ from trade_analytics.warehouse.backfill import (  # noqa: E402
 
 AWS_REGION = "ap-northeast-1"
 BIGQUERY_LOCATION = "asia-northeast1"
+API_REQUEST_SPACING_SECONDS = 1.0
 
 
 def previous_month(period: str) -> str:
@@ -68,6 +72,34 @@ def current_published(client: Any, period: str) -> str | None:
     return rows[0].published_run_id if rows else None
 
 
+def older_unpublished(client: Any, oldest_candidate: str) -> list[str]:
+    """Expose months before the bounded lookback without probing their remote sources."""
+    if oldest_candidate <= "202301":
+        return []
+    from google.cloud import bigquery
+
+    table = f"`{PROJECT}.trade_analytics_published.mart_us_semiconductor_supply_chain`"
+    job = client.query(
+        f"SELECT DISTINCT FORMAT_DATE('%Y%m', period_start_date) AS period FROM {table} "
+        "WHERE period_start_date < PARSE_DATE('%Y%m',@oldest) "
+        "AND cmd_code='8542' AND hs_version='H6'",
+        location=BIGQUERY_LOCATION,
+        job_config=bigquery.QueryJobConfig(
+            query_parameters=[bigquery.ScalarQueryParameter("oldest", "STRING", oldest_candidate)],
+            maximum_bytes_billed=10**9,
+        ),
+    )
+    published = {row.period for row in job.result(timeout=180)}
+    missing: list[str] = []
+    period = "202301"
+    while period < oldest_candidate:
+        if period not in published:
+            missing.append(period)
+        year, month = int(period[:4]), int(period[4:])
+        period = f"{year + (month == 12):04d}{month % 12 + 1:02d}"
+    return missing
+
+
 def bigquery_client() -> Any:
     from google.cloud import bigquery
 
@@ -94,7 +126,10 @@ def source_available(
         return True
     if any(found):
         raise ValueError(f"incomplete S3 source pair: {period} {kind} revision {revision}")
-    query = ComtradeQuery(period=period, cmd_code="8542", query_type=kind, revision=revision)
+    query = ComtradeQuery(
+        period=period, cmd_code="8542", query_type=QueryType(kind), revision=revision
+    )
+    time.sleep(API_REQUEST_SPACING_SECONDS)
     response = ComtradeClient(http_client=http_client).fetch(query)
     if response.count == 0 and not response.data:
         return False
@@ -131,7 +166,8 @@ def plan(
     client = bigquery_client()
     s3 = boto3.client("s3", region_name=AWS_REGION)
     selected: list[dict[str, Any]] = []
-    checks: list[dict[str, str]] = []
+    checks: list[dict[str, Any]] = []
+    backlog = older_unpublished(client, candidates[0]) if manual_period is None else []
     with httpx.Client(timeout=httpx.Timeout(30.0)) as http_client:
         for period in candidates:
             existing = current_published(client, period)
@@ -141,21 +177,29 @@ def plan(
                     {"period": period, "status": "already_published", "checked_at": checked_at}
                 )
                 continue
-            ready = all(
-                source_available(s3, http_client, period, kind, chosen_revisions[kind])
+            sources = {
+                kind: source_available(s3, http_client, period, kind, chosen_revisions[kind])
                 for kind in KINDS
-            )
+            }
+            ready = all(sources.values())
             if not ready:
                 checks.append(
-                    {"period": period, "status": "not_available", "checked_at": checked_at}
+                    {
+                        "period": period,
+                        "status": "not_available",
+                        "checked_at": checked_at,
+                        "sources": sources,
+                    }
                 )
                 continue
             run_id = replay_run_id or (
                 f"monthly-{period}-{hashlib.sha256(dag_run_id.encode()).hexdigest()[:16]}"
             )
             selected.append({"period": period, "run_id": run_id, "revisions": chosen_revisions})
-            checks.append({"period": period, "status": "ready", "checked_at": checked_at})
-    return {"selected": selected, "checks": checks}
+            checks.append(
+                {"period": period, "status": "ready", "checked_at": checked_at, "sources": sources}
+            )
+    return {"selected": selected, "checks": checks, "older_unpublished": backlog}
 
 
 def main() -> None:
@@ -177,4 +221,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as error:
+        raise SystemExit(exit_for_error(error)) from error

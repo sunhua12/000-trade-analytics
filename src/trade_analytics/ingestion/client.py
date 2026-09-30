@@ -14,6 +14,7 @@ from trade_analytics.ingestion.exceptions import (
     ComtradeAuthenticationError,
     ComtradeRequestError,
     ComtradeResponseError,
+    ComtradeTransientError,
     ResponseTruncatedError,
 )
 from trade_analytics.ingestion.queries import ComtradeQuery
@@ -77,7 +78,7 @@ class ComtradeClient:
                 with attempt:
                     return self._request(query)
         except _RetryableRequestError as error:
-            raise ComtradeRequestError(
+            raise ComtradeTransientError(
                 f"UN Comtrade request failed after {self.MAX_ATTEMPTS} attempts: {error}"
             ) from error
         raise AssertionError("retry loop completed without a response")

@@ -52,6 +52,16 @@ variable "log_retention_days" {
   type    = number
   default = 30
 }
+variable "alarm_email_endpoint" {
+  description = "Confirmed recipient for ingestion alarms. Keep the address out of Git."
+  type        = string
+  default     = null
+  sensitive   = true
+}
+variable "alarm_duration_threshold_ms" {
+  type    = number
+  default = 150000
+}
 variable "image_tag_mutability" {
   type    = string
   default = "MUTABLE"

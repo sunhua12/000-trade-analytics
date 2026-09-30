@@ -411,3 +411,17 @@ M2 的單月分析與發布技術驗收完成；不因此將 M1、既有 IaC／�
 正式 DAG 先檢查最多 3 個完整月份，每次 run 只處理一個可用月份；兩種來源分開 ingest／load，通過來源查驗後才執行 dbt、品質 audit、gate 與 publish。XCom 只傳 metadata。Pool 為 1 slot，DAG 同時只允許一個 run，避免候選 Dataset 多 writer。
 
 以真實 `202412` 和原發布 run ID 重跑，Airflow 11 個 task 全部成功，dbt 88 項成功，品質 PASS，發布為 `already_published`；正式表 67 筆與 `published_at` 均未變。月份邊界、`not_available`、來源配對錯誤、raw 錯誤與 FAIL gate 由隔離測試驗證。此次由 AI 協助完成實作與驗證，不代表已測驗本人理解程度；新月份首次發布、長期重試／告警與積欠月份自動處理仍待後續。
+
+## Day 15：月度補期、有限重試與告警
+
+| 項目 | 紀錄 |
+|---|---|
+| 實作日期 | 2026-09-30～2026-10-01（Asia/Taipei） |
+| 狀態 | Airflow 多月串行、重試分類、Lambda 結構化日誌與 AWS 告警已部署；SNS email 訂閱與實際收件仍待完成 |
+| 分支 | `feature/monthly-scheduling-alerts` |
+| 本人實際學習工時 | 未提供；未以助理執行時間代填 |
+| 詳細紀錄 | [Day 15 執行紀錄](day15-run-record.md)與[操作手冊](day15-operations-manual.md) |
+
+Monthly DAG 在最多三期的窗口內依舊到新串行處理可用月份；來源未就緒保留每種類型與檢查時間。暫時性遠端錯誤以明確退出碼供 Airflow 額外重試，永久錯誤與品質 FAIL 不重試。真實唯讀檢查指出 202606、202607 可用，202608 尚未可用，但較早的 202501～202605 共 17 個月未發布；正式 DAG 因此保持暫停，避免跳過積欠直接發布較新月份。
+
+已發布的 202412 用原 run ID 安全重跑成功，正式 67 筆與發布時間不變。Terraform 新增三個 CloudWatch filters、五個 Alarms、SNS topic／policy，並以不可變映像 digest 更新 Lambda；部署後 plan 無 drift。隔離真實 handler 失敗產生可解析的 JSON 日誌，Errors 與 151 秒 Duration 均觸發隔離 Alarm，Alarm history 顯示 SNS topic 動作成功；隔離雲端資源已清理。Topic 尚無 email 訂閱，不能宣稱實際通知已送達。技術實作與驗證由 AI 協助，尚未測驗本人理解，個人學習時間未記錄。

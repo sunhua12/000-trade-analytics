@@ -26,6 +26,8 @@ def test_job_output_excludes_sql_parameters_and_source_rows() -> None:
 
 
 def test_ingest_rejects_mismatched_source_identity(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr("scripts.monthly_steps.time.sleep", lambda seconds: None)
+
     class FakeLambda:
         def invoke(self, **kwargs: Any) -> dict[str, Any]:
             return {
