@@ -3,6 +3,10 @@
 .mypy_cache/
 .ruff_cache/
 .coverage
+.env
+compose.aws.yaml
+/logs/
+/config/airflow.cfg
 htmlcov/
 __pycache__/
 *.py[cod]

@@ -1,8 +1,13 @@
 .git
 .github
 .venv
+.venv-dbt
 .env
 .env.*
+.DS_Store
+**/.DS_Store
+logs
+config
 .pytest_cache
 .mypy_cache
 .ruff_cache

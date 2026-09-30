@@ -397,3 +397,17 @@ M2 的單月分析與發布技術驗收完成；不因此將 M1、既有 IaC／�
 獨立 SQL 核對 2023 年 World 36,062,821,301 美元、2024 年 40,386,451,682 美元，年變化約 +11.99%。馬來西亞 2024 年金額 9,598,343,899 美元，仍為來源國／地區第一；24 個月份國家覆蓋率介於 63.01%～82.92%，HHI 全部為 `insufficient_coverage`，不能解讀成 0。2024-12 有 66 筆國家／地區列具地圖碼，55 筆具有效金額／YoY；預設散佈圖只顯示排名 Top 10。真實 Streamlit 篩選與提示驗收無例外，詳情及限制見執行紀錄。
 
 實作及驗證由 AI 協助，未測驗本人對三項觀察及指標口徑的理解。雲端實際帳單費用與個人學習工時未提供。Day 14 接續 Airflow monthly DAG。
+
+## Day 14：Airflow monthly DAG 與單月安全重跑
+
+| 項目 | 紀錄 |
+|---|---|
+| 實作日期 | 2026-09-30（Asia/Taipei） |
+| 狀態 | Compose、AWS／GCP 容器身分、正式 monthly DAG 與已發布月份完整安全重跑通過；DAG 暫停 |
+| 分支 | `feature/airflow-monthly-pipeline` |
+| 本人實際學習工時 | 未提供；未以助理執行時間代填 |
+| 詳細紀錄 | [Day 14 執行紀錄](day14-run-record.md) |
+
+正式 DAG 先檢查最多 3 個完整月份，每次 run 只處理一個可用月份；兩種來源分開 ingest／load，通過來源查驗後才執行 dbt、品質 audit、gate 與 publish。XCom 只傳 metadata。Pool 為 1 slot，DAG 同時只允許一個 run，避免候選 Dataset 多 writer。
+
+以真實 `202412` 和原發布 run ID 重跑，Airflow 11 個 task 全部成功，dbt 88 項成功，品質 PASS，發布為 `already_published`；正式表 67 筆與 `published_at` 均未變。月份邊界、`not_available`、來源配對錯誤、raw 錯誤與 FAIL gate 由隔離測試驗證。此次由 AI 協助完成實作與驗證，不代表已測驗本人理解程度；新月份首次發布、長期重試／告警與積欠月份自動處理仍待後續。
