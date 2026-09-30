@@ -34,8 +34,14 @@ SOURCE_FIELDS = (
 
 
 def source_key(period: str, kind: str, revision: int = 1) -> str:
-    if not re.fullmatch(r"20(?:23|24)(?:0[1-9]|1[0-2])", period):
-        raise ValueError("period must be in 202301 through 202412")
+    if not re.fullmatch(r"[0-9]{6}", period):
+        raise ValueError("period must be YYYYMM")
+    try:
+        parsed = datetime.strptime(period, "%Y%m")
+    except ValueError as error:
+        raise ValueError("period must be a valid YYYYMM") from error
+    if parsed.strftime("%Y%m") != period or period < "202301":
+        raise ValueError("period must be 202301 or later")
     if kind not in KINDS or revision < 1:
         raise ValueError("invalid source identity")
     return (

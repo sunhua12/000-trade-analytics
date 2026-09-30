@@ -272,3 +272,28 @@ Day 10 以固定候選批次、追加品質 audit 及交易式分區替換管理
 ### 24 個月回填
 
 Day 11 已將 202301～202412 的兩類來源逐月載入、查驗、建置與發布；24 個月份皆為品質 PASS。實際操作採 S3 原檔驗證後的 Python／BigQuery 交易式 raw 載入，不沿用早期單月 Transfer PoC。指令、修訂 fixture、品質限制與證據見 [Day 11 執行紀錄](docs/day11-backfill-record.md)及[覆蓋清單](docs/evidence/day11/coverage.csv)。
+
+### 單月執行與 Airflow 學習
+
+Day 14 已建立 `trade_monthly_pipeline`，以本機 Airflow 3.3.2 編排可用性檢查、兩種來源擷取／載入、查驗、dbt、品質審計與發布。單月入口為 `scripts/monthly_steps.py`。AWS 使用本機 `hua` profile，GCP 使用 ADC；身分檔僅唯讀掛入 worker。已在真實雲端以已發布的 `202412` 和原 run ID 跑完整條 DAG，11 個 task 成功，正式表維持原 67 筆與 `published_at`。DAG 目前保持暫停，尚未驗證新月份的首次發布。
+
+啟動和檢查（先依 [身分範本](compose.identity.example.yaml)備妥未追蹤的 `compose.aws.yaml`，將其中的 `AWS_PROFILE` 設為 `hua`；不必修改主機 `default` profile）：
+
+```bash
+docker compose -f docker-compose.yaml -f compose.aws.yaml up -d --build
+docker compose -f docker-compose.yaml -f compose.aws.yaml ps
+docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-dag-processor airflow dags list-import-errors --local
+docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow pools get trade_pipeline
+```
+
+在 `http://localhost:8080` 檢查 `trade_monthly_pipeline` 的 Grid／Task logs。手動執行須指定月份；已發布月份需附原 run ID 才會安全重跑，否則在可用性檢查後略過：
+
+```bash
+docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow dags test trade_monthly_pipeline -c '{"period":"202412","replay_run_id":"day11-202412-final-v1"}'
+docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow dags list-runs trade_monthly_pipeline
+docker compose -f docker-compose.yaml -f compose.aws.yaml down
+```
+
+若從 UI 觸發，在 DAG 頁面的 Trigger 表單填入相同 JSON conf；執行後從 Grid 選擇該 run，再點各 task 查看 log。`dags test` 會建立可追查的測試 run，正式新月份應先確認來源、權限與發布意圖後再解除暫停或從 UI 觸發。
+
+排程每月 1 日依台北時間檢查最近最多 3 個完整月份，但一次 DAG run 只處理其中最早的一個可用月份；漏跑月份目前須再手動執行。Airflow 只在本機服務運行時排程。設定、月份語意與操作細節見 [Airflow 指南](docs/day14-airflow-manual.md)，實測見 [Day 14 執行紀錄](docs/day14-run-record.md)。

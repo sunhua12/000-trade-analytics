@@ -11,8 +11,8 @@ select
     ) as month_end_date
 from unnest(
     generate_date_array(
-        date '2023-01-01',
-        date '2024-12-01',
+        date '{{ var("month_spine_start_date") }}',
+        date '{{ var("month_spine_end_date") }}',
         interval 1 month
     )
 ) as month_start_date

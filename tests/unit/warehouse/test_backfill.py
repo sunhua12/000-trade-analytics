@@ -16,9 +16,10 @@ def test_revision_decisions() -> None:
         decision(current + [{"revision": 1, "checksum": "sha256:b"}], 3, "sha256:c")
 
 
-def test_source_identity_rejects_out_of_range() -> None:
+def test_source_identity_accepts_new_months_and_rejects_invalid_ones() -> None:
     assert "period=202402/query_type=world_total/revision=1" in source_key("202402", "world_total")
-    for period in ("202212", "202501", "202313"):
+    assert "period=202601/query_type=world_total/revision=1" in source_key("202601", "world_total")
+    for period in ("202212", "202313", "20231", "2023aa"):
         with pytest.raises(ValueError):
             source_key(period, "world_total")
 

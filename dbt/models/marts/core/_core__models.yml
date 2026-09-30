@@ -1,7 +1,7 @@
 version: 2
 models:
 - name: dim_months
-  description: 2023 年至 2024 年的完整月份日曆，每月一列。
+  description: 由 month_spine_start_date 至 month_spine_end_date 的完整月份日曆，每月一列；預設為 2023 年至 2024 年。
   columns:
   - name: month_start_date
     description: 每月第一天，也是月份主鍵。
