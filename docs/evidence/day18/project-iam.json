@@ -1,0 +1,60 @@
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-898093147725@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:trade-dashboard-runtime@trade-analytics-508604.iam.gserviceaccount.com"
+      ],
+      "role": "roles/bigquery.jobUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-898093147725@gcp-sa-bigquerydatatransfer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/bigquerydatatransfer.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-898093147725@gcp-sa-cloudaicompanion.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudaicompanion.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-898093147725@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:898093147725-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "user:abzy121212@gmail.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-898093147725@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-898093147725@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    }
+  ],
+  "etag": "BwZcw49fMKc=",
+  "version": 1
+}

@@ -259,6 +259,12 @@ Day 12 基本查詢的實測結果見 [查詢驗證](docs/evidence/day12-verific
 
 未選或多選 Partner 時，YoY 區塊顯示 World 月度 YoY；只選一個 Partner 時顯示該來源國／地區的 YoY。2023 年沒有 2022 年基期，顯示「無可比較基期」。目前 24 個月國家覆蓋率為 63.01%～82.92%，HHI 均為 `insufficient_coverage`，不畫成 0。地圖僅含有 `map_iso3` 的已確認國家／地區，畫面另列未映射筆數與金額；特殊代碼 490 不畫入地圖。圖表以浮點數顯示，精確金額以 BigQuery `NUMERIC` 核對。詳見 [Day 13 展示與分析紀錄](docs/day13-dashboard-record.md)。
 
+## Cloud Run Live Demo
+
+[開啟美國半導體進口分析 Dashboard](https://trade-dashboard-898093147725.asia-northeast1.run.app)。線上展示 `202301～202504` 的 28 個已發布月份，使用專用 BigQuery 唯讀身分；本機預設仍為 `202301～202412`。以 `TRADE_DASHBOARD_FIRST_MONTH` 與 `TRADE_DASHBOARD_AFTER_LAST_MONTH`（不含）設定展示邊界，最多 60 個月。
+
+部署、權限、TWD 250 月度預算通知、停止／清理與固定條件查核見 [Cloud Run 操作手冊](docs/day18-cloud-run-manual.md)，真實線上與單月安全重跑證據見 [Day 18 執行紀錄](docs/day18-run-record.md)。
+
 ## 設計與實作計畫
 
 - [AWS Terraform 管理與接管流程](infrastructure/aws/README.md)

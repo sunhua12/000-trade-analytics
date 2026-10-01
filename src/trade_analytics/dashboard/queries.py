@@ -20,8 +20,20 @@ class Settings:
     location: str = "asia-northeast1"
     maximum_bytes_billed: int = 1_000_000_000
     cache_ttl_seconds: int = 3600
+    first_month: date = FIRST_MONTH
+    after_last_month: date = AFTER_LAST_MONTH
 
     def __post_init__(self) -> None:
+        if (
+            self.first_month.day != 1
+            or self.after_last_month.day != 1
+            or self.first_month >= self.after_last_month
+            or (self.after_last_month.year - self.first_month.year) * 12
+            + self.after_last_month.month
+            - self.first_month.month
+            > 60
+        ):
+            raise ValueError("展示範圍須為完整月份，且最多 60 個月")
         if not re.fullmatch(r"[a-z][a-z0-9-]{4,61}[a-z0-9]", self.project):
             raise ValueError("TRADE_BQ_PROJECT 不是有效的 GCP 專案 ID")
         if not re.fullmatch(r"[a-z]+-[a-z]+\d", self.location):
@@ -36,6 +48,12 @@ class Settings:
             location=os.environ.get("TRADE_BQ_LOCATION", "asia-northeast1"),
             maximum_bytes_billed=int(os.environ.get("TRADE_BQ_MAX_BYTES_BILLED", "1000000000")),
             cache_ttl_seconds=int(os.environ.get("TRADE_DASHBOARD_CACHE_TTL", "3600")),
+            first_month=date.fromisoformat(
+                os.environ.get("TRADE_DASHBOARD_FIRST_MONTH", "2023-01-01")
+            ),
+            after_last_month=date.fromisoformat(
+                os.environ.get("TRADE_DASHBOARD_AFTER_LAST_MONTH", "2025-01-01")
+            ),
         )
 
     def table(self, name: str) -> str:
@@ -48,10 +66,12 @@ def next_month(month: date) -> date:
     return date(month.year + (month.month == 12), month.month % 12 + 1, 1)
 
 
-def validate_range(start: date, end: date) -> None:
+def validate_range(
+    start: date, end: date, first: date = FIRST_MONTH, after_last: date = AFTER_LAST_MONTH
+) -> None:
     if start.day != 1 or end.day != 1 or start > end:
         raise ValueError("請選擇有效且依時間排序的月份")
-    if start < FIRST_MONTH or end >= AFTER_LAST_MONTH:
+    if start < first or end >= after_last:
         raise ValueError("月份超出已規劃的展示範圍")
 
 
@@ -85,7 +105,7 @@ class PublishedQueries:
         return rows
 
     def _scope(self, start: date, end: date) -> list[Any]:
-        validate_range(start, end)
+        validate_range(start, end, self.settings.first_month, self.settings.after_last_month)
         scalar = self.bigquery.ScalarQueryParameter
         return [
             scalar("start_date", "DATE", start),
@@ -102,8 +122,8 @@ class PublishedQueries:
             WHERE period_start_date >= @start_date AND period_start_date < @end_exclusive
               AND cmd_code=@cmd_code AND hs_version=@hs_version ORDER BY month""",
             [
-                scalar("start_date", "DATE", FIRST_MONTH),
-                scalar("end_exclusive", "DATE", AFTER_LAST_MONTH),
+                scalar("start_date", "DATE", self.settings.first_month),
+                scalar("end_exclusive", "DATE", self.settings.after_last_month),
                 scalar("cmd_code", "STRING", CMD_CODE),
                 scalar("hs_version", "STRING", HS_VERSION),
             ],
@@ -179,7 +199,7 @@ class PublishedQueries:
 
     def monthly_metrics(self, start: date, end: date) -> list[dict[str, Any]]:
         """Read month-grain values once, including the prior year for World YoY."""
-        validate_range(start, end)
+        validate_range(start, end, self.settings.first_month, self.settings.after_last_month)
         table = self.settings.table("mart_us_semiconductor_supply_chain")
         scalar = self.bigquery.ScalarQueryParameter
         # The lower bound is fixed so the display range remains partition-pruned.
@@ -195,7 +215,7 @@ class PublishedQueries:
                   AND cmd_code=@cmd_code AND hs_version=@hs_version
                 GROUP BY month ORDER BY month""",
             [
-                scalar("first_month", "DATE", FIRST_MONTH),
+                scalar("first_month", "DATE", self.settings.first_month),
                 scalar("end_exclusive", "DATE", next_month(end)),
                 scalar("cmd_code", "STRING", CMD_CODE),
                 scalar("hs_version", "STRING", HS_VERSION),
@@ -259,7 +279,7 @@ class PublishedQueries:
         )
 
     def quality(self, start: date, end: date) -> list[dict[str, Any]]:
-        validate_range(start, end)
+        validate_range(start, end, self.settings.first_month, self.settings.after_last_month)
         table = self.settings.table("publication_quality_summary")
         scalar = self.bigquery.ScalarQueryParameter
         return self._run(

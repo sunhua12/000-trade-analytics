@@ -153,3 +153,22 @@ def test_only_published_tables_are_allowed() -> None:
         settings.table("candidate_batches")
     with pytest.raises(ValueError):
         queries.Settings("malicious.project`")
+
+
+def test_configured_range_includes_new_publication_and_rejects_upper_bound(
+    setup_bigquery: FakeClient,
+) -> None:
+    settings = queries.Settings("trade-analytics-508604", after_last_month=date(2025, 5, 1))
+    reader = queries.PublishedQueries(settings, setup_bigquery)
+    reader.trend(date(2025, 4, 1), date(2025, 4, 1), [])
+    params = {p[0]: p[2] for p in setup_bigquery.calls[0][1].query_parameters}
+    assert params["end_exclusive"] == date(2025, 5, 1)
+    with pytest.raises(ValueError):
+        reader.quality(date(2025, 5, 1), date(2025, 5, 1))
+    assert len(setup_bigquery.calls) == 1
+
+
+@pytest.mark.parametrize("end", [date(2023, 1, 1), date(2025, 5, 2), date(2028, 2, 1)])
+def test_invalid_configured_range_rejected(end: date) -> None:
+    with pytest.raises(ValueError):
+        queries.Settings("trade-analytics-508604", after_last_month=end)

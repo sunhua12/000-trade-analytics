@@ -1,0 +1,46 @@
+[
+  {
+    "dag_id": "trade_monthly_pipeline",
+    "dag_display_name": "trade_monthly_pipeline",
+    "is_paused": "True",
+    "is_stale": "False",
+    "last_parsed_time": "2026-10-01 08:56:57.763837+00:00",
+    "last_parse_duration": "0.06516258299234323",
+    "last_expired": null,
+    "bundle_name": "dags-folder",
+    "bundle_version": null,
+    "relative_fileloc": "trade_monthly_pipeline.py",
+    "fileloc": "/opt/airflow/dags/trade_monthly_pipeline.py",
+    "description": "Check and process up to three completed months in serial order",
+    "timetable_summary": "0 0 1 * *",
+    "timetable_description": "At 00:00, on day 1 of the month",
+    "timetable_partitioned": "False",
+    "timetable_periodic": "True",
+    "tags": [
+      {
+        "name": "monthly",
+        "dag_id": "trade_monthly_pipeline",
+        "dag_display_name": "trade_monthly_pipeline"
+      },
+      {
+        "name": "trade",
+        "dag_id": "trade_monthly_pipeline",
+        "dag_display_name": "trade_monthly_pipeline"
+      }
+    ],
+    "max_active_tasks": "1",
+    "max_active_runs": "1",
+    "max_consecutive_failed_dag_runs": "0",
+    "has_task_concurrency_limits": "False",
+    "has_import_errors": "False",
+    "next_dagrun_logical_date": "2026-08-31 16:00:00+00:00",
+    "next_dagrun_data_interval_start": "2026-08-31 16:00:00+00:00",
+    "next_dagrun_data_interval_end": "2026-09-30 16:00:00+00:00",
+    "next_dagrun_run_after": "2026-09-30 16:00:00+00:00",
+    "allowed_run_types": null,
+    "owners": [
+      "airflow"
+    ],
+    "is_backfillable": "True"
+  }
+]

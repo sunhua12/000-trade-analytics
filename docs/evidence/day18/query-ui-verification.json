@@ -1,0 +1,187 @@
+{
+  "verified_at_utc": "2026-10-01T08:58:59.743028+00:00",
+  "reference_job_id": "aff867f4-b74d-4a47-abd6-ab1f61fac7a4",
+  "bytes_processed": 118292,
+  "bytes_billed": 10485760,
+  "reference_rows": [
+    {
+      "month": "2024-01-01",
+      "world_value": "2809141496",
+      "country_coverage": "0.753845911",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "677589792",
+      "partner_yoy": "-0.127210011"
+    },
+    {
+      "month": "2024-02-01",
+      "world_value": "2381713667",
+      "country_coverage": "0.733670387",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "487558244",
+      "partner_yoy": "-0.362500857"
+    },
+    {
+      "month": "2024-03-01",
+      "world_value": "3280964943",
+      "country_coverage": "0.796674554",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "932589262",
+      "partner_yoy": "-0.005359793"
+    },
+    {
+      "month": "2024-04-01",
+      "world_value": "2866042872",
+      "country_coverage": "0.730315946",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "782268120",
+      "partner_yoy": "0.178704983"
+    },
+    {
+      "month": "2024-05-01",
+      "world_value": "3171305458",
+      "country_coverage": "0.759638211",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "844409047",
+      "partner_yoy": "0.027169249"
+    },
+    {
+      "month": "2024-06-01",
+      "world_value": "3714879517",
+      "country_coverage": "0.776517966",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "915024825",
+      "partner_yoy": "0.175885246"
+    },
+    {
+      "month": "2024-07-01",
+      "world_value": "3475251694",
+      "country_coverage": "0.688055445",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "968115466",
+      "partner_yoy": "0.042876101"
+    },
+    {
+      "month": "2024-08-01",
+      "world_value": "3348665576",
+      "country_coverage": "0.639448277",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "616221521",
+      "partner_yoy": "-0.098595365"
+    },
+    {
+      "month": "2024-09-01",
+      "world_value": "4314638299",
+      "country_coverage": "0.71348893",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "1038735878",
+      "partner_yoy": "0.223869817"
+    },
+    {
+      "month": "2024-10-01",
+      "world_value": "3551796876",
+      "country_coverage": "0.630106975",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "747518000",
+      "partner_yoy": "0.027785092"
+    },
+    {
+      "month": "2024-11-01",
+      "world_value": "3417361071",
+      "country_coverage": "0.706308693",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "618888354",
+      "partner_yoy": "-0.099341867"
+    },
+    {
+      "month": "2024-12-01",
+      "world_value": "4054690213",
+      "country_coverage": "0.715999027",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "969425390",
+      "partner_yoy": "-0.086277422"
+    },
+    {
+      "month": "2025-01-01",
+      "world_value": "3525209472",
+      "country_coverage": "0.678628137",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "704223307",
+      "partner_yoy": "0.039306252"
+    },
+    {
+      "month": "2025-02-01",
+      "world_value": "2896179813",
+      "country_coverage": "0.719064808",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "754331621",
+      "partner_yoy": "0.547162068"
+    },
+    {
+      "month": "2025-03-01",
+      "world_value": "3897507654",
+      "country_coverage": "0.774262042",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "1288746272",
+      "partner_yoy": "0.381901255"
+    },
+    {
+      "month": "2025-04-01",
+      "world_value": "3114414147",
+      "country_coverage": "0.659214347",
+      "hhi": null,
+      "hhi_status": "insufficient_coverage",
+      "partner_value": "730153936",
+      "partner_yoy": "-0.066619338"
+    }
+  ],
+  "dashboard_jobs": [
+    {
+      "job_id": "65ae9b86-2d15-4164-ab09-9c510c95d0bb",
+      "bytes_processed": 132203,
+      "bytes_billed": 10485760
+    },
+    {
+      "job_id": "8f12a0d4-a5e1-48dc-9201-a8acb672b292",
+      "bytes_processed": 74869,
+      "bytes_billed": 10485760
+    }
+  ],
+  "historical_filtered_table_rows": [
+    1,
+    12,
+    12,
+    1,
+    12
+  ],
+  "april_metrics": [
+    {
+      "label": "已發布月份",
+      "value": "1"
+    },
+    {
+      "label": "最新成功發布月份",
+      "value": "2025-04"
+    },
+    {
+      "label": "期間 World 金額",
+      "value": "USD 3.11B"
+    }
+  ],
+  "ui_exceptions": 0,
+  "scope": "real BigQuery + local AppTest; live browser verified separately"
+}

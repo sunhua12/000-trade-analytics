@@ -35,6 +35,12 @@ jobs:
           docker run --rm --platform linux/amd64 --entrypoint python trade-ci
           -c "from trade_analytics.lambda_handler import handler; from pydantic import ValidationError;
           exec('try:\n handler({\"action\": \"unsupported\"}, None)\nexcept ValidationError:\n print(\"handler validation passed\")\nelse:\n raise SystemExit(\"invalid event was accepted\")')"
+  dashboard-container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: docker build --platform linux/amd64 --provenance=false -f Dockerfile.dashboard -t trade-dashboard-ci .
+      - run: bash scripts/check_dashboard_container.sh trade-dashboard-ci
   terraform:
     runs-on: ubuntu-latest
     strategy:
