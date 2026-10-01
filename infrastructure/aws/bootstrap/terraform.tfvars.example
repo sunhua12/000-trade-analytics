@@ -5,5 +5,7 @@ state_bucket_name = "YOUR_UNIQUE_STATE_BUCKET"
 # Set only after checking for an existing provider in the AWS account.
 # existing_github_oidc_provider_arn = "arn:aws:iam::YOUR_ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
 github_repository      = "YOUR_OWNER/YOUR_REPOSITORY"
+# Obtain using: gh api repos/OWNER/REPOSITORY/actions/oidc/customization/sub
+# github_oidc_subject_prefix = "repo:YOUR_OWNER@OWNER_ID/YOUR_REPOSITORY@REPOSITORY_ID"
 github_deploy_branches = ["main"]
 raw_bucket_name        = "YOUR_RAW_BUCKET"

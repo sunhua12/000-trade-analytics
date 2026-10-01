@@ -3,7 +3,7 @@
 import sys
 
 from airflow.models import DagBag
-from airflow.timetables.simple import NullTimetable
+from airflow.sdk.definitions.timetables.simple import NullTimetable
 
 
 def check(folder: str) -> None:

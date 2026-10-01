@@ -14,6 +14,15 @@ variable "github_deploy_branches" {
     error_message = "Deployment requires at least one exact branch, without wildcards."
   }
 }
+variable "github_oidc_subject_prefix" {
+  description = "Exact prefix from GitHub's OIDC customization API; new repositories include immutable IDs."
+  type        = string
+  default     = null
+  validation {
+    condition     = var.github_oidc_subject_prefix == null ? true : can(regex("^repo:[A-Za-z0-9_.-]+(@[0-9]+)?/[A-Za-z0-9_.-]+(@[0-9]+)?$", var.github_oidc_subject_prefix))
+    error_message = "Use the exact repo:owner/repository prefix, with optional immutable IDs."
+  }
+}
 variable "existing_github_oidc_provider_arn" {
   type    = string
   default = null
@@ -44,11 +53,12 @@ variable "execution_role_name" {
 }
 
 locals {
-  oidc_enabled = var.github_repository != null
-  oidc_arn     = var.existing_github_oidc_provider_arn != null ? var.existing_github_oidc_provider_arn : (local.oidc_enabled ? aws_iam_openid_connect_provider.github[0].arn : null)
-  lambda_arn   = "arn:aws:lambda:${var.aws_region}:${var.aws_account_id}:function:${var.function_name}"
-  ecr_arn      = "arn:aws:ecr:${var.aws_region}:${var.aws_account_id}:repository/${var.repository_name}"
-  logs_arn     = "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:/aws/lambda/${var.function_name}:*"
+  oidc_enabled   = var.github_repository != null
+  subject_prefix = var.github_oidc_subject_prefix != null ? var.github_oidc_subject_prefix : "repo:${var.github_repository == null ? "disabled" : var.github_repository}"
+  oidc_arn       = var.existing_github_oidc_provider_arn != null ? var.existing_github_oidc_provider_arn : (local.oidc_enabled ? aws_iam_openid_connect_provider.github[0].arn : null)
+  lambda_arn     = "arn:aws:lambda:${var.aws_region}:${var.aws_account_id}:function:${var.function_name}"
+  ecr_arn        = "arn:aws:ecr:${var.aws_region}:${var.aws_account_id}:repository/${var.repository_name}"
+  logs_arn       = "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:/aws/lambda/${var.function_name}:*"
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
@@ -70,7 +80,7 @@ resource "aws_iam_role" "github_deploy" {
       Condition = {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          "token.actions.githubusercontent.com:sub" = [for branch in sort(tolist(var.github_deploy_branches)) : "repo:${var.github_repository}:ref:refs/heads/${branch}"]
+          "token.actions.githubusercontent.com:sub" = [for branch in sort(tolist(var.github_deploy_branches)) : "${local.subject_prefix}:ref:refs/heads/${branch}"]
         }
       }
     }]
