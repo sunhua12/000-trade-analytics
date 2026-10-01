@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-01",
+  "python_unit_tests": 251,
+  "overall_coverage": 91.53,
+  "ingestion_coverage": 97.03,
+  "raw_loader_coverage": 96.52,
+  "ruff": "pass",
+  "mypy_scope": "trade_analytics package, 18 files",
+  "mypy": "pass",
+  "dag_import": "Airflow 3.3.2 real DagBag, both pipeline DAGs have 31 tasks",
+  "docker": "linux/amd64 build and invalid-event handler smoke passed",
+  "dbt_build_results": 88,
+  "dbt_unit_tests": 5,
+  "dbt_data_tests": 71,
+  "dbt_query_jobs": 105,
+  "dbt_billed_bytes": 985661440,
+  "cost_scope": "bytes from ADC user query jobs in test window; actual bill not provided"
+}

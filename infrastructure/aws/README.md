@@ -1,6 +1,6 @@
 # AWS Terraform 管理
 
-Day 4 的既有資源接管入口。`bootstrap/` 管理 state bucket；`application/` 管理 raw S3、ECR、Lambda execution role／policy、Lambda 與 CloudWatch Log Group。兩組使用不同 state key。
+Day 4 的既有資源接管入口。`bootstrap/` 管理 state bucket 與 Day 17 的 GitHub OIDC provider／受限部署角色；`application/` 管理 raw S3、ECR、Lambda execution role／policy、Lambda、CloudWatch 日誌與告警、SNS。兩組使用不同 state key。
 
 使用 Terraform **1.16.2**、AWS provider **6.64.0**；兩組 `.terraform.lock.hcl` 都需提交。工具可用版本管理器安裝；本次助理驗證用的 `/tmp/trade-terraform-tools/terraform` 是暫存執行檔，不是永久安裝。
 
@@ -82,4 +82,4 @@ terraform -chdir=infrastructure/aws/application apply ecr.tfplan
 
 接著依 Dockerfile 建置、推送 image，將 digest 填入 tfvars，再執行完整 plan／apply。`-target` 僅用於首次 ECR 先建的 bootstrap 階段，不用於日常更新。
 
-本次範圍是 Day 4 資源接管與 state 管理。GitHub OIDC provider／受限部署角色仍待補入 bootstrap，GitHub Actions 部署在 Day 17；目前不得宣稱 OIDC bootstrap 完成。Metric Filters／Alarms／SNS 在 Day 15；ECR lifecycle 的啟用需先列出保留的映像。這些差距保留在驗證紀錄中。
+Day 17 已補入 GitHub OIDC provider 與受限部署角色，CI／部署 workflow 及操作入口見 [CI／CD 手冊](../../docs/day17-cicd-manual.md)。Bootstrap 的 OIDC 設定為 opt-in，需查核 repository 的實際 subject prefix，再設定精確受信任分支；日常角色僅可更新 ingestion 映像，不沿用 bootstrap 管理權限。Metric Filters／Alarms／SNS 已於 Day 15 建立，email 實收仍待完成；ECR lifecycle 的啟用需先列出保留的映像。

@@ -439,3 +439,20 @@ Monthly DAG 在最多三期的窗口內依舊到新串行處理可用月份；�
 新增無排程的 `trade_backfill_pipeline`，明確驗證起訖月份及三月上限，沿用單月 pipeline 步驟並與 monthly DAG 共用單 slot Pool。第一輪 `202501` 因 3 個未審夥伴代碼而品質 FAIL，正式發布保持空白，後兩月沒有開始；先從保存的 Comtrade／UN M49 快照審查三個月共 7 個代碼，重建國家 seed 後建立新品質嘗試，未放寬門檻。
 
 `202501`～`202503` 三個月分別發布 67、62、61 筆，品質皆 PASS。另以 `202504` 的 `partner_detail` 做載入提交後失去成功回報的受控演練：Airflow 首次失敗、第二次回傳 `already_loaded`，raw 仍為 61 個不同 grain，品質 PASS 後正式發布。前三個月使用原 run ID 安全重跑，raw 筆數、正式 run ID 與 `published_at` 全部不變。技術工作由 AI 協助，尚未測驗本人理解；雲端實際帳單費用及個人學習工時未提供。正式 monthly DAG 仍暫停，Day 15 的 SNS email 實收仍待完成。
+
+
+## Day 17：CI／CD、OIDC 與 Terraform 部署
+
+| 項目 | 紀錄 |
+|---|---|
+| 實作日期 | 2026-10-01（Asia/Taipei） |
+| 狀態 | 真實 GitHub CI、OIDC → ECR → Terraform → Lambda 部署、digest／無 drift 查核與隔離 dbt 雲端測試通過 |
+| 分支 | `feature/ci-oidc-deployment` |
+| 本人實際學習工時 | 未提供；未以助理執行時間代填 |
+| 詳細紀錄 | [Day 17 執行紀錄](day17-run-record.md)、[操作手冊](day17-cicd-manual.md) |
+
+新增離線 CI 與共用部署前檢查，251 項 Python unit tests 全部通過，整體 coverage 91.53％、ingestion 97.03％、raw loader 96.52％。真實 Airflow 3.3.2 匯入兩條各 31-task pipeline，Docker handler smoke 與兩組 Terraform 檢查通過。首次 GitHub run 揭露 UI 意外依賴 ADC、Linux provider checksum 缺口與 SDK timetable 型別差異；修正前部署被阻擋，沒有以本機綠燈代替真實 CI。
+
+Bootstrap 新增 GitHub provider 與受限部署角色，trust 精確匹配含 immutable IDs 的 repository subject 與指定 branch。真實 OIDC 身分完成 ECR 推送與 image-only saved-plan apply，Lambda resolved digest 相符，部署後與獨立本機 plan 均無 drift。處理 provider refresh 唯讀權限、巢狀 unknown 值誤判與 PyPI 下載逾時；未放寬 trust 或改用 administrator 部署。驗收用自動部署開關已關閉，main 的部署授權須於 PR 合併後另外同步設定。
+
+手動 ADC 入口在新建隔離 Dataset 執行 88 項 dbt build 結果，包含 5 項 unit tests 與 71 項 data tests；raw sources 唯讀，不發布正式資料。Artifacts 與 query job／處理量已保存，測試表 24 小時到期。技術工作由 AI 協助，尚未測驗本人理解；雲端帳單金額與個人學習工時未提供。正式 monthly DAG 仍暫停，SNS email 實收與 Cloud Run／乾淨重建／真實回復演練仍留在後續階段。
