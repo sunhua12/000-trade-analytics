@@ -22,6 +22,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   checks:
+    if: github.ref == vars.AWS_DEPLOY_REF && (github.event_name != 'push' || vars.AWS_AUTO_DEPLOY_ENABLED == 'true')
     uses: ./.github/workflows/ci.yml
   deploy:
     needs: checks

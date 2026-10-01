@@ -50,7 +50,7 @@ AWS_PROFILE=hua terraform -chdir=infrastructure/aws/bootstrap plan -detailed-exi
 | `TF_STATE_BUCKET` variable | 既有 application remote state bucket |
 | `AWS_APPLICATION_TFVARS_JSON` secret | 保存現行 application 設定，參考 JSON 範本；不含 AWS 靜態 credential |
 
-本次驗收暫時將 `AWS_AUTO_DEPLOY_ENABLED=true`，feature 分支指定檔案的 push 會先執行完整 CI，再執行真實部署；驗收後設回 `false`，一般 PR 不部署。另提供 `workflow_dispatch`，`apply=false` 只推送 image 並檢查 plan，`apply=true` 才 apply。GitHub 手動 dispatch 通常需要 workflow 已存在於預設分支，PR 合併後可用 Actions UI 或 `gh workflow run deploy-aws.yml --ref <受信任分支> -f apply=true`。
+本次驗收暫時將 `AWS_AUTO_DEPLOY_ENABLED=true`，feature 分支指定檔案的 push 會先執行完整 CI，再執行真實部署；驗收後設回 `false`，一般 PR 不部署。關閉後，部署 workflow 的共用檢查與部署 job 一起略過，一般 PR／push 的獨立 CI 仍完整執行。另提供 `workflow_dispatch`，`apply=false` 只推送 image 並檢查 plan，`apply=true` 才 apply。GitHub 手動 dispatch 通常需要 workflow 已存在於預設分支，PR 合併後可用 Actions UI 或 `gh workflow run deploy-aws.yml --ref <受信任分支> -f apply=true`。
 
 部署步驟如下：
 
