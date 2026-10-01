@@ -152,10 +152,19 @@ Unit Tests 不會呼叫真實網路：
 ```bash
 .venv/bin/ruff format --check src tests ingest.py
 .venv/bin/ruff check src tests ingest.py
-.venv/bin/mypy .
+.venv/bin/mypy -p trade_analytics
 ```
 
 Ruff 排除與專案無關的個人 `tests/TEST/` 字典轉換目錄；專案測試仍全部檢查。開發依賴包含 `boto3-stubs[s3]`，以便驗證真實 SDK 與測試替身的介面。
+
+Day 17 的完整離線 Python CI 需要 warehouse／dashboard 測試依賴：
+
+```bash
+.venv/bin/python -m pip install -e '.[dev,warehouse,dashboard]'
+PATH="$PWD/.venv/bin:$PATH" bash scripts/ci_checks.sh
+```
+
+Strict mypy 檢查可重用的 `trade_analytics` package；scripts、DAG 與測試另經 Ruff／對應測試驗證。Airflow import、Docker 與 Terraform 檢查，以及 OIDC 部署設定見 [CI／CD 手冊](docs/day17-cicd-manual.md)。
 
 ## Lambda Container Image
 
@@ -259,6 +268,7 @@ Day 12 基本查詢的實測結果見 [查詢驗證](docs/evidence/day12-verific
 - [資料契約](docs/data-contract.md)
 - [Day 3 學習計畫](docs/day-03-learning-plan.md)
 - [學習日誌](docs/learning-log.md)
+- [Day 17 CI／CD 與 OIDC 部署手冊](docs/day17-cicd-manual.md)
 
 - [Phase 1 Design](docs/superpowers/specs/2026-08-28-un-comtrade-preview-ingestion-design.md)
 - [Phase 1 Implementation Plan](docs/superpowers/plans/2026-08-28-un-comtrade-preview-ingestion.md)

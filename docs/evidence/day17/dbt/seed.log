@@ -1,0 +1,17 @@
+[0m07:42:59  Running with dbt=1.12.5
+[0m07:43:01  Registered adapter: bigquery=1.12.1
+[0m07:43:01  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m07:43:02  Found 10 models, 71 data tests, 2 seeds, 3 sources, 563 macros, 5 unit tests
+[0m07:43:02  
+[0m07:43:02  Concurrency: 2 threads (target='ci')
+[0m07:43:02  
+[0m07:43:03  1 of 2 START seed file trade_ci_oidc_20261001_v1.country_reference ............. [RUN]
+[0m07:43:03  2 of 2 START seed file trade_ci_oidc_20261001_v1.hs_code_reference ............. [RUN]
+[0m07:43:07  1 of 2 OK loaded seed file trade_ci_oidc_20261001_v1.country_reference ......... [[32mINSERT 150[0m in 3.63s]
+[0m07:43:07  2 of 2 OK loaded seed file trade_ci_oidc_20261001_v1.hs_code_reference ......... [[32mINSERT 1[0m in 3.71s]
+[0m07:43:07  
+[0m07:43:07  Finished running 2 seeds in 0 hours 0 minutes and 5.07 seconds (5.07s).
+[0m07:43:07  
+[0m07:43:07  [32mCompleted successfully[0m
+[0m07:43:07  
+[0m07:43:07  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=2

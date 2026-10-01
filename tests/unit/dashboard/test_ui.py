@@ -2,6 +2,7 @@
 
 from datetime import date
 from pathlib import Path
+from unittest.mock import Mock
 
 import pytest
 
@@ -10,12 +11,20 @@ pytest.importorskip("google.api_core")
 
 import streamlit as st
 from google.api_core.exceptions import BadRequest, Forbidden
+from google.cloud import bigquery
 from streamlit.testing.v1 import AppTest
 
 from dashboard import error_message, quality_table_rows, world_yoy
 from trade_analytics.dashboard.queries import PublishedQueries
 
 APP = Path(__file__).resolve().parents[3] / "dashboard.py"
+
+
+@pytest.fixture(autouse=True)
+def offline_bigquery_client(monkeypatch: pytest.MonkeyPatch) -> None:
+    client = Mock()
+    client.query.side_effect = AssertionError("UI unit tests must not call BigQuery")
+    monkeypatch.setattr(bigquery, "Client", lambda **kwargs: client)
 
 
 def test_failed_latest_attempt_does_not_hide_published_pass() -> None:

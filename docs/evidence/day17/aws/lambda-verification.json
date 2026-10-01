@@ -1,0 +1,6 @@
+{
+    "function_name": "trade-analytics-ingestion",
+    "last_update_status": "Successful",
+    "state": "Active",
+    "resolved_image_uri": "816079797958.dkr.ecr.ap-northeast-1.amazonaws.com/trade-analytics-ingestion@sha256:befb469c96c356b086152b6fd5d68b3679bacc950b84ee4fe238016b68154a09"
+}
