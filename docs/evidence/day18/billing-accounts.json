@@ -1,0 +1,10 @@
+[
+  {
+    "currencyCode": "TWD",
+    "displayName": "我的帳單帳戶",
+    "masterBillingAccount": "",
+    "name": "billingAccounts/010EDA-A693CD-F58B64",
+    "open": true,
+    "parent": ""
+  }
+]

@@ -456,3 +456,16 @@ Monthly DAG 在最多三期的窗口內依舊到新串行處理可用月份；�
 Bootstrap 新增 GitHub provider 與受限部署角色，trust 精確匹配含 immutable IDs 的 repository subject 與指定 branch。真實 OIDC 身分完成 ECR 推送與 image-only saved-plan apply，Lambda resolved digest 相符，部署後與獨立本機 plan 均無 drift。處理 provider refresh 唯讀權限、巢狀 unknown 值誤判與 PyPI 下載逾時；未放寬 trust 或改用 administrator 部署。驗收用自動部署開關已關閉，main 的部署授權須於 PR 合併後另外同步設定。
 
 手動 ADC 入口在新建隔離 Dataset 執行 88 項 dbt build 結果，包含 5 項 unit tests 與 71 項 data tests；raw sources 唯讀，不發布正式資料。Artifacts 與 query job／處理量已保存，測試表 24 小時到期。技術工作由 AI 協助，尚未測驗本人理解；雲端帳單金額與個人學習工時未提供。正式 monthly DAG 仍暫停，SNS email 實收與 Cloud Run／乾淨重建／真實回復演練仍留在後續階段。
+
+
+## Day 18：Cloud Run 展示與正常路徑 E2E
+
+- 實作／驗收日期：2026-10-01～2026-10-02（Asia/Taipei）。
+- 本人實際投入時間：未提供，不以 AI 操作時間代填。
+- 完成：專用非 root Dashboard image、Cloud Run digest 部署、唯讀 runtime、日期範圍設定、線上金額／YoY／覆蓋率核對、202504 正常路徑安全重跑與操作手冊。
+- 真實結果：線上年度 World USD 40,386,451,682、Malaysia USD 9,598,343,899；202504 World USD 3,114,414,147。重跑保持 raw grain、正式 run ID 與發布時間不變。
+- 費用決策：原始預算 USD 10／月；使用者另指定 TWD 250／月通知門檻，已配置專案限定預算。通知不等於費用硬上限，未驗證通知實收；實際帳單未提供。
+- 程式驗證：255 tests passed、coverage 91.66％、Ruff／mypy、容器 smoke 與真實 SQL／UI 檢查通過；未執行遠端 GitHub CI。
+- 學習邊界：由 AI 協助實作，本人對 runtime／部署身分、查詢限制與快取的理解尚未測驗。
+- 後續：Day 19 乾淨重建／回復／SNS 故障實收，monthly DAG 繼續暫停，剩餘積欠另追蹤。
+- 詳細證據：[Day 18 執行紀錄](day18-run-record.md)。

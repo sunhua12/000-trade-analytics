@@ -1,0 +1,28 @@
+{
+  "base_git_sha": "c684f58436983309e455e789cb62825447d7a47e",
+  "source_hash": "b1b20f129537d7149cf487953587bcf0bd3c263cd7cf92045a24f5e056f5ffc7",
+  "uncommitted_source": true,
+  "files": {
+    "Dockerfile.dashboard": "6967e95e39d77c5a7a25947cacb0a4132a72e3b70dde6eccee978647a828cfcd",
+    "dashboard.py": "cfbec994bb699dd321c34103a4aa18454b3564f7f7b1a911271b2b7ce5917ac0",
+    "pyproject.toml": "182cc90cef5370191bf2b4ea89835b1eb4a8a9fc2d253d4ad1ea46f09ae7a867",
+    "src/trade_analytics/__init__.py": "42a9191fa3295af2d9a690b84db509dd6e4513c6b878e495e98735b2a5c6ed7b",
+    "src/trade_analytics/dashboard/__init__.py": "3b910ddae40e0adedc87bd0d58214555b454746b77bf7b98387c6d20a8531587",
+    "src/trade_analytics/dashboard/queries.py": "f9847717118e6d744ccbf764373469c53928322e87cdb618a698deb0560e21a6",
+    "src/trade_analytics/ingestion/__init__.py": "ddda0f5cf21d071146f915ab1a55f15ec6d32370c9d85f64444c121ca2dd3f6a",
+    "src/trade_analytics/ingestion/client.py": "3c5f2cc7703aec5f3777b8be9d17d20683f6297824a18f44ce41cd5299b58fc9",
+    "src/trade_analytics/ingestion/exceptions.py": "8a6d9a85a52778cc3b6138cb9014c022e12316f04c30607abf44a9708bee2be2",
+    "src/trade_analytics/ingestion/manifest.py": "b665e13bf937a76f371d86e0456b08143b0f08b044707f861eef65c23895e454",
+    "src/trade_analytics/ingestion/queries.py": "dc4564a052fe2ed4ccd28dbbecdfb17f6e8b1a2510c5f0ec462eb864ffaa3bb3",
+    "src/trade_analytics/ingestion/s3_storage.py": "aef03b4eae2f7c65cfcff25e61d638a61c9d0fe44f0271c55a7766188b7491f8",
+    "src/trade_analytics/ingestion/schemas.py": "6e0864ebd16b2320b8c1ea732d7da682fff4335d2170ee73ae4d330152cd795d",
+    "src/trade_analytics/ingestion/service.py": "64c8739b0d0c04e16e4be381ecb6b6f031378496e263bf9069eab57029442b11",
+    "src/trade_analytics/ingestion/storage.py": "249f439e23841485062f9eef8357bda2dc5e340e387a9867243517e9e03dc121",
+    "src/trade_analytics/lambda_handler.py": "e9ac6fa814695dadcb1d72de41ddbfe8d729c24a411f5b7fddbc59f2eff8a1d9",
+    "src/trade_analytics/warehouse/__init__.py": "6f26d7e5ab0339062886ac1775cd88abb60b53980ef37296de8857591b7b071e",
+    "src/trade_analytics/warehouse/backfill.py": "cc9a35abf814c9718260a5aac55aaeda2a582e41b8add18d16fde44e2f80c52e",
+    "src/trade_analytics/warehouse/gate.py": "633e9920deaf92ebbe8076d951aebf2500306e5e93d594413818f61f3146af3c",
+    "src/trade_analytics/warehouse/publish.py": "06a78185762f93c7d33db47ff7321dfd41b217c9527fc39bcd7a6fcefc397e72",
+    "src/trade_analytics/warehouse/quality.py": "565172befa5fa6ff6418b7a25b42ff0ffe8c80abd8bd9fef4b8493af4ba934a6"
+  }
+}

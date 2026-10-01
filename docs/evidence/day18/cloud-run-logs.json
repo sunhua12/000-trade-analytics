@@ -1,0 +1,1112 @@
+[
+  {
+    "httpRequest": {
+      "latency": "0.009644201s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "904",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/Json.DfzTeKsg.js",
+      "responseSize": "4952",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20e20002d065a171ded8",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:14.319124373Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "0487c0dbd2907514",
+    "timestamp": "2026-10-01T08:59:14.172702Z",
+    "trace": "projects/trade-analytics-508604/traces/3898a5ace91754701726ce7960d37f8c"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.956094390s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "911",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/PlotlyChart.DbjBdK9w.js",
+      "responseSize": "4130064",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20e2000292224c244080",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:14.319124373Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "8f6287e5979ad22b",
+    "timestamp": "2026-10-01T08:59:13.210728Z",
+    "trace": "projects/trade-analytics-508604/traces/0e0bf6cf14ce7c101726ce7960d375fa"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.307795485s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "917",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/ArrowVegaLiteChart.CnqICc92.js",
+      "responseSize": "13252",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20e0000b757d5a65ba59",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:12.983312935Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "bdc4420533bd986b",
+    "timestamp": "2026-10-01T08:59:12.441016Z",
+    "trace": "projects/trade-analytics-508604/traces/3f95ce2a9ca8074b1726ce7960d37de3"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.322286960s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "915",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/downloadDataUrl.DgUN6zlz.js",
+      "responseSize": "591",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20e0000b64ab667bf16a",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:12.983312935Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "41bbff0a1d6d09dc",
+    "timestamp": "2026-10-01T08:59:12.422419Z",
+    "trace": "projects/trade-analytics-508604/traces/831f794d251c16d11726ce7960d37b8a"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.269194944s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "914",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/TableChart.esm.o-QINulw.js",
+      "responseSize": "941",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20e0000a9509627762b1",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:12.983312935Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "2b42a122bb47a6a8",
+    "timestamp": "2026-10-01T08:59:12.422068Z",
+    "trace": "projects/trade-analytics-508604/traces/bcd59882e3371b261726ce7960d376fd"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.028034493s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "921",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/withFullScreenWrapper.D_pC5DjL.js",
+      "responseSize": "2059",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000d24c593584062",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "dad4ebe7c4dc43aa",
+    "timestamp": "2026-10-01T08:59:11.587278Z",
+    "trace": "projects/trade-analytics-508604/traces/cb9db28db4d284da1726ce7960d37cb2"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.028910777s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "916",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/toConsumableArray.DL1akTfG.js",
+      "responseSize": "1320",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000d2704e867c5db",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "bcd5a71df3e8a4d2",
+    "timestamp": "2026-10-01T08:59:11.585220Z",
+    "trace": "projects/trade-analytics-508604/traces/7b51791ececb66d21726ce7960d37a7e"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.048553036s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "907",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/isString.C7-zy-83.js",
+      "responseSize": "447",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000d24fa95dc20d6",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "9df038eaabbcaffa",
+    "timestamp": "2026-10-01T08:59:11.576622Z",
+    "trace": "projects/trade-analytics-508604/traces/87a73ebab37fb8f51726ce7960d37164"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.042699329s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "904",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/range.DL19EGGd.js",
+      "responseSize": "620",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000cb43d2c5c8726",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "0b1a8a54b7db3bc0",
+    "timestamp": "2026-10-01T08:59:11.547741Z",
+    "trace": "projects/trade-analytics-508604/traces/067caa8682f917e61726ce7960d37189"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.080941149s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "906",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/colors.Cg5Vh3br.js",
+      "responseSize": "362",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000d49de735f0f43",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "194f6758ec838076",
+    "timestamp": "2026-10-01T08:59:11.537603Z",
+    "trace": "projects/trade-analytics-508604/traces/56d5a1e16a3c8cf21726ce7960d371d3"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.034059188s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "907",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/ordinal.BefGibR5.js",
+      "responseSize": "1711",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000c6426453c1697",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "70a86efad2fc7c39",
+    "timestamp": "2026-10-01T08:59:11.513154Z",
+    "trace": "projects/trade-analytics-508604/traces/8d06861e0726d9311726ce7960d37451"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.018634532s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "906",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/isEmpty.DjruDP6v.js",
+      "responseSize": "758",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000c0921db387949",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "b294b9c87fcbf0bc",
+    "timestamp": "2026-10-01T08:59:11.508922Z",
+    "trace": "projects/trade-analytics-508604/traces/2f489e664da932111726ce7960d375f1"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.062395104s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "925",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/WidgetLabelHelpIconInline._QMPwlXq.js",
+      "responseSize": "741",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000cb47199f5250d",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "134de9f8fc2e2cb7",
+    "timestamp": "2026-10-01T08:59:11.508642Z",
+    "trace": "projects/trade-analytics-508604/traces/0833e7436defa6741726ce7960d37928"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.062597508s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "911",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/remark-emoji._LH4sZI0.js",
+      "responseSize": "5993",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000cb40aa2f1a075",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "38e0e5c912093ab6",
+    "timestamp": "2026-10-01T08:59:11.508052Z",
+    "trace": "projects/trade-analytics-508604/traces/69969b3b63dffb701726ce7960d37c8d"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.092407997s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "904",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/dist.M42-4E3x.js",
+      "responseSize": "31807",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000d25a40b1a0050",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "f98b9fd203cd6436",
+    "timestamp": "2026-10-01T08:59:11.506007Z",
+    "trace": "projects/trade-analytics-508604/traces/9cb1fc4c36ce3b8e1726ce7960d375cc"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.137871692s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "902",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/lib.Dd69Svmo.js",
+      "responseSize": "259153",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000d3243064d2944",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "86dd1dbb3ac28835",
+    "timestamp": "2026-10-01T08:59:11.505561Z",
+    "trace": "projects/trade-analytics-508604/traces/5dec424b096316701726ce7960d3711a"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.083903617s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "919",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/reactJsonViewCompat.CMfXJ98m.js",
+      "responseSize": "119974",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000bdcd2143163a7",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "d3f5edb43d6c7131",
+    "timestamp": "2026-10-01T08:59:11.505453Z",
+    "trace": "projects/trade-analytics-508604/traces/3c495fb8f69c0f101726ce7960d37a59"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.095942508s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "919",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/resolveDefaultExport.DJbX7TqQ.js",
+      "responseSize": "381",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000c0acfa690716e",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "4786d36ef916bd7a",
+    "timestamp": "2026-10-01T08:59:11.504213Z",
+    "trace": "projects/trade-analytics-508604/traces/49abe0aba1c762f21726ce7960d37ee6"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.082946055s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "916",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/FileDownload.esm.BqHa9DH4.js",
+      "responseSize": "919",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000bbdda140f8a50",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "9a66f5f6a7373bf3",
+    "timestamp": "2026-10-01T08:59:11.502888Z",
+    "trace": "projects/trade-analytics-508604/traces/afda3ddbd8631f8a1726ce7960d37398"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.083291872s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "919",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/useDebouncedCallback.DmVKnuOW.js",
+      "responseSize": "839",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000bbe725b7e6848",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "5b458a918377a7e4",
+    "timestamp": "2026-10-01T08:59:11.501907Z",
+    "trace": "projects/trade-analytics-508604/traces/64caf30ff8d722881726ce7960d3713f"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.111398013s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "910",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/Delete.esm.qg4sJoHs.js",
+      "responseSize": "892",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000bbe8c93439bdb",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "f7f18b3db246fee7",
+    "timestamp": "2026-10-01T08:59:11.501823Z",
+    "trace": "projects/trade-analytics-508604/traces/edd8d10097f564ca1726ce7960d37f0b"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.040363353s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "924",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/createDownloadLinkElement.szflUduS.js",
+      "responseSize": "632",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000b157bbdda3e7a",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "a0b0164133b12153",
+    "timestamp": "2026-10-01T08:59:11.501735Z",
+    "trace": "projects/trade-analytics-508604/traces/a4adb585b4b090df1726ce7960d37373"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.110503004s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "924",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/css/DataFrame.DUkanX9_.css",
+      "responseSize": "12532",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000bba7e2899d38c",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "f4ee0a62c57b41d3",
+    "timestamp": "2026-10-01T08:59:11.501345Z",
+    "trace": "projects/trade-analytics-508604/traces/e2de8c9d5238d7cd1726ce7960d37800"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.065355995s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "912",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/serialization.BdCe8Hfp.js",
+      "responseSize": "98656",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000a926009810963",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "1a79e3353bb47ad6",
+    "timestamp": "2026-10-01T08:59:11.500078Z",
+    "trace": "projects/trade-analytics-508604/traces/fc568157e2adf7cd1726ce7960d37cd7"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.113339644s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "910",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/recordbatch.DqFeZyUe.js",
+      "responseSize": "85505",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000a7536321fe405",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "0a0add4b42eafa16",
+    "timestamp": "2026-10-01T08:59:11.499103Z",
+    "trace": "projects/trade-analytics-508604/traces/b603e818ef580d911726ce7960d3784a"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.114070356s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "915",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/_baseAssignValue.DPvIkN18.js",
+      "responseSize": "19606",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000a7735e82c7af9",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "76be542ac9db3fd3",
+    "timestamp": "2026-10-01T08:59:11.498964Z",
+    "trace": "projects/trade-analytics-508604/traces/efc31073f4dff9191726ce7960d37825"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.040859369s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "912",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/_baseIndexOf.CYLdY-L6.js",
+      "responseSize": "529",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000a7716638434ff",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "a0adb9fbd60e6b9b",
+    "timestamp": "2026-10-01T08:59:11.498280Z",
+    "trace": "projects/trade-analytics-508604/traces/87fea40e3c45b7db1726ce7960d3763b"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.031953326s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "908",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/threshold.DoT4oT5R.js",
+      "responseSize": "864",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df0008fd11e46763bf",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.652433880Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "fd34d9047436f2e7",
+    "timestamp": "2026-10-01T08:59:11.498208Z",
+    "trace": "projects/trade-analytics-508604/traces/c8c842bf45dce09c1726ce7960d37d46"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.067422098s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "909",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/_hasUnicode.Cp9Achgk.js",
+      "responseSize": "394",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000a07a674818d79",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "d14122a84fc2da60",
+    "timestamp": "2026-10-01T08:59:11.497889Z",
+    "trace": "projects/trade-analytics-508604/traces/f08d854b4e0526ed1726ce7960d37cfc"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.078663808s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "remoteIp": "2001:b400:e2dc:494d:1497:c3dd:ac38:9192",
+      "requestMethod": "GET",
+      "requestSize": "905",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/static/js/unzip.BaBcYNJz.js",
+      "responseSize": "585",
+      "serverIp": "2600:1900:4242:200::",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe20df000a07bdc7604445",
+    "labels": {
+      "instanceId": "0010dd86079a0df17c65e096dde483dd60fba6fdbbbcd42b7204bc47de665a02ec8b0b971094e6e2d5db4d77a5b2d01677b230a0dd9901b16b75992f77327729e138d1f1b915cad20e6276164c78964fbfa722",
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T08:59:11.987270915Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "2e7e198dbcfe2d9d",
+    "timestamp": "2026-10-01T08:59:11.497844Z",
+    "trace": "projects/trade-analytics-508604/traces/fbee50010518fd351726ce7960d37f30"
+  }
+]

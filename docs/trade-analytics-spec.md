@@ -109,7 +109,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [ ] | Day 15 | 排程、限流、CloudWatch／SNS | 完成月度執行、有限期數檢查與重試；補結構化失敗日誌；以 Terraform 建立 Metric Filters、Alarms、SNS 並確認訂閱 | 缺資料有明確狀態；驗證三類錯誤 filter 與耗時門檻；真實失敗觸發 SNS，依 run_id 找到日誌 |
 | [x] | Day 16 | 參數化回填、復原 | 建立獨立 backfill DAG；真實回填 202501～202503；202504 載入回報遺失後重試 | 復原後無重複 grain；三月安全重跑維持原發布時間；M4 技術驗收見 [執行紀錄](day16-run-record.md) |
 | [x] | Day 17 | CI/CD、OIDC、Terraform | CI 與受限 OIDC → ECR → Terraform → Lambda 真實部署通過；隔離 BigQuery dbt 測試入口完成 | 251 項 unit tests、88 項 dbt build 結果；digest 相符、部署後無 drift、無靜態 AWS Key；見[執行紀錄](day17-run-record.md) |
-| [ ] | Day 18 | Cloud Run、Service Account、查詢成本 | 部署 Streamlit；限制資料存取與查詢量；核對線上圖表 | Live URL 可開啟；與 BigQuery 固定條件查詢結果一致；完成正常路徑 E2E |
+| [x] | Day 18 | Cloud Run、Service Account、查詢成本 | 部署 Streamlit；限制資料存取與查詢量；核對線上圖表 | Live Demo、固定 SQL／線上核對及單月正常路徑安全重跑通過；見[執行紀錄](day18-run-record.md) |
 | [ ] | Day 19 | 整合緩衝、故障與重建驗證 | 依 Terraform／OIDC runbook 乾淨重建；完成失敗 → SNS → run_id 追查 → 重跑復原；驗證失敗不發布 | 保存重建、告警接收、定位與復原證據；未完成項目明列；不追加功能 |
 | [ ] | Day 20 | 技術敘事與最終驗收 | 完成 README、架構圖、資料字典、runbook、限制與 5 分鐘展示稿 | 依第 11 節逐項驗收；展示 3 項分析、1 次故障復原及 1 次重跑 |
 

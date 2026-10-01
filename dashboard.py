@@ -203,7 +203,9 @@ def main() -> None:
         f"畫面資料讀取：{display_time(data['read_at'])}。"
     )
     st.caption(
-        "展示期間固定為 2023-01～2024-12。畫面可能使用 1 小時快取；"
+        f"展示範圍起於 {SETTINGS.first_month:%Y-%m}，止於 "
+        f"{SETTINGS.after_last_month:%Y-%m}（不含）；僅列出已發布月份。"
+        f"畫面可能使用 {SETTINGS.cache_ttl_seconds} 秒快取；"
         "重新讀取按鈕可取得新的正式版本。最新失敗嘗試不會更新正式資料。"
     )
 
