@@ -1,0 +1,115 @@
+Browser tab: 1, Title: "美國半導體進口分析", URL: "https://trade-dashboard-898093147725.asia-northeast1.run.app/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 63-113, 451-491, 626-695, 729-771
++					729 container Selected values
++						730 container 458 · Malaysia
++							731 text 458 · Malaysia
++							732 button Remove 458 · Malaysia
++					733 button Description: Clear all, ID: react-aria6059840215-:rao:
+~				33 text 期間：2023-01～2024-12；Partner：458；排名顯示前 10 名。
+~					45 text 所選期間最新資料月份：2024-12；所選期間最近成功發布：2026-09-24 12:19 :50  Asia/Taipei；所選期間最新發布嘗試：2026-09-30 19:17 :12  Asia/Taipei；畫面資料讀取：2026-10-02 07:08 :37  Asia/Taipei。
++								734 row (selectable) 458 Malaysia USD 19,277,096,395 25.22%
++									735 cell (selectable) Value: 458, ID: glide-cell-0-0
++									736 cell (selectable) Value: Malaysia, ID: glide-cell-1-0
++									737 cell (selectable) Value: USD 19,277,096,395, ID: glide-cell-2-0
++									738 cell (selectable) Value: 25.22%, ID: glide-cell-3-0
++					739 button Download as PNG
++						740 image
++							741 container X-axis for a linear scale with values from 0 to 20,000,000,000 Y-axis for a discrete scale with 1 value: 458 · Malaysia 進口金額（USD）: 19277096395; 來源國／地區: 458 · Malaysia
++								742 axis X-axis for a linear scale with values from 0 to 20,000,000,000
++								743 axis Y-axis for a discrete scale with 1 value: 458 · Malaysia
++								744 container 進口金額（USD）: 19277096395; 來源國／地區: 458 · Malaysia
++									745 bar 進口金額（USD）: 19277096395; 來源國／地區: 458 · Malaysia
++					746 button Download as PNG
++						747 image
++							748 container X-axis for a time scale with values from Sunday, 01 January 2023, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM Y-axis for a linear scale with values from 0 to 1,100,000,000 月份: Jan 01, 2023; 進口金額（USD）: 776349180月份: Jan 01, 2023; 進口金額（USD）: 776349180 月份: Feb 01, 2023; 進口金額（USD）: 764798274 月份: Mar 01, 2023; 進口金額（USD）: 937614683 月份: Apr 01, 2023; 進口金額（USD）: 663667441 月份: May 01, 2023; 進口金額（USD）: 822073916 月份: Jun 01, 2023; 進口金額（USD）: 778158267 月份: Jul 01, 2023; 進口金額（USD）: 928313023 月份: Aug 01, 2023; 進口金額（USD）: 683623644 月份: Sep 01, 2023; 進口金額（USD）: 848730693 月份: Oct 01, 2023; 進口金額（USD）: 727309635 月份: Nov 01, 2023; 進口金額（USD）: 687151241 月份: Dec 01, 2023; 進口金額（USD）: 1060962499 月份: Jan 01, 2024; 進口金額（USD）: 677589792 月份: Feb 01, 2024; 進口金額（USD）: 487558244 月份: Mar 01, 2024; 進口金額（USD）: 932589262 月份: Apr 01, 2024; 進口金額（USD）: 782268120 月份: May 01, 2024; 進口金額（USD）: 844409047 月份: Jun 01, 2024; 進口金額（USD）: 915024825 月份: Jul 01, 2024; 進口金額（USD）: 968115466 月份: Aug 01, 2024; 進口金額（USD）: 616221521 月份: Sep 01, 2024; 進口金額（USD）: 1038735878 月份: Oct 01, 2024; 進口金額（USD）: 747518000 月份: Nov 01, 2024; 進口金額（USD）: 618888354 月份: Dec 01, 2024; 進口金額（USD）: 969425390
++								749 axis X-axis for a time scale with values from Sunday, 01 January 2023, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM
++								750 axis Y-axis for a linear scale with values from 0 to 1,100,000,000
++								751 container 月份: Jan 01, 2023; 進口金額（USD）: 776349180
++									752 line mark 月份: Jan 01, 2023; 進口金額（USD）: 776349180
++								753 container 月份: Jan 01, 2023; 進口金額（USD）: 776349180 月份: Feb 01, 2023; 進口金額（USD）: 764798274 月份: Mar 01, 2023; 進口金額（USD）: 937614683 月份: Apr 01, 2023; 進口金額（USD）: 663667441 月份: May 01, 2023; 進口金額（USD）: 822073916 月份: Jun 01, 2023; 進口金額（USD）: 778158267 月份: Jul 01, 2023; 進口金額（USD）: 928313023 月份: Aug 01, 2023; 進口金額（USD）: 683623644 月份: Sep 01, 2023; 進口金額（USD）: 848730693 月份: Oct 01, 2023; 進口金額（USD）: 727309635 月份: Nov 01, 2023; 進口金額（USD）: 687151241 月份: Dec 01, 2023; 進口金額（USD）: 1060962499 月份: Jan 01, 2024; 進口金額（USD）: 677589792 月份: Feb 01, 2024; 進口金額（USD）: 487558244 月份: Mar 01, 2024; 進口金額（USD）: 932589262 月份: Apr 01, 2024; 進口金額（USD）: 782268120 月份: May 01, 2024; 進口金額（USD）: 844409047 月份: Jun 01, 2024; 進口金額（USD）: 915024825 月份: Jul 01, 2024; 進口金額（USD）: 968115466 月份: Aug 01, 2024; 進口金額（USD）: 616221521 月份: Sep 01, 2024; 進口金額（USD）: 1038735878 月份: Oct 01, 2024; 進口金額（USD）: 747518000 月份: Nov 01, 2024; 進口金額（USD）: 618888354 月份: Dec 01, 2024; 進口金額（USD）: 969425390
++									754 point 月份: Jan 01, 2023; 進口金額（USD）: 776349180
++									755 point 月份: Feb 01, 2023; 進口金額（USD）: 764798274
++									756 point 月份: Mar 01, 2023; 進口金額（USD）: 937614683
++									757 point 月份: Apr 01, 2023; 進口金額（USD）: 663667441
++									758 point 月份: May 01, 2023; 進口金額（USD）: 822073916
++									759 point 月份: Jun 01, 2023; 進口金額（USD）: 778158267
++									760 point 月份: Jul 01, 2023; 進口金額（USD）: 928313023
++									761 point 月份: Aug 01, 2023; 進口金額（USD）: 683623644
++									762 point 月份: Sep 01, 2023; 進口金額（USD）: 848730693
++									763 point 月份: Oct 01, 2023; 進口金額（USD）: 727309635
++									764 point 月份: Nov 01, 2023; 進口金額（USD）: 687151241
++									765 point 月份: Dec 01, 2023; 進口金額（USD）: 1060962499
++									766 point 月份: Jan 01, 2024; 進口金額（USD）: 677589792
++									767 point 月份: Feb 01, 2024; 進口金額（USD）: 487558244
++									768 point 月份: Mar 01, 2024; 進口金額（USD）: 932589262
++									769 point 月份: Apr 01, 2024; 進口金額（USD）: 782268120
++									770 point 月份: May 01, 2024; 進口金額（USD）: 844409047
++									771 point 月份: Jun 01, 2024; 進口金額（USD）: 915024825
++									772 point 月份: Jul 01, 2024; 進口金額（USD）: 968115466
++									773 point 月份: Aug 01, 2024; 進口金額（USD）: 616221521
++									774 point 月份: Sep 01, 2024; 進口金額（USD）: 1038735878
++									775 point 月份: Oct 01, 2024; 進口金額（USD）: 747518000
++									776 point 月份: Nov 01, 2024; 進口金額（USD）: 618888354
++									777 point 月份: Dec 01, 2024; 進口金額（USD）: 969425390
++								778 symbol mark container
+~				184 text 來源國／地區 458 的本月金額與去年同月比較。
++					779 button Download as PNG
++						780 image
++							781 container X-axis for a time scale with values from Sunday, 01 January 2023, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM Y-axis for a linear scale with values from −40 to 25 月份: Jan 01, 2023; YoY（%）: null月份: Jan 01, 2024; YoY（%）: −12.7210011 月份: Feb 01, 2024; YoY（%）: −36.2500857 月份: Mar 01, 2024; YoY（%）: −0.5359793 月份: Apr 01, 2024; YoY（%）: 17.8704983 月份: May 01, 2024; YoY（%）: 2.7169249 月份: Jun 01, 2024; YoY（%）: 17.5885246 月份: Jul 01, 2024; YoY（%）: 4.2876101 月份: Aug 01, 2024; YoY（%）: −9.8595365 月份: Sep 01, 2024; YoY（%）: 22.3869817 月份: Oct 01, 2024; YoY（%）: 2.7785092 月份: Nov 01, 2024; YoY（%）: −9.9341867 月份: Dec 01, 2024; YoY（%）: −8.6277422
++								782 axis X-axis for a time scale with values from Sunday, 01 January 2023, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM
++								783 axis Y-axis for a linear scale with values from −40 to 25
++								784 container 月份: Jan 01, 2023; YoY（%）: null
++									785 line mark 月份: Jan 01, 2023; YoY（%）: null
++								786 container 月份: Jan 01, 2024; YoY（%）: −12.7210011 月份: Feb 01, 2024; YoY（%）: −36.2500857 月份: Mar 01, 2024; YoY（%）: −0.5359793 月份: Apr 01, 2024; YoY（%）: 17.8704983 月份: May 01, 2024; YoY（%）: 2.7169249 月份: Jun 01, 2024; YoY（%）: 17.5885246 月份: Jul 01, 2024; YoY（%）: 4.2876101 月份: Aug 01, 2024; YoY（%）: −9.8595365 月份: Sep 01, 2024; YoY（%）: 22.3869817 月份: Oct 01, 2024; YoY（%）: 2.7785092 月份: Nov 01, 2024; YoY（%）: −9.9341867 月份: Dec 01, 2024; YoY（%）: −8.6277422
++									787 point 月份: Jan 01, 2024; YoY（%）: −12.7210011
++									788 point 月份: Feb 01, 2024; YoY（%）: −36.2500857
++									789 point 月份: Mar 01, 2024; YoY（%）: −0.5359793
++									790 point 月份: Apr 01, 2024; YoY（%）: 17.8704983
++									791 point 月份: May 01, 2024; YoY（%）: 2.7169249
++									792 point 月份: Jun 01, 2024; YoY（%）: 17.5885246
++									793 point 月份: Jul 01, 2024; YoY（%）: 4.2876101
++									794 point 月份: Aug 01, 2024; YoY（%）: −9.8595365
++									795 point 月份: Sep 01, 2024; YoY（%）: 22.3869817
++									796 point 月份: Oct 01, 2024; YoY（%）: 2.7785092
++									797 point 月份: Nov 01, 2024; YoY（%）: −9.9341867
++									798 point 月份: Dec 01, 2024; YoY（%）: −8.6277422
++								799 symbol mark container
++				800 container
++					801 image
++						802 image
++					803 image
++						804 text 9.8
++						805 text 10
++						806 text 10.2
++						807 text 10.4
++						808 text 10.6
++						809 text log10(USD+1)
++					810 toolbar modebar-244cfc
++						811 button Download plot as a PNG
++							812 image
++						813 button Pan
++							814 image
++						815 container
++							816 button Zoom in
++								817 image
++							818 button Zoom out
++								819 image
++							820 button Reset
++								821 image
++						822 button Fullscreen
++							823 image
++					824 image
++					825 button Download as PNG
++						826 image
++							827 container X-axis titled '進口金額（USD）' for a linear scale with values from 0 to 1,000,000,000 Y-axis titled 'YoY（%）' for a linear scale with values from −9 to 0 進口金額（USD）: 969425390; YoY（%）: −8.6277422
++								828 axis X-axis titled '進口金額（USD）' for a linear scale with values from 0 to 1,000,000,000
++								829 axis Y-axis titled 'YoY（%）' for a linear scale with values from −9 to 0
++								830 container 進口金額（USD）: 969425390; YoY（%）: −8.6277422
++									831 circle 進口金額（USD）: 969425390; YoY（%）: −8.6277422
++								832 row (selectable) 458 · Malaysia 969425390 -8.6277422
++									833 cell (selectable) Value: 458 · Malaysia, ID: glide-cell-0-0
++									834 cell (selectable) Value: 969425390, ID: glide-cell-1-0
++									835 cell (selectable) Value: -8.6277422, ID: glide-cell-2-0
+~				493 text 每點為 2024-12 的一個已確認國家／地區；僅從所選期間排名前 10 名中取金額與 YoY 均有效的資料。有效點數：1。
+The focused UI element is 618 combo box (collapsed, settable) Description: Partner（未選＝全部已確認國家／地區）, ID: react-aria6059840215-:r9s:, Secondary Actions: Expand

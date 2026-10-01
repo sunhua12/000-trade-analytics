@@ -1,0 +1,212 @@
+[
+  {
+    "name": "period",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "period_start_date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "reporter_code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partner_code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "flow_code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "cmd_code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hs_version",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "primary_value",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "net_weight",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "quantity",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ingested_at",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "source_file",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "checksum",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "run_id",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "revision",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "source_name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "partner_type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "classification_status",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "map_iso3",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "reconciliation_role",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hs_description",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "country_mapping_found",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hs_mapping_found",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "month_mapping_found",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "world_value",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "market_share",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "market_share_status",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "previous_month_value",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "previous_year_value",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "mom",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "yoy",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "unit_value_usd_per_kg",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "country_value",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "country_count",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "country_coverage",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hhi_raw",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hhi",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hhi_status",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "candidate_batch_id",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "quality_status",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "published_at",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "published_run_id",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "verified_at_utc": "2026-10-01T23:09:56.810500+00:00",
+  "operator": "AI",
+  "url": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+  "checks": {
+    "annual_world": true,
+    "annual_malaysia": true,
+    "historical_missing_base": true,
+    "historical_hhi": true,
+    "partner_yoy": true,
+    "top5_control": true
+  },
+  "scope": "live filter/refresh and semantic checks; not human timed presentation",
+  "result": "passed"
+}

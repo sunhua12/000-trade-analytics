@@ -482,3 +482,14 @@ Bootstrap 新增 GitHub provider 與受限部署角色，trust 精確匹配含 i
 - 隔離 AWS 21 個資源、BigQuery 兩個 fixture Dataset 已清理；GCP 無流量 revisions／映像與隔離空 remote state 保留。Monthly DAG 仍暫停，積欠另處理。
 - 本人實際投入與帳單未提供，理解測驗未進行；由 AI 協助完成技術驗收，M5 留待 Day 20。
 - 詳細證據：[Day 19 執行紀錄](day19-run-record.md)、[操作手冊](day19-recovery-manual.md)。
+
+## Day 20：技術敘事、文件交付與最終驗收
+
+- 整理／補驗日期：2026-10-02（Asia/Taipei）；基準提交 `278f031c2848581b664aece16b7c64a4ad37c779`，交付提交以 Git 歷史為準。
+- 更新 README 為目前端到端成果與可操作的本機展示入口，新增架構圖、資料字典、操作手冊索引、已知限制、5 分鐘展示稿及 14 項最終驗收對照。
+- 三個 BigQuery 唯讀查詢核對 24 月連續覆蓋／grain、兩年度 World、Malaysia 排名、HHI 不可用與 202504 正式版本；結果及 job IDs 保存於 `docs/evidence/day20/`。
+- Live UI 切換 2024 年度與原 24 月範圍、重新讀取及數值／缺值／HHI 提示查核；由 AI 操作，未當作本人展示。
+- 重建／CI／OIDC／告警實收／品質停損／正式安全重跑沿用 Day 9～19 的既有版本證據，未重新部署或寫入正式資料。
+- 14 項驗收中 13 項通過，第 13 項本人 5 分鐘講解／理解待完成；因此 Day 20／M5／完整 MVP 仍保留未完成。
+- 本人實際工時、理解測驗及帳單未提供；不由 AI 文件產出代替。Monthly DAG 仍暫停，剩餘積欠另追蹤。
+- 詳見 [最終驗收](day20-final-acceptance.md)、[展示稿](demo-script.md)與 [限制](known-limitations.md)。
