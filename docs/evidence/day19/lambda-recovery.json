@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-01T17:35:37.883183+00:00",
+  "event": {
+    "action": "ingest",
+    "period": "202504",
+    "query_type": "partner_detail",
+    "run_id": "rebuild-recovery-20261002",
+    "revision": 1
+  },
+  "function_error": null,
+  "response": {
+    "status": "success",
+    "period": "202504",
+    "query_type": "partner_detail",
+    "row_count": 61,
+    "checksum": "sha256:2150cde13d68f474808135e4f76e0b710dc505905ade1ec6a783548ca1c22610",
+    "data_uri": "s3://trade-rebuild-816079797958-20261002/acceptance/v2/hs_version=H6/cmd_code=8542/period=202504/query_type=partner_detail/revision=1/data.ndjson",
+    "manifest_uri": "s3://trade-rebuild-816079797958-20261002/acceptance/v2/hs_version=H6/cmd_code=8542/period=202504/query_type=partner_detail/revision=1/manifest.json"
+  },
+  "log": "START RequestId: 82c17c36-f53a-4ad2-98c8-0704a6953b8b Version: $LATEST\n{\"aws_request_id\": \"82c17c36-f53a-4ad2-98c8-0704a6953b8b\", \"event\": \"ingestion_started\", \"period\": \"202504\", \"query_type\": \"partner_detail\", \"revision\": 1, \"run_id\": \"rebuild-recovery-20261002\"}\n{\"aws_request_id\": \"82c17c36-f53a-4ad2-98c8-0704a6953b8b\", \"checksum\": \"sha256:2150cde13d68f474808135e4f76e0b710dc505905ade1ec6a783548ca1c22610\", \"data_uri\": \"s3://trade-rebuild-816079797958-20261002/acceptance/v2/hs_version=H6/cmd_code=8542/period=202504/query_type=partner_detail/revision=1/data.ndjson\", \"event\": \"ingestion_succeeded\", \"manifest_uri\": \"s3://trade-rebuild-816079797958-20261002/acceptance/v2/hs_version=H6/cmd_code=8542/period=202504/query_type=partner_detail/revision=1/manifest.json\", \"period\": \"202504\", \"query_type\": \"partner_detail\", \"revision\": 1, \"row_count\": 61, \"run_id\": \"rebuild-recovery-20261002\", \"status\": \"success\"}\nEND RequestId: 82c17c36-f53a-4ad2-98c8-0704a6953b8b\nREPORT RequestId: 82c17c36-f53a-4ad2-98c8-0704a6953b8b\tDuration: 4136.09 ms\tBilled Duration: 5057 ms\tMemory Size: 512 MB\tMax Memory Used: 109 MB\tInit Duration: 920.19 ms\t\n"
+}

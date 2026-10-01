@@ -1,0 +1,23 @@
+{
+  "trade-rebuild-acceptance-ComtradeResponseError": [
+    {
+      "eventNumber": 1,
+      "eventMessage": "{\"event\": \"ingestion_failed\", \"error_category\": \"ComtradeResponseError\"}",
+      "extractedValues": {}
+    }
+  ],
+  "trade-rebuild-acceptance-ResponseTruncatedError": [
+    {
+      "eventNumber": 2,
+      "eventMessage": "{\"event\": \"ingestion_failed\", \"error_category\": \"ResponseTruncatedError\"}",
+      "extractedValues": {}
+    }
+  ],
+  "trade-rebuild-acceptance-StorageConflictError": [
+    {
+      "eventNumber": 3,
+      "eventMessage": "{\"event\": \"ingestion_failed\", \"error_category\": \"StorageConflictError\"}",
+      "extractedValues": {}
+    }
+  ]
+}

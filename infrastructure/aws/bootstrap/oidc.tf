@@ -178,7 +178,7 @@ resource "aws_iam_role_policy" "github_deploy" {
       {
         Sid      = "ReadManagedNotificationTopic"
         Effect   = "Allow"
-        Action   = ["sns:GetTopicAttributes", "sns:ListTagsForResource", "sns:ListSubscriptionsByTopic"]
+        Action   = ["sns:GetTopicAttributes", "sns:GetSubscriptionAttributes", "sns:ListTagsForResource", "sns:ListSubscriptionsByTopic"]
         Resource = "arn:aws:sns:${var.aws_region}:${var.aws_account_id}:${var.function_name}-alarms"
       }
     ]

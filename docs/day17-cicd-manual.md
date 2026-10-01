@@ -1,5 +1,7 @@
 # Day 17：CI／CD 與 OIDC 部署操作手冊
 
+> 現行設定：Day 19 已將精確 OIDC trust 與 `AWS_DEPLOY_REF` 同步為 `main`，自動部署仍關閉，並補入指定 SNS topic 的 subscription refresh 唯讀權限。下方 Day 17 feature 分支值為歷史驗收設定；現行操作見 [重建與復原手冊](day19-recovery-manual.md)。
+
 ## 1. 檢查與身分邊界
 
 `.github/workflows/ci.yml` 在 PR／push 執行，亦可供部署 workflow 重用。Python 3.11 安裝 `.[dev,warehouse,dashboard]`，執行 Ruff format／lint、套件的 strict mypy、251 項離線 unit tests，以及整體 80％、ingestion 90％、raw loader 85％的 coverage 門檻。歷史驗證 scripts 與 DAG 採 lint／測試，不宣稱它們已全數通過 strict mypy。

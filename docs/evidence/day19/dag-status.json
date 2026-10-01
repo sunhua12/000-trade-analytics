@@ -1,0 +1,22 @@
+[
+  {
+    "dag_id": "trade_backfill_pipeline",
+    "fileloc": "/opt/airflow/dags/trade_backfill_pipeline.py",
+    "owners": [
+      "airflow"
+    ],
+    "is_paused": "True",
+    "bundle_name": "dags-folder",
+    "bundle_version": null
+  },
+  {
+    "dag_id": "trade_monthly_pipeline",
+    "fileloc": "/opt/airflow/dags/trade_monthly_pipeline.py",
+    "owners": [
+      "airflow"
+    ],
+    "is_paused": "True",
+    "bundle_name": "dags-folder",
+    "bundle_version": null
+  }
+]

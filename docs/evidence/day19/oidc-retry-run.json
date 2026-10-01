@@ -1,0 +1,516 @@
+{
+  "conclusion": "success",
+  "jobs": [
+    {
+      "completedAt": "2026-10-01T17:41:16Z",
+      "conclusion": "success",
+      "databaseId": 110500198019,
+      "name": "checks / dashboard-container",
+      "startedAt": "2026-10-01T17:40:30Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:40:31Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:40:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:32Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:40:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:13Z",
+          "conclusion": "success",
+          "name": "Run docker build --platform linux/amd64 --provenance=false -f Dockerfile.dashboard -t trade-dashboard-ci .",
+          "number": 3,
+          "startedAt": "2026-10-01T17:40:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:15Z",
+          "conclusion": "success",
+          "name": "Run bash scripts/check_dashboard_container.sh trade-dashboard-ci",
+          "number": 4,
+          "startedAt": "2026-10-01T17:41:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:15Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 8,
+          "startedAt": "2026-10-01T17:41:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:15Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-01T17:41:15Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500198019"
+    },
+    {
+      "completedAt": "2026-10-01T17:41:19Z",
+      "conclusion": "success",
+      "databaseId": 110500198085,
+      "name": "checks / dags",
+      "startedAt": "2026-10-01T17:40:34Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:40:36Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:40:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:37Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:40:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:17Z",
+          "conclusion": "success",
+          "name": "Run docker run --rm -v \"$PWD:/opt/trade-analytics:ro\" -e AIRFLOW__CORE__LOAD_EXAMPLES=False apache/airflow:3.3.2-python3.11 python /opt/trade-analytics/scripts/check_dags.py /opt/trade-analytics/dags",
+          "number": 3,
+          "startedAt": "2026-10-01T17:40:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:17Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 6,
+          "startedAt": "2026-10-01T17:41:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:17Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-10-01T17:41:17Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500198085"
+    },
+    {
+      "completedAt": "2026-10-01T17:41:15Z",
+      "conclusion": "success",
+      "databaseId": 110500198294,
+      "name": "checks / python",
+      "startedAt": "2026-10-01T17:40:30Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:40:32Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:40:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:34Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:40:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:34Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+          "number": 3,
+          "startedAt": "2026-10-01T17:40:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:03Z",
+          "conclusion": "success",
+          "name": "Run python -m pip install -e '.[dev,warehouse,dashboard]'",
+          "number": 4,
+          "startedAt": "2026-10-01T17:40:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:13Z",
+          "conclusion": "success",
+          "name": "Run bash scripts/ci_checks.sh",
+          "number": 5,
+          "startedAt": "2026-10-01T17:41:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:13Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+          "number": 9,
+          "startedAt": "2026-10-01T17:41:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:13Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 10,
+          "startedAt": "2026-10-01T17:41:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:13Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-01T17:41:13Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500198294"
+    },
+    {
+      "completedAt": "2026-10-01T17:40:54Z",
+      "conclusion": "success",
+      "databaseId": 110500198345,
+      "name": "checks / docker",
+      "startedAt": "2026-10-01T17:40:30Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:40:31Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:40:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:32Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:40:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:52Z",
+          "conclusion": "success",
+          "name": "Run docker buildx build --platform linux/amd64 --provenance=false --load -t trade-ci .",
+          "number": 3,
+          "startedAt": "2026-10-01T17:40:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:53Z",
+          "conclusion": "success",
+          "name": "Handler import smoke without cloud credentials",
+          "number": 4,
+          "startedAt": "2026-10-01T17:40:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:53Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 8,
+          "startedAt": "2026-10-01T17:40:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:53Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-01T17:40:53Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500198345"
+    },
+    {
+      "completedAt": "2026-10-01T17:40:49Z",
+      "conclusion": "success",
+      "databaseId": 110500198364,
+      "name": "checks / terraform (application)",
+      "startedAt": "2026-10-01T17:40:31Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:40:33Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:40:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:34Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:40:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:35Z",
+          "conclusion": "success",
+          "name": "Run hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd",
+          "number": 3,
+          "startedAt": "2026-10-01T17:40:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:35Z",
+          "conclusion": "success",
+          "name": "Run terraform -chdir=infrastructure/aws/application fmt -check",
+          "number": 4,
+          "startedAt": "2026-10-01T17:40:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:44Z",
+          "conclusion": "success",
+          "name": "Run terraform -chdir=infrastructure/aws/application init -backend=false -lockfile=readonly",
+          "number": 5,
+          "startedAt": "2026-10-01T17:40:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:47Z",
+          "conclusion": "success",
+          "name": "Run terraform -chdir=infrastructure/aws/application validate",
+          "number": 6,
+          "startedAt": "2026-10-01T17:40:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:47Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 12,
+          "startedAt": "2026-10-01T17:40:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:47Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-10-01T17:40:47Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500198364"
+    },
+    {
+      "completedAt": "2026-10-01T17:40:47Z",
+      "conclusion": "success",
+      "databaseId": 110500198373,
+      "name": "checks / terraform (bootstrap)",
+      "startedAt": "2026-10-01T17:40:31Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:40:33Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:40:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:34Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:40:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:36Z",
+          "conclusion": "success",
+          "name": "Run hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd",
+          "number": 3,
+          "startedAt": "2026-10-01T17:40:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:36Z",
+          "conclusion": "success",
+          "name": "Run terraform -chdir=infrastructure/aws/bootstrap fmt -check",
+          "number": 4,
+          "startedAt": "2026-10-01T17:40:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:43Z",
+          "conclusion": "success",
+          "name": "Run terraform -chdir=infrastructure/aws/bootstrap init -backend=false -lockfile=readonly",
+          "number": 5,
+          "startedAt": "2026-10-01T17:40:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:45Z",
+          "conclusion": "success",
+          "name": "Run terraform -chdir=infrastructure/aws/bootstrap validate",
+          "number": 6,
+          "startedAt": "2026-10-01T17:40:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:45Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 12,
+          "startedAt": "2026-10-01T17:40:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:40:45Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-10-01T17:40:45Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500198373"
+    },
+    {
+      "completedAt": "2026-10-01T17:43:24Z",
+      "conclusion": "success",
+      "databaseId": 110500567981,
+      "name": "deploy",
+      "startedAt": "2026-10-01T17:41:23Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-01T17:41:27Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-01T17:41:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:28Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-01T17:41:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:29Z",
+          "conclusion": "success",
+          "name": "Run hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd",
+          "number": 3,
+          "startedAt": "2026-10-01T17:41:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:41:30Z",
+          "conclusion": "success",
+          "name": "Run aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a",
+          "number": 4,
+          "startedAt": "2026-10-01T17:41:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:42:23Z",
+          "conclusion": "success",
+          "name": "Build and push immutable image",
+          "number": 5,
+          "startedAt": "2026-10-01T17:41:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:42:32Z",
+          "conclusion": "success",
+          "name": "Configure backend and preserved application settings",
+          "number": 6,
+          "startedAt": "2026-10-01T17:42:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:42:43Z",
+          "conclusion": "success",
+          "name": "Save and review the image-only plan",
+          "number": 7,
+          "startedAt": "2026-10-01T17:42:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:43:09Z",
+          "conclusion": "success",
+          "name": "Apply the same saved plan",
+          "number": 8,
+          "startedAt": "2026-10-01T17:42:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:43:20Z",
+          "conclusion": "success",
+          "name": "Verify Lambda digest and absence of drift",
+          "number": 9,
+          "startedAt": "2026-10-01T17:43:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:43:21Z",
+          "conclusion": "success",
+          "name": "Preserve sanitized evidence only",
+          "number": 10,
+          "startedAt": "2026-10-01T17:43:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:43:21Z",
+          "conclusion": "success",
+          "name": "Post Run aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a",
+          "number": 19,
+          "startedAt": "2026-10-01T17:43:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:43:21Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 20,
+          "startedAt": "2026-10-01T17:43:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-01T17:43:21Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "startedAt": "2026-10-01T17:43:21Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994/job/110500567981"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/sunhua12/000-trade-analytics/actions/runs/36901101994"
+}

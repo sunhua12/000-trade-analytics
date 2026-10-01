@@ -1,0 +1,1 @@
+PASS: custom PORT=8090 health endpoint; UID=10001; no cloud credentials
