@@ -1,0 +1,77 @@
+{
+  "dag_run_id": "manual__2026-10-01T02:22:56.108332+00:00",
+  "sources": {
+    "ingest_detail": {
+      "checksum": "sha256:e35597747970b76fbb74842b11c7eb7a0b76cb4021eb3e7f454713f3605a6f86",
+      "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202501/query_type=partner_detail/revision=1/data.ndjson",
+      "kind": "partner_detail",
+      "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202501/query_type=partner_detail/revision=1/manifest.json",
+      "period": "202501",
+      "revision": 1,
+      "row_count": 67,
+      "run_id": "backfill-202501-f345c669360ee0ee",
+      "status": "already_exists",
+      "step": "ingest"
+    },
+    "ingest_detail_2": {
+      "checksum": "sha256:d58116d9931d2cb44343020827480ea842d8ca070153f2950f575b3ac130a3ad",
+      "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202502/query_type=partner_detail/revision=1/data.ndjson",
+      "kind": "partner_detail",
+      "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202502/query_type=partner_detail/revision=1/manifest.json",
+      "period": "202502",
+      "revision": 1,
+      "row_count": 62,
+      "run_id": "backfill-202502-f345c669360ee0ee",
+      "status": "success",
+      "step": "ingest"
+    },
+    "ingest_detail_3": {
+      "checksum": "sha256:3e920e92e1eeaf147e60d114a02bc131fd175496eeacfba37266781aad53c2e8",
+      "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202503/query_type=partner_detail/revision=1/data.ndjson",
+      "kind": "partner_detail",
+      "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202503/query_type=partner_detail/revision=1/manifest.json",
+      "period": "202503",
+      "revision": 1,
+      "row_count": 61,
+      "run_id": "backfill-202503-f345c669360ee0ee",
+      "status": "success",
+      "step": "ingest"
+    },
+    "ingest_world": {
+      "checksum": "sha256:9560d5dd17e733bd6214b5811a1c3eb0a31a34d8a47539f14c168dd833414947",
+      "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202501/query_type=world_total/revision=1/data.ndjson",
+      "kind": "world_total",
+      "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202501/query_type=world_total/revision=1/manifest.json",
+      "period": "202501",
+      "revision": 1,
+      "row_count": 1,
+      "run_id": "backfill-202501-f345c669360ee0ee",
+      "status": "already_exists",
+      "step": "ingest"
+    },
+    "ingest_world_2": {
+      "checksum": "sha256:e82f0f1335d96cc9beadf0b8835e1635614e81ae1ede5342f687882b0828d015",
+      "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202502/query_type=world_total/revision=1/data.ndjson",
+      "kind": "world_total",
+      "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202502/query_type=world_total/revision=1/manifest.json",
+      "period": "202502",
+      "revision": 1,
+      "row_count": 1,
+      "run_id": "backfill-202502-f345c669360ee0ee",
+      "status": "success",
+      "step": "ingest"
+    },
+    "ingest_world_3": {
+      "checksum": "sha256:500b8bd8d9383b3715df9527702223260d5584d59c42fbcb1e13b258bc59b716",
+      "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202503/query_type=world_total/revision=1/data.ndjson",
+      "kind": "world_total",
+      "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202503/query_type=world_total/revision=1/manifest.json",
+      "period": "202503",
+      "revision": 1,
+      "row_count": 1,
+      "run_id": "backfill-202503-f345c669360ee0ee",
+      "status": "success",
+      "step": "ingest"
+    }
+  }
+}

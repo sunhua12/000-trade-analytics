@@ -107,7 +107,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [x] | Day 13 | 視覺化與指標解讀 | 完成來源國圖表、YoY／HHI、資料新鮮度；依資料可用性加入地圖與散佈圖 | 本機展示與真實資料核對通過；3 項觀察及限制見[展示紀錄](day13-dashboard-record.md)；里程碑 M3 |
 | [x] | Day 14 | Airflow DAG、task 邊界與 logical date | 建立 Docker Compose、固定版本與 monthly DAG；包裝已完成的 ingestion／load／dbt 操作 | DAG 無 import error；已發布單月完整安全重跑；XCom 只含 metadata，詳見 [Day 14 執行紀錄](day14-run-record.md) |
 | [ ] | Day 15 | 排程、限流、CloudWatch／SNS | 完成月度執行、有限期數檢查與重試；補結構化失敗日誌；以 Terraform 建立 Metric Filters、Alarms、SNS 並確認訂閱 | 缺資料有明確狀態；驗證三類錯誤 filter 與耗時門檻；真實失敗觸發 SNS，依 run_id 找到日誌 |
-| [ ] | Day 16 | 參數化回填、復原 | 建立獨立 backfill DAG；回填 3 個月；故意中斷載入後重跑 | 不混用原生 Backfill 語意；復原後無重複 grain；里程碑 M4 |
+| [x] | Day 16 | 參數化回填、復原 | 建立獨立 backfill DAG；真實回填 202501～202503；202504 載入回報遺失後重試 | 復原後無重複 grain；三月安全重跑維持原發布時間；M4 技術驗收見 [執行紀錄](day16-run-record.md) |
 | [ ] | Day 17 | CI/CD、OIDC、Terraform | 加入 Ruff／mypy／pytest、DAG、Docker 與 Terraform 檢查；以 OIDC 推送 ECR 並經 Terraform 更新 Lambda；整理手動 dbt 雲端測試入口 | 有成功 CI 與 AWS 部署 run；trust policy 限定來源；無靜態 AWS Key；保存部署 digest 與 plan／apply 證據 |
 | [ ] | Day 18 | Cloud Run、Service Account、查詢成本 | 部署 Streamlit；限制資料存取與查詢量；核對線上圖表 | Live URL 可開啟；與 BigQuery 固定條件查詢結果一致；完成正常路徑 E2E |
 | [ ] | Day 19 | 整合緩衝、故障與重建驗證 | 依 Terraform／OIDC runbook 乾淨重建；完成失敗 → SNS → run_id 追查 → 重跑復原；驗證失敗不發布 | 保存重建、告警接收、定位與復原證據；未完成項目明列；不追加功能 |
@@ -120,7 +120,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | M1：單月可信入倉 | Day 6 | 真實 API／Lambda／S3／BigQuery 證據與重跑結果 |
 | M2：可解釋的分析資料 | Day 10 | dbt models、手算核對、品質 gate |
 | M3：可展示的資料產品 | Day 13 | 24 個月覆蓋清單、本機 Dashboard、分析說明 |
-| M4：可復原的自動流程 | Day 16 | Monthly DAG、3 個月 backfill、故障復原 |
+| M4：可復原的自動流程 | Day 16 | Monthly DAG、3 個月真實 backfill、故障復原均有驗證；見 [Day 16 執行紀錄](day16-run-record.md) |
 | M5：可交付作品 | Day 20 | CI、Live Demo、乾淨環境重建、文件與驗收紀錄 |
 
 前置里程碑未通過時，不把後續 fixture 展示算成真實整合成功。可以先用 fixture 學習後續模型／UI，但必須標記測試資料，並在 Day 19 補真實驗證。

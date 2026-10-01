@@ -1,0 +1,116 @@
+{
+  "checked_at": "2026-10-01T02:43:37.598722+00:00",
+  "months": [
+    {
+      "latest_quality": {
+        "job_id": "23912c73-aa69-4d51-81ec-f65b23e5948d",
+        "latest_json": "{\"run_id\":\"backfill-202501-f345c669360ee0ee\",\"status\":\"PASS\",\"reason_codes\":[],\"tested_at\":\"2026-10-01T02:24:29.125743Z\"}"
+      },
+      "period": "202501",
+      "published": {
+        "distinct_partner_count": 67,
+        "job_id": "0aeb15a7-2c8b-409f-ac0b-cbedf25ff036",
+        "published_at": [
+          "2026-10-01 02:24:33.796+00"
+        ],
+        "row_count": 67,
+        "run_id_count": 1,
+        "run_ids": [
+          "backfill-202501-f345c669360ee0ee"
+        ]
+      },
+      "raw": {
+        "partner_detail": {
+          "amount": "3525209472",
+          "checksum_count": 1,
+          "distinct_partner_count": 67,
+          "job_id": "c435b505-16b2-41d8-9209-8326d6f4714c",
+          "revision_count": 1,
+          "row_count": 67
+        },
+        "world_total": {
+          "amount": "3525209472",
+          "checksum_count": 1,
+          "distinct_partner_count": 1,
+          "job_id": "5c7f8013-aff5-4d2f-82a0-2c7490157d87",
+          "revision_count": 1,
+          "row_count": 1
+        }
+      }
+    },
+    {
+      "latest_quality": {
+        "job_id": "9ca0ad7e-a08d-49c5-9ae1-13bc2ae67a6e",
+        "latest_json": "{\"run_id\":\"backfill-202502-f345c669360ee0ee\",\"status\":\"PASS\",\"reason_codes\":[],\"tested_at\":\"2026-10-01T02:26:38.671633Z\"}"
+      },
+      "period": "202502",
+      "published": {
+        "distinct_partner_count": 62,
+        "job_id": "af658f85-9a40-4bfb-ba32-a88d3190fe6c",
+        "published_at": [
+          "2026-10-01 02:26:43.081+00"
+        ],
+        "row_count": 62,
+        "run_id_count": 1,
+        "run_ids": [
+          "backfill-202502-f345c669360ee0ee"
+        ]
+      },
+      "raw": {
+        "partner_detail": {
+          "amount": "2896179813",
+          "checksum_count": 1,
+          "distinct_partner_count": 62,
+          "job_id": "50755e45-ee5e-4483-b644-33762fe1e76d",
+          "revision_count": 1,
+          "row_count": 62
+        },
+        "world_total": {
+          "amount": "2896179813",
+          "checksum_count": 1,
+          "distinct_partner_count": 1,
+          "job_id": "ea8d07b9-76c0-46d4-b2b3-ac8eab4e199d",
+          "revision_count": 1,
+          "row_count": 1
+        }
+      }
+    },
+    {
+      "latest_quality": {
+        "job_id": "03a01662-2be5-4962-b611-1ac703225e1c",
+        "latest_json": "{\"run_id\":\"backfill-202503-f345c669360ee0ee\",\"status\":\"PASS\",\"reason_codes\":[],\"tested_at\":\"2026-10-01T02:28:39.240124Z\"}"
+      },
+      "period": "202503",
+      "published": {
+        "distinct_partner_count": 61,
+        "job_id": "091f4f26-fc20-4d1f-ac06-f9d240bc7d81",
+        "published_at": [
+          "2026-10-01 02:28:43.890+00"
+        ],
+        "row_count": 61,
+        "run_id_count": 1,
+        "run_ids": [
+          "backfill-202503-f345c669360ee0ee"
+        ]
+      },
+      "raw": {
+        "partner_detail": {
+          "amount": "3897507654",
+          "checksum_count": 1,
+          "distinct_partner_count": 61,
+          "job_id": "cc7cb963-6808-4999-8617-5f1ac4283051",
+          "revision_count": 1,
+          "row_count": 61
+        },
+        "world_total": {
+          "amount": "3897507654",
+          "checksum_count": 1,
+          "distinct_partner_count": 1,
+          "job_id": "003061c5-b130-42ff-a3dd-ad0858380e0f",
+          "revision_count": 1,
+          "row_count": 1
+        }
+      }
+    }
+  ]
+}
