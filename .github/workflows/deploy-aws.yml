@@ -1,0 +1,106 @@
+name: Deploy AWS Lambda
+on:
+  push:
+    branches: [feature/ci-oidc-deployment]
+    paths:
+      - '.github/workflows/**'
+      - 'infrastructure/aws/**'
+      - 'src/**'
+      - 'scripts/**'
+      - 'Dockerfile'
+      - 'pyproject.toml'
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: Apply the reviewed image-only plan
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: trade-analytics-aws-production
+  cancel-in-progress: false
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+  deploy:
+    needs: checks
+    if: github.ref == vars.AWS_DEPLOY_REF
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+      ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+      LAMBDA_FUNCTION: ${{ vars.LAMBDA_FUNCTION }}
+      TF_IN_AUTOMATION: 'true'
+      TF_INPUT: 'false'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: '1.16.2'
+          terraform_wrapper: false
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: github-${{ github.run_id }}
+          aws-region: ${{ vars.AWS_REGION }}
+          allowed-account-ids: ${{ vars.AWS_ACCOUNT_ID }}
+          role-duration-seconds: 3600
+      - name: Build and push immutable image
+        run: |
+          set -euo pipefail
+          registry="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
+          aws ecr get-login-password | docker login --username AWS --password-stdin "$registry"
+          docker buildx build --platform linux/amd64 --provenance=false --push -t "$registry/$ECR_REPOSITORY:$GITHUB_SHA" .
+          digest=$(aws ecr describe-images --repository-name "$ECR_REPOSITORY" --image-ids "imageTag=$GITHUB_SHA" --query 'imageDetails[0].imageDigest' --output text)
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          echo "IMAGE_URI=$registry/$ECR_REPOSITORY@$digest" >> "$GITHUB_ENV"
+      - name: Configure backend and preserved application settings
+        env:
+          SETTINGS: ${{ secrets.AWS_APPLICATION_TFVARS_JSON }}
+          STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s' "$SETTINGS" > infrastructure/aws/application/deployment.auto.tfvars.json
+          python -c 'import json; json.load(open("infrastructure/aws/application/deployment.auto.tfvars.json"))'
+          terraform -chdir=infrastructure/aws/application init -lockfile=readonly \
+            -backend-config="bucket=$STATE_BUCKET" \
+            -backend-config="key=trade-analytics/application/terraform.tfstate" \
+            -backend-config="region=$AWS_REGION" -backend-config="encrypt=true" \
+            -backend-config="use_lockfile=true" -backend-config="allowed_account_ids=[\"$AWS_ACCOUNT_ID\"]"
+      - name: Save and review the image-only plan
+        run: |
+          set -euo pipefail
+          umask 077
+          terraform -chdir=infrastructure/aws/application plan -out=deployment.tfplan -var="image_uri=$IMAGE_URI"
+          terraform -chdir=infrastructure/aws/application show -json deployment.tfplan > /tmp/deployment-plan.json
+          python scripts/check_deploy_plan.py /tmp/deployment-plan.json "$IMAGE_URI" > deployment-summary.json
+          cat deployment-summary.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Apply the same saved plan
+        if: github.event_name == 'push' || inputs.apply
+        run: terraform -chdir=infrastructure/aws/application apply deployment.tfplan
+      - name: Verify Lambda digest and absence of drift
+        if: github.event_name == 'push' || inputs.apply
+        run: |
+          set -euo pipefail
+          aws lambda wait function-updated-v2 --function-name "$LAMBDA_FUNCTION"
+          actual=$(aws lambda get-function --function-name "$LAMBDA_FUNCTION" --query Code.ResolvedImageUri --output text)
+          test "$actual" = "$IMAGE_URI"
+          terraform -chdir=infrastructure/aws/application plan -detailed-exitcode -var="image_uri=$IMAGE_URI" > /tmp/post-deploy-plan.txt
+          python -c 'import json,os; print(json.dumps({"git_sha":os.environ["GITHUB_SHA"],"image_uri":os.environ["IMAGE_URI"],"run_id":os.environ["GITHUB_RUN_ID"],"drift":False}))' > deployment-verification.json
+          cat deployment-verification.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve sanitized evidence only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: deployment-evidence
+          path: |
+            deployment-summary.json
+            deployment-verification.json
+          retention-days: 7
+          if-no-files-found: ignore

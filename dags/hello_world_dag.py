@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from airflow import DAG
 from airflow.providers.standard.operators.bash import BashOperator
 
@@ -9,7 +10,6 @@ with DAG(
     catchup=False,
     tags=["test"],
 ) as dag:
-
     task_hello = BashOperator(
         task_id="print_hello",
         bash_command='echo "Hello Airflow from simple DAG"',
