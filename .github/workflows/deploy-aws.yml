@@ -25,7 +25,7 @@ jobs:
     uses: ./.github/workflows/ci.yml
   deploy:
     needs: checks
-    if: github.ref == vars.AWS_DEPLOY_REF
+    if: github.ref == vars.AWS_DEPLOY_REF && (github.event_name != 'push' || vars.AWS_AUTO_DEPLOY_ENABLED == 'true')
     runs-on: ubuntu-latest
     permissions:
       contents: read

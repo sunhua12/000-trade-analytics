@@ -123,7 +123,7 @@ resource "aws_iam_role_policy" "github_deploy" {
       {
         Sid      = "InspectManagedBucket"
         Effect   = "Allow"
-        Action   = ["s3:GetBucketLocation", "s3:GetBucketVersioning", "s3:GetBucketPublicAccessBlock", "s3:GetEncryptionConfiguration", "s3:GetBucketOwnershipControls", "s3:GetBucketTagging", "s3:ListBucket"]
+        Action   = ["s3:GetBucketLocation", "s3:GetBucketVersioning", "s3:GetBucketPublicAccessBlock", "s3:GetEncryptionConfiguration", "s3:GetBucketOwnershipControls", "s3:GetBucketTagging", "s3:ListBucket", "s3:GetBucketPolicy", "s3:GetBucketAcl", "s3:GetBucketCORS", "s3:GetBucketWebsite", "s3:GetAccelerateConfiguration", "s3:GetBucketRequestPayment", "s3:GetBucketLogging", "s3:GetLifecycleConfiguration", "s3:GetReplicationConfiguration", "s3:GetBucketObjectLockConfiguration"]
         Resource = "arn:aws:s3:::${var.raw_bucket_name}"
       },
       {
@@ -167,7 +167,7 @@ resource "aws_iam_role_policy" "github_deploy" {
         Sid      = "ReadManagedLogs"
         Effect   = "Allow"
         Action   = ["logs:DescribeMetricFilters", "logs:ListTagsForResource", "logs:ListTagsLogGroup"]
-        Resource = local.logs_arn
+        Resource = [local.logs_arn, trimsuffix(local.logs_arn, ":*")]
       },
       {
         Sid      = "ReadManagedAlarmTags"
