@@ -1,0 +1,586 @@
+Browser tab: 1, Title: "美國半導體進口分析", URL: "https://trade-dashboard-898093147725.asia-northeast1.run.app/".
+0 AXWebArea 美國半導體進口分析, URL: trade-dashboard-898093147725.asia-northeast1.run.app/
+	1 container
+		2 container
+			3 container
+				616 button keyboard_double_arrow_left
+				4 heading 篩選條件, Value: 2
+					5 text 篩選條件
+				6 button 重新讀取已發布資料
+					7 text 重新讀取已發布資料
+				8 container
+					9 combo box (collapsed, settable) Description: 起始月份, Value: 2024-01, ID: react-aria6059840215-:r8:, Secondary Actions: Expand
+					10 pop up button (collapsed) Description: Open, ID: react-aria6059840215-:r4:, Secondary Actions: Expand
+				11 container
+					12 combo box (collapsed, settable) Description: 結束月份, Value: 2024-12, ID: react-aria6059840215-:rm:, Secondary Actions: Expand
+					13 pop up button (collapsed) Description: Open, ID: react-aria6059840215-:ri:, Secondary Actions: Expand
+				617 container
+					618 combo box (collapsed, settable) Description: Partner（未選＝全部已確認國家／地區）, ID: react-aria6059840215-:r7t:, Secondary Actions: Expand
+					619 pop up button (collapsed) Description: Open, ID: react-aria6059840215-:r7p:, Secondary Actions: Expand
+				17 container
+					18 container Description: Top N, ID: react-aria6059840215-:rv:
+						19 container
+							20 slider (settable, integer) Top N Top N, Value: 10, ID: react-aria6059840215-:rv:-0
+							21 text 10
+							22 text 5
+							23 text 30
+				24 text 查詢快取：3600 秒；可手動重新讀取。
+			25 container
+				26 button keyboard_double_arrow_right
+				27 pop up button (collapsed) Description: Main menu, Secondary Actions: Expand
+			28 container 美國半導體進口分析 正式發布資料｜美國月度進口｜HS 8542／H6｜金額單位：美元 期間：2024-01～2024-12；Partner：全部已確認國家／地區；排名顯示前 10 名。 已發布月份 12 最新成功發布月份 2024-12 期間 World 金額 USD 40.39B 期間 World 精確金額：USD 40,386,451,682。World 每月只計一次，不加總夥伴列上的重複值。 資料新鮮度 所選期間最新資料月份：2024-12；所選期間最近成功發布：2026-09-24 12:19:50 Asia/Taipei；所選期間最新發布嘗試：2026-09-30 19:17:12 Asia/Taipei；畫面資料讀取：2026-10-02 07:05:21 Asia/Taipei。 展示範圍起於 2023-01，止於 2025-05（不含）；僅列出已發布月份。畫面可能使用 3600 秒快取；重新讀取按鈕可取得新的正式版本。最新失敗嘗試不會更新正式資料。 來源國／地區金額排名
+				29 heading 美國半導體進口分析, Value: 1, ID: d6f3816
+					30 text 美國半導體進口分析
+					31 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#d6f3816
+				32 text 正式發布資料｜美國月度進口｜HS 8542／H6｜金額單位：美元
+				33 text 期間：2024-01～2024-12；Partner：全部已確認國家／地區；排名顯示前 10 名。
+				620 container
+					621 text 已發布月份
+					622 text 12
+				623 container
+					624 text 最新成功發布月份
+					625 text 2024-12
+				626 container
+					627 text 期間 World 金額
+					628 text USD 40.39B
+				40 text 期間 World 精確金額：USD 40,386,451,682。World 每月只計一次，不加總夥伴列上的重複值。
+				41 heading 資料新鮮度, Value: 3, ID: 4d5cd059
+					42 text 資料新鮮度
+					43 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#4d5cd059
+				44 container
+					45 text 所選期間最新資料月份：2024-12；所選期間最近成功發布：2026-09-24 12:19 :50  Asia/Taipei；所選期間最新發布嘗試：2026-09-30 19:17 :12  Asia/Taipei；畫面資料讀取：2026-10-02 07:05 :21  Asia/Taipei。
+				46 text 展示範圍起於 2023-01，止於 2025-05（不含）；僅列出已發布月份。畫面可能使用 3600 秒快取；重新讀取按鈕可取得新的正式版本。最新失敗嘗試不會更新正式資料。
+				47 heading 來源國／地區金額排名, Value: 3, ID: 7fe3072a
+					48 text 來源國／地區金額排名
+					49 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#7fe3072a
+				50 container
+					51 button Show/hide columns
+					52 button Download as CSV
+					53 button Search
+					54 button Fullscreen
+					55 container
+						56 image
+							57 table
+								58 row 代碼 來源國／地區 期間進口金額 占期間 World
+									59 cell (selectable) 代碼
+									60 cell (selectable) 來源國／地區
+									61 cell (selectable) 期間進口金額
+									62 cell (selectable) 占期間 World
+								63 container
+									64 row (selectable) 458 Malaysia USD 9,598,343,899 23.77%
+										65 cell (selectable) Value: 458, ID: glide-cell-0-0
+										66 cell (selectable) Value: Malaysia, ID: glide-cell-1-0
+										67 cell (selectable) Value: USD 9,598,343,899, ID: glide-cell-2-0
+										68 cell (selectable) Value: 23.77%, ID: glide-cell-3-0
+									69 row (selectable) 376 Israel USD 4,195,233,049 10.39%
+										70 cell (selectable) Value: 376, ID: glide-cell-0-1
+										71 cell (selectable) Value: Israel, ID: glide-cell-1-1
+										72 cell (selectable) Value: USD 4,195,233,049, ID: glide-cell-2-1
+										73 cell (selectable) Value: 10.39%, ID: glide-cell-3-1
+									74 row (selectable) 410 Rep. of Korea USD 2,422,182,840 6.00%
+										75 cell (selectable) Value: 410, ID: glide-cell-0-2
+										76 cell (selectable) Value: Rep. of Korea, ID: glide-cell-1-2
+										77 cell (selectable) Value: USD 2,422,182,840, ID: glide-cell-2-2
+										78 cell (selectable) Value: 6.00%, ID: glide-cell-3-2
+									79 row (selectable) 372 Ireland USD 1,917,728,859 4.75%
+										80 cell (selectable) Value: 372, ID: glide-cell-0-3
+										81 cell (selectable) Value: Ireland, ID: glide-cell-1-3
+										82 cell (selectable) Value: USD 1,917,728,859, ID: glide-cell-2-3
+										83 cell (selectable) Value: 4.75%, ID: glide-cell-3-3
+									84 row (selectable) 484 Mexico USD 1,485,684,565 3.68%
+										85 cell (selectable) Value: 484, ID: glide-cell-0-4
+										86 cell (selectable) Value: Mexico, ID: glide-cell-1-4
+										87 cell (selectable) Value: USD 1,485,684,565, ID: glide-cell-2-4
+										88 cell (selectable) Value: 3.68%, ID: glide-cell-3-4
+									89 row (selectable) 156 China USD 1,473,432,024 3.65%
+										90 cell (selectable) Value: 156, ID: glide-cell-0-5
+										91 cell (selectable) Value: China, ID: glide-cell-1-5
+										92 cell (selectable) Value: USD 1,473,432,024, ID: glide-cell-2-5
+										93 cell (selectable) Value: 3.65%, ID: glide-cell-3-5
+									94 row (selectable) 704 Viet Nam USD 1,400,475,602 3.47%
+										95 cell (selectable) Value: 704, ID: glide-cell-0-6
+										96 cell (selectable) Value: Viet Nam, ID: glide-cell-1-6
+										97 cell (selectable) Value: USD 1,400,475,602, ID: glide-cell-2-6
+										98 cell (selectable) Value: 3.47%, ID: glide-cell-3-6
+									99 row (selectable) 188 Costa Rica USD 1,232,820,793 3.05%
+										100 cell (selectable) Value: 188, ID: glide-cell-0-7
+										101 cell (selectable) Value: Costa Rica, ID: glide-cell-1-7
+										102 cell (selectable) Value: USD 1,232,820,793, ID: glide-cell-2-7
+										103 cell (selectable) Value: 3.05%, ID: glide-cell-3-7
+									104 row (selectable) 764 Thailand USD 1,073,978,276 2.66%
+										105 cell (selectable) Value: 764, ID: glide-cell-0-8
+										106 cell (selectable) Value: Thailand, ID: glide-cell-1-8
+										107 cell (selectable) Value: USD 1,073,978,276, ID: glide-cell-2-8
+										108 cell (selectable) Value: 2.66%, ID: glide-cell-3-8
+									109 row (selectable) 392 Japan USD 1,016,130,660 2.52%
+										110 cell (selectable) Value: 392, ID: glide-cell-0-9
+										111 cell (selectable) Value: Japan, ID: glide-cell-1-9
+										112 cell (selectable) Value: USD 1,016,130,660, ID: glide-cell-2-9
+										113 cell (selectable) Value: 2.52%, ID: glide-cell-3-9
+						114 image
+				115 container
+					116 button Show data
+					629 button Download as PNG
+					118 button Fullscreen
+					119 container Vega visualization
+						630 image
+							631 container X-axis for a linear scale with values from 0 to 10,000,000,000 Y-axis for a discrete scale with 10 values: 156 · China, 188 · Costa Rica, 372 · Ireland, 376 · Israel, 392 · Japan, ending with 764 · Thailand 進口金額（USD）: 9598343899; 來源國／地區: 458 · Malaysia 進口金額（USD）: 4195233049; 來源國／地區: 376 · Israel 進口金額（USD）: 2422182840; 來源國／地區: 410 · Rep. of Korea 進口金額（USD）: 1917728859; 來源國／地區: 372 · Ireland 進口金額（USD）: 1485684565; 來源國／地區: 484 · Mexico 進口金額（USD）: 1473432024; 來源國／地區: 156 · China 進口金額（USD）: 1400475602; 來源國／地區: 704 · Viet Nam 進口金額（USD）: 1232820793; 來源國／地區: 188 · Costa Rica 進口金額（USD）: 1073978276; 來源國／地區: 764 · Thailand 進口金額（USD）: 1016130660; 來源國／地區: 392 · Japan
+								632 axis X-axis for a linear scale with values from 0 to 10,000,000,000
+								633 axis Y-axis for a discrete scale with 10 values: 156 · China, 188 · Costa Rica, 372 · Ireland, 376 · Israel, 392 · Japan, ending with 764 · Thailand
+								634 container 進口金額（USD）: 9598343899; 來源國／地區: 458 · Malaysia 進口金額（USD）: 4195233049; 來源國／地區: 376 · Israel 進口金額（USD）: 2422182840; 來源國／地區: 410 · Rep. of Korea 進口金額（USD）: 1917728859; 來源國／地區: 372 · Ireland 進口金額（USD）: 1485684565; 來源國／地區: 484 · Mexico 進口金額（USD）: 1473432024; 來源國／地區: 156 · China 進口金額（USD）: 1400475602; 來源國／地區: 704 · Viet Nam 進口金額（USD）: 1232820793; 來源國／地區: 188 · Costa Rica 進口金額（USD）: 1073978276; 來源國／地區: 764 · Thailand 進口金額（USD）: 1016130660; 來源國／地區: 392 · Japan
+									635 bar 進口金額（USD）: 9598343899; 來源國／地區: 458 · Malaysia
+									636 bar 進口金額（USD）: 4195233049; 來源國／地區: 376 · Israel
+									637 bar 進口金額（USD）: 2422182840; 來源國／地區: 410 · Rep. of Korea
+									638 bar 進口金額（USD）: 1917728859; 來源國／地區: 372 · Ireland
+									639 bar 進口金額（USD）: 1485684565; 來源國／地區: 484 · Mexico
+									640 bar 進口金額（USD）: 1473432024; 來源國／地區: 156 · China
+									641 bar 進口金額（USD）: 1400475602; 來源國／地區: 704 · Viet Nam
+									642 bar 進口金額（USD）: 1232820793; 來源國／地區: 188 · Costa Rica
+									643 bar 進口金額（USD）: 1073978276; 來源國／地區: 764 · Thailand
+									644 bar 進口金額（USD）: 1016130660; 來源國／地區: 392 · Japan
+				135 text 排名僅含已確認的國家／地區；490 等特殊代碼不列入。占比以期間各月 World 金額合計為分母。
+				136 heading 月度進口趨勢, Value: 3, ID: 964a2e5
+					137 text 月度進口趨勢
+					138 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#964a2e5
+				139 container
+					140 button Show data
+					645 button Download as PNG
+					142 button Fullscreen
+					143 container Vega visualization
+						646 image
+							647 container X-axis for a time scale with values from Monday, 01 January 2024, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM Y-axis for a linear scale with values from 0 to 3,500,000,000 月份: Jan 01, 2024; 進口金額（USD）: 2117659829月份: Jan 01, 2024; 進口金額（USD）: 2117659829 月份: Feb 01, 2024; 進口金額（USD）: 1747392788 月份: Mar 01, 2024; 進口金額（USD）: 2613861284 月份: Apr 01, 2024; 進口金額（USD）: 2093116812 月份: May 01, 2024; 進口金額（USD）: 2409044805 月份: Jun 01, 2024; 進口金額（USD）: 2884670686 月份: Jul 01, 2024; 進口金額（USD）: 2391165852 月份: Aug 01, 2024; 進口金額（USD）: 2141298434 月份: Sep 01, 2024; 進口金額（USD）: 3078446662 月份: Oct 01, 2024; 進口金額（USD）: 2238011987 月份: Nov 01, 2024; 進口金額（USD）: 2413711833 月份: Dec 01, 2024; 進口金額（USD）: 2903154248
+								648 axis X-axis for a time scale with values from Monday, 01 January 2024, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM
+								649 axis Y-axis for a linear scale with values from 0 to 3,500,000,000
+								650 container 月份: Jan 01, 2024; 進口金額（USD）: 2117659829
+									651 line mark 月份: Jan 01, 2024; 進口金額（USD）: 2117659829
+								652 container 月份: Jan 01, 2024; 進口金額（USD）: 2117659829 月份: Feb 01, 2024; 進口金額（USD）: 1747392788 月份: Mar 01, 2024; 進口金額（USD）: 2613861284 月份: Apr 01, 2024; 進口金額（USD）: 2093116812 月份: May 01, 2024; 進口金額（USD）: 2409044805 月份: Jun 01, 2024; 進口金額（USD）: 2884670686 月份: Jul 01, 2024; 進口金額（USD）: 2391165852 月份: Aug 01, 2024; 進口金額（USD）: 2141298434 月份: Sep 01, 2024; 進口金額（USD）: 3078446662 月份: Oct 01, 2024; 進口金額（USD）: 2238011987 月份: Nov 01, 2024; 進口金額（USD）: 2413711833 月份: Dec 01, 2024; 進口金額（USD）: 2903154248
+									653 point 月份: Jan 01, 2024; 進口金額（USD）: 2117659829
+									654 point 月份: Feb 01, 2024; 進口金額（USD）: 1747392788
+									655 point 月份: Mar 01, 2024; 進口金額（USD）: 2613861284
+									656 point 月份: Apr 01, 2024; 進口金額（USD）: 2093116812
+									657 point 月份: May 01, 2024; 進口金額（USD）: 2409044805
+									658 point 月份: Jun 01, 2024; 進口金額（USD）: 2884670686
+									659 point 月份: Jul 01, 2024; 進口金額（USD）: 2391165852
+									660 point 月份: Aug 01, 2024; 進口金額（USD）: 2141298434
+									661 point 月份: Sep 01, 2024; 進口金額（USD）: 3078446662
+									662 point 月份: Oct 01, 2024; 進口金額（USD）: 2238011987
+									663 point 月份: Nov 01, 2024; 進口金額（USD）: 2413711833
+									664 point 月份: Dec 01, 2024; 進口金額（USD）: 2903154248
+								665 symbol mark container
+				180 text 僅加總已確認國家／地區的金額；缺月保留空白，不補成 0。圖表使用浮點數顯示，精確核對以 BigQuery NUMERIC 為準。
+				181 heading 年增率 YoY, Value: 3, ID: yo-y
+					182 text 年增率 YoY
+					183 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#yo-y
+				184 text World 月度金額與去年同月比較；此參考指標不隨 Partner 多選改變。
+				185 container
+					186 button Show/hide columns
+					187 button Download as CSV
+					188 button Search
+					189 button Fullscreen
+					190 container
+						191 image
+							192 table
+								193 row 月份 YoY
+									194 cell (selectable) 月份
+									195 cell (selectable) YoY
+								196 container
+									197 row (selectable) 2024-01 0.34%
+										198 cell (selectable) Value: 2024-01, ID: glide-cell-0-0
+										199 cell (selectable) Value: 0.34%, ID: glide-cell-1-0
+									200 row (selectable) 2024-02 -19.10%
+										201 cell (selectable) Value: 2024-02, ID: glide-cell-0-1
+										202 cell (selectable) Value: -19.10%, ID: glide-cell-1-1
+									203 row (selectable) 2024-03 -2.90%
+										204 cell (selectable) Value: 2024-03, ID: glide-cell-0-2
+										205 cell (selectable) Value: -2.90%, ID: glide-cell-1-2
+									206 row (selectable) 2024-04 6.54%
+										207 cell (selectable) Value: 2024-04, ID: glide-cell-0-3
+										208 cell (selectable) Value: 6.54%, ID: glide-cell-1-3
+									209 row (selectable) 2024-05 0.27%
+										210 cell (selectable) Value: 2024-05, ID: glide-cell-0-4
+										211 cell (selectable) Value: 0.27%, ID: glide-cell-1-4
+									212 row (selectable) 2024-06 17.68%
+										213 cell (selectable) Value: 2024-06, ID: glide-cell-0-5
+										214 cell (selectable) Value: 17.68%, ID: glide-cell-1-5
+									215 row (selectable) 2024-07 11.22%
+										216 cell (selectable) Value: 2024-07, ID: glide-cell-0-6
+										217 cell (selectable) Value: 11.22%, ID: glide-cell-1-6
+									218 row (selectable) 2024-08 14.33%
+										219 cell (selectable) Value: 2024-08, ID: glide-cell-0-7
+										220 cell (selectable) Value: 14.33%, ID: glide-cell-1-7
+									221 row (selectable) 2024-09 39.66%
+										222 cell (selectable) Value: 2024-09, ID: glide-cell-0-8
+										223 cell (selectable) Value: 39.66%, ID: glide-cell-1-8
+									224 row (selectable) 2024-10 21.18%
+										225 cell (selectable) Value: 2024-10, ID: glide-cell-0-9
+										226 cell (selectable) Value: 21.18%, ID: glide-cell-1-9
+									227 row (selectable) 2024-11 20.18%
+										228 cell (selectable) Value: 2024-11, ID: glide-cell-0-10
+										229 cell (selectable) Value: 20.18%, ID: glide-cell-1-10
+									230 row (selectable) 2024-12 34.56%
+										231 cell (selectable) Value: 2024-12, ID: glide-cell-0-11
+										232 cell (selectable) Value: 34.56%, ID: glide-cell-1-11
+						233 image
+				234 container
+					235 button Show data
+					666 button Download as PNG
+					237 button Fullscreen
+					238 container Vega visualization
+						667 image
+							668 container X-axis for a time scale with values from Monday, 01 January 2024, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM Y-axis for a linear scale with values from −20 to 40 月份: Jan 01, 2024; YoY（%）: 0.341705951136月份: Jan 01, 2024; YoY（%）: 0.341705951136 月份: Feb 01, 2024; YoY（%）: −19.1033855952 月份: Mar 01, 2024; YoY（%）: −2.90439855048 月份: Apr 01, 2024; YoY（%）: 6.54496133773 月份: May 01, 2024; YoY（%）: 0.273925424223 月份: Jun 01, 2024; YoY（%）: 17.6802058016 月份: Jul 01, 2024; YoY（%）: 11.2224295202 月份: Aug 01, 2024; YoY（%）: 14.3330225946 月份: Sep 01, 2024; YoY（%）: 39.6644055909 月份: Oct 01, 2024; YoY（%）: 21.182776037 月份: Nov 01, 2024; YoY（%）: 20.1773909182 月份: Dec 01, 2024; YoY（%）: 34.5591960105
+								669 axis X-axis for a time scale with values from Monday, 01 January 2024, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM
+								670 axis Y-axis for a linear scale with values from −20 to 40
+								671 container 月份: Jan 01, 2024; YoY（%）: 0.341705951136
+									672 line mark 月份: Jan 01, 2024; YoY（%）: 0.341705951136
+								673 container 月份: Jan 01, 2024; YoY（%）: 0.341705951136 月份: Feb 01, 2024; YoY（%）: −19.1033855952 月份: Mar 01, 2024; YoY（%）: −2.90439855048 月份: Apr 01, 2024; YoY（%）: 6.54496133773 月份: May 01, 2024; YoY（%）: 0.273925424223 月份: Jun 01, 2024; YoY（%）: 17.6802058016 月份: Jul 01, 2024; YoY（%）: 11.2224295202 月份: Aug 01, 2024; YoY（%）: 14.3330225946 月份: Sep 01, 2024; YoY（%）: 39.6644055909 月份: Oct 01, 2024; YoY（%）: 21.182776037 月份: Nov 01, 2024; YoY（%）: 20.1773909182 月份: Dec 01, 2024; YoY（%）: 34.5591960105
+									674 point 月份: Jan 01, 2024; YoY（%）: 0.341705951136
+									675 point 月份: Feb 01, 2024; YoY（%）: −19.1033855952
+									676 point 月份: Mar 01, 2024; YoY（%）: −2.90439855048
+									677 point 月份: Apr 01, 2024; YoY（%）: 6.54496133773
+									678 point 月份: May 01, 2024; YoY（%）: 0.273925424223
+									679 point 月份: Jun 01, 2024; YoY（%）: 17.6802058016
+									680 point 月份: Jul 01, 2024; YoY（%）: 11.2224295202
+									681 point 月份: Aug 01, 2024; YoY（%）: 14.3330225946
+									682 point 月份: Sep 01, 2024; YoY（%）: 39.6644055909
+									683 point 月份: Oct 01, 2024; YoY（%）: 21.182776037
+									684 point 月份: Nov 01, 2024; YoY（%）: 20.1773909182
+									685 point 月份: Dec 01, 2024; YoY（%）: 34.5591960105
+								686 symbol mark container
+				263 text 缺去年同月或基期不大於 0 時保留空白；百分比不加總或平均。
+				264 heading 國家覆蓋與 HHI 狀態, Value: 3, ID: hhi
+					265 text 國家覆蓋與 HHI 狀態
+					266 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#hhi
+				267 container
+					268 button Show/hide columns
+					269 button Download as CSV
+					270 button Search
+					271 button Fullscreen
+					272 container
+						273 image
+							274 table
+								275 row 月份 國家覆蓋率 HHI HHI 狀態
+									276 cell (selectable) 月份
+									277 cell (selectable) 國家覆蓋率
+									278 cell (selectable) HHI
+									279 cell (selectable) HHI 狀態
+								280 container
+									281 row (selectable) 2024-01 75.38% 資料不足 insufficient_coverage
+										282 cell (selectable) Value: 2024-01, ID: glide-cell-0-0
+										283 cell (selectable) Value: 75.38%, ID: glide-cell-1-0
+										284 cell (selectable) Value: 資料不足, ID: glide-cell-2-0
+										285 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-0
+									286 row (selectable) 2024-02 73.37% 資料不足 insufficient_coverage
+										287 cell (selectable) Value: 2024-02, ID: glide-cell-0-1
+										288 cell (selectable) Value: 73.37%, ID: glide-cell-1-1
+										289 cell (selectable) Value: 資料不足, ID: glide-cell-2-1
+										290 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-1
+									291 row (selectable) 2024-03 79.67% 資料不足 insufficient_coverage
+										292 cell (selectable) Value: 2024-03, ID: glide-cell-0-2
+										293 cell (selectable) Value: 79.67%, ID: glide-cell-1-2
+										294 cell (selectable) Value: 資料不足, ID: glide-cell-2-2
+										295 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-2
+									296 row (selectable) 2024-04 73.03% 資料不足 insufficient_coverage
+										297 cell (selectable) Value: 2024-04, ID: glide-cell-0-3
+										298 cell (selectable) Value: 73.03%, ID: glide-cell-1-3
+										299 cell (selectable) Value: 資料不足, ID: glide-cell-2-3
+										300 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-3
+									301 row (selectable) 2024-05 75.96% 資料不足 insufficient_coverage
+										302 cell (selectable) Value: 2024-05, ID: glide-cell-0-4
+										303 cell (selectable) Value: 75.96%, ID: glide-cell-1-4
+										304 cell (selectable) Value: 資料不足, ID: glide-cell-2-4
+										305 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-4
+									306 row (selectable) 2024-06 77.65% 資料不足 insufficient_coverage
+										307 cell (selectable) Value: 2024-06, ID: glide-cell-0-5
+										308 cell (selectable) Value: 77.65%, ID: glide-cell-1-5
+										309 cell (selectable) Value: 資料不足, ID: glide-cell-2-5
+										310 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-5
+									311 row (selectable) 2024-07 68.81% 資料不足 insufficient_coverage
+										312 cell (selectable) Value: 2024-07, ID: glide-cell-0-6
+										313 cell (selectable) Value: 68.81%, ID: glide-cell-1-6
+										314 cell (selectable) Value: 資料不足, ID: glide-cell-2-6
+										315 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-6
+									316 row (selectable) 2024-08 63.94% 資料不足 insufficient_coverage
+										317 cell (selectable) Value: 2024-08, ID: glide-cell-0-7
+										318 cell (selectable) Value: 63.94%, ID: glide-cell-1-7
+										319 cell (selectable) Value: 資料不足, ID: glide-cell-2-7
+										320 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-7
+									321 row (selectable) 2024-09 71.35% 資料不足 insufficient_coverage
+										322 cell (selectable) Value: 2024-09, ID: glide-cell-0-8
+										323 cell (selectable) Value: 71.35%, ID: glide-cell-1-8
+										324 cell (selectable) Value: 資料不足, ID: glide-cell-2-8
+										325 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-8
+									326 row (selectable) 2024-10 63.01% 資料不足 insufficient_coverage
+										327 cell (selectable) Value: 2024-10, ID: glide-cell-0-9
+										328 cell (selectable) Value: 63.01%, ID: glide-cell-1-9
+										329 cell (selectable) Value: 資料不足, ID: glide-cell-2-9
+										330 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-9
+									331 row (selectable) 2024-11 70.63% 資料不足 insufficient_coverage
+										332 cell (selectable) Value: 2024-11, ID: glide-cell-0-10
+										333 cell (selectable) Value: 70.63%, ID: glide-cell-1-10
+										334 cell (selectable) Value: 資料不足, ID: glide-cell-2-10
+										335 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-10
+									336 row (selectable) 2024-12 71.60% 資料不足 insufficient_coverage
+										337 cell (selectable) Value: 2024-12, ID: glide-cell-0-11
+										338 cell (selectable) Value: 71.60%, ID: glide-cell-1-11
+										339 cell (selectable) Value: 資料不足, ID: glide-cell-2-11
+										340 cell (selectable) Value: insufficient_coverage, ID: glide-cell-3-11
+						341 image
+				342 container
+					343 button Show data
+					687 button Download as PNG
+					345 button Fullscreen
+					346 container Vega visualization
+						688 image
+							689 container X-axis for a time scale with values from Monday, 01 January 2024, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM Y-axis for a linear scale with values from 0 to 80 月份: Jan 01, 2024; 國家覆蓋率（%）: 75.3845911月份: Jan 01, 2024; 國家覆蓋率（%）: 75.3845911 月份: Feb 01, 2024; 國家覆蓋率（%）: 73.3670387 月份: Mar 01, 2024; 國家覆蓋率（%）: 79.6674554 月份: Apr 01, 2024; 國家覆蓋率（%）: 73.0315946 月份: May 01, 2024; 國家覆蓋率（%）: 75.9638211 月份: Jun 01, 2024; 國家覆蓋率（%）: 77.6517966 月份: Jul 01, 2024; 國家覆蓋率（%）: 68.8055445 月份: Aug 01, 2024; 國家覆蓋率（%）: 63.9448277 月份: Sep 01, 2024; 國家覆蓋率（%）: 71.348893 月份: Oct 01, 2024; 國家覆蓋率（%）: 63.0106975 月份: Nov 01, 2024; 國家覆蓋率（%）: 70.6308693 月份: Dec 01, 2024; 國家覆蓋率（%）: 71.5999027
+								690 axis X-axis for a time scale with values from Monday, 01 January 2024, 12:00:00 AM to Sunday, 01 December 2024, 12:00:00 AM
+								691 axis Y-axis for a linear scale with values from 0 to 80
+								692 container 月份: Jan 01, 2024; 國家覆蓋率（%）: 75.3845911
+									693 line mark 月份: Jan 01, 2024; 國家覆蓋率（%）: 75.3845911
+								694 container 月份: Jan 01, 2024; 國家覆蓋率（%）: 75.3845911 月份: Feb 01, 2024; 國家覆蓋率（%）: 73.3670387 月份: Mar 01, 2024; 國家覆蓋率（%）: 79.6674554 月份: Apr 01, 2024; 國家覆蓋率（%）: 73.0315946 月份: May 01, 2024; 國家覆蓋率（%）: 75.9638211 月份: Jun 01, 2024; 國家覆蓋率（%）: 77.6517966 月份: Jul 01, 2024; 國家覆蓋率（%）: 68.8055445 月份: Aug 01, 2024; 國家覆蓋率（%）: 63.9448277 月份: Sep 01, 2024; 國家覆蓋率（%）: 71.348893 月份: Oct 01, 2024; 國家覆蓋率（%）: 63.0106975 月份: Nov 01, 2024; 國家覆蓋率（%）: 70.6308693 月份: Dec 01, 2024; 國家覆蓋率（%）: 71.5999027
+									695 point 月份: Jan 01, 2024; 國家覆蓋率（%）: 75.3845911
+									696 point 月份: Feb 01, 2024; 國家覆蓋率（%）: 73.3670387
+									697 point 月份: Mar 01, 2024; 國家覆蓋率（%）: 79.6674554
+									698 point 月份: Apr 01, 2024; 國家覆蓋率（%）: 73.0315946
+									699 point 月份: May 01, 2024; 國家覆蓋率（%）: 75.9638211
+									700 point 月份: Jun 01, 2024; 國家覆蓋率（%）: 77.6517966
+									701 point 月份: Jul 01, 2024; 國家覆蓋率（%）: 68.8055445
+									702 point 月份: Aug 01, 2024; 國家覆蓋率（%）: 63.9448277
+									703 point 月份: Sep 01, 2024; 國家覆蓋率（%）: 71.348893
+									704 point 月份: Oct 01, 2024; 國家覆蓋率（%）: 63.0106975
+									705 point 月份: Nov 01, 2024; 國家覆蓋率（%）: 70.6308693
+									706 point 月份: Dec 01, 2024; 國家覆蓋率（%）: 71.5999027
+								707 symbol mark container
+				383 text 所選月份的 HHI 均不可顯示；請查看各月覆蓋率與狀態。
+				384 text HHI 以 World 為分母，僅在國家覆蓋差距不超過 0.5% 且狀態為 ok 時顯示。品質 PASS 不代表 HHI 可用。
+				385 heading 來源國／地區地圖, Value: 3, ID: 4501aeab
+					386 text 來源國／地區地圖
+					387 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#4501aeab
+				708 container
+					709 image
+						710 image
+					711 image
+						712 text 4
+						713 text 5
+						714 text 6
+						715 text 7
+						716 text 8
+						717 text 9
+						718 text log10(USD+1)
+					719 toolbar modebar-cd3bbe
+						720 button Download plot as a PNG
+							721 image
+						722 button Pan
+							723 image
+						724 container
+							725 button Zoom in
+								726 image
+							727 button Zoom out
+								728 image
+							729 button Reset
+								730 image
+						731 button Fullscreen
+							732 image
+					733 image
+				415 text 期間 2024-01～2024-12；地圖僅含已確認國家／地區。無地圖碼來源列：0；未映射金額：USD 0。顏色使用對數尺度，精確金額請看排名表。特殊代碼 490 不畫入地圖。
+				416 heading 最新月份：進口金額與 YoY, Value: 3, ID: yo-y
+					417 text 最新月份：進口金額與 YoY
+					418 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#yo-y
+				419 container
+					420 button Show data
+					734 button Download as PNG
+					422 button Fullscreen
+					423 container Vega visualization
+						735 image
+							736 container X-axis titled '進口金額（USD）' for a linear scale with values from 0 to 1,000,000,000 Y-axis titled 'YoY（%）' for a linear scale with values from −30 to 90 進口金額（USD）: 154527791; YoY（%）: 53.2105085 進口金額（USD）: 189642646; YoY（%）: 68.2095097 進口金額（USD）: 186476458; YoY（%）: 79.7559649 進口金額（USD）: 473973067; YoY（%）: 86.7904646 進口金額（USD）: 86084043; YoY（%）: −1.6615381 進口金額（USD）: 216065356; YoY（%）: 15.1997074 進口金額（USD）: 969425390; YoY（%）: −8.6277422 進口金額（USD）: 129056445; YoY（%）: −14.599948 進口金額（USD）: 155487566; YoY（%）: 89.7044402 進口金額（USD）: 80172688; YoY（%）: −20.6610854
+								737 axis X-axis titled '進口金額（USD）' for a linear scale with values from 0 to 1,000,000,000
+								738 axis Y-axis titled 'YoY（%）' for a linear scale with values from −30 to 90
+								739 container 進口金額（USD）: 154527791; YoY（%）: 53.2105085 進口金額（USD）: 189642646; YoY（%）: 68.2095097 進口金額（USD）: 186476458; YoY（%）: 79.7559649 進口金額（USD）: 473973067; YoY（%）: 86.7904646 進口金額（USD）: 86084043; YoY（%）: −1.6615381 進口金額（USD）: 216065356; YoY（%）: 15.1997074 進口金額（USD）: 969425390; YoY（%）: −8.6277422 進口金額（USD）: 129056445; YoY（%）: −14.599948 進口金額（USD）: 155487566; YoY（%）: 89.7044402 進口金額（USD）: 80172688; YoY（%）: −20.6610854
+									740 circle 進口金額（USD）: 154527791; YoY（%）: 53.2105085
+									741 circle 進口金額（USD）: 189642646; YoY（%）: 68.2095097
+									742 circle 進口金額（USD）: 186476458; YoY（%）: 79.7559649
+									743 circle 進口金額（USD）: 473973067; YoY（%）: 86.7904646
+									744 circle 進口金額（USD）: 86084043; YoY（%）: −1.6615381
+									745 circle 進口金額（USD）: 216065356; YoY（%）: 15.1997074
+									746 circle 進口金額（USD）: 969425390; YoY（%）: −8.6277422
+									747 circle 進口金額（USD）: 129056445; YoY（%）: −14.599948
+									748 circle 進口金額（USD）: 155487566; YoY（%）: 89.7044402
+									749 circle 進口金額（USD）: 80172688; YoY（%）: −20.6610854
+				439 container
+					440 button Show/hide columns
+					441 button Download as CSV
+					442 button Search
+					443 button Fullscreen
+					444 container
+						445 image
+							446 table
+								447 row 來源國／地區 進口金額（USD） YoY（%）
+									448 cell (selectable) 來源國／地區
+									449 cell (selectable) 進口金額（USD）
+									450 cell (selectable) YoY（%）
+								451 container
+									452 row (selectable) 156 · China 154527791 53.2105085
+										453 cell (selectable) Value: 156 · China, ID: glide-cell-0-0
+										454 cell (selectable) Value: 154527791, ID: glide-cell-1-0
+										455 cell (selectable) Value: 53.2105085, ID: glide-cell-2-0
+									456 row (selectable) 188 · Costa Rica 189642646 68.2095097
+										457 cell (selectable) Value: 188 · Costa Rica, ID: glide-cell-0-1
+										458 cell (selectable) Value: 189642646, ID: glide-cell-1-1
+										459 cell (selectable) Value: 68.2095097, ID: glide-cell-2-1
+									460 row (selectable) 372 · Ireland 186476458 79.7559649
+										461 cell (selectable) Value: 372 · Ireland, ID: glide-cell-0-2
+										462 cell (selectable) Value: 186476458, ID: glide-cell-1-2
+										463 cell (selectable) Value: 79.7559649, ID: glide-cell-2-2
+									464 row (selectable) 376 · Israel 473973067 86.7904646
+										465 cell (selectable) Value: 376 · Israel, ID: glide-cell-0-3
+										466 cell (selectable) Value: 473973067, ID: glide-cell-1-3
+										467 cell (selectable) Value: 86.7904646, ID: glide-cell-2-3
+									468 row (selectable) 392 · Japan 86084043 -1.6615381
+										469 cell (selectable) Value: 392 · Japan, ID: glide-cell-0-4
+										470 cell (selectable) Value: 86084043, ID: glide-cell-1-4
+										471 cell (selectable) Value: -1.6615381, ID: glide-cell-2-4
+									472 row (selectable) 410 · Rep. of Korea 216065356 15.1997074
+										473 cell (selectable) Value: 410 · Rep. of Korea, ID: glide-cell-0-5
+										474 cell (selectable) Value: 216065356, ID: glide-cell-1-5
+										475 cell (selectable) Value: 15.1997074, ID: glide-cell-2-5
+									476 row (selectable) 458 · Malaysia 969425390 -8.6277422
+										477 cell (selectable) Value: 458 · Malaysia, ID: glide-cell-0-6
+										478 cell (selectable) Value: 969425390, ID: glide-cell-1-6
+										479 cell (selectable) Value: -8.6277422, ID: glide-cell-2-6
+									480 row (selectable) 484 · Mexico 129056445 -14.599948
+										481 cell (selectable) Value: 484 · Mexico, ID: glide-cell-0-7
+										482 cell (selectable) Value: 129056445, ID: glide-cell-1-7
+										483 cell (selectable) Value: -14.599948, ID: glide-cell-2-7
+									484 row (selectable) 704 · Viet Nam 155487566 89.7044402
+										485 cell (selectable) Value: 704 · Viet Nam, ID: glide-cell-0-8
+										486 cell (selectable) Value: 155487566, ID: glide-cell-1-8
+										487 cell (selectable) Value: 89.7044402, ID: glide-cell-2-8
+									488 row (selectable) 764 · Thailand 80172688 -20.6610854
+										489 cell (selectable) Value: 764 · Thailand, ID: glide-cell-0-9
+										490 cell (selectable) Value: 80172688, ID: glide-cell-1-9
+										491 cell (selectable) Value: -20.6610854, ID: glide-cell-2-9
+						492 image
+				493 text 每點為 2024-12 的一個已確認國家／地區；僅從所選期間排名前 10 名中取金額與 YoY 均有效的資料。有效點數：10。
+				494 heading 發布與品質摘要, Value: 3, ID: 130abcdc
+					495 text 發布與品質摘要
+					496 link Description: Link to heading, Value: trade-dashboard-898093147725.asia-northeast1.run.app/#130abcdc
+				497 container
+					498 button Show/hide columns
+					499 button Download as CSV
+					500 button Search
+					501 button Fullscreen
+					502 container
+						503 image
+							504 table
+								505 row 月份 已發布品質 最新品質嘗試 品質原因 最新發布嘗試 正式發布時間 最新品質檢查時間
+									506 cell (selectable) 月份
+									507 cell (selectable) 已發布品質
+									508 cell (selectable) 最新品質嘗試
+									509 cell (selectable) 品質原因
+									510 cell (selectable) 最新發布嘗試
+									511 cell (selectable) 正式發布時間
+									512 cell (selectable) 最新品質檢查時間
+								513 container
+									514 row (selectable) 202401 PASS PASS published 2026-09-24 04:17:05+00:00 2026-09-24 04:17:03+00:00
+										515 cell (selectable) Value: 202401, ID: glide-cell-0-0
+										516 cell (selectable) Value: PASS, ID: glide-cell-1-0
+										517 cell (selectable) Value: PASS, ID: glide-cell-2-0
+										518 cell (selectable) glide-cell-3-0
+										519 cell (selectable) Value: published, ID: glide-cell-4-0
+										520 cell (selectable) Value: 2026-09-24 04:17:05+00:00, ID: glide-cell-5-0
+										521 cell (selectable) Value: 2026-09-24 04:17:03+00:00, ID: glide-cell-6-0
+									522 row (selectable) 202402 PASS PASS published 2026-09-24 04:17:20+00:00 2026-09-24 04:17:18+00:00
+										523 cell (selectable) Value: 202402, ID: glide-cell-0-1
+										524 cell (selectable) Value: PASS, ID: glide-cell-1-1
+										525 cell (selectable) Value: PASS, ID: glide-cell-2-1
+										526 cell (selectable) glide-cell-3-1
+										527 cell (selectable) Value: published, ID: glide-cell-4-1
+										528 cell (selectable) Value: 2026-09-24 04:17:20+00:00, ID: glide-cell-5-1
+										529 cell (selectable) Value: 2026-09-24 04:17:18+00:00, ID: glide-cell-6-1
+									530 row (selectable) 202403 PASS PASS published 2026-09-24 04:17:35+00:00 2026-09-24 04:17:33+00:00
+										531 cell (selectable) Value: 202403, ID: glide-cell-0-2
+										532 cell (selectable) Value: PASS, ID: glide-cell-1-2
+										533 cell (selectable) Value: PASS, ID: glide-cell-2-2
+										534 cell (selectable) glide-cell-3-2
+										535 cell (selectable) Value: published, ID: glide-cell-4-2
+										536 cell (selectable) Value: 2026-09-24 04:17:35+00:00, ID: glide-cell-5-2
+										537 cell (selectable) Value: 2026-09-24 04:17:33+00:00, ID: glide-cell-6-2
+									538 row (selectable) 202404 PASS PASS published 2026-09-24 04:17:49+00:00 2026-09-24 04:17:47+00:00
+										539 cell (selectable) Value: 202404, ID: glide-cell-0-3
+										540 cell (selectable) Value: PASS, ID: glide-cell-1-3
+										541 cell (selectable) Value: PASS, ID: glide-cell-2-3
+										542 cell (selectable) glide-cell-3-3
+										543 cell (selectable) Value: published, ID: glide-cell-4-3
+										544 cell (selectable) Value: 2026-09-24 04:17:49+00:00, ID: glide-cell-5-3
+										545 cell (selectable) Value: 2026-09-24 04:17:47+00:00, ID: glide-cell-6-3
+									546 row (selectable) 202405 PASS PASS published 2026-09-24 04:18:04+00:00 2026-09-24 04:18:01+00:00
+										547 cell (selectable) Value: 202405, ID: glide-cell-0-4
+										548 cell (selectable) Value: PASS, ID: glide-cell-1-4
+										549 cell (selectable) Value: PASS, ID: glide-cell-2-4
+										550 cell (selectable) glide-cell-3-4
+										551 cell (selectable) Value: published, ID: glide-cell-4-4
+										552 cell (selectable) Value: 2026-09-24 04:18:04+00:00, ID: glide-cell-5-4
+										553 cell (selectable) Value: 2026-09-24 04:18:01+00:00, ID: glide-cell-6-4
+									554 row (selectable) 202406 PASS PASS published 2026-09-24 04:18:18+00:00 2026-09-24 04:18:16+00:00
+										555 cell (selectable) Value: 202406, ID: glide-cell-0-5
+										556 cell (selectable) Value: PASS, ID: glide-cell-1-5
+										557 cell (selectable) Value: PASS, ID: glide-cell-2-5
+										558 cell (selectable) glide-cell-3-5
+										559 cell (selectable) Value: published, ID: glide-cell-4-5
+										560 cell (selectable) Value: 2026-09-24 04:18:18+00:00, ID: glide-cell-5-5
+										561 cell (selectable) Value: 2026-09-24 04:18:16+00:00, ID: glide-cell-6-5
+									562 row (selectable) 202407 PASS PASS published 2026-09-24 04:18:33+00:00 2026-09-24 04:18:31+00:00
+										563 cell (selectable) Value: 202407, ID: glide-cell-0-6
+										564 cell (selectable) Value: PASS, ID: glide-cell-1-6
+										565 cell (selectable) Value: PASS, ID: glide-cell-2-6
+										566 cell (selectable) glide-cell-3-6
+										567 cell (selectable) Value: published, ID: glide-cell-4-6
+										568 cell (selectable) Value: 2026-09-24 04:18:33+00:00, ID: glide-cell-5-6
+										569 cell (selectable) Value: 2026-09-24 04:18:31+00:00, ID: glide-cell-6-6
+									570 row (selectable) 202408 PASS PASS published 2026-09-24 04:18:49+00:00 2026-09-24 04:18:46+00:00
+										571 cell (selectable) Value: 202408, ID: glide-cell-0-7
+										572 cell (selectable) Value: PASS, ID: glide-cell-1-7
+										573 cell (selectable) Value: PASS, ID: glide-cell-2-7
+										574 cell (selectable) glide-cell-3-7
+										575 cell (selectable) Value: published, ID: glide-cell-4-7
+										576 cell (selectable) Value: 2026-09-24 04:18:49+00:00, ID: glide-cell-5-7
+										577 cell (selectable) Value: 2026-09-24 04:18:46+00:00, ID: glide-cell-6-7
+									578 row (selectable) 202409 PASS PASS published 2026-09-24 04:19:04+00:00 2026-09-24 04:19:02+00:00
+										579 cell (selectable) Value: 202409, ID: glide-cell-0-8
+										580 cell (selectable) Value: PASS, ID: glide-cell-1-8
+										581 cell (selectable) Value: PASS, ID: glide-cell-2-8
+										582 cell (selectable) glide-cell-3-8
+										583 cell (selectable) Value: published, ID: glide-cell-4-8
+										584 cell (selectable) Value: 2026-09-24 04:19:04+00:00, ID: glide-cell-5-8
+										585 cell (selectable) Value: 2026-09-24 04:19:02+00:00, ID: glide-cell-6-8
+									586 row (selectable) 202410 PASS PASS published 2026-09-24 04:19:20+00:00 2026-09-24 04:19:19+00:00
+										587 cell (selectable) Value: 202410, ID: glide-cell-0-9
+										588 cell (selectable) Value: PASS, ID: glide-cell-1-9
+										589 cell (selectable) Value: PASS, ID: glide-cell-2-9
+										590 cell (selectable) glide-cell-3-9
+										591 cell (selectable) Value: published, ID: glide-cell-4-9
+										592 cell (selectable) Value: 2026-09-24 04:19:20+00:00, ID: glide-cell-5-9
+										593 cell (selectable) Value: 2026-09-24 04:19:19+00:00, ID: glide-cell-6-9
+									594 row (selectable) 202411 PASS PASS published 2026-09-24 04:19:35+00:00 2026-09-24 04:19:33+00:00
+										595 cell (selectable) Value: 202411, ID: glide-cell-0-10
+										596 cell (selectable) Value: PASS, ID: glide-cell-1-10
+										597 cell (selectable) Value: PASS, ID: glide-cell-2-10
+										598 cell (selectable) glide-cell-3-10
+										599 cell (selectable) Value: published, ID: glide-cell-4-10
+										600 cell (selectable) Value: 2026-09-24 04:19:35+00:00, ID: glide-cell-5-10
+										601 cell (selectable) Value: 2026-09-24 04:19:33+00:00, ID: glide-cell-6-10
+									602 row (selectable) 202412 PASS PASS already_published 2026-09-24 04:19:50+00:00 2026-09-24 04:19:48+00:00
+										603 cell (selectable) Value: 202412, ID: glide-cell-0-11
+										604 cell (selectable) Value: PASS, ID: glide-cell-1-11
+										605 cell (selectable) Value: PASS, ID: glide-cell-2-11
+										606 cell (selectable) glide-cell-3-11
+										607 cell (selectable) Value: already_published, ID: glide-cell-4-11
+										608 cell (selectable) Value: 2026-09-24 04:19:50+00:00, ID: glide-cell-5-11
+										609 cell (selectable) Value: 2026-09-24 04:19:48+00:00, ID: glide-cell-6-11
+						610 image
+				611 text 最新品質嘗試與已發布版本分開顯示。最新嘗試 FAIL 時，正式資料仍可能是前一次成功版本。
+				612 button (collapsed) keyboard_arrow_right 查詢紀錄與限制, Secondary Actions: Expand
+					613 text keyboard_arrow_right
+					614 text 查詢紀錄與限制
+		615 image js-plotly-tester
+
+The focused UI element is 28 container 美國半導體進口分析 正式發布資料｜美國月度進口｜HS 8542／H6｜金額單位：美元 期間：2024-01～2024-12；Partner：全部已確認國家／地區；排名顯示前 10 名。 已發布月份 12 最新成功發布月份 2024-12 期間 World 金額 USD 40.39B 期間 World 精確金額：USD 40,386,451,682。World 每月只計一次，不加總夥伴列上的重複值。 資料新鮮度 所選期間最新資料月份：2024-12；所選期間最近成功發布：2026-09-24 12:19:50 Asia/Taipei；所選期間最新發布嘗試：2026-09-30 19:17:12 Asia/Taipei；畫面資料讀取：2026-10-02 07:05:21 Asia/Taipei。 展示範圍起於 2023-01，止於 2025-05（不含）；僅列出已發布月份。畫面可能使用 3600 秒快取；重新讀取按鈕可取得新的正式版本。最新失敗嘗試不會更新正式資料。 來源國／地區金額排名

@@ -1,8 +1,32 @@
 # U.S. Semiconductor Import Intelligence
 
-Phase 1 提供可重用的 Python ingestion package 與 CLI，從 UN Comtrade Preview API 擷取美國半導體月度進口資料。Phase 2 的第一個子階段將相同 package 封裝為 AWS Lambda Container Image，並支援寫入 Amazon S3 Raw Layer。
+分析美國半導體月度進口金額、來源國變化與資料覆蓋限制的端到端資料作品。UN Comtrade → AWS Lambda／S3 → BigQuery／dbt → 品質 gate／正式發布 → Streamlit／Cloud Run；Airflow 編排 monthly／backfill，GitHub Actions 透過受限 AWS OIDC 部署。
 
-Day 3 已實作資料契約與 v2 儲存格式。真實 AWS 部署屬於 Day 4；目前 API 仍使用 `/HS`，但程式只接受 H6（HS2022）回應。H5 或混合分類會被拒絕，不會重新標記成 H6。
+[開啟 Live Demo](https://trade-dashboard-898093147725.asia-northeast1.run.app)｜[架構與取捨](docs/architecture.md)｜[資料字典](docs/data-dictionary.md)｜[操作索引](docs/runbook.md)｜[已知限制](docs/known-limitations.md)｜[5 分鐘展示稿](docs/demo-script.md)｜[最終驗收](docs/day20-final-acceptance.md)
+
+截至 2026-10-02，原始驗收 `202301～202412` 連續 24 月皆已查驗及發布，延伸至 `202504`，線上展示 28 月。乾淨來源重建、真實 SNS 實收／來源復原、正式同月安全重跑與 OIDC 部署已有證據；本人 5 分鐘講解仍未實測，完整 M5／MVP 驗收尚未全數勾選。Monthly DAG 保持暫停，剩餘積欠另批處理。
+
+### 三項分析觀察
+
+- 2024 年 World 金額 USD 40,386,451,682，較 2023 年 USD 36,062,821,301 成長約 11.99％。
+- Malaysia 2024 年 USD 9,598,343,899，在已確認國家／地區中第一；排名排除特殊代碼 490。
+- 原 24 月國家覆蓋率約 63.01％～82.92％，HHI 均不可用，不能解讀為 0 或低集中度。
+
+數值的條件、SQL／job ID 與限制見 [查詢證據](docs/evidence/day13-verification.json)。World 每月只計一次；國家趨勢圖合計與 World 含特殊項目的總額不同。
+
+### 最短本機展示路徑
+
+需 Python 3.11，並已取得 BigQuery query job 與正式 Dataset 唯讀權限的 Google ADC：
+
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -e '.[dashboard]'
+.venv/bin/streamlit run dashboard.py
+```
+
+從專案根目錄執行；本機預設展示 202301～202412。要與線上 28 月一致，啟動前設定 `TRADE_DASHBOARD_FIRST_MONTH=202301`、`TRADE_DASHBOARD_AFTER_LAST_MONTH=202505`。無 ADC／正式資料的新環境先依 [操作索引](docs/runbook.md)完成授權與建置；不要把個人憑證寫入 repository 或 image。
+
+完整乾淨環境與部署依 [重建手冊](docs/day19-recovery-manual.md)：先安裝 application 依賴，再驗證容器／Airflow／dbt，AWS 依 bootstrap → ECR／image → application Terraform，GCP 採既有部署指令。共用 backend／OIDC provider 的範圍與隔離資源實測分開記錄。
 
 目前固定資料範圍：
 
@@ -24,7 +48,7 @@ Day 3 已實作資料契約與 v2 儲存格式。真實 AWS 部署屬於 Day 4�
 建立專案虛擬環境：
 
 ```bash
-/opt/homebrew/bin/python3.11 -m venv .venv
+python3.11 -m venv .venv
 .venv/bin/pip install -e '.[dev]'
 ```
 
@@ -231,15 +255,15 @@ AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署
 - Preview API 單次最多回傳 500 筆；本專案會偵測並拒絕疑似截斷結果。
 - Preview response 的國家名稱、ISO、重量及部分描述欄位可能為 `null`。
 - Phase 1 使用月度端點 `C/M/HS`，不使用年度端點 `C/A/HS`。
-- 目前 Lambda Image 仍使用 Preview API，尚未包含正式 API Key、BigQuery、dbt 或 Airflow。
+- Lambda image 專責 Preview API 擷取與 S3 寫入；BigQuery／dbt／Airflow 位於後續載入、建模與編排元件。正式 API Key 未導入。
 
 ## 本機 Streamlit Dashboard
 
 Dashboard 從 BigQuery 的 `trade_analytics_published.mart_us_semiconductor_supply_chain` 與 `publication_quality_summary` 唯讀取數。它提供日期、Partner 與 Top N 篩選、來源國／地區金額排名及地圖、月度趨勢、YoY、國家覆蓋與 HHI 狀態、最新月份金額／YoY 散佈圖、資料新鮮度及品質摘要；商品與分類固定為 `8542／H6`。需先有可查詢正式 Dataset 的 Google ADC 身分，以及執行 BigQuery job 的權限。
 
 ```bash
-.venv-dbt/bin/python -m pip install -e '.[dashboard]'
-.venv-dbt/bin/streamlit run dashboard.py
+.venv/bin/python -m pip install -e '.[dashboard]'
+.venv/bin/streamlit run dashboard.py
 ```
 
 從專案根目錄執行。預設 GCP 專案為 `trade-analytics-508604`、location 為 `asia-northeast1`；可用 `TRADE_BQ_PROJECT` 與 `TRADE_BQ_LOCATION` 指定其他同結構環境。`TRADE_BQ_MAX_BYTES_BILLED` 預設 `1000000000`，限制每次 BigQuery 查詢的處理量；`TRADE_DASHBOARD_CACHE_TTL` 預設 `3600` 秒。畫面提供「重新讀取已發布資料」以清除快取。憑證由 ADC 提供，勿將金鑰放進 repository。

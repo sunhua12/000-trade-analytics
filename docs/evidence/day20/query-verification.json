@@ -1,0 +1,311 @@
+{
+  "verified_at_utc": "2026-10-01T23:06:10.669016+00:00",
+  "scope": "readonly published; 8542/H6",
+  "queries": {
+    "monthly": {
+      "rows": [
+        {
+          "period": "202301",
+          "world_value": "2799575181",
+          "country_coverage": "0.774618509",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 67,
+          "distinct_partners": 67
+        },
+        {
+          "period": "202302",
+          "world_value": "2944145048",
+          "country_coverage": "0.773748723",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 73,
+          "distinct_partners": 73
+        },
+        {
+          "period": "202303",
+          "world_value": "3379107698",
+          "country_coverage": "0.793911682",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 70,
+          "distinct_partners": 70
+        },
+        {
+          "period": "202304",
+          "world_value": "2689984431",
+          "country_coverage": "0.769038949",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 68,
+          "distinct_partners": 68
+        },
+        {
+          "period": "202305",
+          "world_value": "3162642177",
+          "country_coverage": "0.787893734",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 63,
+          "distinct_partners": 63
+        },
+        {
+          "period": "202306",
+          "world_value": "3156758175",
+          "country_coverage": "0.821646319",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 61,
+          "distinct_partners": 61
+        },
+        {
+          "period": "202307",
+          "world_value": "3124596099",
+          "country_coverage": "0.812441306",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 65,
+          "distinct_partners": 65
+        },
+        {
+          "period": "202308",
+          "world_value": "2928869980",
+          "country_coverage": "0.818213093",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 62,
+          "distinct_partners": 62
+        },
+        {
+          "period": "202309",
+          "world_value": "3089289845",
+          "country_coverage": "0.796310809",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 64,
+          "distinct_partners": 64
+        },
+        {
+          "period": "202310",
+          "world_value": "2930941997",
+          "country_coverage": "0.776583212",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 68,
+          "distinct_partners": 68
+        },
+        {
+          "period": "202311",
+          "world_value": "2843597323",
+          "country_coverage": "0.80196061",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 66,
+          "distinct_partners": 66
+        },
+        {
+          "period": "202312",
+          "world_value": "3013313347",
+          "country_coverage": "0.829243016",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 67,
+          "distinct_partners": 67
+        },
+        {
+          "period": "202401",
+          "world_value": "2809141496",
+          "country_coverage": "0.753845911",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 62,
+          "distinct_partners": 62
+        },
+        {
+          "period": "202402",
+          "world_value": "2381713667",
+          "country_coverage": "0.733670387",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 61,
+          "distinct_partners": 61
+        },
+        {
+          "period": "202403",
+          "world_value": "3280964943",
+          "country_coverage": "0.796674554",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 67,
+          "distinct_partners": 67
+        },
+        {
+          "period": "202404",
+          "world_value": "2866042872",
+          "country_coverage": "0.730315946",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 61,
+          "distinct_partners": 61
+        },
+        {
+          "period": "202405",
+          "world_value": "3171305458",
+          "country_coverage": "0.759638211",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 62,
+          "distinct_partners": 62
+        },
+        {
+          "period": "202406",
+          "world_value": "3714879517",
+          "country_coverage": "0.776517966",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 70,
+          "distinct_partners": 70
+        },
+        {
+          "period": "202407",
+          "world_value": "3475251694",
+          "country_coverage": "0.688055445",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 68,
+          "distinct_partners": 68
+        },
+        {
+          "period": "202408",
+          "world_value": "3348665576",
+          "country_coverage": "0.639448277",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 66,
+          "distinct_partners": 66
+        },
+        {
+          "period": "202409",
+          "world_value": "4314638299",
+          "country_coverage": "0.71348893",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 62,
+          "distinct_partners": 62
+        },
+        {
+          "period": "202410",
+          "world_value": "3551796876",
+          "country_coverage": "0.630106975",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 60,
+          "distinct_partners": 60
+        },
+        {
+          "period": "202411",
+          "world_value": "3417361071",
+          "country_coverage": "0.706308693",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 60,
+          "distinct_partners": 60
+        },
+        {
+          "period": "202412",
+          "world_value": "4054690213",
+          "country_coverage": "0.715999027",
+          "hhi": null,
+          "hhi_status": "insufficient_coverage",
+          "row_count": 67,
+          "distinct_partners": 67
+        }
+      ],
+      "job_id": "23079f81-324c-4d54-90e1-5034550a83ee",
+      "bytes_processed": 134028,
+      "bytes_billed": 10485760
+    },
+    "ranking": {
+      "rows": [
+        {
+          "partner_code": "458",
+          "source_name": "Malaysia",
+          "amount": "9598343899"
+        },
+        {
+          "partner_code": "376",
+          "source_name": "Israel",
+          "amount": "4195233049"
+        },
+        {
+          "partner_code": "410",
+          "source_name": "Rep. of Korea",
+          "amount": "2422182840"
+        },
+        {
+          "partner_code": "372",
+          "source_name": "Ireland",
+          "amount": "1917728859"
+        },
+        {
+          "partner_code": "484",
+          "source_name": "Mexico",
+          "amount": "1485684565"
+        },
+        {
+          "partner_code": "156",
+          "source_name": "China",
+          "amount": "1473432024"
+        },
+        {
+          "partner_code": "704",
+          "source_name": "Viet Nam",
+          "amount": "1400475602"
+        },
+        {
+          "partner_code": "188",
+          "source_name": "Costa Rica",
+          "amount": "1232820793"
+        },
+        {
+          "partner_code": "764",
+          "source_name": "Thailand",
+          "amount": "1073978276"
+        },
+        {
+          "partner_code": "392",
+          "source_name": "Japan",
+          "amount": "1016130660"
+        }
+      ],
+      "job_id": "c2ff5ae2-a1f9-4582-ab74-71b2c2ff0dc5",
+      "bytes_processed": 44566,
+      "bytes_billed": 10485760
+    },
+    "april": {
+      "rows": [
+        {
+          "period": "202504",
+          "world_value": "3114414147",
+          "row_count": 61,
+          "distinct_partners": 61,
+          "published_run_id": "backfill-202504-32a1f3080f769f4e",
+          "published_at": "2026-10-01 02:36:29.695000+00:00"
+        }
+      ],
+      "job_id": "deb8295f-2547-4d84-8707-97ae891772c7",
+      "bytes_processed": 5425,
+      "bytes_billed": 10485760
+    }
+  },
+  "summary": {
+    "months": 24,
+    "world_2023": "36062821301",
+    "world_2024": "40386451682",
+    "annual_change": "0.119891628691849141911372055",
+    "min_coverage": "0.630106975",
+    "max_coverage": "0.829243016",
+    "all_hhi_unavailable": true
+  },
+  "result": "passed"
+}

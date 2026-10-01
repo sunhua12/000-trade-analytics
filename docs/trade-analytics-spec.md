@@ -111,7 +111,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [x] | Day 17 | CI/CD、OIDC、Terraform | CI 與受限 OIDC → ECR → Terraform → Lambda 真實部署通過；隔離 BigQuery dbt 測試入口完成 | 251 項 unit tests、88 項 dbt build 結果；digest 相符、部署後無 drift、無靜態 AWS Key；見[執行紀錄](day17-run-record.md) |
 | [x] | Day 18 | Cloud Run、Service Account、查詢成本 | 部署 Streamlit；限制資料存取與查詢量；核對線上圖表 | Live Demo、固定 SQL／線上核對及單月正常路徑安全重跑通過；見[執行紀錄](day18-run-record.md) |
 | [x] | Day 19 | 整合緩衝、故障與重建驗證 | 乾淨來源／隔離 AWS application 重建、main OIDC 部署、SNS 實收與同 run_id 復原、隔離品質停損與正式安全重跑 | 證據及清理完成；Cloud Run 直接舊 revision 回切失敗，以舊 digest 新 revision 復原；共用 bootstrap 範圍明列，見[紀錄](day19-run-record.md) |
-| [ ] | Day 20 | 技術敘事與最終驗收 | 完成 README、架構圖、資料字典、runbook、限制與 5 分鐘展示稿 | 依第 11 節逐項驗收；展示 3 項分析、1 次故障復原及 1 次重跑 |
+| [ ] | Day 20 | 技術敘事與最終驗收 | 文件與技術補驗完成，見 [最終驗收](day20-final-acceptance.md) | 13／14 項通過；本人 5 分鐘展示待完成 |
 
 ### 里程碑與依賴
 
@@ -121,7 +121,7 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | M2：可解釋的分析資料 | Day 10 | dbt models、手算核對、品質 gate |
 | M3：可展示的資料產品 | Day 13 | 24 個月覆蓋清單、本機 Dashboard、分析說明 |
 | M4：可復原的自動流程 | Day 16 | Monthly DAG、3 個月真實 backfill、故障復原均有驗證；見 [Day 16 執行紀錄](day16-run-record.md) |
-| M5：可交付作品 | Day 20 | CI、Live Demo、乾淨環境重建、文件與驗收紀錄 |
+| M5：可交付作品 | Day 20 | 技術／文件交付完成；本人 5 分鐘展示待完成，見 [最終驗收](day20-final-acceptance.md) |
 
 前置里程碑未通過時，不把後續 fixture 展示算成真實整合成功。可以先用 fixture 學習後續模型／UI，但必須標記測試資料，並在 Day 19 補真實驗證。
 
@@ -415,19 +415,21 @@ docs/analysis-findings.md
 
 ## 11. Day 20 最終驗收
 
-- [ ] 能從乾淨環境依 README 安裝依賴，啟動必要元件；依 bootstrap／Terraform 流程重建 AWS 資源，保存 plan／apply 證據，後續 plan 無預期外差異。
-- [ ] GitHub Actions 透過受限 OIDC role 取得臨時憑證，完成 ECR 推送與 Terraform 部署 Lambda；無靜態 AWS Access Key，部署 image digest 可追溯至 Git SHA。
-- [ ] 三類錯誤 Metric Filters、Lambda Errors／Duration Alarms 與 SNS 均經驗證；完成真實失敗 → 收到通知 → run_id 定位 → 重跑復原，且無重複有效資料。
-- [ ] 固定分類版本與連續 24 個月份均有覆蓋清單；無靜默漏資料或混版本。
-- [ ] 真實 Lambda／S3／BigQuery 流程完成，來源筆數與金額可追溯。
-- [ ] 同月重跑不產生重複有效 grain；來源修訂保留歷史原檔。
-- [ ] 市占率、MoM、YoY、HHI 與條件式單位價值的測試和手算抽樣一致。
-- [ ] PASS／WARN／FAIL 行為正確；失敗 partition 不更新 published mart。
-- [ ] Monthly DAG 與 3 個月 Backfill 完成，故障後可復原；本機排程限制已註明。
-- [ ] Dashboard 本機與 Cloud Run 均可展示；缺值與資料新鮮度明確呈現。
-- [ ] CI 成功，雲端整合及 dbt 驗證證據已保存，repository 無 credential。
-- [ ] README、架構圖、資料字典、runbook、已知限制與 Live URL 齊全。
+2026-10-02 對照：[最終驗收與證據索引](day20-final-acceptance.md)。13 項技術／文件條件通過；本人 5 分鐘展示未實測，第 13 項、Day 20 與 M5 保留未完成。歷史實測與本次唯讀補驗範圍分開記錄。
+
+- [x] 能從乾淨環境依 README 安裝依賴，啟動必要元件；依 bootstrap／Terraform 流程重建 AWS 資源，保存 plan／apply 證據，後續 plan 無預期外差異。
+- [x] GitHub Actions 透過受限 OIDC role 取得臨時憑證，完成 ECR 推送與 Terraform 部署 Lambda；無靜態 AWS Access Key，部署 image digest 可追溯至 Git SHA。
+- [x] 三類錯誤 Metric Filters、Lambda Errors／Duration Alarms 與 SNS 均經驗證；完成真實失敗 → 收到通知 → run_id 定位 → 重跑復原，且無重複有效資料。
+- [x] 固定分類版本與連續 24 個月份均有覆蓋清單；無靜默漏資料或混版本。
+- [x] 真實 Lambda／S3／BigQuery 流程完成，來源筆數與金額可追溯。
+- [x] 同月重跑不產生重複有效 grain；來源修訂保留歷史原檔。
+- [x] 市占率、MoM、YoY、HHI 與條件式單位價值的測試和手算抽樣一致。
+- [x] PASS／WARN／FAIL 行為正確；失敗 partition 不更新 published mart。
+- [x] Monthly DAG 與 3 個月 Backfill 完成，故障後可復原；本機排程限制已註明。
+- [x] Dashboard 本機與 Cloud Run 均可展示；缺值與資料新鮮度明確呈現。
+- [x] CI 成功，雲端整合及 dbt 驗證證據已保存，repository 無 credential。
+- [x] README、架構圖、資料字典、runbook、已知限制與 Live URL 齊全。
 - [ ] 能以 5 分鐘說明設計取捨、展示 3 項有查詢證據的觀察，並解釋一次重跑或故障復原。
-- [ ] 履歷敘述只使用實測月份、資料量、執行時間與完成狀態，不把規劃當成果。
+- [x] 履歷敘述只使用實測月份、資料量、執行時間與完成狀態，不把規劃當成果。
 
 完成定義：上述必要項目全部通過，才稱為本版 MVP 完成。若僅本機可展示或尚缺雲端驗證，應明確標示目前交付層級與未完成項目。
