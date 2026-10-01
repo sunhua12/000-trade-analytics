@@ -5,6 +5,14 @@ import sys
 from pathlib import Path
 
 
+def has_unknown(value: object) -> bool:
+    if isinstance(value, dict):
+        return any(has_unknown(item) for item in value.values())
+    if isinstance(value, list):
+        return any(has_unknown(item) for item in value)
+    return value is True
+
+
 def check(plan: dict, image_uri: str) -> dict:
     changes = []
     for resource in plan.get("resource_changes", []):
@@ -31,7 +39,7 @@ def check(plan: dict, image_uri: str) -> dict:
         if changed - computed - {"image_uri"}:
             raise ValueError(f"unexpected Lambda configuration change: {sorted(changed)}")
         unknown = change.get("after_unknown", {})
-        if any(value for key, value in unknown.items() if key not in computed):
+        if any(has_unknown(value) for key, value in unknown.items() if key not in computed):
             raise ValueError("unexpected unknown configuration in deployment plan")
         changes.append({"address": resource["address"], "actions": change["actions"]})
     return {"image_uri": image_uri, "changes": changes}

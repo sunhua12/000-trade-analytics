@@ -29,6 +29,24 @@ def test_image_only_update_is_accepted() -> None:
     assert len(check(plan(), IMAGE)["changes"]) == 1
 
 
+def test_known_nested_configuration_is_not_mistaken_for_unknown() -> None:
+    value = plan()
+    value["resource_changes"][0]["change"]["after_unknown"] = {
+        "architectures": [False],
+        "environment": [{"variables": {"RAW_BUCKET": False}}],
+    }
+    assert len(check(value, IMAGE)["changes"]) == 1
+
+
+def test_unknown_nested_configuration_is_rejected() -> None:
+    value = plan()
+    value["resource_changes"][0]["change"]["after_unknown"] = {
+        "environment": [{"variables": {"RAW_BUCKET": True}}]
+    }
+    with pytest.raises(ValueError, match="unknown"):
+        check(value, IMAGE)
+
+
 @pytest.mark.parametrize("mutation", ["role", "delete", "timeout", "digest", "unknown"])
 def test_unsafe_plan_is_rejected(mutation: str) -> None:
     value = deepcopy(plan())
