@@ -1,0 +1,549 @@
+[
+  {
+    "errorGroups": [
+      {
+        "id": "CKqF4cGSuODxngE"
+      }
+    ],
+    "httpRequest": {
+      "latency": "0s",
+      "protocol": "HTTP/1.1",
+      "requestMethod": "GET",
+      "requestSize": "946",
+      "requestUrl": "https://trade-dashboard-898093147725.asia-northeast1.run.app/",
+      "responseSize": "14",
+      "status": 429,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "insertId": "6abe9b4b00041668c6f2850b",
+    "labels": {
+      "source-hash": "b1b20f129537d714",
+      "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+    },
+    "logName": "projects/trade-analytics-508604/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-01T17:41:31.275082478Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "WARNING",
+    "spanId": "4690d6328da82a20",
+    "textPayload": "The request was aborted because there was no available instance. Additional troubleshooting documentation can be found at: https://cloud.google.com/run/docs/troubleshooting#abort-request",
+    "timestamp": "2026-10-01T17:41:17.249767Z",
+    "trace": "projects/trade-analytics-508604/traces/78405ba6e68c44ce27b1e208f372764c"
+  },
+  {
+    "insertId": "4rbx28du8cm",
+    "logName": "projects/trade-analytics-508604/logs/cloudaudit.googleapis.com%2Fsystem_event",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "methodName": "/Services.ReplaceService",
+      "resourceName": "namespaces/trade-analytics-508604/services/trade-dashboard",
+      "response": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.Service",
+        "apiVersion": "serving.knative.dev/v1",
+        "kind": "Service",
+        "metadata": {
+          "annotations": {
+            "run.googleapis.com/client-name": "gcloud",
+            "run.googleapis.com/client-version": "585.0.0",
+            "run.googleapis.com/ingress": "all",
+            "run.googleapis.com/ingress-status": "all",
+            "run.googleapis.com/maxScale": "2",
+            "run.googleapis.com/operation-id": "f275578c-af4f-4ba4-a749-7bae4b5a04af",
+            "run.googleapis.com/urls": "[\"https://trade-dashboard-898093147725.asia-northeast1.run.app\",\"https://trade-dashboard-e242237ytq-an.a.run.app\"]",
+            "serving.knative.dev/creator": "[REDACTED_EMAIL]",
+            "serving.knative.dev/lastModifier": "[REDACTED_EMAIL]"
+          },
+          "creationTimestamp": "2026-10-01T08:56:47.373167Z",
+          "generation": 5,
+          "labels": {
+            "cloud.googleapis.com/location": "asia-northeast1",
+            "source-hash": "b1b20f129537d714",
+            "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+          },
+          "name": "trade-dashboard",
+          "namespace": "898093147725",
+          "resourceVersion": "AAZcyulTZ3g",
+          "selfLink": "/apis/serving.knative.dev/v1/namespaces/898093147725/services/trade-dashboard",
+          "uid": "49215ec6-7344-4f07-9b29-8a8d039f8731"
+        },
+        "spec": {
+          "template": {
+            "metadata": {
+              "annotations": {
+                "autoscaling.knative.dev/maxScale": "1",
+                "run.googleapis.com/client-name": "gcloud",
+                "run.googleapis.com/client-version": "585.0.0",
+                "run.googleapis.com/startup-cpu-boost": "true"
+              },
+              "labels": {
+                "run.googleapis.com/startupProbeType": "Default",
+                "source-hash": "b1b20f129537d714",
+                "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+              },
+              "name": "trade-dashboard-rebuild-ff59ba5"
+            },
+            "spec": {
+              "containerConcurrency": 10,
+              "containers": [
+                {
+                  "env": [
+                    {
+                      "name": "TRADE_BQ_PROJECT",
+                      "value": "trade-analytics-508604"
+                    },
+                    {
+                      "name": "TRADE_BQ_LOCATION",
+                      "value": "asia-northeast1"
+                    },
+                    {
+                      "name": "TRADE_BQ_MAX_BYTES_BILLED",
+                      "value": "1000000000"
+                    },
+                    {
+                      "name": "TRADE_DASHBOARD_CACHE_TTL",
+                      "value": "3600"
+                    },
+                    {
+                      "name": "TRADE_DASHBOARD_FIRST_MONTH",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "name": "TRADE_DASHBOARD_AFTER_LAST_MONTH",
+                      "value": "2025-05-01"
+                    }
+                  ],
+                  "image": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard@sha256:9d64a8cc9a15a43f4be5ce9fb4c28a14579fa3b8cc13727880a16e5002990277",
+                  "ports": [
+                    {
+                      "containerPort": 8080,
+                      "name": "http1"
+                    }
+                  ],
+                  "resources": {
+                    "limits": {
+                      "cpu": "1",
+                      "memory": "1Gi"
+                    }
+                  },
+                  "startupProbe": {
+                    "failureThreshold": 1,
+                    "periodSeconds": 240,
+                    "tcpSocket": {
+                      "port": 8080
+                    },
+                    "timeoutSeconds": 240
+                  }
+                }
+              ],
+              "serviceAccountName": "trade-dashboard-runtime@trade-analytics-508604.iam.gserviceaccount.com",
+              "timeoutSeconds": 3600
+            }
+          },
+          "traffic": [
+            {
+              "percent": 100,
+              "revisionName": "trade-dashboard-00001-glf"
+            }
+          ]
+        },
+        "status": {
+          "address": {
+            "url": "https://trade-dashboard-e242237ytq-an.a.run.app"
+          },
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-10-01T17:40:27.970424Z",
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastTransitionTime": "2026-10-01T17:35:00.928483Z",
+              "message": "Deploying revision succeeded in 7.82s.",
+              "reason": "Retired",
+              "status": "True",
+              "type": "ConfigurationsReady"
+            },
+            {
+              "lastTransitionTime": "2026-10-01T17:40:27.942670Z",
+              "status": "True",
+              "type": "RoutesReady"
+            }
+          ],
+          "latestCreatedRevisionName": "trade-dashboard-rebuild-ff59ba5",
+          "latestReadyRevisionName": "trade-dashboard-rebuild-ff59ba5",
+          "observedGeneration": 5,
+          "traffic": [
+            {
+              "percent": 100,
+              "revisionName": "trade-dashboard-00001-glf"
+            }
+          ],
+          "url": "https://trade-dashboard-e242237ytq-an.a.run.app"
+        }
+      },
+      "serviceName": "run.googleapis.com",
+      "status": {
+        "message": "Ready condition status changed to True for Service trade-dashboard."
+      }
+    },
+    "receiveTimestamp": "2026-10-01T17:40:28.492234052Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-10-01T17:40:27.978417Z"
+  },
+  {
+    "insertId": "-j4ur9dtvw8",
+    "logName": "projects/trade-analytics-508604/logs/cloudaudit.googleapis.com%2Fsystem_event",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "methodName": "/Services.ReplaceService",
+      "resourceName": "namespaces/trade-analytics-508604/revisions/trade-dashboard-00001-glf",
+      "response": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.Revision",
+        "apiVersion": "serving.knative.dev/v1",
+        "kind": "Revision",
+        "metadata": {
+          "annotations": {
+            "autoscaling.knative.dev/maxScale": "1",
+            "run.googleapis.com/client-name": "gcloud",
+            "run.googleapis.com/client-version": "585.0.0",
+            "run.googleapis.com/operation-id": "f275578c-af4f-4ba4-a749-7bae4b5a04af",
+            "run.googleapis.com/startup-cpu-boost": "true",
+            "serving.knative.dev/creator": "[REDACTED_EMAIL]"
+          },
+          "creationTimestamp": "2026-10-01T08:56:47.631807Z",
+          "generation": 1,
+          "labels": {
+            "client.knative.dev/nonce": "shjwhiwbdy",
+            "cloud.googleapis.com/location": "asia-northeast1",
+            "run.googleapis.com/startupProbeType": "Default",
+            "serving.knative.dev/configuration": "trade-dashboard",
+            "serving.knative.dev/configurationGeneration": "1",
+            "serving.knative.dev/route": "trade-dashboard",
+            "serving.knative.dev/service": "trade-dashboard",
+            "serving.knative.dev/serviceUid": "49215ec6-7344-4f07-9b29-8a8d039f8731",
+            "source-hash": "b1b20f129537d714",
+            "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+          },
+          "name": "trade-dashboard-00001-glf",
+          "namespace": "898093147725",
+          "ownerReferences": [
+            {
+              "apiVersion": "serving.knative.dev/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "Configuration",
+              "name": "trade-dashboard",
+              "uid": "f429ad78-87e8-47d7-aefa-acda768c1ca5"
+            }
+          ],
+          "resourceVersion": "AAZcyulSSVw",
+          "selfLink": "/apis/serving.knative.dev/v1/namespaces/898093147725/revisions/trade-dashboard-00001-glf",
+          "uid": "81c6cead-651b-448b-8f8e-22a4c6fea0f2"
+        },
+        "spec": {
+          "containerConcurrency": 10,
+          "containers": [
+            {
+              "env": [
+                {
+                  "name": "TRADE_BQ_PROJECT",
+                  "value": "trade-analytics-508604"
+                },
+                {
+                  "name": "TRADE_BQ_LOCATION",
+                  "value": "asia-northeast1"
+                },
+                {
+                  "name": "TRADE_BQ_MAX_BYTES_BILLED",
+                  "value": "1000000000"
+                },
+                {
+                  "name": "TRADE_DASHBOARD_CACHE_TTL",
+                  "value": "3600"
+                },
+                {
+                  "name": "TRADE_DASHBOARD_FIRST_MONTH",
+                  "value": "2023-01-01"
+                },
+                {
+                  "name": "TRADE_DASHBOARD_AFTER_LAST_MONTH",
+                  "value": "2025-05-01"
+                }
+              ],
+              "image": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard@sha256:bf659188d8f1c4a7bc4cf910bb48e1d72db2c43d4a9610e2183846b40d9b2819",
+              "name": "dashboard-1",
+              "ports": [
+                {
+                  "containerPort": 8080,
+                  "name": "http1"
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "1Gi"
+                }
+              },
+              "startupProbe": {
+                "failureThreshold": 1,
+                "periodSeconds": 240,
+                "tcpSocket": {
+                  "port": 8080
+                },
+                "timeoutSeconds": 240
+              }
+            }
+          ],
+          "serviceAccountName": "trade-dashboard-runtime@trade-analytics-508604.iam.gserviceaccount.com",
+          "timeoutSeconds": 3600
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-10-01T17:40:27.897180Z",
+              "message": "Updating revision scaling succeeded.",
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastTransitionTime": "2026-10-01T17:33:38.002503Z",
+              "severity": "Info",
+              "status": "True",
+              "type": "Active"
+            },
+            {
+              "lastTransitionTime": "2026-10-01T08:57:18.724189Z",
+              "message": "Containers became healthy in 3.57s.",
+              "status": "True",
+              "type": "ContainerHealthy"
+            },
+            {
+              "lastTransitionTime": "2026-10-01T08:57:13.354590Z",
+              "message": "Container image import completed in 25.09s.",
+              "status": "True",
+              "type": "ContainerReady"
+            },
+            {
+              "lastTransitionTime": "2026-10-01T08:57:14.687585Z",
+              "message": "Provisioning imported containers completed in 1.33s. Checking container health. This will wait for up to 4m for the configured startup probe, including an initial delay of 0s.",
+              "status": "True",
+              "type": "ResourcesAvailable"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "imageDigest": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard@sha256:bf659188d8f1c4a7bc4cf910bb48e1d72db2c43d4a9610e2183846b40d9b2819",
+              "name": "dashboard-1"
+            }
+          ],
+          "imageDigest": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard@sha256:bf659188d8f1c4a7bc4cf910bb48e1d72db2c43d4a9610e2183846b40d9b2819",
+          "logUrl": "https://console.cloud.google.com/logs/viewer?project=trade-analytics-508604&resource=cloud_run_revision/service_name/trade-dashboard/revision_name/trade-dashboard-00001-glf&advancedFilter=resource.type%3D%22cloud_run_revision%22%0Aresource.labels.service_name%3D%22trade-dashboard%22%0Aresource.labels.revision_name%3D%22trade-dashboard-00001-glf%22",
+          "observedGeneration": 1
+        }
+      },
+      "serviceName": "run.googleapis.com",
+      "status": {
+        "message": "Ready condition status changed to True for Revision trade-dashboard-00001-glf with message: Updating revision scaling succeeded."
+      }
+    },
+    "receiveTimestamp": "2026-10-01T17:40:28.896286803Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "trade-dashboard",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "trade-dashboard-00001-glf",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-10-01T17:40:27.903437Z"
+  },
+  {
+    "insertId": "lx5pswdd4bx",
+    "logName": "projects/trade-analytics-508604/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "32555940559.apps.googleusercontent.com"
+        },
+        "principalEmail": "[REDACTED_EMAIL]",
+        "principalSubject": "user:[REDACTED_EMAIL]"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "run.services.update",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "namespaces/trade-analytics-508604/services/trade-dashboard",
+          "resourceAttributes": {}
+        },
+        {
+          "granted": true,
+          "permission": "run.services.update",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "namespaces/trade-analytics-508604/services/trade-dashboard",
+          "resourceAttributes": {
+            "name": "namespaces/trade-analytics-508604/services/trade-dashboard",
+            "service": "run.googleapis.com/",
+            "type": "run.googleapis.com/Service"
+          }
+        }
+      ],
+      "methodName": "google.cloud.run.v1.Services.ReplaceService",
+      "request": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.ReplaceServiceRequest",
+        "name": "namespaces/trade-analytics-508604/services/trade-dashboard",
+        "service": {
+          "apiVersion": "serving.knative.dev/v1",
+          "kind": "Service",
+          "metadata": {
+            "annotations": {
+              "run.googleapis.com/client-name": "gcloud",
+              "run.googleapis.com/client-version": "585.0.0",
+              "run.googleapis.com/ingress": "all",
+              "run.googleapis.com/ingress-status": "all",
+              "run.googleapis.com/maxScale": "2",
+              "run.googleapis.com/operation-id": "becb2b2d-c313-48ce-b16e-6484d580b74c",
+              "run.googleapis.com/urls": "[\"https://trade-dashboard-898093147725.asia-northeast1.run.app\",\"https://trade-dashboard-e242237ytq-an.a.run.app\"]",
+              "serving.knative.dev/creator": "[REDACTED_EMAIL]",
+              "serving.knative.dev/lastModifier": "[REDACTED_EMAIL]"
+            },
+            "creationTimestamp": "2026-10-01T08:56:47.373167Z",
+            "generation": 4,
+            "labels": {
+              "cloud.googleapis.com/location": "asia-northeast1",
+              "source-hash": "b1b20f129537d714",
+              "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+            },
+            "name": "trade-dashboard",
+            "namespace": "898093147725",
+            "resourceVersion": "AAZcytXVoMk",
+            "selfLink": "/apis/serving.knative.dev/v1/namespaces/898093147725/services/trade-dashboard",
+            "uid": "49215ec6-7344-4f07-9b29-8a8d039f8731"
+          },
+          "spec": {
+            "template": {
+              "metadata": {
+                "annotations": {
+                  "autoscaling.knative.dev/maxScale": "1",
+                  "run.googleapis.com/client-name": "gcloud",
+                  "run.googleapis.com/client-version": "585.0.0",
+                  "run.googleapis.com/startup-cpu-boost": "true"
+                },
+                "labels": {
+                  "run.googleapis.com/startupProbeType": "Default",
+                  "source-hash": "b1b20f129537d714",
+                  "source-sha": "c684f58436983309e455e789cb62825447d7a47e"
+                },
+                "name": "trade-dashboard-rebuild-ff59ba5"
+              },
+              "spec": {
+                "containerConcurrency": 10,
+                "containers": [
+                  {
+                    "image": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard@sha256:9d64a8cc9a15a43f4be5ce9fb4c28a14579fa3b8cc13727880a16e5002990277",
+                    "resources": {
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    }
+                  }
+                ],
+                "serviceAccountName": "trade-dashboard-runtime@trade-analytics-508604.iam.gserviceaccount.com",
+                "timeoutSeconds": 3600
+              }
+            },
+            "traffic": [
+              {
+                "percent": 100,
+                "revisionName": "trade-dashboard-00001-glf"
+              }
+            ]
+          },
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-10-01T17:33:39.199282Z",
+                "status": "True",
+                "type": "Ready"
+              },
+              {
+                "lastTransitionTime": "2026-10-01T17:35:00.928483Z",
+                "reason": "Retired",
+                "status": "True",
+                "type": "ConfigurationsReady"
+              },
+              {
+                "lastTransitionTime": "2026-10-01T17:33:39.171695Z",
+                "status": "True",
+                "type": "RoutesReady"
+              }
+            ],
+            "latestCreatedRevisionName": "trade-dashboard-rebuild-ff59ba5",
+            "latestReadyRevisionName": "trade-dashboard-rebuild-ff59ba5",
+            "observedGeneration": 4,
+            "traffic": [
+              {
+                "percent": 100,
+                "revisionName": "trade-dashboard-00001-glf"
+              }
+            ],
+            "url": "https://trade-dashboard-e242237ytq-an.a.run.app"
+          }
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "123.252.12.198",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/585.0.0 agent-name/codex_cli command/gcloud.run.services.update invocation-id/c7c7eab2ccc440e7b6fe9a3f88b5dd0e environment/None environment-version/None client-os/MACOSX client-os-ver/25.6.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.6 term/dumb  (Macintosh; Intel Mac OS X 25.6.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-10-01T17:40:27.818257Z"
+        }
+      },
+      "resourceLocation": {
+        "currentLocations": [
+          "asia-northeast1"
+        ]
+      },
+      "resourceName": "namespaces/trade-analytics-508604/services/trade-dashboard",
+      "serviceName": "run.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-10-01T17:40:28.698077577Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "",
+        "location": "asia-northeast1",
+        "project_id": "trade-analytics-508604",
+        "revision_name": "",
+        "service_name": "trade-dashboard"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-10-01T17:40:27.523300Z"
+  }
+]

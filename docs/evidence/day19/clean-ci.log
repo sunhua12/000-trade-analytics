@@ -1,0 +1,15 @@
+82 files already formatted
+All checks passed!
+Success: no issues found in 18 source files
+........................................................................ [ 28%]
+........................................................................ [ 56%]
+........................................................................ [ 84%]
+.......................................                                  [100%]
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Coverage JSON written to file coverage.json
+Required test coverage of 80% reached. Total coverage: 91.66%
+255 passed in 14.73s
+ingestion: 97.03% (minimum 90%)
+raw loader: 96.52% (minimum 85%)

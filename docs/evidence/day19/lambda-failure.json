@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-01T17:33:26.277970+00:00",
+  "event": {
+    "action": "ingest",
+    "period": "202504",
+    "query_type": "partner_detail",
+    "run_id": "rebuild-recovery-20261002",
+    "revision": 1
+  },
+  "function_error": "Unhandled",
+  "response": {
+    "errorMessage": "UN Comtrade response was not valid JSON",
+    "errorType": "ComtradeResponseError",
+    "requestId": "6dae3bff-5b2b-4e75-8ac9-142adfadfc3b",
+    "stackTrace": [
+      "  File \"/var/task/trade_analytics/lambda_handler.py\", line 106, in handler\n    stored = runner(\n",
+      "  File \"/var/task/trade_analytics/lambda_handler.py\", line 66, in run_ingestion\n    dataset = IngestionService(client).fetch_dataset(query)\n",
+      "  File \"/var/task/trade_analytics/ingestion/service.py\", line 35, in fetch_dataset\n    response = self._client.fetch(query)\n",
+      "  File \"/var/task/trade_analytics/ingestion/client.py\", line 77, in fetch\n    for attempt in retrying:\n",
+      "  File \"/var/task/tenacity/__init__.py\", line 438, in __iter__\n    do = self.iter(retry_state=retry_state)\n",
+      "  File \"/var/task/tenacity/__init__.py\", line 371, in iter\n    result = action(retry_state)\n",
+      "  File \"/var/task/tenacity/__init__.py\", line 393, in <lambda>\n    self._add_action_func(lambda rs: rs.outcome.result())\n",
+      "  File \"/var/lang/lib/python3.11/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n",
+      "  File \"/var/lang/lib/python3.11/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n",
+      "  File \"/var/task/trade_analytics/ingestion/client.py\", line 79, in fetch\n    return self._request(query)\n",
+      "  File \"/var/task/trade_analytics/ingestion/client.py\", line 97, in _request\n    payload = self._decode_payload(response)\n",
+      "  File \"/var/task/trade_analytics/ingestion/client.py\", line 119, in _decode_payload\n    raise ComtradeResponseError(\"UN Comtrade response was not valid JSON\") from error\n"
+    ]
+  },
+  "log": "START RequestId: 6dae3bff-5b2b-4e75-8ac9-142adfadfc3b Version: $LATEST\n{\"aws_request_id\": \"6dae3bff-5b2b-4e75-8ac9-142adfadfc3b\", \"event\": \"ingestion_started\", \"period\": \"202504\", \"query_type\": \"partner_detail\", \"revision\": 1, \"run_id\": \"rebuild-recovery-20261002\"}\n{\"aws_request_id\": \"6dae3bff-5b2b-4e75-8ac9-142adfadfc3b\", \"error_category\": \"ComtradeResponseError\", \"error_type\": \"ComtradeResponseError\", \"event\": \"ingestion_failed\", \"message\": \"Ingestion failed; inspect error_type and request ID.\", \"period\": \"202504\", \"query_type\": \"partner_detail\", \"revision\": 1, \"run_id\": \"rebuild-recovery-20261002\"}\n[ERROR] ComtradeResponseError: UN Comtrade response was not valid JSON\rTraceback (most recent call last):\r  File \"/var/task/trade_analytics/lambda_handler.py\", line 106, in handler\r    stored = runner(\r  File \"/var/task/trade_analytics/lambda_handler.py\", line 66, in run_ingestion\r    dataset = IngestionService(client).fetch_dataset(query)\r  File \"/var/task/trade_analytics/ingestion/service.py\", line 35, in fetch_dataset\r    response = self._client.fetch(query)\r  File \"/var/task/trade_analytics/ingestion/client.py\", line 77, in fetch\r    for attempt in retrying:\r  File \"/var/task/tenacity/__init__.py\", line 438, in __iter__\r    do = self.iter(retry_state=retry_state)\r  File \"/var/task/tenacity/__init__.py\", line 371, in iter\r    result = action(retry_state)\r  File \"/var/task/tenacity/__init__.py\", line 393, in <lambda>\r    self._add_action_func(lambda rs: rs.outcome.result())\r  File \"/var/lang/lib/python3.11/concurrent/futures/_base.py\", line 449, in result\r    return self.__get_result()\r  File \"/var/lang/lib/python3.11/concurrent/futures/_base.py\", line 401, in __get_result\r    raise self._exception\r  File \"/var/task/trade_analytics/ingestion/client.py\", line 79, in fetch\r    return self._request(query)\r  File \"/var/task/trade_analytics/ingestion/client.py\", line 97, in _request\r    payload = self._decode_payload(response)\r  File \"/var/task/trade_analytics/ingestion/client.py\", line 119, in _decode_payload\r    raise ComtradeResponseError(\"UN Comtrade response was not valid JSON\") from error\nEND RequestId: 6dae3bff-5b2b-4e75-8ac9-142adfadfc3b\nREPORT RequestId: 6dae3bff-5b2b-4e75-8ac9-142adfadfc3b\tDuration: 927.84 ms\tBilled Duration: 3592 ms\tMemory Size: 512 MB\tMax Memory Used: 87 MB\tInit Duration: 2664.02 ms\t\n"
+}

@@ -469,3 +469,16 @@ Bootstrap 新增 GitHub provider 與受限部署角色，trust 精確匹配含 i
 - 學習邊界：由 AI 協助實作，本人對 runtime／部署身分、查詢限制與快取的理解尚未測驗。
 - 後續：Day 19 乾淨重建／回復／SNS 故障實收，monthly DAG 繼續暫停，剩餘積欠另追蹤。
 - 詳細證據：[Day 18 執行紀錄](day18-run-record.md)。
+
+## Day 19：乾淨重建、SNS 實收與故障復原
+
+- 驗收日期：2026-10-02（Asia/Taipei）；分支 `feature/rebuild-alert-recovery`。
+- 乾淨來源安裝／255 項 unit tests 通過，coverage 91.66％；Lambda、Dashboard 與 Airflow／dbt image 重建及真實 GitHub CI 通過。
+- 以獨立 state／新命名重建 21 個 AWS application 資源，後續無 drift；bootstrap state bucket／帳號 OIDC provider 共用，未宣稱全部帳號資源重建。
+- 補齊 SNS 訂閱確認；真實隔離 handler 失敗觸發分類與 Errors Alarm，本人回報兩封告警於台北時間 01:34 收到。同 run ID 修正後成功擷取 61 筆，再重跑為 `already_exists`，checksum 相同。
+- 真實 BigQuery 隔離合成品質驗證共 10 案例通過；正式 202504 完整 Airflow 安全重跑成功，raw grain／金額、正式 run ID／發布時間不變。兩類案例分開記錄，不冒稱同一次事故。
+- OIDC 精確 trust／部署 ref 改為 `main`，新增指定 SNS topic 的 subscription refresh 唯讀權限；首次部署因缺該權限失敗，修正後真實 OIDC 部署與兩組獨立無 drift 查核成功。
+- 隔離 Lambda 舊 digest 回復通過。Cloud Run 直接回切舊 revision 發生 429，暫時 scaling 調整未解決；重新部署舊 digest 至新 revision 並明確切流量後恢復，原 Live URL 的單月數值核對成功，min 0／max 1 已還原。
+- 隔離 AWS 21 個資源、BigQuery 兩個 fixture Dataset 已清理；GCP 無流量 revisions／映像與隔離空 remote state 保留。Monthly DAG 仍暫停，積欠另處理。
+- 本人實際投入與帳單未提供，理解測驗未進行；由 AI 協助完成技術驗收，M5 留待 Day 20。
+- 詳細證據：[Day 19 執行紀錄](day19-run-record.md)、[操作手冊](day19-recovery-manual.md)。

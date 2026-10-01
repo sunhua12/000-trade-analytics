@@ -1,0 +1,132 @@
+- log
+- log
+- heading "篩選條件" [level=2]
+- button "重新讀取已發布資料":
+  - paragraph: 重新讀取已發布資料
+- paragraph: 起始月份
+- combobox "起始月份" [active]: 2025-04
+- button "Open":
+- paragraph: 結束月份
+- combobox "結束月份": 2025-04
+- button "Open":
+- paragraph: Partner（未選＝全部已確認國家／地區）
+- combobox "Partner（未選＝全部已確認國家／地區）"
+- button "Open":
+- paragraph: Top N
+- group "Top N":
+  - slider "Top N Top N": "10"
+  - paragraph: "10"
+  - paragraph: "5"
+  - paragraph: "30"
+- paragraph: 查詢快取：3600 秒；可手動重新讀取。
+- banner:
+  - button "keyboard_double_arrow_right":
+    - generic: keyboard_double_arrow_right
+  - button "Main menu":
+- heading "美國半導體進口分析" [level=1]:
+  - text: 美國半導體進口分析
+  - link "Link to heading":
+    - /url: "#d6f3816"
+- paragraph: 正式發布資料｜美國月度進口｜HS 8542／H6｜金額單位：美元
+- paragraph: 期間：2025-04～2025-04；Partner：全部已確認國家／地區；排名顯示前 10 名。
+- paragraph: 已發布月份
+- paragraph: "1"
+- paragraph: 最新成功發布月份
+- paragraph: 2025-04
+- paragraph: 期間 World 金額
+- paragraph: USD 3.11B
+- paragraph: 期間 World 精確金額：USD 3,114,414,147。World 每月只計一次，不加總夥伴列上的重複值。
+- heading "資料新鮮度" [level=3]:
+  - text: 資料新鮮度
+  - link "Link to heading":
+    - /url: "#4d5cd059"
+- paragraph: 所選期間最新資料月份：2025-04；所選期間最近成功發布：2026-10-01 10:36:29 Asia/Taipei；所選期間最新發布嘗試：2026-10-01 16:58:13 Asia/Taipei；畫面資料讀取：2026-10-02 01:32:54 Asia/Taipei。
+- paragraph: 展示範圍起於 2023-01，止於 2025-05（不含）；僅列出已發布月份。畫面可能使用 3600 秒快取；重新讀取按鈕可取得新的正式版本。最新失敗嘗試不會更新正式資料。
+- heading "來源國／地區金額排名" [level=3]:
+  - text: 來源國／地區金額排名
+  - link "Link to heading":
+    - /url: "#7fe3072a"
+- button "Show/hide columns":
+- button "Download as CSV":
+- button "Search":
+- button "Fullscreen":
+- button "Show data":
+- button "Download as PNG":
+- button "Fullscreen":
+- generic "Vega visualization":
+- paragraph: 排名僅含已確認的國家／地區；490 等特殊代碼不列入。占比以期間各月 World 金額合計為分母。
+- heading "月度進口趨勢" [level=3]:
+  - text: 月度進口趨勢
+  - link "Link to heading":
+    - /url: "#964a2e5"
+- button "Show data":
+- button "Download as PNG":
+- button "Fullscreen":
+- generic "Vega visualization":
+- paragraph: 僅加總已確認國家／地區的金額；缺月保留空白，不補成 0。圖表使用浮點數顯示，精確核對以 BigQuery NUMERIC 為準。
+- heading "年增率 YoY" [level=3]:
+  - text: 年增率 YoY
+  - link "Link to heading":
+    - /url: "#yo-y"
+- paragraph: World 月度金額與去年同月比較；此參考指標不隨 Partner 多選改變。
+- button "Show/hide columns":
+- button "Download as CSV":
+- button "Search":
+- button "Fullscreen":
+- button "Show data":
+- button "Download as PNG":
+- button "Fullscreen":
+- generic "Vega visualization":
+- paragraph: 缺去年同月或基期不大於 0 時保留空白；百分比不加總或平均。
+- heading "國家覆蓋與 HHI 狀態" [level=3]:
+  - text: 國家覆蓋與 HHI 狀態
+  - link "Link to heading":
+    - /url: "#hhi"
+- button "Show/hide columns":
+- button "Download as CSV":
+- button "Search":
+- button "Fullscreen":
+- button "Show data":
+- button "Download as PNG":
+- button "Fullscreen":
+- generic "Vega visualization":
+- status:
+  - paragraph: 所選月份的 HHI 均不可顯示；請查看各月覆蓋率與狀態。
+- paragraph: HHI 以 World 為分母，僅在國家覆蓋差距不超過 0.5% 且狀態為 ok 時顯示。品質 PASS 不代表 HHI 可用。
+- heading "來源國／地區地圖" [level=3]:
+  - text: 來源國／地區地圖
+  - link "Link to heading":
+    - /url: "#4501aeab"
+- toolbar:
+  - button "Download plot as a PNG":
+  - button "Pan":
+  - button "Zoom in":
+  - button "Zoom out":
+  - button "Reset":
+  - button "Fullscreen":
+- paragraph: 期間 2025-04～2025-04；地圖僅含已確認國家／地區。無地圖碼來源列：0；未映射金額：USD 0。顏色使用對數尺度，精確金額請看排名表。特殊代碼 490 不畫入地圖。
+- heading "最新月份：進口金額與 YoY" [level=3]:
+  - text: 最新月份：進口金額與 YoY
+  - link "Link to heading":
+    - /url: "#yo-y"
+- button "Show data":
+- button "Download as PNG":
+- button "Fullscreen":
+- generic "Vega visualization":
+- button "Show/hide columns":
+- button "Download as CSV":
+- button "Search":
+- button "Fullscreen":
+- paragraph: 每點為 2025-04 的一個已確認國家／地區；僅從所選期間排名前 10 名中取金額與 YoY 均有效的資料。有效點數：10。
+- heading "發布與品質摘要" [level=3]:
+  - text: 發布與品質摘要
+  - link "Link to heading":
+    - /url: "#130abcdc"
+- button "Show/hide columns":
+- button "Download as CSV":
+- button "Search":
+- button "Fullscreen":
+- paragraph: 最新品質嘗試與已發布版本分開顯示。最新嘗試 FAIL 時，正式資料仍可能是前一次成功版本。
+- generic "keyboard_arrow_right 查詢紀錄與限制":
+  - generic: keyboard_arrow_right
+  - paragraph: 查詢紀錄與限制

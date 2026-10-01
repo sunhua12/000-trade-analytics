@@ -1,0 +1,57 @@
+aws_ecr_repository.ingestion: Refreshing state... [id=trade-rebuild-acceptance]
+aws_cloudwatch_log_group.lambda: Refreshing state... [id=/aws/lambda/trade-rebuild-acceptance]
+aws_sns_topic.ingestion_alarms: Refreshing state... [id=arn:aws:sns:ap-northeast-1:816079797958:trade-rebuild-acceptance-alarms]
+aws_iam_role.lambda: Refreshing state... [id=trade-rebuild-acceptance]
+aws_s3_bucket.raw: Refreshing state... [id=trade-rebuild-816079797958-20261002]
+aws_s3_bucket_public_access_block.raw: Refreshing state... [id=trade-rebuild-816079797958-20261002]
+aws_s3_bucket_versioning.raw: Refreshing state... [id=trade-rebuild-816079797958-20261002]
+aws_s3_bucket_server_side_encryption_configuration.raw: Refreshing state... [id=trade-rebuild-816079797958-20261002]
+aws_s3_bucket_ownership_controls.raw: Refreshing state... [id=trade-rebuild-816079797958-20261002]
+aws_cloudwatch_log_metric_filter.ingestion_error["ResponseTruncatedError"]: Refreshing state... [id=trade-rebuild-acceptance-ResponseTruncatedError]
+aws_cloudwatch_log_metric_filter.ingestion_error["ComtradeResponseError"]: Refreshing state... [id=trade-rebuild-acceptance-ComtradeResponseError]
+aws_cloudwatch_log_metric_filter.ingestion_error["StorageConflictError"]: Refreshing state... [id=trade-rebuild-acceptance-StorageConflictError]
+aws_sns_topic_policy.ingestion_alarms: Refreshing state... [id=arn:aws:sns:ap-northeast-1:816079797958:trade-rebuild-acceptance-alarms]
+aws_cloudwatch_metric_alarm.ingestion_error["ComtradeResponseError"]: Refreshing state... [id=trade-analytics-ingestion-rebuild-ComtradeResponseError]
+aws_cloudwatch_metric_alarm.ingestion_error["ResponseTruncatedError"]: Refreshing state... [id=trade-analytics-ingestion-rebuild-ResponseTruncatedError]
+aws_cloudwatch_metric_alarm.ingestion_error["StorageConflictError"]: Refreshing state... [id=trade-analytics-ingestion-rebuild-StorageConflictError]
+aws_iam_role_policy_attachment.logs: Refreshing state... [id=trade-rebuild-acceptance/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_iam_role_policy.s3: Refreshing state... [id=trade-rebuild-acceptance:TradeAnalyticsS3Access]
+aws_lambda_function.ingestion: Refreshing state... [id=trade-rebuild-acceptance]
+aws_cloudwatch_metric_alarm.lambda_duration: Refreshing state... [id=trade-analytics-ingestion-rebuild-LambdaDuration]
+aws_cloudwatch_metric_alarm.lambda_errors: Refreshing state... [id=trade-analytics-ingestion-rebuild-LambdaErrors]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_ecr_repository.ingestion will be updated in-place
+  ~ resource "aws_ecr_repository" "ingestion" {
+      ~ force_delete         = false -> true
+        id                   = "trade-rebuild-acceptance"
+        name                 = "trade-rebuild-acceptance"
+        tags                 = {}
+        # (6 unchanged attributes hidden)
+
+        # (2 unchanged blocks hidden)
+    }
+
+  # aws_s3_bucket.raw will be updated in-place
+  ~ resource "aws_s3_bucket" "raw" {
+      ~ force_destroy               = false -> true
+        id                          = "trade-rebuild-816079797958-20261002"
+        tags                        = {}
+        # (14 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 2 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: /private/tmp/rebuild-cleanup-enable.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "/private/tmp/rebuild-cleanup-enable.tfplan"

@@ -1,0 +1,13 @@
+aws_cloudwatch_metric_alarm.lambda_errors: Creating...
+aws_cloudwatch_metric_alarm.lambda_duration: Creating...
+aws_cloudwatch_metric_alarm.lambda_errors: Creation complete after 0s [id=trade-analytics-ingestion-rebuild-LambdaErrors]
+aws_cloudwatch_metric_alarm.lambda_duration: Creation complete after 0s [id=trade-analytics-ingestion-rebuild-LambdaDuration]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+function_name = "trade-rebuild-acceptance"
+image_uri = "816079797958.dkr.ecr.ap-northeast-1.amazonaws.com/trade-rebuild-acceptance@sha256:3855f0da15fdeb154e7dfe34160e0cf95a9d718b3c5d426b7a1a43bec377687d"
+ingestion_alarm_topic_arn = "arn:aws:sns:ap-northeast-1:816079797958:trade-rebuild-acceptance-alarms"
+raw_bucket = "trade-rebuild-816079797958-20261002"

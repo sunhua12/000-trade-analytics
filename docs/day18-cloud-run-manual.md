@@ -1,5 +1,7 @@
 # Day 18：Cloud Run 展示操作手冊
 
+> 現行服務：Day 19 使用原 digest 復原至 `trade-dashboard-recovered-original`，流量 100％、最小 instances 0、最大 instances 1。直接回切首次 revision 曾發生 429；可用的舊 digest 重新部署入口與真實結果見 [復原手冊](day19-recovery-manual.md)及 [執行紀錄](day19-run-record.md)。本頁首次 revision 資料保留作歷史證據。
+
 ## 服務與執行邊界
 
 [Live Demo](https://trade-dashboard-898093147725.asia-northeast1.run.app) 使用專案 `trade-analytics-508604`、region `asia-northeast1`、服務 `trade-dashboard` 與 Artifact Registry repository `trade-dashboard`。公開頁面只展示已發布的美國月度進口 `8542／H6`；目前雲端展示範圍為 `202301～202504`，共 28 個已發布月份，不代表最新可取得月份。

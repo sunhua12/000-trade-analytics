@@ -265,6 +265,8 @@ Day 12 基本查詢的實測結果見 [查詢驗證](docs/evidence/day12-verific
 
 部署、權限、TWD 250 月度預算通知、停止／清理與固定條件查核見 [Cloud Run 操作手冊](docs/day18-cloud-run-manual.md)，真實線上與單月安全重跑證據見 [Day 18 執行紀錄](docs/day18-run-record.md)。
 
+乾淨來源重建、SNS 實收與故障／版本復原見 [Day 19 手冊](docs/day19-recovery-manual.md)與 [驗收紀錄](docs/day19-run-record.md)。目前 OIDC 精確信任 `main`；Cloud Run 已用原 digest 復原到新 revision，保留直接舊 revision 回切遇到 429 的實測限制。
+
 ## 設計與實作計畫
 
 - [AWS Terraform 管理與接管流程](infrastructure/aws/README.md)
