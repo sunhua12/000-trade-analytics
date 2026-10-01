@@ -1,0 +1,137 @@
+{
+  "dag_run_id": "manual__2026-10-01T02:22:56.108332+00:00",
+  "loads": {
+    "load_detail": {
+      "jobs": [
+        {
+          "job_id": "day11_6e8d2e9d920d4519b71cc260369d6063",
+          "status": "success"
+        }
+      ],
+      "kind": "partner_detail",
+      "period": "202501",
+      "revision": 1,
+      "rows": 67,
+      "status": "already_loaded",
+      "step": "load"
+    },
+    "load_detail_2": {
+      "jobs": [
+        {
+          "job_id": "day11_a91d68d0862c41ba958720e2cba2063e",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_d0cf32be5f71493e8dca2f43e6c56b70",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_02f6f93cc60c4b4cae884d9bd9d8e523",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_302f2690114945b6a6f2a95344005b36",
+          "status": "success"
+        }
+      ],
+      "kind": "partner_detail",
+      "period": "202502",
+      "revision": 1,
+      "rows": 62,
+      "status": "success",
+      "step": "load"
+    },
+    "load_detail_3": {
+      "jobs": [
+        {
+          "job_id": "day11_1fefb628c29142cd805679540e045f9f",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_3e26de1710e1427c8ada65609055eeda",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_da405c052cd04cbba06e897ca9add4bf",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_bf7834e64be8403bb28d8917b3a35954",
+          "status": "success"
+        }
+      ],
+      "kind": "partner_detail",
+      "period": "202503",
+      "revision": 1,
+      "rows": 61,
+      "status": "success",
+      "step": "load"
+    },
+    "load_world": {
+      "jobs": [
+        {
+          "job_id": "day11_b1973ea4879f4ec49bf2ad23ae1b1ac1",
+          "status": "success"
+        }
+      ],
+      "kind": "world_total",
+      "period": "202501",
+      "revision": 1,
+      "rows": 1,
+      "status": "already_loaded",
+      "step": "load"
+    },
+    "load_world_2": {
+      "jobs": [
+        {
+          "job_id": "day11_9e547e44d6314154b84377192b93b0f7",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_d8f8b6be4c3f482d9831a7f5b136fdc7",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_83e7db4ca4b344c1b03b3b44df8a0a86",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_c60c5d6baa3e401e8f3b3f7277596303",
+          "status": "success"
+        }
+      ],
+      "kind": "world_total",
+      "period": "202502",
+      "revision": 1,
+      "rows": 1,
+      "status": "success",
+      "step": "load"
+    },
+    "load_world_3": {
+      "jobs": [
+        {
+          "job_id": "day11_069b89bdf9194a41a6bee5f4fd94c564",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_841935d7ac3049a4a329fa4fd5b7d42d",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_ee1af6caa578480d838bed8fa75dfa89",
+          "status": "success"
+        },
+        {
+          "job_id": "day11_ef43af6ab0fb4315affd6e92cf37fbbc",
+          "status": "success"
+        }
+      ],
+      "kind": "world_total",
+      "period": "202503",
+      "revision": 1,
+      "rows": 1,
+      "status": "success",
+      "step": "load"
+    }
+  }
+}

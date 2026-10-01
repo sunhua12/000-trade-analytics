@@ -1,8 +1,9 @@
 """Critical revision decisions must fail closed before raw mutation."""
 
 import pytest
+from botocore.exceptions import ClientError
 
-from trade_analytics.warehouse.backfill import canonical, decision, source_key
+from trade_analytics.warehouse.backfill import RawLoader, canonical, decision, source_key
 
 
 def test_revision_decisions() -> None:
@@ -32,3 +33,20 @@ def test_snapshot_comparison_keeps_nulls_and_decimal_precision() -> None:
     assert canonical(template) != canonical(
         {"primary_value": "1.000000002", "net_weight": None, "quantity": "0"}
     )
+
+
+def test_missing_manifest_stops_before_any_bigquery_write() -> None:
+    class NoQueryClient:
+        def query(self, *args: object, **kwargs: object) -> None:
+            raise AssertionError("incomplete source must not reach BigQuery")
+
+    class HalfSource:
+        def get_object(self, *, Key: str, **kwargs: object) -> dict[str, object]:
+            if Key.endswith("data.ndjson"):
+                return {"Body": type("Body", (), {"read": lambda self: b"{}"})()}
+            raise ClientError({"Error": {"Code": "NoSuchKey"}}, "GetObject")
+
+    loader = RawLoader(NoQueryClient(), HalfSource())
+    with pytest.raises(ClientError):
+        loader.load("202504", "partner_detail")
+    assert loader.jobs == []

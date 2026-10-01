@@ -275,7 +275,7 @@ Day 11 已將 202301～202412 的兩類來源逐月載入、查驗、建置與�
 
 ### 單月執行與 Airflow 學習
 
-Day 14 已建立 `trade_monthly_pipeline`，以本機 Airflow 3.3.2 編排可用性檢查、兩種來源擷取／載入、查驗、dbt、品質審計與發布。單月入口為 `scripts/monthly_steps.py`。AWS 使用本機 `hua` profile，GCP 使用 ADC；身分檔僅唯讀掛入 worker。Day 14 曾以已發布的 `202412` 和原 run ID 在真實雲端跑完單月，正式表維持原 67 筆與 `published_at`。目前 DAG 程式已擴充為最多三個月份串行處理；新月份首次發布仍須獨立驗證。
+Day 14 已建立 `trade_monthly_pipeline`，以本機 Airflow 3.3.2 編排可用性檢查、兩種來源擷取／載入、查驗、dbt、品質審計與發布。單月入口為 `scripts/monthly_steps.py`。AWS 使用本機 `hua` profile，GCP 使用 ADC；身分檔僅唯讀掛入 worker。Day 14 曾以已發布的 `202412` 和原 run ID 在真實雲端跑完單月，正式表維持原 67 筆與 `published_at`。目前 monthly DAG 可在三期窗口內串行處理；Day 16 另以獨立 backfill DAG 完成 `202501`～`202503` 的真實首次發布。
 
 啟動和檢查（先依 [身分範本](compose.identity.example.yaml)備妥未追蹤的 `compose.aws.yaml`，將其中的 `AWS_PROFILE` 設為 `hua`；不必修改主機 `default` profile）：
 
@@ -297,3 +297,5 @@ docker compose -f docker-compose.yaml -f compose.aws.yaml down
 若從 UI 觸發，在 DAG 頁面的 Trigger 表單填入相同 JSON conf；執行後從 Grid 選擇該 run，再點各 task 查看 log。`dags test` 會建立可追查的測試 run，正式新月份應先確認來源、權限與發布意圖後再解除暫停或從 UI 觸發。
 
 排程每月 1 日依台北時間檢查最近最多 3 個完整月份，依序處理其中可用且未發布的月份；超出三期範圍的未發布月份列在 `older_unpublished`，須人工處置。Airflow 只在本機服務運行時排程，且 `catchup=False` 不會補建停機期間的所有排程 run。暫時性遠端錯誤最多額外重試 3 次；永久錯誤直接失敗。設定、月份語意與操作細節見 [Airflow 指南](docs/day14-airflow-manual.md)與 [Day 15 操作手冊](docs/day15-operations-manual.md)，歷史單月實測見 [Day 14 執行紀錄](docs/day14-run-record.md)。
+
+歷史積欠使用無排程的 `trade_backfill_pipeline`，明確指定起訖月份，每次最多三個連續完整月份；與 monthly DAG 共用單 slot Pool。`202501`～`202503` 的真實回填與 `202504` 載入回報遺失後重試，見 [Day 16 操作手冊](docs/day16-backfill-manual.md)及[執行紀錄](docs/day16-run-record.md)。正式 monthly DAG 目前仍保持暫停；其餘積欠月份需逐批查核後處理。
