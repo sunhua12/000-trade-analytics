@@ -36,3 +36,6 @@ dbt/dbt_packages/
 dbt/**/.user.yml
 dbt/**/logs/
 dbt/**/target/
+
+# Account billing details remain local; only acceptance status is published.
+docs/evidence/continuous-operations/private/
