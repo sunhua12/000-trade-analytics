@@ -1,7 +1,7 @@
 name: Deploy AWS Lambda
 on:
   push:
-    branches: [feature/ci-oidc-deployment]
+    branches: [main]
     paths:
       - '.github/workflows/**'
       - 'infrastructure/aws/**'

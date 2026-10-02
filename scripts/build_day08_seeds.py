@@ -130,6 +130,7 @@ def main():
     for review_file in (
         ROOT / "docs/evidence/day11/partner-review.json",
         ROOT / "docs/evidence/day16/partner-review.json",
+        ROOT / "docs/evidence/continuous-operations/partner-review.json",
     ):
         if review_file.exists():
             for item in json.loads(review_file.read_text()):
@@ -144,7 +145,7 @@ def main():
         assert len(matches) == 1, f"Ambiguous reference: {code}"
         r = matches[0]
         assert r["entryEffectiveDate"][:10] <= "2023-01-01"
-        assert not r.get("entryExpiredDate") or r["entryExpiredDate"][:10] >= "2025-04-30"
+        assert not r.get("entryExpiredDate") or r["entryExpiredDate"][:10] >= "2026-07-31"
         iso = r.get("PartnerCodeIsoAlpha3", "")
         ordinary = code in reviewed
         if ordinary:

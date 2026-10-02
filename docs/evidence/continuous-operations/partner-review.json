@@ -1,0 +1,202 @@
+[
+  {
+    "partner_code": "4",
+    "source_name": "Afghanistan",
+    "source_iso_alpha3": "AFG",
+    "m49_name": "Afghanistan",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202506",
+      "202511"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "31",
+    "source_name": "Azerbaijan",
+    "source_iso_alpha3": "AZE",
+    "m49_name": "Azerbaijan",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202506"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "60",
+    "source_name": "Bermuda",
+    "source_iso_alpha3": "BMU",
+    "m49_name": "Bermuda",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202606"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "70",
+    "source_name": "Bosnia Herzegovina",
+    "source_iso_alpha3": "BIH",
+    "m49_name": "Bosnia and Herzegovina",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202507",
+      "202511"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "234",
+    "source_name": "Faroe Isds",
+    "source_iso_alpha3": "FRO",
+    "m49_name": "Faroe Islands",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202604"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "266",
+    "source_name": "Gabon",
+    "source_iso_alpha3": "GAB",
+    "m49_name": "Gabon",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202512"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "417",
+    "source_name": "Kyrgyzstan",
+    "source_iso_alpha3": "KGZ",
+    "m49_name": "Kyrgyzstan",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202507"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "418",
+    "source_name": "Lao People's Dem. Rep.",
+    "source_iso_alpha3": "LAO",
+    "m49_name": "Lao People's Democratic Republic",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202512",
+      "202605"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "422",
+    "source_name": "Lebanon",
+    "source_iso_alpha3": "LBN",
+    "m49_name": "Lebanon",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202505"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "524",
+    "source_name": "Nepal",
+    "source_iso_alpha3": "NPL",
+    "m49_name": "Nepal",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202606"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "558",
+    "source_name": "Nicaragua",
+    "source_iso_alpha3": "NIC",
+    "m49_name": "Nicaragua",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202507",
+      "202606",
+      "202607"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "584",
+    "source_name": "Marshall Isds",
+    "source_iso_alpha3": "MHL",
+    "m49_name": "Marshall Islands",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202604"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  },
+  {
+    "partner_code": "686",
+    "source_name": "Senegal",
+    "source_iso_alpha3": "SEN",
+    "m49_name": "Senegal",
+    "source_is_group": false,
+    "effective_full_period": true,
+    "months": [
+      "202603"
+    ],
+    "suggested_role": "country_detail",
+    "reviewed_scope": "202301-202607",
+    "reviewed_at": "2026-10-02",
+    "reference_sha256": "2da5667693b5a7f8b203028964a431cdb46356d3a377c7369bb9736c59f03733"
+  }
+]
