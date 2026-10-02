@@ -1,0 +1,32 @@
+[
+  {
+    "createTime": "2026-10-01T17:31:02.706767Z",
+    "metadata": {
+      "buildTime": "2026-10-01T17:29:39.334257632Z",
+      "imageSizeBytes": "233128601",
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "name": "projects/trade-analytics-508604/locations/asia-northeast1/repositories/trade-dashboard/dockerImages/dashboard@sha256:9d64a8cc9a15a43f4be5ce9fb4c28a14579fa3b8cc13727880a16e5002990277"
+    },
+    "package": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard",
+    "tags": [
+      "rebuild-ff59ba5"
+    ],
+    "updateTime": "2026-10-01T17:31:02.706767Z",
+    "version": "sha256:9d64a8cc9a15a43f4be5ce9fb4c28a14579fa3b8cc13727880a16e5002990277"
+  },
+  {
+    "createTime": "2026-10-01T08:56:42.502271Z",
+    "metadata": {
+      "buildTime": "2026-10-01T08:55:13.577843388Z",
+      "imageSizeBytes": "233136936",
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "name": "projects/trade-analytics-508604/locations/asia-northeast1/repositories/trade-dashboard/dockerImages/dashboard@sha256:bf659188d8f1c4a7bc4cf910bb48e1d72db2c43d4a9610e2183846b40d9b2819"
+    },
+    "package": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard",
+    "tags": [
+      "c684f58436983309e455e789cb62825447d7a47e-b1b20f129537d714"
+    ],
+    "updateTime": "2026-10-01T08:56:42.502271Z",
+    "version": "sha256:bf659188d8f1c4a7bc4cf910bb48e1d72db2c43d4a9610e2183846b40d9b2819"
+  }
+]

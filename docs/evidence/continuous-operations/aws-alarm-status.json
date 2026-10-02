@@ -1,0 +1,42 @@
+[
+    {
+        "name": "trade-analytics-ingestion-ComtradeResponseError",
+        "state": "OK",
+        "updated": "2026-09-30T23:32:39.313000+08:00",
+        "actions": [
+            "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms"
+        ]
+    },
+    {
+        "name": "trade-analytics-ingestion-LambdaDuration",
+        "state": "OK",
+        "updated": "2026-09-30T23:33:14.746000+08:00",
+        "actions": [
+            "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms"
+        ]
+    },
+    {
+        "name": "trade-analytics-ingestion-LambdaErrors",
+        "state": "OK",
+        "updated": "2026-09-30T23:33:06.568000+08:00",
+        "actions": [
+            "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms"
+        ]
+    },
+    {
+        "name": "trade-analytics-ingestion-ResponseTruncatedError",
+        "state": "OK",
+        "updated": "2026-09-30T23:33:12.656000+08:00",
+        "actions": [
+            "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms"
+        ]
+    },
+    {
+        "name": "trade-analytics-ingestion-StorageConflictError",
+        "state": "OK",
+        "updated": "2026-09-30T23:33:03.690000+08:00",
+        "actions": [
+            "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms"
+        ]
+    }
+]

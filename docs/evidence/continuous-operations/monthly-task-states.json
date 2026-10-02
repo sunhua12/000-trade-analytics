@@ -1,0 +1,219 @@
+[
+    {
+        "state": "success",
+        "task_id": "check_availability",
+        "end_date": "2026-10-02T02:08:37.968038+00:00",
+        "start_date": "2026-10-02T02:07:51.715154+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "select_month",
+        "end_date": "2026-10-02T02:08:38.727871+00:00",
+        "start_date": "2026-10-02T02:08:38.240998+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "ingest_detail",
+        "end_date": "2026-10-02T02:08:53.111265+00:00",
+        "start_date": "2026-10-02T02:08:39.687847+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "ingest_world",
+        "end_date": "2026-10-02T02:09:02.742637+00:00",
+        "start_date": "2026-10-02T02:08:54.907121+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "load_detail",
+        "end_date": "2026-10-02T02:09:26.236918+00:00",
+        "start_date": "2026-10-02T02:09:04.120283+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "load_world",
+        "end_date": "2026-10-02T02:09:49.724078+00:00",
+        "start_date": "2026-10-02T02:09:27.592925+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "attest",
+        "end_date": "2026-10-02T02:10:00.873262+00:00",
+        "start_date": "2026-10-02T02:09:50.326891+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "build",
+        "end_date": "2026-10-02T02:11:32.557471+00:00",
+        "start_date": "2026-10-02T02:10:01.659543+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "audit",
+        "end_date": "2026-10-02T02:11:49.979758+00:00",
+        "start_date": "2026-10-02T02:11:33.794946+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "gate",
+        "end_date": "2026-10-02T02:11:56.031922+00:00",
+        "start_date": "2026-10-02T02:11:51.23137+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "success",
+        "task_id": "publish",
+        "end_date": "2026-10-02T02:12:10.118941+00:00",
+        "start_date": "2026-10-02T02:11:56.997969+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "skipped",
+        "task_id": "select_month_2",
+        "end_date": "2026-10-02T02:12:12.305488+00:00",
+        "start_date": "2026-10-02T02:12:11.779924+00:00",
+        "try_number": 1
+    },
+    {
+        "state": "skipped",
+        "task_id": "attest_2",
+        "end_date": "2026-10-02T02:12:12.897227+00:00",
+        "start_date": "2026-10-02T02:12:12.897227+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "audit_2",
+        "end_date": "2026-10-02T02:12:12.909127+00:00",
+        "start_date": "2026-10-02T02:12:12.909127+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "build_2",
+        "end_date": "2026-10-02T02:12:12.915795+00:00",
+        "start_date": "2026-10-02T02:12:12.915795+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "gate_2",
+        "end_date": "2026-10-02T02:12:12.921679+00:00",
+        "start_date": "2026-10-02T02:12:12.921679+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "ingest_detail_2",
+        "end_date": "2026-10-02T02:12:12.92903+00:00",
+        "start_date": "2026-10-02T02:12:12.92903+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "ingest_world_2",
+        "end_date": "2026-10-02T02:12:12.936732+00:00",
+        "start_date": "2026-10-02T02:12:12.936732+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "load_detail_2",
+        "end_date": "2026-10-02T02:12:12.947505+00:00",
+        "start_date": "2026-10-02T02:12:12.947505+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "load_world_2",
+        "end_date": "2026-10-02T02:12:12.952716+00:00",
+        "start_date": "2026-10-02T02:12:12.952716+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "publish_2",
+        "end_date": "2026-10-02T02:12:12.959259+00:00",
+        "start_date": "2026-10-02T02:12:12.959259+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "select_month_3",
+        "end_date": "2026-10-02T02:12:14.248105+00:00",
+        "start_date": "2026-10-02T02:12:14.248105+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "attest_3",
+        "end_date": "2026-10-02T02:12:15.417627+00:00",
+        "start_date": "2026-10-02T02:12:15.417627+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "audit_3",
+        "end_date": "2026-10-02T02:12:15.423031+00:00",
+        "start_date": "2026-10-02T02:12:15.423031+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "build_3",
+        "end_date": "2026-10-02T02:12:15.425774+00:00",
+        "start_date": "2026-10-02T02:12:15.425774+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "gate_3",
+        "end_date": "2026-10-02T02:12:15.428084+00:00",
+        "start_date": "2026-10-02T02:12:15.428084+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "ingest_detail_3",
+        "end_date": "2026-10-02T02:12:15.431807+00:00",
+        "start_date": "2026-10-02T02:12:15.431807+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "ingest_world_3",
+        "end_date": "2026-10-02T02:12:15.440305+00:00",
+        "start_date": "2026-10-02T02:12:15.440305+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "load_detail_3",
+        "end_date": "2026-10-02T02:12:15.443074+00:00",
+        "start_date": "2026-10-02T02:12:15.443074+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "load_world_3",
+        "end_date": "2026-10-02T02:12:15.445414+00:00",
+        "start_date": "2026-10-02T02:12:15.445414+00:00",
+        "try_number": 0
+    },
+    {
+        "state": "skipped",
+        "task_id": "publish_3",
+        "end_date": "2026-10-02T02:12:15.448651+00:00",
+        "start_date": "2026-10-02T02:12:15.448651+00:00",
+        "try_number": 0
+    }
+]

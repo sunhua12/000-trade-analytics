@@ -1,0 +1,1262 @@
+2026-10-02T01:27:21.192173Z [info     ] DAG bundles loaded: dags-folder, example_dags, apache-airflow-providers-common-sql-example-dags, apache-airflow-providers-standard-example-dags [airflow.dag_processing.bundles.manager.DagBundlesManager] loc=manager.py:304
+2026-10-02T01:27:21.196051Z [info     ] Filling up the DagBag from /opt/airflow/dags [airflow.dag_processing.dagbag.BundleDagBag] loc=dagbag.py:460
+2026-10-02T01:27:21.249682Z [info     ] Bulk-writing dags to db        [airflow.serialization.definitions.dag] count=3 loc=dag.py:218
+2026-10-02T01:27:21.260314Z [info     ] get next_dagrun_info_v2        [airflow.serialization.definitions.dag] last_automated_run_info=None loc=dag.py:453 next_info=None
+2026-10-02T01:27:21.260486Z [info     ] setting next dagrun info       [airflow.models.dag] loc=dag.py:848 next_dagrun=None next_dagrun_create_after=None next_dagrun_data_interval_end=None next_dagrun_data_interval_start=None next_dagrun_partition_date=None next_dagrun_partition_key=None
+2026-10-02T01:27:21.262142Z [info     ] get next_dagrun_info_v2        [airflow.serialization.definitions.dag] last_automated_run_info=None loc=dag.py:453 next_info=None
+2026-10-02T01:27:21.262256Z [info     ] setting next dagrun info       [airflow.models.dag] loc=dag.py:848 next_dagrun=None next_dagrun_create_after=None next_dagrun_data_interval_end=None next_dagrun_data_interval_start=None next_dagrun_partition_date=None next_dagrun_partition_key=None
+2026-10-02T01:27:21.272911Z [info     ] get next_dagrun_info_v2        [airflow.serialization.definitions.dag] last_automated_run_info=None loc=dag.py:453 next_info=DagRunInfo(run_after=DateTime(2026, 9, 30, 16, 0, 0, tzinfo=Timezone('UTC')), data_interval=DataInterval(start=DateTime(2026, 8, 31, 16, 0, 0, tzinfo=Timezone('UTC')), end=DateTime(2026, 9, 30, 16, 0, 0, tzinfo=Timezone('UTC'))), partition_date=None, partition_key=None)
+2026-10-02T01:27:21.273082Z [info     ] setting next dagrun info       [airflow.models.dag] loc=dag.py:848 next_dagrun='2026-08-31 16:00:00+00:00' next_dagrun_create_after='2026-09-30 16:00:00+00:00' next_dagrun_data_interval_end='2026-09-30 16:00:00+00:00' next_dagrun_data_interval_start='2026-08-31 16:00:00+00:00' next_dagrun_partition_date=None next_dagrun_partition_key=None
+2026-10-02T01:27:21.687517Z [info     ] DAG bundles loaded: dags-folder, example_dags, apache-airflow-providers-common-sql-example-dags, apache-airflow-providers-standard-example-dags [airflow.dag_processing.bundles.manager.DagBundlesManager] loc=manager.py:304
+2026-10-02T01:27:21.690410Z [info     ] Filling up the DagBag from /opt/airflow/dags [airflow.dag_processing.dagbag.BundleDagBag] loc=dagbag.py:460
+2026-10-02T01:27:21.712577Z [info     ] Bulk-writing dags to db        [airflow.serialization.definitions.dag] count=3 loc=dag.py:218
+2026-10-02T01:27:21.714653Z [info     ] get next_dagrun_info_v2        [airflow.serialization.definitions.dag] last_automated_run_info=None loc=dag.py:453 next_info=None
+2026-10-02T01:27:21.714707Z [info     ] setting next dagrun info       [airflow.models.dag] loc=dag.py:848 next_dagrun=None next_dagrun_create_after=None next_dagrun_data_interval_end=None next_dagrun_data_interval_start=None next_dagrun_partition_date=None next_dagrun_partition_key=None
+2026-10-02T01:27:21.715657Z [info     ] get next_dagrun_info_v2        [airflow.serialization.definitions.dag] last_automated_run_info=None loc=dag.py:453 next_info=None
+2026-10-02T01:27:21.715696Z [info     ] setting next dagrun info       [airflow.models.dag] loc=dag.py:848 next_dagrun=None next_dagrun_create_after=None next_dagrun_data_interval_end=None next_dagrun_data_interval_start=None next_dagrun_partition_date=None next_dagrun_partition_key=None
+2026-10-02T01:27:21.719298Z [info     ] get next_dagrun_info_v2        [airflow.serialization.definitions.dag] last_automated_run_info=None loc=dag.py:453 next_info=DagRunInfo(run_after=DateTime(2026, 9, 30, 16, 0, 0, tzinfo=Timezone('UTC')), data_interval=DataInterval(start=DateTime(2026, 8, 31, 16, 0, 0, tzinfo=Timezone('UTC')), end=DateTime(2026, 9, 30, 16, 0, 0, tzinfo=Timezone('UTC'))), partition_date=None, partition_key=None)
+2026-10-02T01:27:21.719361Z [info     ] setting next dagrun info       [airflow.models.dag] loc=dag.py:848 next_dagrun='2026-08-31 16:00:00+00:00' next_dagrun_create_after='2026-09-30 16:00:00+00:00' next_dagrun_data_interval_end='2026-09-30 16:00:00+00:00' next_dagrun_data_interval_start='2026-08-31 16:00:00+00:00' next_dagrun_partition_date=None next_dagrun_partition_key=None
+2026-10-02T01:27:21.744205Z [info     ] creating dag run               [airflow.serialization.definitions.dag] loc=dag.py:615 logical_date=DateTime(2026, 10, 2, 1, 27, 21, 191620, tzinfo=Timezone('UTC')) partition_key=None run_after=DateTime(2026, 10, 2, 1, 27, 21, 687223, tzinfo=Timezone('UTC')) run_id=manual__2026-10-02T01:27:21.687223+00:00
+2026-10-02T01:27:21.777157Z [info     ] Created dag run.               [airflow.models.dagrun] dagrun=<DagRun trade_backfill_pipeline @ 2026-10-02 01:27:21.191620+00:00: manual__2026-10-02T01:27:21.687223+00:00, state:running, queued_at: None. run_type: manual> loc=dagrun.py:2464
+2026-10-02T01:27:21.791509Z [info     ] [DAG TEST] starting task_id=preflight map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:21.791835Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.preflight manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bb5-7a16-b054-d991ca023406> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:23.470956Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-1cdc-7ea8-95f2-a503e84cc721 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bb5-7a16-b054-d991ca023406
+2026-10-02T01:27:23.472350Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-1cdc-7ea8-95f2-a503e84cc721 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bb5-7a16-b054-d991ca023406
+2026-10-02T01:27:23.486477Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-225b-7b58-83a6-48a984c82a0c field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bb5-7a16-b054-d991ca023406
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:preflight
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:23.493216Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"dag_run_id": "manual__2026-10-02T01:27:21.687223+00:00", "items": [{"period": "202505", "revisions": {"partner_detail": 1, "world_total": 1}, "run_id": "backfill-202505-0e137046013f5e9c", "sources": {"partner_detail": true, "world_total": true}, "status": "ready"}, {"period": "202506", "revisions": {"partner_detail": 1, "world_total": 1}, "run_id": "backfill-202506-0e137046013f5e9c", "sources": {"partner_detail": true, "world_total": true}, "status": "ready"}, {"period": "202507", "revisions": {"partner_detail": 1, "world_total": 1}, "run_id": "backfill-202507-0e137046013f5e9c", "sources": {"partner_detail": true, "world_total": true}, "status": "ready"}]}
+
+2026-10-02T01:27:34.141189Z [info     ] Done. Returned value was: {'dag_run_id': 'manual__2026-10-02T01:27:21.687223+00:00', 'items': [{'period': '202505', 'revisions': {'partner_detail': 1, 'world_total': 1}, 'run_id': 'backfill-202505-0e137046013f5e9c', 'sources': {'partner_detail': True, 'world_total': True}, 'status': 'ready'}, {'period': '202506', 'revisions': {'partner_detail': 1, 'world_total': 1}, 'run_id': 'backfill-202506-0e137046013f5e9c', 'sources': {'partner_detail': True, 'world_total': True}, 'status': 'ready'}, {'period': '202507', 'revisions': {'partner_detail': 1, 'world_total': 1}, 'run_id': 'backfill-202507-0e137046013f5e9c', 'sources': {'partner_detail': True, 'world_total': True}, 'status': 'ready'}]} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:34.142778Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:34.145161Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bb5-7a16-b054-d991ca023406'), task_id='preflight', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): preflight>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 27, 22, 76573, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:34.587657Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4c6b-77ad-9f9e-6ed81aaa25a4 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bb5-7a16-b054-d991ca023406
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): preflight>
+2026-10-02T01:27:34.590989Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:34.601014Z [info     ] [DAG TEST] end task task_id=preflight map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:34.616652Z [info     ] [DAG TEST] starting task_id=select_month map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:34.616740Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.select_month manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bb6-7142-90d3-d8c0f2c31057> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:34.623204Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4dda-75ed-b868-784bf6974c52 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bb6-7142-90d3-d8c0f2c31057
+2026-10-02T01:27:34.623956Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4dda-75ed-b868-784bf6974c52 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bb6-7142-90d3-d8c0f2c31057
+2026-10-02T01:27:34.639274Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4dec-7aec-9915-defcc1533270 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bb6-7142-90d3-d8c0f2c31057
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:select_month
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:34.644021Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+2026-10-02T01:27:34.644195Z [info     ] Done. Returned value was: {'period': '202505', 'run_id': 'backfill-202505-0e137046013f5e9c', 'status': 'ready', 'sources': {'world_total': True, 'partner_detail': True}, 'revisions': {'world_total': 1, 'partner_detail': 1}} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:34.644250Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:34.644327Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bb6-7142-90d3-d8c0f2c31057'), task_id='select_month', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): select_month>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 27, 34, 617987, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:34.689143Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4e1c-7680-bd31-8ac4662239c8 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bb6-7142-90d3-d8c0f2c31057
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): select_month>
+2026-10-02T01:27:34.691282Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:34.693642Z [info     ] [DAG TEST] end task task_id=select_month map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:34.702589Z [info     ] [DAG TEST] starting task_id=ingest_world map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:34.702657Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.ingest_world manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bb8-7af5-bae7-3cb6e3dd9d75> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:34.708714Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4e2f-722b-842b-14e5b211baad hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bb8-7af5-bae7-3cb6e3dd9d75
+2026-10-02T01:27:34.709325Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4e2f-722b-842b-14e5b211baad loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bb8-7af5-bae7-3cb6e3dd9d75
+2026-10-02T01:27:34.721945Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-4e3e-7f31-baf8-475cf8b524d8 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bb8-7af5-bae7-3cb6e3dd9d75
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:ingest_world
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:34.728017Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "ingest", "kind": "world_total", "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"checksum": "sha256:2246b09d30c7f8c187ff9b7b64ef3eba2aaf62923e2c031baf889dcd71b66066", "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=world_total/revision=1/data.ndjson", "kind": "world_total", "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=world_total/revision=1/manifest.json", "period": "202505", "revision": 1, "row_count": 1, "run_id": "backfill-202505-0e137046013f5e9c", "status": "already_exists", "step": "ingest"}
+
+2026-10-02T01:27:35.418167Z [info     ] Done. Returned value was: {'checksum': 'sha256:2246b09d30c7f8c187ff9b7b64ef3eba2aaf62923e2c031baf889dcd71b66066', 'data_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=world_total/revision=1/data.ndjson', 'kind': 'world_total', 'manifest_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=world_total/revision=1/manifest.json', 'period': '202505', 'revision': 1, 'row_count': 1, 'run_id': 'backfill-202505-0e137046013f5e9c', 'status': 'already_exists', 'step': 'ingest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:35.418322Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:35.418630Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bb8-7af5-bae7-3cb6e3dd9d75'), task_id='ingest_world', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): ingest_world>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 27, 34, 703825, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:35.494461Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5140-718a-a785-07be547a3cc7 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bb8-7af5-bae7-3cb6e3dd9d75
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): ingest_world>
+2026-10-02T01:27:35.496548Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:35.499159Z [info     ] [DAG TEST] end task task_id=ingest_world map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:35.499237Z [info     ] [DAG TEST] starting task_id=ingest_detail map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:35.499298Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.ingest_detail manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bb7-711b-9c10-2422dd368e16> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:35.505390Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-514d-7aba-af15-e2d520247e3b hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bb7-711b-9c10-2422dd368e16
+2026-10-02T01:27:35.505888Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-514d-7aba-af15-e2d520247e3b loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bb7-711b-9c10-2422dd368e16
+2026-10-02T01:27:35.516090Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5159-790c-b567-ba8ee2a8694e field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bb7-711b-9c10-2422dd368e16
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:ingest_detail
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:35.519990Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "ingest", "kind": "partner_detail", "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"checksum": "sha256:ad6a6938ed5f30555ca018d8e48cd3b9874cda0c321ae481cfdee1fdc8cfa2b3", "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=partner_detail/revision=1/data.ndjson", "kind": "partner_detail", "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=partner_detail/revision=1/manifest.json", "period": "202505", "revision": 1, "row_count": 67, "run_id": "backfill-202505-0e137046013f5e9c", "status": "already_exists", "step": "ingest"}
+
+2026-10-02T01:27:36.110827Z [info     ] Done. Returned value was: {'checksum': 'sha256:ad6a6938ed5f30555ca018d8e48cd3b9874cda0c321ae481cfdee1fdc8cfa2b3', 'data_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=partner_detail/revision=1/data.ndjson', 'kind': 'partner_detail', 'manifest_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=partner_detail/revision=1/manifest.json', 'period': '202505', 'revision': 1, 'row_count': 67, 'run_id': 'backfill-202505-0e137046013f5e9c', 'status': 'already_exists', 'step': 'ingest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:36.110941Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:36.111045Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bb7-711b-9c10-2422dd368e16'), task_id='ingest_detail', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): ingest_detail>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 27, 35, 501493, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:36.170172Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-53e5-7dc6-ae66-30f80bc7e20d loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bb7-711b-9c10-2422dd368e16
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): ingest_detail>
+2026-10-02T01:27:36.172420Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:36.175286Z [info     ] [DAG TEST] end task task_id=ingest_detail map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:36.184737Z [info     ] [DAG TEST] starting task_id=load_detail map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:36.184813Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.load_detail manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bb9-7793-9046-6356ad84bf91> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:36.190794Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-53fa-76dc-bd54-42b5a65d2cf5 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bb9-7793-9046-6356ad84bf91
+2026-10-02T01:27:36.191530Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-53fa-76dc-bd54-42b5a65d2cf5 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bb9-7793-9046-6356ad84bf91
+2026-10-02T01:27:36.203142Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5408-722d-a7a8-98d1740182d8 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bb9-7793-9046-6356ad84bf91
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:load_detail
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:36.207343Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "load", "kind": "partner_detail", "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"jobs": [{"job_id": "day11_fd2e33c43d5843b9a0fffbafe9ea99f3", "status": "success"}], "kind": "partner_detail", "period": "202505", "revision": 1, "rows": 67, "status": "already_loaded", "step": "load"}
+
+2026-10-02T01:27:39.018008Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'day11_fd2e33c43d5843b9a0fffbafe9ea99f3', 'status': 'success'}], 'kind': 'partner_detail', 'period': '202505', 'revision': 1, 'rows': 67, 'status': 'already_loaded', 'step': 'load'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:39.019219Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:39.019844Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bb9-7793-9046-6356ad84bf91'), task_id='load_detail', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): load_detail>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 27, 36, 185893, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:39.095141Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5f4b-7410-9e3d-d720318aae84 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bb9-7793-9046-6356ad84bf91
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): load_detail>
+2026-10-02T01:27:39.100457Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:39.107348Z [info     ] [DAG TEST] end task task_id=load_detail map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:39.107518Z [info     ] [DAG TEST] starting task_id=load_world map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:39.107555Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.load_world manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bba-7007-a544-775570d67303> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:39.118248Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5f67-7905-956d-a7be133c1157 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bba-7007-a544-775570d67303
+2026-10-02T01:27:39.120549Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5f67-7905-956d-a7be133c1157 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bba-7007-a544-775570d67303
+2026-10-02T01:27:39.163163Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-5f96-7a72-81b2-86e7582e4f8a field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bba-7007-a544-775570d67303
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:load_world
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:39.177887Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "load", "kind": "world_total", "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"jobs": [{"job_id": "day11_7bcebf90c7c048b4b38d63bdf95b9880", "status": "success"}], "kind": "world_total", "period": "202505", "revision": 1, "rows": 1, "status": "already_loaded", "step": "load"}
+
+2026-10-02T01:27:41.309632Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'day11_7bcebf90c7c048b4b38d63bdf95b9880', 'status': 'success'}], 'kind': 'world_total', 'period': '202505', 'revision': 1, 'rows': 1, 'status': 'already_loaded', 'step': 'load'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:41.309868Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:41.310039Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bba-7007-a544-775570d67303'), task_id='load_world', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): load_world>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 27, 39, 111171, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:41.392685Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-6844-75b2-a425-a4c8496f0e5e loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bba-7007-a544-775570d67303
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): load_world>
+2026-10-02T01:27:41.397643Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:41.404334Z [info     ] [DAG TEST] end task task_id=load_world map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:41.423417Z [info     ] [DAG TEST] starting task_id=attest map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:41.423526Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.attest manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bbb-7334-bc67-16f10a93f943> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:41.433102Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-6871-761d-876e-3d9093f8fb4b hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bbb-7334-bc67-16f10a93f943
+2026-10-02T01:27:41.433977Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-6871-761d-876e-3d9093f8fb4b loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bbb-7334-bc67-16f10a93f943
+2026-10-02T01:27:41.452235Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-6888-7a95-bde2-841f76c1539c field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bbb-7334-bc67-16f10a93f943
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:attest
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:41.457939Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "attest", "kind": null, "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"jobs": [{"job_id": "ca2bcc67-8196-43b4-9e26-2c94d08884b9", "result": "success"}, {"job_id": "63922c3d-fd08-4974-9446-2b0f8de96f25", "result": "success"}, {"job_id": "6b566c31-877c-4ce2-bde5-5fcde56b9a90", "result": "success"}, {"job_id": "6e29a675-7069-4188-8d9b-b2bc90e7bfc8", "result": "success"}, {"job_id": "35b15d82-de2d-4085-9ae2-8b3bac3f5261", "result": "success"}, {"job_id": "8a99c600-cf37-45a4-ba21-9e52bac38ed2", "result": "success"}], "period": "202505", "sources": [{"checksum": "sha256:ad6a6938ed5f30555ca018d8e48cd3b9874cda0c321ae481cfdee1fdc8cfa2b3", "query_type": "partner_detail", "revision": 1, "snapshot_hash": "6cad06f88eae2b823eea017c8dd17ba258b7d9451f06ce167a8c3c125aec4be3", "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=partner_detail/revision=1/data.ndjson"}, {"checksum": "sha256:2246b09d30c7f8c187ff9b7b64ef3eba2aaf62923e2c031baf889dcd71b66066", "query_type": "world_total", "revision": 1, "snapshot_hash": "99846a862ed677337642334e83448ec2f97abcc7732fb2edcacd7157cf374387", "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=world_total/revision=1/data.ndjson"}], "status": "verified", "step": "attest"}
+
+2026-10-02T01:27:48.348696Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'ca2bcc67-8196-43b4-9e26-2c94d08884b9', 'result': 'success'}, {'job_id': '63922c3d-fd08-4974-9446-2b0f8de96f25', 'result': 'success'}, {'job_id': '6b566c31-877c-4ce2-bde5-5fcde56b9a90', 'result': 'success'}, {'job_id': '6e29a675-7069-4188-8d9b-b2bc90e7bfc8', 'result': 'success'}, {'job_id': '35b15d82-de2d-4085-9ae2-8b3bac3f5261', 'result': 'success'}, {'job_id': '8a99c600-cf37-45a4-ba21-9e52bac38ed2', 'result': 'success'}], 'period': '202505', 'sources': [{'checksum': 'sha256:ad6a6938ed5f30555ca018d8e48cd3b9874cda0c321ae481cfdee1fdc8cfa2b3', 'query_type': 'partner_detail', 'revision': 1, 'snapshot_hash': '6cad06f88eae2b823eea017c8dd17ba258b7d9451f06ce167a8c3c125aec4be3', 'source_file': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=partner_detail/revision=1/data.ndjson'}, {'checksum': 'sha256:2246b09d30c7f8c187ff9b7b64ef3eba2aaf62923e2c031baf889dcd71b66066', 'query_type': 'world_total', 'revision': 1, 'snapshot_hash': '99846a862ed677337642334e83448ec2f97abcc7732fb2edcacd7157cf374387', 'source_file': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202505/query_type=world_total/revision=1/data.ndjson'}], 'status': 'verified', 'step': 'attest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:27:48.350120Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:27:48.350821Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bbb-7334-bc67-16f10a93f943'), task_id='attest', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): attest>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 27, 41, 425265, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:27:48.641083Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-8489-7caa-8c7c-3b2855047cb3 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bbb-7334-bc67-16f10a93f943
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): attest>
+2026-10-02T01:27:48.650422Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:27:48.666151Z [info     ] [DAG TEST] end task task_id=attest map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:27:48.698235Z [info     ] [DAG TEST] starting task_id=build map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:27:48.698387Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.build manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bbc-7994-abb5-baa493d467c0> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:27:48.718324Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-84de-70a2-8623-7ea0b87d1dfe hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bbc-7994-abb5-baa493d467c0
+2026-10-02T01:27:48.721076Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-84de-70a2-8623-7ea0b87d1dfe loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bbc-7994-abb5-baa493d467c0
+2026-10-02T01:27:48.797870Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa39-852e-7f8e-a1c4-bcf806bc02cc field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bbc-7994-abb5-baa493d467c0
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:build
+Dag name:trade_backfill_pipeline
+2026-10-02T01:27:48.817091Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "build", "kind": null, "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+01:27:50  Running with dbt=1.12.5
+01:27:51  Registered adapter: bigquery=1.12.1
+01:27:52  Found 10 models, 71 data tests, 2 seeds, 3 sources, 563 macros, 5 unit tests
+01:27:52
+01:27:52  Concurrency: 4 threads (target='day11')
+01:27:52
+01:27:53  1 of 88 START sql table model trade_analytics_day10_dev.dim_months ............. [RUN]
+01:27:53  2 of 88 START sql view model trade_analytics_day10_dev.stg_un_comtrade__partner_trades  [RUN]
+01:27:53  3 of 88 START sql view model trade_analytics_day10_dev.stg_un_comtrade__world_totals  [RUN]
+01:27:53  4 of 88 START seed file trade_analytics_day10_dev.country_reference ............ [RUN]
+01:27:53  3 of 88 OK created sql view model trade_analytics_day10_dev.stg_un_comtrade__world_totals  [CREATE VIEW (0 processed) in 0.67s]
+01:27:53  2 of 88 OK created sql view model trade_analytics_day10_dev.stg_un_comtrade__partner_trades  [CREATE VIEW (0 processed) in 0.67s]
+01:27:53  5 of 88 START seed file trade_analytics_day10_dev.hs_code_reference ............ [RUN]
+01:27:53  6 of 88 START test assert_world_grain_unique ................................... [RUN]
+01:27:54  1 of 88 OK created sql table model trade_analytics_day10_dev.dim_months ........ [CREATE TABLE (29.0 rows, 0 processed) in 1.73s]
+01:27:54  7 of 88 START test assert_january_2023_exists .................................. [RUN]
+01:27:54  6 of 88 PASS assert_world_grain_unique ......................................... [PASS in 1.15s]
+01:27:54  8 of 88 START test assert_partner_grain_unique ................................. [RUN]
+01:27:56  7 of 88 PASS assert_january_2023_exists ........................................ [PASS in 1.14s]
+01:27:56  9 of 88 START test assert_staging_contract ..................................... [RUN]
+01:27:56  8 of 88 PASS assert_partner_grain_unique ....................................... [PASS in 1.20s]
+01:27:56  10 of 88 START test assert_staging_matches_raw ................................. [RUN]
+01:27:56  4 of 88 OK loaded seed file trade_analytics_day10_dev.country_reference ........ [INSERT 163 in 3.16s]
+01:27:56  11 of 88 START test assert_month_spine_complete ................................ [RUN]
+01:27:56  5 of 88 OK loaded seed file trade_analytics_day10_dev.hs_code_reference ........ [INSERT 1 in 3.16s]
+01:27:56  12 of 88 START test not_null_dim_months_month_start_date ....................... [RUN]
+01:27:57  9 of 88 PASS assert_staging_contract ........................................... [PASS in 1.11s]
+01:27:57  13 of 88 START test not_null_dim_months_period ................................. [RUN]
+01:27:57  11 of 88 PASS assert_month_spine_complete ...................................... [PASS in 0.95s]
+01:27:57  14 of 88 START test unique_dim_months_month_start_date ......................... [RUN]
+01:27:57  10 of 88 PASS assert_staging_matches_raw ....................................... [PASS in 1.21s]
+01:27:57  15 of 88 START test unique_dim_months_period ................................... [RUN]
+01:27:57  12 of 88 PASS not_null_dim_months_month_start_date ............................. [PASS in 0.72s]
+01:27:57  16 of 88 START test accepted_values_country_reference_classification_status__verified__needs_review  [RUN]
+01:27:57  13 of 88 PASS not_null_dim_months_period ....................................... [PASS in 0.80s]
+01:27:57  17 of 88 START test accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:27:58  14 of 88 PASS unique_dim_months_month_start_date ............................... [PASS in 0.81s]
+01:27:58  18 of 88 START test accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:27:58  15 of 88 PASS unique_dim_months_period ......................................... [PASS in 0.68s]
+01:27:58  19 of 88 START test not_null_country_reference_classification_note ............. [RUN]
+01:27:58  16 of 88 PASS accepted_values_country_reference_classification_status__verified__needs_review  [PASS in 0.75s]
+01:27:58  20 of 88 START test not_null_country_reference_classification_status ........... [RUN]
+01:27:58  17 of 88 PASS accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [PASS in 0.81s]
+01:27:58  21 of 88 START test not_null_country_reference_partner_code .................... [RUN]
+01:27:58  19 of 88 PASS not_null_country_reference_classification_note ................... [PASS in 0.75s]
+01:27:58  22 of 88 START test not_null_country_reference_partner_type .................... [RUN]
+01:27:58  18 of 88 PASS accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.79s]
+01:27:58  23 of 88 START test not_null_country_reference_reconciliation_role ............. [RUN]
+01:27:59  20 of 88 PASS not_null_country_reference_classification_status ................. [PASS in 0.84s]
+01:27:59  24 of 88 START test not_null_country_reference_retrieved_at .................... [RUN]
+01:27:59  21 of 88 PASS not_null_country_reference_partner_code .......................... [PASS in 0.73s]
+01:27:59  25 of 88 START test not_null_country_reference_source_name ..................... [RUN]
+01:27:59  22 of 88 PASS not_null_country_reference_partner_type .......................... [PASS in 0.73s]
+01:27:59  23 of 88 PASS not_null_country_reference_reconciliation_role ................... [PASS in 0.72s]
+01:27:59  26 of 88 START test not_null_country_reference_source_url ...................... [RUN]
+01:27:59  27 of 88 START test unique_country_reference_partner_code ...................... [RUN]
+01:28:00  24 of 88 PASS not_null_country_reference_retrieved_at .......................... [PASS in 0.79s]
+01:28:00  28 of 88 START test compound_unique_hs_code_reference_hs_version__cmd_code ..... [RUN]
+01:28:00  26 of 88 PASS not_null_country_reference_source_url ............................ [PASS in 0.72s]
+01:28:00  29 of 88 START test not_null_hs_code_reference_cmd_code ........................ [RUN]
+01:28:00  27 of 88 PASS unique_country_reference_partner_code ............................ [PASS in 0.74s]
+01:28:00  30 of 88 START test not_null_hs_code_reference_code_level ...................... [RUN]
+01:28:00  25 of 88 PASS not_null_country_reference_source_name ........................... [PASS in 0.86s]
+01:28:00  31 of 88 START test not_null_hs_code_reference_hs_description .................. [RUN]
+01:28:00  28 of 88 PASS compound_unique_hs_code_reference_hs_version__cmd_code ........... [PASS in 0.73s]
+01:28:00  32 of 88 START test not_null_hs_code_reference_hs_version ...................... [RUN]
+01:28:00  29 of 88 PASS not_null_hs_code_reference_cmd_code .............................. [PASS in 0.65s]
+01:28:00  33 of 88 START test not_null_hs_code_reference_parent_code ..................... [RUN]
+01:28:01  31 of 88 PASS not_null_hs_code_reference_hs_description ........................ [PASS in 0.70s]
+01:28:01  34 of 88 START test not_null_hs_code_reference_retrieved_at .................... [RUN]
+01:28:01  30 of 88 PASS not_null_hs_code_reference_code_level ............................ [PASS in 0.74s]
+01:28:01  35 of 88 START test not_null_hs_code_reference_source_url ...................... [RUN]
+01:28:01  32 of 88 PASS not_null_hs_code_reference_hs_version ............................ [PASS in 0.77s]
+01:28:01  36 of 88 START sql table model trade_analytics_day10_dev.dim_countries ......... [RUN]
+01:28:01  33 of 88 PASS not_null_hs_code_reference_parent_code ........................... [PASS in 0.69s]
+01:28:01  34 of 88 PASS not_null_hs_code_reference_retrieved_at .......................... [PASS in 0.72s]
+01:28:01  35 of 88 PASS not_null_hs_code_reference_source_url ............................ [PASS in 0.76s]
+01:28:01  37 of 88 START sql table model trade_analytics_day10_dev.dim_hs_codes .......... [RUN]
+01:28:03  37 of 88 OK created sql table model trade_analytics_day10_dev.dim_hs_codes ..... [CREATE TABLE (1.0 rows, 154.0 Bytes processed) in 1.50s]
+01:28:03  36 of 88 OK created sql table model trade_analytics_day10_dev.dim_countries .... [CREATE TABLE (163.0 rows, 86.5 KiB processed) in 1.73s]
+01:28:03  38 of 88 START test assert_hs_reference_contract ............................... [RUN]
+01:28:03  39 of 88 START test compound_unique_dim_hs_codes_hs_version__cmd_code .......... [RUN]
+01:28:03  41 of 88 START test not_null_dim_hs_codes_code_level ........................... [RUN]
+01:28:03  40 of 88 START test not_null_dim_hs_codes_cmd_code ............................. [RUN]
+01:28:04  40 of 88 PASS not_null_dim_hs_codes_cmd_code ................................... [PASS in 0.77s]
+01:28:04  42 of 88 START test not_null_dim_hs_codes_hs_version ........................... [RUN]
+01:28:04  41 of 88 PASS not_null_dim_hs_codes_code_level ................................. [PASS in 0.80s]
+01:28:04  43 of 88 START test accepted_values_dim_countries_classification_status__verified__needs_review  [RUN]
+01:28:04  38 of 88 PASS assert_hs_reference_contract ..................................... [PASS in 0.81s]
+01:28:04  44 of 88 START test accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:28:04  39 of 88 PASS compound_unique_dim_hs_codes_hs_version__cmd_code ................ [PASS in 0.84s]
+01:28:04  45 of 88 START test accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:28:04  42 of 88 PASS not_null_dim_hs_codes_hs_version ................................. [PASS in 0.71s]
+01:28:04  46 of 88 START test assert_special_partner_contract ............................ [RUN]
+01:28:04  44 of 88 PASS accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [PASS in 0.69s]
+01:28:04  47 of 88 START test not_null_dim_countries_classification_status ............... [RUN]
+01:28:04  43 of 88 PASS accepted_values_dim_countries_classification_status__verified__needs_review  [PASS in 0.71s]
+01:28:04  48 of 88 START test not_null_dim_countries_partner_code ........................ [RUN]
+01:28:04  45 of 88 PASS accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.72s]
+01:28:04  49 of 88 START test not_null_dim_countries_partner_type ........................ [RUN]
+01:28:05  46 of 88 PASS assert_special_partner_contract .................................. [PASS in 0.74s]
+01:28:05  47 of 88 PASS not_null_dim_countries_classification_status ..................... [PASS in 0.73s]
+01:28:05  50 of 88 START test not_null_dim_countries_reconciliation_role ................. [RUN]
+01:28:05  51 of 88 START test unique_dim_countries_partner_code .......................... [RUN]
+01:28:05  48 of 88 PASS not_null_dim_countries_partner_code .............................. [PASS in 0.73s]
+01:28:05  49 of 88 PASS not_null_dim_countries_partner_type .............................. [PASS in 0.77s]
+01:28:06  51 of 88 PASS unique_dim_countries_partner_code ................................ [PASS in 0.75s]
+01:28:06  50 of 88 PASS not_null_dim_countries_reconciliation_role ....................... [PASS in 0.76s]
+01:28:06  52 of 88 START sql table model trade_analytics_day10_dev.audit_partner_mapping_issues  [RUN]
+01:28:06  53 of 88 START sql table model trade_analytics_day10_dev.fct_monthly_semiconductor_imports  [RUN]
+01:28:08  53 of 88 OK created sql table model trade_analytics_day10_dev.fct_monthly_semiconductor_imports  [CREATE TABLE (1.9k rows, 684.6 KiB processed) in 2.13s]
+01:28:08  54 of 88 START test accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review  [RUN]
+01:28:08  55 of 88 START test accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:28:08  56 of 88 START test accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:28:08  52 of 88 OK created sql table model trade_analytics_day10_dev.audit_partner_mapping_issues  [CREATE TABLE (29.0 rows, 465.6 KiB processed) in 2.34s]
+01:28:08  57 of 88 START test assert_fact_contract ....................................... [RUN]
+01:28:09  54 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review  [PASS in 0.70s]
+01:28:09  58 of 88 START test assert_fact_preserves_staging .............................. [RUN]
+01:28:09  56 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.75s]
+01:28:09  59 of 88 START test compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:28:09  55 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown  [PASS in 0.80s]
+01:28:09  60 of 88 START test not_null_fct_monthly_semiconductor_imports_cmd_code ........ [RUN]
+01:28:09  57 of 88 PASS assert_fact_contract ............................................. [PASS in 0.70s]
+01:28:09  61 of 88 START test not_null_fct_monthly_semiconductor_imports_country_mapping_found  [RUN]
+01:28:09  59 of 88 PASS compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version  [PASS in 0.73s]
+01:28:09  62 of 88 START test not_null_fct_monthly_semiconductor_imports_hs_mapping_found  [RUN]
+01:28:10  61 of 88 PASS not_null_fct_monthly_semiconductor_imports_country_mapping_found . [PASS in 0.73s]
+01:28:10  63 of 88 START test not_null_fct_monthly_semiconductor_imports_hs_version ...... [RUN]
+01:28:10  60 of 88 PASS not_null_fct_monthly_semiconductor_imports_cmd_code .............. [PASS in 0.84s]
+01:28:10  64 of 88 START test not_null_fct_monthly_semiconductor_imports_month_mapping_found  [RUN]
+01:28:10  58 of 88 PASS assert_fact_preserves_staging .................................... [PASS in 1.35s]
+01:28:10  65 of 88 START test not_null_fct_monthly_semiconductor_imports_partner_code .... [RUN]
+01:28:10  62 of 88 PASS not_null_fct_monthly_semiconductor_imports_hs_mapping_found ...... [PASS in 0.77s]
+01:28:10  66 of 88 START test not_null_fct_monthly_semiconductor_imports_period_start_date  [RUN]
+01:28:10  63 of 88 PASS not_null_fct_monthly_semiconductor_imports_hs_version ............ [PASS in 0.69s]
+01:28:10  67 of 88 START test assert_missing_country_audited ............................. [RUN]
+01:28:10  64 of 88 PASS not_null_fct_monthly_semiconductor_imports_month_mapping_found ... [PASS in 0.71s]
+01:28:10  68 of 88 START test not_null_audit_partner_mapping_issues_issue_type ........... [RUN]
+01:28:11  65 of 88 PASS not_null_fct_monthly_semiconductor_imports_partner_code .......... [PASS in 0.62s]
+01:28:11  69 of 88 START test not_null_audit_partner_mapping_issues_observed_at .......... [RUN]
+01:28:11  66 of 88 PASS not_null_fct_monthly_semiconductor_imports_period_start_date ..... [PASS in 0.67s]
+01:28:11  70 of 88 START test not_null_audit_partner_mapping_issues_partner_code ......... [RUN]
+01:28:11  68 of 88 PASS not_null_audit_partner_mapping_issues_issue_type ................. [PASS in 0.74s]
+01:28:11  71 of 88 START unit_test int_partner_market_share::day09_calendar_growth_and_weights  [RUN]
+01:28:11  69 of 88 PASS not_null_audit_partner_mapping_issues_observed_at ................ [PASS in 0.65s]
+01:28:12  67 of 88 PASS assert_missing_country_audited ................................... [PASS in 1.23s]
+01:28:12  70 of 88 PASS not_null_audit_partner_mapping_issues_partner_code ............... [PASS in 0.68s]
+01:28:14  71 of 88 PASS int_partner_market_share::day09_calendar_growth_and_weights ...... [PASS in 3.00s]
+01:28:14  72 of 88 START unit_test int_partner_market_share::day09_partner_and_version_isolation  [RUN]
+01:28:17  72 of 88 PASS int_partner_market_share::day09_partner_and_version_isolation .... [PASS in 2.40s]
+01:28:17  73 of 88 START unit_test int_partner_market_share::day09_invalid_denominators_and_zero_current  [RUN]
+01:28:19  73 of 88 PASS int_partner_market_share::day09_invalid_denominators_and_zero_current  [PASS in 2.74s]
+01:28:19  74 of 88 START sql view model trade_analytics_day10_dev.int_partner_market_share  [RUN]
+01:28:20  74 of 88 OK created sql view model trade_analytics_day10_dev.int_partner_market_share  [CREATE VIEW (0 processed) in 1.12s]
+01:28:20  75 of 88 START test accepted_values_int_partner_market_share_market_share_status__ok__missing_world__invalid_world__missing_value  [RUN]
+01:28:20  76 of 88 START test compound_unique_int_partner_market_share_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:28:20  77 of 88 START test not_null_int_partner_market_share_market_share_status ...... [RUN]
+01:28:22  75 of 88 PASS accepted_values_int_partner_market_share_market_share_status__ok__missing_world__invalid_world__missing_value  [PASS in 1.18s]
+01:28:22  76 of 88 PASS compound_unique_int_partner_market_share_period_start_date__partner_code__cmd_code__hs_version  [PASS in 1.19s]
+01:28:22  77 of 88 PASS not_null_int_partner_market_share_market_share_status ............ [PASS in 1.43s]
+01:28:22  78 of 88 START unit_test int_market_concentration_hhi::day09_hhi_unreviewed_country  [RUN]
+01:28:24  78 of 88 PASS int_market_concentration_hhi::day09_hhi_unreviewed_country ....... [PASS in 2.49s]
+01:28:24  79 of 88 START unit_test int_market_concentration_hhi::day09_hhi_hand_calculations_and_coverage  [RUN]
+01:28:28  79 of 88 PASS int_market_concentration_hhi::day09_hhi_hand_calculations_and_coverage  [PASS in 3.66s]
+01:28:28  80 of 88 START sql view model trade_analytics_day10_dev.int_market_concentration_hhi  [RUN]
+01:28:29  80 of 88 OK created sql view model trade_analytics_day10_dev.int_market_concentration_hhi  [CREATE VIEW (0 processed) in 0.93s]
+01:28:29  81 of 88 START test accepted_values_int_market_concentration_hhi_hhi_status__ok__missing_world__invalid_world__no_countries__missing_country_value__negative_country_value__unreviewed_country__insufficient_coverage  [RUN]
+01:28:29  82 of 88 START test compound_unique_int_market_concentration_hhi_period_start_date__cmd_code__hs_version  [RUN]
+01:28:29  83 of 88 START test not_null_int_market_concentration_hhi_hhi_status ........... [RUN]
+01:28:30  81 of 88 PASS accepted_values_int_market_concentration_hhi_hhi_status__ok__missing_world__invalid_world__no_countries__missing_country_value__negative_country_value__unreviewed_country__insufficient_coverage  [PASS in 1.18s]
+01:28:30  82 of 88 PASS compound_unique_int_market_concentration_hhi_period_start_date__cmd_code__hs_version  [PASS in 1.18s]
+01:28:30  83 of 88 PASS not_null_int_market_concentration_hhi_hhi_status ................. [PASS in 1.20s]
+01:28:30  84 of 88 START sql table model trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate  [RUN]
+01:28:32  84 of 88 OK created sql table model trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate  [CREATE TABLE (1.9k rows, 832.4 KiB processed) in 2.18s]
+01:28:32  85 of 88 START test assert_day09_candidate_preserves_fact ...................... [RUN]
+01:28:32  86 of 88 START test assert_day09_metric_contract ............................... [RUN]
+01:28:32  87 of 88 START test compound_unique_mart_us_semiconductor_supply_chain_candidate_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:28:32  88 of 88 START test not_null_mart_us_semiconductor_supply_chain_candidate_hhi_status  [RUN]
+01:28:33  86 of 88 PASS assert_day09_metric_contract ..................................... [PASS in 0.70s]
+01:28:33  87 of 88 PASS compound_unique_mart_us_semiconductor_supply_chain_candidate_period_start_date__partner_code__cmd_code__hs_version  [PASS in 0.71s]
+01:28:33  88 of 88 PASS not_null_mart_us_semiconductor_supply_chain_candidate_hhi_status . [PASS in 0.74s]
+01:28:33  85 of 88 PASS assert_day09_candidate_preserves_fact ............................ [PASS in 0.75s]
+01:28:33
+01:28:33  Finished running 2 seeds, 6 table models, 71 data tests, 5 unit tests, 4 view models in 0 hours 0 minutes and 41.28 seconds (41.28s).
+01:28:33
+01:28:33  Completed successfully
+01:28:33
+01:28:33  Done. PASS=88 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=88
+{"period": "202505", "status": "success", "step": "build", "vars": {"month_spine_end_date": "2025-05-01", "month_spine_start_date": "2023-01-01", "raw_end_date": "2025-06-01", "raw_start_date": "2023-01-01"}}
+
+2026-10-02T01:28:34.221837Z [info     ] Done. Returned value was: {'period': '202505', 'status': 'success', 'step': 'build', 'vars': {'month_spine_end_date': '2025-05-01', 'month_spine_start_date': '2023-01-01', 'raw_end_date': '2025-06-01', 'raw_start_date': '2023-01-01'}} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:28:34.222814Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:28:34.223665Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bbc-7994-abb5-baa493d467c0'), task_id='build', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): build>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 27, 48, 702231, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:28:34.281810Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-36df-7eb0-b7c0-293ff778f29e loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bbc-7994-abb5-baa493d467c0
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): build>
+2026-10-02T01:28:34.286277Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:28:34.291810Z [info     ] [DAG TEST] end task task_id=build map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:28:34.304441Z [info     ] [DAG TEST] starting task_id=audit map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:28:34.304532Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.audit manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bbd-7c6b-9996-4bcfc9421933> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:28:34.310898Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-3702-7433-984d-c885e0981019 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bbd-7c6b-9996-4bcfc9421933
+2026-10-02T01:28:34.312050Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-3702-7433-984d-c885e0981019 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bbd-7c6b-9996-4bcfc9421933
+2026-10-02T01:28:34.327569Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-3715-7589-a985-51c71e3caebe field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bbd-7c6b-9996-4bcfc9421933
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:audit
+Dag name:trade_backfill_pipeline
+2026-10-02T01:28:34.333509Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "audit", "kind": null, "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"jobs": [{"job_id": "f66510cf-63e4-4ce1-9a82-c81ea1e1848f", "result": "success"}, {"job_id": "ab9a650e-d130-4044-a25f-304056f66906", "result": "success"}, {"job_id": "6fb6bad2-9c9f-4ddc-a07b-750e4a333aaa", "result": "success"}], "period": "202505", "reason_codes": [], "run_id": "backfill-202505-0e137046013f5e9c", "status": "PASS", "step": "audit"}
+
+2026-10-02T01:28:41.965845Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'f66510cf-63e4-4ce1-9a82-c81ea1e1848f', 'result': 'success'}, {'job_id': 'ab9a650e-d130-4044-a25f-304056f66906', 'result': 'success'}, {'job_id': '6fb6bad2-9c9f-4ddc-a07b-750e4a333aaa', 'result': 'success'}], 'period': '202505', 'reason_codes': [], 'run_id': 'backfill-202505-0e137046013f5e9c', 'status': 'PASS', 'step': 'audit'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:28:41.965989Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:28:41.966101Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bbd-7c6b-9996-4bcfc9421933'), task_id='audit', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): audit>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 28, 34, 306007, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:28:42.010895Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-5514-78d1-96e2-b3533782f9a2 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bbd-7c6b-9996-4bcfc9421933
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): audit>
+2026-10-02T01:28:42.012992Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:28:42.015924Z [info     ] [DAG TEST] end task task_id=audit map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:28:42.026322Z [info     ] [DAG TEST] starting task_id=gate map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:28:42.026391Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.gate manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bbe-7cff-a11b-33b8a4132617> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:28:42.031365Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-552b-7ca7-bed2-d37f4d9dc5ba hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bbe-7cff-a11b-33b8a4132617
+2026-10-02T01:28:42.032044Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-552b-7ca7-bed2-d37f4d9dc5ba loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bbe-7cff-a11b-33b8a4132617
+2026-10-02T01:28:42.046001Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-553b-7153-90e1-a1a13322e59e field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bbe-7cff-a11b-33b8a4132617
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:gate
+Dag name:trade_backfill_pipeline
+2026-10-02T01:28:42.050909Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "gate", "kind": null, "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"jobs": [{"job_id": "bfcdd26a-c934-4187-b972-c54207aae44f", "result": "success"}], "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c", "status": "PASS", "step": "gate"}
+
+2026-10-02T01:28:43.380198Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'bfcdd26a-c934-4187-b972-c54207aae44f', 'result': 'success'}], 'period': '202505', 'run_id': 'backfill-202505-0e137046013f5e9c', 'status': 'PASS', 'step': 'gate'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:28:43.380336Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:28:43.380435Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bbe-7cff-a11b-33b8a4132617'), task_id='gate', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): gate>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 28, 42, 27441, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:28:43.415822Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-5a93-7e69-ab53-f0bdae897b0d loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bbe-7cff-a11b-33b8a4132617
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): gate>
+2026-10-02T01:28:43.417536Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:28:43.420284Z [info     ] [DAG TEST] end task task_id=gate map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:28:43.429429Z [info     ] [DAG TEST] starting task_id=publish map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:28:43.429505Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.publish manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bbf-7417-a63a-623db4e47d2a> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:28:43.434645Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-5aa6-7994-a906-b24ed0db64ef hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bbf-7417-a63a-623db4e47d2a
+2026-10-02T01:28:43.435233Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-5aa6-7994-a906-b24ed0db64ef loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bbf-7417-a63a-623db4e47d2a
+2026-10-02T01:28:43.446546Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-5ab4-73af-848d-d11cd711e692 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bbf-7417-a63a-623db4e47d2a
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:publish
+Dag name:trade_backfill_pipeline
+2026-10-02T01:28:43.450656Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "publish", "kind": null, "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c"}
+{"jobs": [{"job_id": "dfa2e216-a052-400c-855a-e73023d69008", "result": "success"}, {"job_id": "6ef183bc-a784-4276-a0b6-32db8f18f829", "result": "success"}, {"job_id": "53c30a85-138f-448a-93f2-f99e9d6ef8a7", "result": "success"}], "period": "202505", "run_id": "backfill-202505-0e137046013f5e9c", "status": "published", "step": "publish"}
+
+2026-10-02T01:28:52.492346Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'dfa2e216-a052-400c-855a-e73023d69008', 'result': 'success'}, {'job_id': '6ef183bc-a784-4276-a0b6-32db8f18f829', 'result': 'success'}, {'job_id': '53c30a85-138f-448a-93f2-f99e9d6ef8a7', 'result': 'success'}], 'period': '202505', 'run_id': 'backfill-202505-0e137046013f5e9c', 'status': 'published', 'step': 'publish'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:28:52.496599Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:28:52.497202Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bbf-7417-a63a-623db4e47d2a'), task_id='publish', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): publish>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 28, 43, 430389, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:28:52.608328Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7e73-7b1c-b8dd-28ae7481b0f0 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bbf-7417-a63a-623db4e47d2a
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): publish>
+2026-10-02T01:28:52.616749Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:28:52.628111Z [info     ] [DAG TEST] end task task_id=publish map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:28:52.650728Z [info     ] [DAG TEST] starting task_id=select_month_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:28:52.650818Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.select_month_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc0-796d-be58-58001d8ade1a> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:28:52.665561Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7eae-7a16-8226-208d4487498c hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc0-796d-be58-58001d8ade1a
+2026-10-02T01:28:52.666586Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7eae-7a16-8226-208d4487498c loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc0-796d-be58-58001d8ade1a
+2026-10-02T01:28:52.705321Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7ed7-7085-8b9a-541956459520 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc0-796d-be58-58001d8ade1a
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:select_month_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:28:52.722130Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+2026-10-02T01:28:52.723316Z [info     ] Done. Returned value was: {'period': '202506', 'run_id': 'backfill-202506-0e137046013f5e9c', 'status': 'ready', 'sources': {'world_total': True, 'partner_detail': True}, 'revisions': {'world_total': 1, 'partner_detail': 1}} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:28:52.723564Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:28:52.723738Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc0-796d-be58-58001d8ade1a'), task_id='select_month_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): select_month_2>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 28, 52, 653583, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:28:52.793392Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7f30-73ca-b8df-fe9d81471d2a loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc0-796d-be58-58001d8ade1a
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): select_month_2>
+2026-10-02T01:28:52.798389Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:28:52.801471Z [info     ] [DAG TEST] end task task_id=select_month_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:28:52.815460Z [info     ] [DAG TEST] starting task_id=ingest_world_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:28:52.815559Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.ingest_world_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc2-7ece-b679-b3a01c802810> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:28:52.826786Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7f51-7ca0-a45b-3c30675212a7 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc2-7ece-b679-b3a01c802810
+2026-10-02T01:28:52.827986Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7f51-7ca0-a45b-3c30675212a7 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc2-7ece-b679-b3a01c802810
+2026-10-02T01:28:52.853442Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-7f71-77a3-a1d7-3ba61b9de0ad field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc2-7ece-b679-b3a01c802810
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:ingest_world_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:28:52.861768Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "ingest", "kind": "world_total", "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"checksum": "sha256:6b405ba687e1e03e69fc8e495534f8c88a1f7ec7b18a746d334b1eec698bc019", "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=world_total/revision=1/data.ndjson", "kind": "world_total", "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=world_total/revision=1/manifest.json", "period": "202506", "revision": 1, "row_count": 1, "run_id": "backfill-202506-0e137046013f5e9c", "status": "success", "step": "ingest"}
+
+2026-10-02T01:28:58.492696Z [info     ] Done. Returned value was: {'checksum': 'sha256:6b405ba687e1e03e69fc8e495534f8c88a1f7ec7b18a746d334b1eec698bc019', 'data_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=world_total/revision=1/data.ndjson', 'kind': 'world_total', 'manifest_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=world_total/revision=1/manifest.json', 'period': '202506', 'revision': 1, 'row_count': 1, 'run_id': 'backfill-202506-0e137046013f5e9c', 'status': 'success', 'step': 'ingest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:28:58.492937Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:28:58.493105Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc2-7ece-b679-b3a01c802810'), task_id='ingest_world_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): ingest_world_2>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 28, 52, 817644, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:28:58.539688Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-95a7-7079-9119-75829a6713f8 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc2-7ece-b679-b3a01c802810
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): ingest_world_2>
+2026-10-02T01:28:58.541486Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:28:58.544057Z [info     ] [DAG TEST] end task task_id=ingest_world_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:28:58.544124Z [info     ] [DAG TEST] starting task_id=ingest_detail_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:28:58.544161Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.ingest_detail_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc1-7aff-b97a-d69fe33ee065> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:28:58.549996Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-95b2-7404-949f-3f4bdf99668a hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc1-7aff-b97a-d69fe33ee065
+2026-10-02T01:28:58.550493Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-95b2-7404-949f-3f4bdf99668a loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc1-7aff-b97a-d69fe33ee065
+2026-10-02T01:28:58.560261Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-95be-72b3-b8be-f57f0a3c12c8 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc1-7aff-b97a-d69fe33ee065
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:ingest_detail_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:28:58.563319Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "ingest", "kind": "partner_detail", "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"checksum": "sha256:47934b974b97b3653dcf46c915e7339999cc073e11e53555f0a1e3995ce65199", "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=partner_detail/revision=1/data.ndjson", "kind": "partner_detail", "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=partner_detail/revision=1/manifest.json", "period": "202506", "revision": 1, "row_count": 66, "run_id": "backfill-202506-0e137046013f5e9c", "status": "success", "step": "ingest"}
+
+2026-10-02T01:29:02.371716Z [info     ] Done. Returned value was: {'checksum': 'sha256:47934b974b97b3653dcf46c915e7339999cc073e11e53555f0a1e3995ce65199', 'data_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=partner_detail/revision=1/data.ndjson', 'kind': 'partner_detail', 'manifest_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=partner_detail/revision=1/manifest.json', 'period': '202506', 'revision': 1, 'row_count': 66, 'run_id': 'backfill-202506-0e137046013f5e9c', 'status': 'success', 'step': 'ingest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:29:02.372817Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:29:02.373403Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc1-7aff-b97a-d69fe33ee065'), task_id='ingest_detail_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): ingest_detail_2>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 28, 58, 546091, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:29:02.467295Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-a4f9-7b08-9677-04c30ff176bb loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc1-7aff-b97a-d69fe33ee065
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): ingest_detail_2>
+2026-10-02T01:29:02.470924Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:29:02.475891Z [info     ] [DAG TEST] end task task_id=ingest_detail_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:29:02.487390Z [info     ] [DAG TEST] starting task_id=load_detail_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:29:02.487513Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.load_detail_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc3-7d2e-ac7a-7fcbf43aa95e> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:29:02.494575Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-a519-7a7f-8705-2bad83c11010 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc3-7d2e-ac7a-7fcbf43aa95e
+2026-10-02T01:29:02.495469Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-a519-7a7f-8705-2bad83c11010 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc3-7d2e-ac7a-7fcbf43aa95e
+2026-10-02T01:29:02.509439Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-a52b-7346-b668-aacbb4e2a2b1 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc3-7d2e-ac7a-7fcbf43aa95e
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:load_detail_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:29:02.514225Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "load", "kind": "partner_detail", "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"jobs": [{"job_id": "day11_f344cd1ded744fc18ec838d11dacfcd6", "status": "success"}, {"job_id": "day11_c8d0c8ac86754724bfcea5a789896410", "status": "success"}, {"job_id": "day11_f5708fb31600422db8ccd24c1f47501b", "status": "success"}, {"job_id": "day11_173a0c5c7e7147a1ba1f0812cabf50e6", "status": "success"}], "kind": "partner_detail", "period": "202506", "revision": 1, "rows": 66, "status": "success", "step": "load"}
+
+2026-10-02T01:29:17.357026Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'day11_f344cd1ded744fc18ec838d11dacfcd6', 'status': 'success'}, {'job_id': 'day11_c8d0c8ac86754724bfcea5a789896410', 'status': 'success'}, {'job_id': 'day11_f5708fb31600422db8ccd24c1f47501b', 'status': 'success'}, {'job_id': 'day11_173a0c5c7e7147a1ba1f0812cabf50e6', 'status': 'success'}], 'kind': 'partner_detail', 'period': '202506', 'revision': 1, 'rows': 66, 'status': 'success', 'step': 'load'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:29:17.357774Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:29:17.358231Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc3-7d2e-ac7a-7fcbf43aa95e'), task_id='load_detail_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): load_detail_2>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 29, 2, 489420, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:29:17.442287Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-df78-7923-97ae-cc90dc7b4c32 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc3-7d2e-ac7a-7fcbf43aa95e
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): load_detail_2>
+2026-10-02T01:29:17.447641Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:29:17.454376Z [info     ] [DAG TEST] end task task_id=load_detail_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:29:17.454528Z [info     ] [DAG TEST] starting task_id=load_world_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:29:17.454566Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.load_world_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc4-77ef-9f65-5691130a3ea6> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:29:17.462746Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-df92-70f1-9ccf-ff41e09c1f03 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc4-77ef-9f65-5691130a3ea6
+2026-10-02T01:29:17.463503Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-df92-70f1-9ccf-ff41e09c1f03 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc4-77ef-9f65-5691130a3ea6
+2026-10-02T01:29:17.476806Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3a-dfa2-7f83-b379-3ca8a1542c33 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc4-77ef-9f65-5691130a3ea6
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:load_world_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:29:17.481994Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "load", "kind": "world_total", "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"jobs": [{"job_id": "day11_5d882be251ae4c179cf0a8fcef4bb949", "status": "success"}, {"job_id": "day11_78000e6b65e14704ba6ce7fc2509d6ea", "status": "success"}, {"job_id": "day11_2f6ba1f8f0c443efae0b2b3f750dd228", "status": "success"}, {"job_id": "day11_92d078d5d8764cb9b9523c68d5704bea", "status": "success"}], "kind": "world_total", "period": "202506", "revision": 1, "rows": 1, "status": "success", "step": "load"}
+
+2026-10-02T01:29:31.374061Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'day11_5d882be251ae4c179cf0a8fcef4bb949', 'status': 'success'}, {'job_id': 'day11_78000e6b65e14704ba6ce7fc2509d6ea', 'status': 'success'}, {'job_id': 'day11_2f6ba1f8f0c443efae0b2b3f750dd228', 'status': 'success'}, {'job_id': 'day11_92d078d5d8764cb9b9523c68d5704bea', 'status': 'success'}], 'kind': 'world_total', 'period': '202506', 'revision': 1, 'rows': 1, 'status': 'success', 'step': 'load'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:29:31.375073Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:29:31.375621Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc4-77ef-9f65-5691130a3ea6'), task_id='load_world_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): load_world_2>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 29, 17, 458077, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:29:31.425835Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-161b-708c-90e5-7b8611bada0d loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc4-77ef-9f65-5691130a3ea6
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): load_world_2>
+2026-10-02T01:29:31.428661Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:29:31.432373Z [info     ] [DAG TEST] end task task_id=load_world_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:29:31.440874Z [info     ] [DAG TEST] starting task_id=attest_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:29:31.440929Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.attest_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc5-76a1-af62-5978b5e21bf1> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:29:31.446267Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-1632-7405-9a53-6660be41646d hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc5-76a1-af62-5978b5e21bf1
+2026-10-02T01:29:31.446844Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-1632-7405-9a53-6660be41646d loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc5-76a1-af62-5978b5e21bf1
+2026-10-02T01:29:31.458059Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-1640-7e07-87b7-21e880fada95 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc5-76a1-af62-5978b5e21bf1
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:attest_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:29:31.461925Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "attest", "kind": null, "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"jobs": [{"job_id": "5439025d-e0f2-4815-9e12-e55abe04ca3a", "result": "success"}, {"job_id": "a2626295-92fb-484d-b32f-409cce667ee1", "result": "success"}, {"job_id": "31b115ac-8175-419a-8dc6-24d3cdde3253", "result": "success"}, {"job_id": "bf157667-ea69-4ab5-abeb-9910435fb1a8", "result": "success"}, {"job_id": "fa7f8948-acef-4350-af69-9eabc2a742d0", "result": "success"}, {"job_id": "dd6df235-8257-4e1e-9d85-aa134d70bde3", "result": "success"}], "period": "202506", "sources": [{"checksum": "sha256:47934b974b97b3653dcf46c915e7339999cc073e11e53555f0a1e3995ce65199", "query_type": "partner_detail", "revision": 1, "snapshot_hash": "00d9343bf77961f0d767e459ddc6edebfb77b73301037002c8c0413cd5eccafb", "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=partner_detail/revision=1/data.ndjson"}, {"checksum": "sha256:6b405ba687e1e03e69fc8e495534f8c88a1f7ec7b18a746d334b1eec698bc019", "query_type": "world_total", "revision": 1, "snapshot_hash": "29566cfb28018eed99a5ab37f7609ba62bca6f694e762c6c3ba7fb4443356030", "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=world_total/revision=1/data.ndjson"}], "status": "verified", "step": "attest"}
+
+2026-10-02T01:29:37.595410Z [info     ] Done. Returned value was: {'jobs': [{'job_id': '5439025d-e0f2-4815-9e12-e55abe04ca3a', 'result': 'success'}, {'job_id': 'a2626295-92fb-484d-b32f-409cce667ee1', 'result': 'success'}, {'job_id': '31b115ac-8175-419a-8dc6-24d3cdde3253', 'result': 'success'}, {'job_id': 'bf157667-ea69-4ab5-abeb-9910435fb1a8', 'result': 'success'}, {'job_id': 'fa7f8948-acef-4350-af69-9eabc2a742d0', 'result': 'success'}, {'job_id': 'dd6df235-8257-4e1e-9d85-aa134d70bde3', 'result': 'success'}], 'period': '202506', 'sources': [{'checksum': 'sha256:47934b974b97b3653dcf46c915e7339999cc073e11e53555f0a1e3995ce65199', 'query_type': 'partner_detail', 'revision': 1, 'snapshot_hash': '00d9343bf77961f0d767e459ddc6edebfb77b73301037002c8c0413cd5eccafb', 'source_file': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=partner_detail/revision=1/data.ndjson'}, {'checksum': 'sha256:6b405ba687e1e03e69fc8e495534f8c88a1f7ec7b18a746d334b1eec698bc019', 'query_type': 'world_total', 'revision': 1, 'snapshot_hash': '29566cfb28018eed99a5ab37f7609ba62bca6f694e762c6c3ba7fb4443356030', 'source_file': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202506/query_type=world_total/revision=1/data.ndjson'}], 'status': 'verified', 'step': 'attest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:29:37.595595Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:29:37.595740Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc5-76a1-af62-5978b5e21bf1'), task_id='attest_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): attest_2>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 29, 31, 441974, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:29:37.624275Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-2e54-7ed9-b1d3-d5bc58d41aaa loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc5-76a1-af62-5978b5e21bf1
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): attest_2>
+2026-10-02T01:29:37.626041Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:29:37.628390Z [info     ] [DAG TEST] end task task_id=attest_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:29:37.634632Z [info     ] [DAG TEST] starting task_id=build_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:29:37.634679Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.build_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc6-79ce-a9bc-32d8adc63660> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:29:37.639128Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-2e63-7284-824d-dd14acef2ead hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc6-79ce-a9bc-32d8adc63660
+2026-10-02T01:29:37.639654Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-2e63-7284-824d-dd14acef2ead loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc6-79ce-a9bc-32d8adc63660
+2026-10-02T01:29:37.649173Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-2e6f-7de1-a94f-ee4bd1aac6a3 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc6-79ce-a9bc-32d8adc63660
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:build_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:29:37.652386Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "build", "kind": null, "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+01:29:38  Running with dbt=1.12.5
+01:29:39  Registered adapter: bigquery=1.12.1
+01:29:39  Unable to do partial parsing because config vars, config profile, or config target have changed
+01:29:40  Found 10 models, 71 data tests, 2 seeds, 3 sources, 563 macros, 5 unit tests
+01:29:40
+01:29:40  Concurrency: 4 threads (target='day11')
+01:29:40
+01:29:41  2 of 88 START sql view model trade_analytics_day10_dev.stg_un_comtrade__partner_trades  [RUN]
+01:29:41  3 of 88 START sql view model trade_analytics_day10_dev.stg_un_comtrade__world_totals  [RUN]
+01:29:41  4 of 88 START seed file trade_analytics_day10_dev.country_reference ............ [RUN]
+01:29:41  1 of 88 START sql table model trade_analytics_day10_dev.dim_months ............. [RUN]
+01:29:41  2 of 88 OK created sql view model trade_analytics_day10_dev.stg_un_comtrade__partner_trades  [CREATE VIEW (0 processed) in 0.69s]
+01:29:41  5 of 88 START seed file trade_analytics_day10_dev.hs_code_reference ............ [RUN]
+01:29:41  3 of 88 OK created sql view model trade_analytics_day10_dev.stg_un_comtrade__world_totals  [CREATE VIEW (0 processed) in 0.79s]
+01:29:41  6 of 88 START test assert_partner_grain_unique ................................. [RUN]
+01:29:42  1 of 88 OK created sql table model trade_analytics_day10_dev.dim_months ........ [CREATE TABLE (30.0 rows, 0 processed) in 1.58s]
+01:29:42  7 of 88 START test assert_january_2023_exists .................................. [RUN]
+01:29:42  6 of 88 PASS assert_partner_grain_unique ....................................... [PASS in 1.06s]
+01:29:42  8 of 88 START test assert_staging_contract ..................................... [RUN]
+01:29:43  7 of 88 PASS assert_january_2023_exists ........................................ [PASS in 1.03s]
+01:29:43  9 of 88 START test assert_staging_matches_raw .................................. [RUN]
+01:29:44  8 of 88 PASS assert_staging_contract ........................................... [PASS in 1.11s]
+01:29:44  10 of 88 START test assert_world_grain_unique .................................. [RUN]
+01:29:44  4 of 88 OK loaded seed file trade_analytics_day10_dev.country_reference ........ [INSERT 163 in 3.07s]
+01:29:44  11 of 88 START test assert_month_spine_complete ................................ [RUN]
+01:29:44  10 of 88 PASS assert_world_grain_unique ........................................ [PASS in 0.78s]
+01:29:44  12 of 88 START test not_null_dim_months_month_start_date ....................... [RUN]
+01:29:44  9 of 88 PASS assert_staging_matches_raw ........................................ [PASS in 1.19s]
+01:29:44  13 of 88 START test not_null_dim_months_period ................................. [RUN]
+01:29:44  11 of 88 PASS assert_month_spine_complete ...................................... [PASS in 0.82s]
+01:29:44  14 of 88 START test unique_dim_months_month_start_date ......................... [RUN]
+01:29:45  5 of 88 OK loaded seed file trade_analytics_day10_dev.hs_code_reference ........ [INSERT 1 in 3.26s]
+01:29:45  15 of 88 START test unique_dim_months_period ................................... [RUN]
+01:29:45  12 of 88 PASS not_null_dim_months_month_start_date ............................. [PASS in 0.72s]
+01:29:45  16 of 88 START test accepted_values_country_reference_classification_status__verified__needs_review  [RUN]
+01:29:45  13 of 88 PASS not_null_dim_months_period ....................................... [PASS in 0.79s]
+01:29:45  17 of 88 START test accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:29:45  14 of 88 PASS unique_dim_months_month_start_date ............................... [PASS in 0.75s]
+01:29:45  18 of 88 START test accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:29:45  15 of 88 PASS unique_dim_months_period ......................................... [PASS in 0.73s]
+01:29:45  19 of 88 START test not_null_country_reference_classification_note ............. [RUN]
+01:29:46  16 of 88 PASS accepted_values_country_reference_classification_status__verified__needs_review  [PASS in 0.75s]
+01:29:46  20 of 88 START test not_null_country_reference_classification_status ........... [RUN]
+01:29:46  17 of 88 PASS accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [PASS in 0.73s]
+01:29:46  21 of 88 START test not_null_country_reference_partner_code .................... [RUN]
+01:29:46  18 of 88 PASS accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.70s]
+01:29:46  22 of 88 START test not_null_country_reference_partner_type .................... [RUN]
+01:29:46  19 of 88 PASS not_null_country_reference_classification_note ................... [PASS in 0.70s]
+01:29:46  23 of 88 START test not_null_country_reference_reconciliation_role ............. [RUN]
+01:29:47  20 of 88 PASS not_null_country_reference_classification_status ................. [PASS in 0.70s]
+01:29:47  24 of 88 START test not_null_country_reference_retrieved_at .................... [RUN]
+01:29:47  23 of 88 PASS not_null_country_reference_reconciliation_role ................... [PASS in 0.66s]
+01:29:47  25 of 88 START test not_null_country_reference_source_name ..................... [RUN]
+01:29:47  22 of 88 PASS not_null_country_reference_partner_type .......................... [PASS in 0.72s]
+01:29:47  26 of 88 START test not_null_country_reference_source_url ...................... [RUN]
+01:29:47  21 of 88 PASS not_null_country_reference_partner_code .......................... [PASS in 0.89s]
+01:29:47  27 of 88 START test unique_country_reference_partner_code ...................... [RUN]
+01:29:47  24 of 88 PASS not_null_country_reference_retrieved_at .......................... [PASS in 0.75s]
+01:29:47  28 of 88 START test compound_unique_hs_code_reference_hs_version__cmd_code ..... [RUN]
+01:29:47  26 of 88 PASS not_null_country_reference_source_url ............................ [PASS in 0.68s]
+01:29:47  29 of 88 START test not_null_hs_code_reference_cmd_code ........................ [RUN]
+01:29:47  25 of 88 PASS not_null_country_reference_source_name ........................... [PASS in 0.73s]
+01:29:47  30 of 88 START test not_null_hs_code_reference_code_level ...................... [RUN]
+01:29:48  27 of 88 PASS unique_country_reference_partner_code ............................ [PASS in 0.75s]
+01:29:48  31 of 88 START test not_null_hs_code_reference_hs_description .................. [RUN]
+01:29:48  28 of 88 PASS compound_unique_hs_code_reference_hs_version__cmd_code ........... [PASS in 0.73s]
+01:29:48  32 of 88 START test not_null_hs_code_reference_hs_version ...................... [RUN]
+01:29:48  29 of 88 PASS not_null_hs_code_reference_cmd_code .............................. [PASS in 0.71s]
+01:29:48  33 of 88 START test not_null_hs_code_reference_parent_code ..................... [RUN]
+01:29:48  30 of 88 PASS not_null_hs_code_reference_code_level ............................ [PASS in 0.70s]
+01:29:48  34 of 88 START test not_null_hs_code_reference_retrieved_at .................... [RUN]
+01:29:48  31 of 88 PASS not_null_hs_code_reference_hs_description ........................ [PASS in 0.65s]
+01:29:48  35 of 88 START test not_null_hs_code_reference_source_url ...................... [RUN]
+01:29:49  32 of 88 PASS not_null_hs_code_reference_hs_version ............................ [PASS in 0.66s]
+01:29:49  36 of 88 START sql table model trade_analytics_day10_dev.dim_countries ......... [RUN]
+01:29:49  33 of 88 PASS not_null_hs_code_reference_parent_code ........................... [PASS in 0.66s]
+01:29:49  34 of 88 PASS not_null_hs_code_reference_retrieved_at .......................... [PASS in 0.66s]
+01:29:49  35 of 88 PASS not_null_hs_code_reference_source_url ............................ [PASS in 0.66s]
+01:29:49  37 of 88 START sql table model trade_analytics_day10_dev.dim_hs_codes .......... [RUN]
+01:29:50  36 of 88 OK created sql table model trade_analytics_day10_dev.dim_countries .... [CREATE TABLE (163.0 rows, 86.5 KiB processed) in 1.44s]
+01:29:50  38 of 88 START test accepted_values_dim_countries_classification_status__verified__needs_review  [RUN]
+01:29:50  39 of 88 START test accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:29:50  40 of 88 START test accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:29:50  37 of 88 OK created sql table model trade_analytics_day10_dev.dim_hs_codes ..... [CREATE TABLE (1.0 rows, 154.0 Bytes processed) in 1.44s]
+01:29:50  41 of 88 START test assert_special_partner_contract ............................ [RUN]
+01:29:51  40 of 88 PASS accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.67s]
+01:29:51  42 of 88 START test not_null_dim_countries_classification_status ............... [RUN]
+01:29:51  38 of 88 PASS accepted_values_dim_countries_classification_status__verified__needs_review  [PASS in 0.70s]
+01:29:51  43 of 88 START test not_null_dim_countries_partner_code ........................ [RUN]
+01:29:51  39 of 88 PASS accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [PASS in 0.72s]
+01:29:51  44 of 88 START test not_null_dim_countries_partner_type ........................ [RUN]
+01:29:51  41 of 88 PASS assert_special_partner_contract .................................. [PASS in 0.67s]
+01:29:51  45 of 88 START test not_null_dim_countries_reconciliation_role ................. [RUN]
+01:29:51  42 of 88 PASS not_null_dim_countries_classification_status ..................... [PASS in 0.63s]
+01:29:51  46 of 88 START test unique_dim_countries_partner_code .......................... [RUN]
+01:29:52  43 of 88 PASS not_null_dim_countries_partner_code .............................. [PASS in 0.70s]
+01:29:52  47 of 88 START test assert_hs_reference_contract ............................... [RUN]
+01:29:52  44 of 88 PASS not_null_dim_countries_partner_type .............................. [PASS in 0.69s]
+01:29:52  48 of 88 START test compound_unique_dim_hs_codes_hs_version__cmd_code .......... [RUN]
+01:29:52  45 of 88 PASS not_null_dim_countries_reconciliation_role ....................... [PASS in 0.66s]
+01:29:52  49 of 88 START test not_null_dim_hs_codes_cmd_code ............................. [RUN]
+01:29:52  46 of 88 PASS unique_dim_countries_partner_code ................................ [PASS in 0.68s]
+01:29:52  50 of 88 START test not_null_dim_hs_codes_code_level ........................... [RUN]
+01:29:52  47 of 88 PASS assert_hs_reference_contract ..................................... [PASS in 0.65s]
+01:29:52  51 of 88 START test not_null_dim_hs_codes_hs_version ........................... [RUN]
+01:29:52  48 of 88 PASS compound_unique_dim_hs_codes_hs_version__cmd_code ................ [PASS in 0.68s]
+01:29:52  52 of 88 START sql table model trade_analytics_day10_dev.audit_partner_mapping_issues  [RUN]
+01:29:52  49 of 88 PASS not_null_dim_hs_codes_cmd_code ................................... [PASS in 0.69s]
+01:29:53  51 of 88 PASS not_null_dim_hs_codes_hs_version ................................. [PASS in 0.60s]
+01:29:53  50 of 88 PASS not_null_dim_hs_codes_code_level ................................. [PASS in 0.69s]
+01:29:53  53 of 88 START sql table model trade_analytics_day10_dev.fct_monthly_semiconductor_imports  [RUN]
+01:29:54  52 of 88 OK created sql table model trade_analytics_day10_dev.audit_partner_mapping_issues  [CREATE TABLE (30.0 rows, 480.8 KiB processed) in 2.00s]
+01:29:54  54 of 88 START test assert_missing_country_audited ............................. [RUN]
+01:29:54  56 of 88 START test not_null_audit_partner_mapping_issues_observed_at .......... [RUN]
+01:29:54  55 of 88 START test not_null_audit_partner_mapping_issues_issue_type ........... [RUN]
+01:29:55  55 of 88 PASS not_null_audit_partner_mapping_issues_issue_type ................. [PASS in 0.68s]
+01:29:55  57 of 88 START test not_null_audit_partner_mapping_issues_partner_code ......... [RUN]
+01:29:55  56 of 88 PASS not_null_audit_partner_mapping_issues_observed_at ................ [PASS in 0.73s]
+01:29:55  54 of 88 PASS assert_missing_country_audited ................................... [PASS in 1.18s]
+01:29:56  53 of 88 OK created sql table model trade_analytics_day10_dev.fct_monthly_semiconductor_imports  [CREATE TABLE (1.9k rows, 708.4 KiB processed) in 3.22s]
+01:29:56  58 of 88 START test accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review  [RUN]
+01:29:56  59 of 88 START test accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:29:56  60 of 88 START test accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:29:57  60 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.76s]
+01:29:57  61 of 88 START test assert_fact_contract ....................................... [RUN]
+01:29:57  59 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown  [PASS in 0.79s]
+01:29:57  62 of 88 START test assert_fact_preserves_staging .............................. [RUN]
+01:29:57  58 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review  [PASS in 0.85s]
+01:29:57  63 of 88 START test compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:29:57  57 of 88 PASS not_null_audit_partner_mapping_issues_partner_code ............... [PASS in 2.55s]
+01:29:57  64 of 88 START test not_null_fct_monthly_semiconductor_imports_cmd_code ........ [RUN]
+01:29:58  61 of 88 PASS assert_fact_contract ............................................. [PASS in 0.69s]
+01:29:58  65 of 88 START test not_null_fct_monthly_semiconductor_imports_country_mapping_found  [RUN]
+01:29:58  63 of 88 PASS compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version  [PASS in 0.71s]
+01:29:58  66 of 88 START test not_null_fct_monthly_semiconductor_imports_hs_mapping_found  [RUN]
+01:29:58  62 of 88 PASS assert_fact_preserves_staging .................................... [PASS in 0.92s]
+01:29:58  67 of 88 START test not_null_fct_monthly_semiconductor_imports_hs_version ...... [RUN]
+01:29:58  65 of 88 PASS not_null_fct_monthly_semiconductor_imports_country_mapping_found . [PASS in 0.63s]
+01:29:58  64 of 88 PASS not_null_fct_monthly_semiconductor_imports_cmd_code .............. [PASS in 0.65s]
+01:29:58  68 of 88 START test not_null_fct_monthly_semiconductor_imports_month_mapping_found  [RUN]
+01:29:58  69 of 88 START test not_null_fct_monthly_semiconductor_imports_partner_code .... [RUN]
+01:29:58  66 of 88 PASS not_null_fct_monthly_semiconductor_imports_hs_mapping_found ...... [PASS in 0.70s]
+01:29:58  70 of 88 START test not_null_fct_monthly_semiconductor_imports_period_start_date  [RUN]
+01:29:59  67 of 88 PASS not_null_fct_monthly_semiconductor_imports_hs_version ............ [PASS in 1.09s]
+01:29:59  69 of 88 PASS not_null_fct_monthly_semiconductor_imports_partner_code .......... [PASS in 0.72s]
+01:29:59  68 of 88 PASS not_null_fct_monthly_semiconductor_imports_month_mapping_found ... [PASS in 0.77s]
+01:29:59  70 of 88 PASS not_null_fct_monthly_semiconductor_imports_period_start_date ..... [PASS in 0.67s]
+01:29:59  71 of 88 START unit_test int_partner_market_share::day09_invalid_denominators_and_zero_current  [RUN]
+01:30:02  71 of 88 PASS int_partner_market_share::day09_invalid_denominators_and_zero_current  [PASS in 2.53s]
+01:30:02  72 of 88 START unit_test int_partner_market_share::day09_calendar_growth_and_weights  [RUN]
+01:30:04  72 of 88 PASS int_partner_market_share::day09_calendar_growth_and_weights ...... [PASS in 2.80s]
+01:30:04  73 of 88 START unit_test int_partner_market_share::day09_partner_and_version_isolation  [RUN]
+01:30:07  73 of 88 PASS int_partner_market_share::day09_partner_and_version_isolation .... [PASS in 2.67s]
+01:30:07  74 of 88 START sql view model trade_analytics_day10_dev.int_partner_market_share  [RUN]
+01:30:08  74 of 88 OK created sql view model trade_analytics_day10_dev.int_partner_market_share  [CREATE VIEW (0 processed) in 0.90s]
+01:30:08  75 of 88 START test accepted_values_int_partner_market_share_market_share_status__ok__missing_world__invalid_world__missing_value  [RUN]
+01:30:08  76 of 88 START test compound_unique_int_partner_market_share_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:30:08  77 of 88 START test not_null_int_partner_market_share_market_share_status ...... [RUN]
+01:30:09  77 of 88 PASS not_null_int_partner_market_share_market_share_status ............ [PASS in 1.21s]
+01:30:09  75 of 88 PASS accepted_values_int_partner_market_share_market_share_status__ok__missing_world__invalid_world__missing_value  [PASS in 1.22s]
+01:30:09  76 of 88 PASS compound_unique_int_partner_market_share_period_start_date__partner_code__cmd_code__hs_version  [PASS in 1.27s]
+01:30:09  78 of 88 START unit_test int_market_concentration_hhi::day09_hhi_hand_calculations_and_coverage  [RUN]
+01:30:12  78 of 88 PASS int_market_concentration_hhi::day09_hhi_hand_calculations_and_coverage  [PASS in 2.87s]
+01:30:12  79 of 88 START unit_test int_market_concentration_hhi::day09_hhi_unreviewed_country  [RUN]
+01:30:15  79 of 88 PASS int_market_concentration_hhi::day09_hhi_unreviewed_country ....... [PASS in 3.25s]
+01:30:15  80 of 88 START sql view model trade_analytics_day10_dev.int_market_concentration_hhi  [RUN]
+01:30:16  80 of 88 OK created sql view model trade_analytics_day10_dev.int_market_concentration_hhi  [CREATE VIEW (0 processed) in 0.80s]
+01:30:16  81 of 88 START test accepted_values_int_market_concentration_hhi_hhi_status__ok__missing_world__invalid_world__no_countries__missing_country_value__negative_country_value__unreviewed_country__insufficient_coverage  [RUN]
+01:30:16  82 of 88 START test compound_unique_int_market_concentration_hhi_period_start_date__cmd_code__hs_version  [RUN]
+01:30:16  83 of 88 START test not_null_int_market_concentration_hhi_hhi_status ........... [RUN]
+01:30:17  82 of 88 PASS compound_unique_int_market_concentration_hhi_period_start_date__cmd_code__hs_version  [PASS in 1.17s]
+01:30:17  83 of 88 PASS not_null_int_market_concentration_hhi_hhi_status ................. [PASS in 1.17s]
+01:30:17  81 of 88 PASS accepted_values_int_market_concentration_hhi_hhi_status__ok__missing_world__invalid_world__no_countries__missing_country_value__negative_country_value__unreviewed_country__insufficient_coverage  [PASS in 1.19s]
+01:30:17  84 of 88 START sql table model trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate  [RUN]
+01:30:24  84 of 88 OK created sql table model trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate  [CREATE TABLE (1.9k rows, 861.6 KiB processed) in 6.54s]
+01:30:24  85 of 88 START test assert_day09_candidate_preserves_fact ...................... [RUN]
+01:30:24  86 of 88 START test assert_day09_metric_contract ............................... [RUN]
+01:30:24  87 of 88 START test compound_unique_mart_us_semiconductor_supply_chain_candidate_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:30:24  88 of 88 START test not_null_mart_us_semiconductor_supply_chain_candidate_hhi_status  [RUN]
+01:30:25  86 of 88 PASS assert_day09_metric_contract ..................................... [PASS in 0.75s]
+01:30:25  85 of 88 PASS assert_day09_candidate_preserves_fact ............................ [PASS in 0.77s]
+01:30:25  88 of 88 PASS not_null_mart_us_semiconductor_supply_chain_candidate_hhi_status . [PASS in 0.78s]
+01:30:25  87 of 88 PASS compound_unique_mart_us_semiconductor_supply_chain_candidate_period_start_date__partner_code__cmd_code__hs_version  [PASS in 0.79s]
+01:30:25
+01:30:25  Finished running 2 seeds, 6 table models, 71 data tests, 5 unit tests, 4 view models in 0 hours 0 minutes and 44.95 seconds (44.95s).
+01:30:25
+01:30:25  Completed successfully
+01:30:25
+01:30:25  Done. PASS=88 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=88
+{"period": "202506", "status": "success", "step": "build", "vars": {"month_spine_end_date": "2025-06-01", "month_spine_start_date": "2023-01-01", "raw_end_date": "2025-07-01", "raw_start_date": "2023-01-01"}}
+
+2026-10-02T01:30:25.579508Z [info     ] Done. Returned value was: {'period': '202506', 'status': 'success', 'step': 'build', 'vars': {'month_spine_end_date': '2025-06-01', 'month_spine_start_date': '2023-01-01', 'raw_end_date': '2025-07-01', 'raw_start_date': '2023-01-01'}} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:25.580318Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:25.580772Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc6-79ce-a9bc-32d8adc63660'), task_id='build_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): build_2>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 29, 37, 635448, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:25.644236Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-e9e4-7f71-b60c-5a433c63d3b2 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc6-79ce-a9bc-32d8adc63660
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): build_2>
+2026-10-02T01:30:25.647354Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:25.651715Z [info     ] [DAG TEST] end task task_id=build_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:25.659367Z [info     ] [DAG TEST] starting task_id=audit_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:25.659430Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.audit_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc7-706c-9f0b-c2cb056c429b> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:25.664783Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-e9fc-710b-8b3a-8ed0341684a2 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc7-706c-9f0b-c2cb056c429b
+2026-10-02T01:30:25.665467Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-e9fc-710b-8b3a-8ed0341684a2 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc7-706c-9f0b-c2cb056c429b
+2026-10-02T01:30:25.677464Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3b-ea0b-7752-b0ec-9685f1698126 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc7-706c-9f0b-c2cb056c429b
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:audit_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:25.681837Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "audit", "kind": null, "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"jobs": [{"job_id": "2bddfe04-43a6-4fab-aa22-74abf5ebd328", "result": "success"}, {"job_id": "23593b0c-db1d-4dc6-bae4-a9da3fb2d469", "result": "success"}, {"job_id": "dc1991e8-77fc-4bf7-afe7-4b541334fd48", "result": "success"}], "period": "202506", "reason_codes": [], "run_id": "backfill-202506-0e137046013f5e9c", "status": "PASS", "step": "audit"}
+
+2026-10-02T01:30:33.689540Z [info     ] Done. Returned value was: {'jobs': [{'job_id': '2bddfe04-43a6-4fab-aa22-74abf5ebd328', 'result': 'success'}, {'job_id': '23593b0c-db1d-4dc6-bae4-a9da3fb2d469', 'result': 'success'}, {'job_id': 'dc1991e8-77fc-4bf7-afe7-4b541334fd48', 'result': 'success'}], 'period': '202506', 'reason_codes': [], 'run_id': 'backfill-202506-0e137046013f5e9c', 'status': 'PASS', 'step': 'audit'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:33.689681Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:33.689779Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc7-706c-9f0b-c2cb056c429b'), task_id='audit_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): audit_2>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 30, 25, 660555, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:33.719427Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0973-7d62-90bd-3ebb5730169c loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc7-706c-9f0b-c2cb056c429b
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): audit_2>
+2026-10-02T01:30:33.721182Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:33.723426Z [info     ] [DAG TEST] end task task_id=audit_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:33.729426Z [info     ] [DAG TEST] starting task_id=gate_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:33.729470Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.gate_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc8-748e-8204-b6d1c7d64d72> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:33.733999Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0982-7467-8ec6-17d9a6636c50 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc8-748e-8204-b6d1c7d64d72
+2026-10-02T01:30:33.734476Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0982-7467-8ec6-17d9a6636c50 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc8-748e-8204-b6d1c7d64d72
+2026-10-02T01:30:33.743381Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-098d-7681-aa19-ce7d75ae4f65 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc8-748e-8204-b6d1c7d64d72
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:gate_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:33.746321Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "gate", "kind": null, "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"jobs": [{"job_id": "0434b0ea-a72c-4c44-85e1-cbcb5b77d5e4", "result": "success"}], "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c", "status": "PASS", "step": "gate"}
+
+2026-10-02T01:30:34.930187Z [info     ] Done. Returned value was: {'jobs': [{'job_id': '0434b0ea-a72c-4c44-85e1-cbcb5b77d5e4', 'result': 'success'}], 'period': '202506', 'run_id': 'backfill-202506-0e137046013f5e9c', 'status': 'PASS', 'step': 'gate'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:34.930295Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:34.930388Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc8-748e-8204-b6d1c7d64d72'), task_id='gate_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): gate_2>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 30, 33, 730437, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:34.956512Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0e48-7d15-b1c9-25b58df2aeab loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc8-748e-8204-b6d1c7d64d72
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): gate_2>
+2026-10-02T01:30:34.958096Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:34.960160Z [info     ] [DAG TEST] end task task_id=gate_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:34.966125Z [info     ] [DAG TEST] starting task_id=publish_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:34.966171Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.publish_2 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bc9-7c11-be7c-7b95dfa6cf8c> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:34.970277Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0e57-7a6f-a73a-845f69f3f53e hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bc9-7c11-be7c-7b95dfa6cf8c
+2026-10-02T01:30:34.970764Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0e57-7a6f-a73a-845f69f3f53e loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bc9-7c11-be7c-7b95dfa6cf8c
+2026-10-02T01:30:34.979440Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-0e61-734e-9439-5dccd2456209 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bc9-7c11-be7c-7b95dfa6cf8c
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:publish_2
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:34.982521Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "publish", "kind": null, "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c"}
+{"jobs": [{"job_id": "4befc9f3-d861-40b2-b5a7-36e4cbd56b2b", "result": "success"}, {"job_id": "1662215f-d9b8-49ef-aae8-eac550fd4987", "result": "success"}, {"job_id": "bb2b997b-f971-4165-a43a-b105d95f9dc3", "result": "success"}], "period": "202506", "run_id": "backfill-202506-0e137046013f5e9c", "status": "published", "step": "publish"}
+
+2026-10-02T01:30:46.104018Z [info     ] Done. Returned value was: {'jobs': [{'job_id': '4befc9f3-d861-40b2-b5a7-36e4cbd56b2b', 'result': 'success'}, {'job_id': '1662215f-d9b8-49ef-aae8-eac550fd4987', 'result': 'success'}, {'job_id': 'bb2b997b-f971-4165-a43a-b105d95f9dc3', 'result': 'success'}], 'period': '202506', 'run_id': 'backfill-202506-0e137046013f5e9c', 'status': 'published', 'step': 'publish'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:46.104136Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:46.104217Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bc9-7c11-be7c-7b95dfa6cf8c'), task_id='publish_2', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): publish_2>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 30, 34, 966887, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:46.132556Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-39ef-780e-99f8-c53d41ffa454 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bc9-7c11-be7c-7b95dfa6cf8c
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): publish_2>
+2026-10-02T01:30:46.134942Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:46.137431Z [info     ] [DAG TEST] end task task_id=publish_2 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:46.144113Z [info     ] [DAG TEST] starting task_id=select_month_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:46.144177Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.select_month_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bca-7c39-bb34-e6a22d2bae76> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:46.148611Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a01-73cb-baf9-686e34d6b15d hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bca-7c39-bb34-e6a22d2bae76
+2026-10-02T01:30:46.149138Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a01-73cb-baf9-686e34d6b15d loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bca-7c39-bb34-e6a22d2bae76
+2026-10-02T01:30:46.158054Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a0c-7f39-ad39-aaebb9229940 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bca-7c39-bb34-e6a22d2bae76
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:select_month_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:46.160827Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+2026-10-02T01:30:46.160978Z [info     ] Done. Returned value was: {'period': '202507', 'run_id': 'backfill-202507-0e137046013f5e9c', 'status': 'ready', 'sources': {'world_total': True, 'partner_detail': True}, 'revisions': {'world_total': 1, 'partner_detail': 1}} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:46.161017Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:46.161071Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bca-7c39-bb34-e6a22d2bae76'), task_id='select_month_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): select_month_3>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 30, 46, 144984, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:46.184237Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a24-78c4-8dd6-75d8e0c355e3 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bca-7c39-bb34-e6a22d2bae76
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): select_month_3>
+2026-10-02T01:30:46.185733Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:46.187554Z [info     ] [DAG TEST] end task task_id=select_month_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:46.193375Z [info     ] [DAG TEST] starting task_id=ingest_world_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:46.193415Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.ingest_world_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bcc-787c-a5b6-e1f33a582791> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:46.197459Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a32-73c1-8280-0f19796251a8 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bcc-787c-a5b6-e1f33a582791
+2026-10-02T01:30:46.197925Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a32-73c1-8280-0f19796251a8 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bcc-787c-a5b6-e1f33a582791
+2026-10-02T01:30:46.206716Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-3a3d-7fc8-b68a-a3c726f18587 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bcc-787c-a5b6-e1f33a582791
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:ingest_world_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:46.209499Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "ingest", "kind": "world_total", "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"checksum": "sha256:c033f07b7cd5e203239ce1d7ba2f3141bda1c6c0aef7f0b0732b4e26c6463aa6", "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=world_total/revision=1/data.ndjson", "kind": "world_total", "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=world_total/revision=1/manifest.json", "period": "202507", "revision": 1, "row_count": 1, "run_id": "backfill-202507-0e137046013f5e9c", "status": "success", "step": "ingest"}
+
+2026-10-02T01:30:49.626974Z [info     ] Done. Returned value was: {'checksum': 'sha256:c033f07b7cd5e203239ce1d7ba2f3141bda1c6c0aef7f0b0732b4e26c6463aa6', 'data_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=world_total/revision=1/data.ndjson', 'kind': 'world_total', 'manifest_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=world_total/revision=1/manifest.json', 'period': '202507', 'revision': 1, 'row_count': 1, 'run_id': 'backfill-202507-0e137046013f5e9c', 'status': 'success', 'step': 'ingest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:49.627071Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:49.627158Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bcc-787c-a5b6-e1f33a582791'), task_id='ingest_world_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): ingest_world_3>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 30, 46, 194173, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:49.670685Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-47c2-70dc-9eb7-c4b2c86120ea loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bcc-787c-a5b6-e1f33a582791
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): ingest_world_3>
+2026-10-02T01:30:49.672245Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:49.674424Z [info     ] [DAG TEST] end task task_id=ingest_world_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:49.674477Z [info     ] [DAG TEST] starting task_id=ingest_detail_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:49.674512Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.ingest_detail_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bcb-7819-80bf-8a30d204d79c> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:49.679559Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-47cc-78f6-a724-20a4fcc45825 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bcb-7819-80bf-8a30d204d79c
+2026-10-02T01:30:49.680040Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-47cc-78f6-a724-20a4fcc45825 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bcb-7819-80bf-8a30d204d79c
+2026-10-02T01:30:49.688767Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-47d7-76f3-8d18-353f711c71fb field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bcb-7819-80bf-8a30d204d79c
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:ingest_detail_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:49.691632Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "ingest", "kind": "partner_detail", "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"checksum": "sha256:3a25de516ce5374606b5b97a01398f9fc4a64da4bb8ee850a6ace3cd92bc0182", "data_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=partner_detail/revision=1/data.ndjson", "kind": "partner_detail", "manifest_uri": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=partner_detail/revision=1/manifest.json", "period": "202507", "revision": 1, "row_count": 64, "run_id": "backfill-202507-0e137046013f5e9c", "status": "success", "step": "ingest"}
+
+2026-10-02T01:30:53.529903Z [info     ] Done. Returned value was: {'checksum': 'sha256:3a25de516ce5374606b5b97a01398f9fc4a64da4bb8ee850a6ace3cd92bc0182', 'data_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=partner_detail/revision=1/data.ndjson', 'kind': 'partner_detail', 'manifest_uri': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=partner_detail/revision=1/manifest.json', 'period': '202507', 'revision': 1, 'row_count': 64, 'run_id': 'backfill-202507-0e137046013f5e9c', 'status': 'success', 'step': 'ingest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:30:53.530026Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:30:53.530124Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bcb-7819-80bf-8a30d204d79c'), task_id='ingest_detail_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): ingest_detail_3>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 30, 49, 676298, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:30:53.572786Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-5701-74e6-bd87-c09b74d8befb loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bcb-7819-80bf-8a30d204d79c
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): ingest_detail_3>
+2026-10-02T01:30:53.574315Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:30:53.576561Z [info     ] [DAG TEST] end task task_id=ingest_detail_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:30:53.583384Z [info     ] [DAG TEST] starting task_id=load_detail_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:30:53.583450Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.load_detail_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bcd-726e-9073-71b49e4cdefb> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:30:53.589015Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-5710-7038-bf92-3d5ee1563e66 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bcd-726e-9073-71b49e4cdefb
+2026-10-02T01:30:53.589654Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-5710-7038-bf92-3d5ee1563e66 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bcd-726e-9073-71b49e4cdefb
+2026-10-02T01:30:53.600967Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-571f-7d60-98ff-0c308b00ed49 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bcd-726e-9073-71b49e4cdefb
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:load_detail_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:30:53.604047Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "load", "kind": "partner_detail", "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"jobs": [{"job_id": "day11_f947e04fa9514f7188679e8f3016507f", "status": "success"}, {"job_id": "day11_6e17180360ca401d97067d5409ed35ca", "status": "success"}, {"job_id": "day11_a8670f37f36c48039917994feaca9eb9", "status": "success"}, {"job_id": "day11_67d53b8d64c643d29bcf4119e72a323d", "status": "success"}], "kind": "partner_detail", "period": "202507", "revision": 1, "rows": 64, "status": "success", "step": "load"}
+
+2026-10-02T01:31:08.091322Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'day11_f947e04fa9514f7188679e8f3016507f', 'status': 'success'}, {'job_id': 'day11_6e17180360ca401d97067d5409ed35ca', 'status': 'success'}, {'job_id': 'day11_a8670f37f36c48039917994feaca9eb9', 'status': 'success'}, {'job_id': 'day11_67d53b8d64c643d29bcf4119e72a323d', 'status': 'success'}], 'kind': 'partner_detail', 'period': '202507', 'revision': 1, 'rows': 64, 'status': 'success', 'step': 'load'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:31:08.093587Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:31:08.094244Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bcd-726e-9073-71b49e4cdefb'), task_id='load_detail_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): load_detail_3>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 30, 53, 584403, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:31:08.154900Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-8ff3-7c0d-a216-7c3cc75b87ce loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bcd-726e-9073-71b49e4cdefb
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): load_detail_3>
+2026-10-02T01:31:08.157706Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:31:08.168223Z [info     ] [DAG TEST] end task task_id=load_detail_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:31:08.168326Z [info     ] [DAG TEST] starting task_id=load_world_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:31:08.168361Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.load_world_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bce-782a-b23d-2a82e4213459> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:31:08.174682Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-900a-704f-89d6-81557a792cb0 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bce-782a-b23d-2a82e4213459
+2026-10-02T01:31:08.175324Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-900a-704f-89d6-81557a792cb0 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bce-782a-b23d-2a82e4213459
+2026-10-02T01:31:08.187147Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-9019-7de5-92ae-2a2ee9be89fa field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bce-782a-b23d-2a82e4213459
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:load_world_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:31:08.191306Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "load", "kind": "world_total", "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"jobs": [{"job_id": "day11_d0eb7b1bbe384d729d367f78605f238f", "status": "success"}, {"job_id": "day11_83bbb351ab5e464b88060638df39a065", "status": "success"}, {"job_id": "day11_83e6b19698c5443d9665e65ad8ce2344", "status": "success"}, {"job_id": "day11_1c50071d03264ed1a982f28c06ea72b1", "status": "success"}], "kind": "world_total", "period": "202507", "revision": 1, "rows": 1, "status": "success", "step": "load"}
+
+2026-10-02T01:31:21.467249Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'day11_d0eb7b1bbe384d729d367f78605f238f', 'status': 'success'}, {'job_id': 'day11_83bbb351ab5e464b88060638df39a065', 'status': 'success'}, {'job_id': 'day11_83e6b19698c5443d9665e65ad8ce2344', 'status': 'success'}, {'job_id': 'day11_1c50071d03264ed1a982f28c06ea72b1', 'status': 'success'}], 'kind': 'world_total', 'period': '202507', 'revision': 1, 'rows': 1, 'status': 'success', 'step': 'load'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:31:21.467348Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:31:21.467451Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bce-782a-b23d-2a82e4213459'), task_id='load_world_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): load_world_3>, max_tries=3, start_date=datetime.datetime(2026, 10, 2, 1, 31, 8, 170613, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:31:21.499699Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-c417-7fda-a150-96a139d05418 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bce-782a-b23d-2a82e4213459
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): load_world_3>
+2026-10-02T01:31:21.501349Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:31:21.503582Z [info     ] [DAG TEST] end task task_id=load_world_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:31:21.510178Z [info     ] [DAG TEST] starting task_id=attest_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:31:21.510236Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.attest_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bcf-7894-b169-8dd83d63e0d1> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:31:21.514720Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-c427-7194-a81c-916debbd8a4a hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bcf-7894-b169-8dd83d63e0d1
+2026-10-02T01:31:21.515272Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-c427-7194-a81c-916debbd8a4a loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bcf-7894-b169-8dd83d63e0d1
+2026-10-02T01:31:21.524112Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-c432-7c9d-b6c1-52351b1c0bd2 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bcf-7894-b169-8dd83d63e0d1
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:attest_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:31:21.526961Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "attest", "kind": null, "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"jobs": [{"job_id": "b8084a77-1ead-4d89-8eda-1253fa0facd4", "result": "success"}, {"job_id": "cf117a69-1675-4e2b-9dae-b129d601012e", "result": "success"}, {"job_id": "a8255c00-a2b3-4442-be7c-3103e5bb067c", "result": "success"}, {"job_id": "0877d55b-996b-4f74-bb4c-68ab949948ca", "result": "success"}, {"job_id": "37806192-8330-45b8-a991-926d4e971823", "result": "success"}, {"job_id": "ab66ced5-ccd6-4e8f-b5b6-b29198a9d90a", "result": "success"}], "period": "202507", "sources": [{"checksum": "sha256:3a25de516ce5374606b5b97a01398f9fc4a64da4bb8ee850a6ace3cd92bc0182", "query_type": "partner_detail", "revision": 1, "snapshot_hash": "eabcd997bc1f794280c1baf6ac9f4a6069994d7e994efed6c86ad60e242373b8", "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=partner_detail/revision=1/data.ndjson"}, {"checksum": "sha256:c033f07b7cd5e203239ce1d7ba2f3141bda1c6c0aef7f0b0732b4e26c6463aa6", "query_type": "world_total", "revision": 1, "snapshot_hash": "bbe1d1af10c869004b8cae530c173d82ddc5c7a869b1a89275f598b01f884c1f", "source_file": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=world_total/revision=1/data.ndjson"}], "status": "verified", "step": "attest"}
+
+2026-10-02T01:31:27.306413Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'b8084a77-1ead-4d89-8eda-1253fa0facd4', 'result': 'success'}, {'job_id': 'cf117a69-1675-4e2b-9dae-b129d601012e', 'result': 'success'}, {'job_id': 'a8255c00-a2b3-4442-be7c-3103e5bb067c', 'result': 'success'}, {'job_id': '0877d55b-996b-4f74-bb4c-68ab949948ca', 'result': 'success'}, {'job_id': '37806192-8330-45b8-a991-926d4e971823', 'result': 'success'}, {'job_id': 'ab66ced5-ccd6-4e8f-b5b6-b29198a9d90a', 'result': 'success'}], 'period': '202507', 'sources': [{'checksum': 'sha256:3a25de516ce5374606b5b97a01398f9fc4a64da4bb8ee850a6ace3cd92bc0182', 'query_type': 'partner_detail', 'revision': 1, 'snapshot_hash': 'eabcd997bc1f794280c1baf6ac9f4a6069994d7e994efed6c86ad60e242373b8', 'source_file': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=partner_detail/revision=1/data.ndjson'}, {'checksum': 'sha256:c033f07b7cd5e203239ce1d7ba2f3141bda1c6c0aef7f0b0732b4e26c6463aa6', 'query_type': 'world_total', 'revision': 1, 'snapshot_hash': 'bbe1d1af10c869004b8cae530c173d82ddc5c7a869b1a89275f598b01f884c1f', 'source_file': 's3://trade-analytics-prod-816079797958-ap-northeast-1-an/un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202507/query_type=world_total/revision=1/data.ndjson'}], 'status': 'verified', 'step': 'attest'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:31:27.307455Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:31:27.308009Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bcf-7894-b169-8dd83d63e0d1'), task_id='attest_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): attest_3>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 31, 21, 511137, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:31:27.371738Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-daff-718e-8a04-314b8da0480f loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bcf-7894-b169-8dd83d63e0d1
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): attest_3>
+2026-10-02T01:31:27.376389Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:31:27.382996Z [info     ] [DAG TEST] end task task_id=attest_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:31:27.391406Z [info     ] [DAG TEST] starting task_id=build_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:31:27.391484Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.build_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bd0-78bb-862b-ce85d7ce14d3> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:31:27.398105Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-db21-7199-a778-d0e6773fa599 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bd0-78bb-862b-ce85d7ce14d3
+2026-10-02T01:31:27.398894Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-db21-7199-a778-d0e6773fa599 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bd0-78bb-862b-ce85d7ce14d3
+2026-10-02T01:31:27.418592Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3c-db37-7d0c-aa62-57da0afabd84 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bd0-78bb-862b-ce85d7ce14d3
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:build_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:31:27.425294Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "build", "kind": null, "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+01:31:28  Running with dbt=1.12.5
+01:31:28  Registered adapter: bigquery=1.12.1
+01:31:28  Unable to do partial parsing because config vars, config profile, or config target have changed
+01:31:30  Found 10 models, 71 data tests, 2 seeds, 3 sources, 563 macros, 5 unit tests
+01:31:30
+01:31:30  Concurrency: 4 threads (target='day11')
+01:31:30
+01:31:31  1 of 88 START sql table model trade_analytics_day10_dev.dim_months ............. [RUN]
+01:31:31  2 of 88 START sql view model trade_analytics_day10_dev.stg_un_comtrade__partner_trades  [RUN]
+01:31:31  3 of 88 START sql view model trade_analytics_day10_dev.stg_un_comtrade__world_totals  [RUN]
+01:31:31  4 of 88 START seed file trade_analytics_day10_dev.country_reference ............ [RUN]
+01:31:32  3 of 88 OK created sql view model trade_analytics_day10_dev.stg_un_comtrade__world_totals  [CREATE VIEW (0 processed) in 0.68s]
+01:31:32  5 of 88 START seed file trade_analytics_day10_dev.hs_code_reference ............ [RUN]
+01:31:32  2 of 88 OK created sql view model trade_analytics_day10_dev.stg_un_comtrade__partner_trades  [CREATE VIEW (0 processed) in 0.83s]
+01:31:32  6 of 88 START test assert_world_grain_unique ................................... [RUN]
+01:31:33  1 of 88 OK created sql table model trade_analytics_day10_dev.dim_months ........ [CREATE TABLE (31.0 rows, 0 processed) in 1.70s]
+01:31:33  7 of 88 START test assert_january_2023_exists .................................. [RUN]
+01:31:33  6 of 88 PASS assert_world_grain_unique ......................................... [PASS in 1.07s]
+01:31:33  8 of 88 START test assert_partner_grain_unique ................................. [RUN]
+01:31:34  7 of 88 PASS assert_january_2023_exists ........................................ [PASS in 1.07s]
+01:31:34  9 of 88 START test assert_staging_contract ..................................... [RUN]
+01:31:34  8 of 88 PASS assert_partner_grain_unique ....................................... [PASS in 1.05s]
+01:31:34  10 of 88 START test assert_staging_matches_raw ................................. [RUN]
+01:31:35  4 of 88 OK loaded seed file trade_analytics_day10_dev.country_reference ........ [INSERT 163 in 3.34s]
+01:31:35  11 of 88 START test assert_month_spine_complete ................................ [RUN]
+01:31:35  5 of 88 OK loaded seed file trade_analytics_day10_dev.hs_code_reference ........ [INSERT 1 in 3.36s]
+01:31:35  12 of 88 START test not_null_dim_months_month_start_date ....................... [RUN]
+01:31:35  10 of 88 PASS assert_staging_matches_raw ....................................... [PASS in 1.17s]
+01:31:35  13 of 88 START test not_null_dim_months_period ................................. [RUN]
+01:31:35  11 of 88 PASS assert_month_spine_complete ...................................... [PASS in 0.88s]
+01:31:35  14 of 88 START test unique_dim_months_month_start_date ......................... [RUN]
+01:31:36  9 of 88 PASS assert_staging_contract ........................................... [PASS in 1.78s]
+01:31:36  15 of 88 START test unique_dim_months_period ................................... [RUN]
+01:31:36  12 of 88 PASS not_null_dim_months_month_start_date ............................. [PASS in 0.68s]
+01:31:36  16 of 88 START test accepted_values_country_reference_classification_status__verified__needs_review  [RUN]
+01:31:36  13 of 88 PASS not_null_dim_months_period ....................................... [PASS in 0.71s]
+01:31:36  17 of 88 START test accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:31:36  14 of 88 PASS unique_dim_months_month_start_date ............................... [PASS in 0.70s]
+01:31:36  18 of 88 START test accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:31:36  15 of 88 PASS unique_dim_months_period ......................................... [PASS in 0.66s]
+01:31:36  19 of 88 START test not_null_country_reference_classification_note ............. [RUN]
+01:31:37  16 of 88 PASS accepted_values_country_reference_classification_status__verified__needs_review  [PASS in 0.68s]
+01:31:37  20 of 88 START test not_null_country_reference_classification_status ........... [RUN]
+01:31:37  17 of 88 PASS accepted_values_country_reference_partner_type__country__world__aggregate__special__unknown  [PASS in 0.67s]
+01:31:37  21 of 88 START test not_null_country_reference_partner_code .................... [RUN]
+01:31:37  18 of 88 PASS accepted_values_country_reference_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.65s]
+01:31:37  22 of 88 START test not_null_country_reference_partner_type .................... [RUN]
+01:31:37  19 of 88 PASS not_null_country_reference_classification_note ................... [PASS in 0.72s]
+01:31:37  23 of 88 START test not_null_country_reference_reconciliation_role ............. [RUN]
+01:31:37  20 of 88 PASS not_null_country_reference_classification_status ................. [PASS in 0.66s]
+01:31:37  24 of 88 START test not_null_country_reference_retrieved_at .................... [RUN]
+01:31:37  21 of 88 PASS not_null_country_reference_partner_code .......................... [PASS in 0.64s]
+01:31:37  25 of 88 START test not_null_country_reference_source_name ..................... [RUN]
+01:31:37  22 of 88 PASS not_null_country_reference_partner_type .......................... [PASS in 0.64s]
+01:31:37  26 of 88 START test not_null_country_reference_source_url ...................... [RUN]
+01:31:38  23 of 88 PASS not_null_country_reference_reconciliation_role ................... [PASS in 0.70s]
+01:31:38  27 of 88 START test unique_country_reference_partner_code ...................... [RUN]
+01:31:38  24 of 88 PASS not_null_country_reference_retrieved_at .......................... [PASS in 0.69s]
+01:31:38  28 of 88 START test compound_unique_hs_code_reference_hs_version__cmd_code ..... [RUN]
+01:31:38  25 of 88 PASS not_null_country_reference_source_name ........................... [PASS in 0.70s]
+01:31:38  29 of 88 START test not_null_hs_code_reference_cmd_code ........................ [RUN]
+01:31:38  26 of 88 PASS not_null_country_reference_source_url ............................ [PASS in 0.64s]
+01:31:38  30 of 88 START test not_null_hs_code_reference_code_level ...................... [RUN]
+01:31:38  27 of 88 PASS unique_country_reference_partner_code ............................ [PASS in 0.68s]
+01:31:38  31 of 88 START test not_null_hs_code_reference_hs_description .................. [RUN]
+01:31:39  28 of 88 PASS compound_unique_hs_code_reference_hs_version__cmd_code ........... [PASS in 0.71s]
+01:31:39  32 of 88 START test not_null_hs_code_reference_hs_version ...................... [RUN]
+01:31:39  29 of 88 PASS not_null_hs_code_reference_cmd_code .............................. [PASS in 0.64s]
+01:31:39  33 of 88 START test not_null_hs_code_reference_parent_code ..................... [RUN]
+01:31:39  30 of 88 PASS not_null_hs_code_reference_code_level ............................ [PASS in 0.68s]
+01:31:39  34 of 88 START test not_null_hs_code_reference_retrieved_at .................... [RUN]
+01:31:39  31 of 88 PASS not_null_hs_code_reference_hs_description ........................ [PASS in 0.68s]
+01:31:39  35 of 88 START test not_null_hs_code_reference_source_url ...................... [RUN]
+01:31:39  32 of 88 PASS not_null_hs_code_reference_hs_version ............................ [PASS in 0.64s]
+01:31:39  36 of 88 START sql table model trade_analytics_day10_dev.dim_countries ......... [RUN]
+01:31:39  33 of 88 PASS not_null_hs_code_reference_parent_code ........................... [PASS in 0.69s]
+01:31:39  34 of 88 PASS not_null_hs_code_reference_retrieved_at .......................... [PASS in 0.66s]
+01:31:40  35 of 88 PASS not_null_hs_code_reference_source_url ............................ [PASS in 0.67s]
+01:31:40  37 of 88 START sql table model trade_analytics_day10_dev.dim_hs_codes .......... [RUN]
+01:31:41  36 of 88 OK created sql table model trade_analytics_day10_dev.dim_countries .... [CREATE TABLE (163.0 rows, 86.5 KiB processed) in 1.73s]
+01:31:41  38 of 88 START test accepted_values_dim_countries_classification_status__verified__needs_review  [RUN]
+01:31:41  39 of 88 START test accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:31:41  40 of 88 START test accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:31:41  37 of 88 OK created sql table model trade_analytics_day10_dev.dim_hs_codes ..... [CREATE TABLE (1.0 rows, 154.0 Bytes processed) in 1.53s]
+01:31:41  41 of 88 START test assert_special_partner_contract ............................ [RUN]
+01:31:42  40 of 88 PASS accepted_values_dim_countries_reconciliation_role__detail__overlap__world__unresolved  [PASS in 0.69s]
+01:31:42  42 of 88 START test not_null_dim_countries_classification_status ............... [RUN]
+01:31:42  39 of 88 PASS accepted_values_dim_countries_partner_type__country__world__aggregate__special__unknown  [PASS in 0.71s]
+01:31:42  43 of 88 START test not_null_dim_countries_partner_code ........................ [RUN]
+01:31:42  38 of 88 PASS accepted_values_dim_countries_classification_status__verified__needs_review  [PASS in 0.76s]
+01:31:42  44 of 88 START test not_null_dim_countries_partner_type ........................ [RUN]
+01:31:42  41 of 88 PASS assert_special_partner_contract .................................. [PASS in 0.75s]
+01:31:42  45 of 88 START test not_null_dim_countries_reconciliation_role ................. [RUN]
+01:31:42  44 of 88 PASS not_null_dim_countries_partner_type .............................. [PASS in 0.63s]
+01:31:42  46 of 88 START test unique_dim_countries_partner_code .......................... [RUN]
+01:31:42  42 of 88 PASS not_null_dim_countries_classification_status ..................... [PASS in 0.73s]
+01:31:42  47 of 88 START test assert_hs_reference_contract ............................... [RUN]
+01:31:42  43 of 88 PASS not_null_dim_countries_partner_code .............................. [PASS in 0.75s]
+01:31:42  48 of 88 START test compound_unique_dim_hs_codes_hs_version__cmd_code .......... [RUN]
+01:31:43  45 of 88 PASS not_null_dim_countries_reconciliation_role ....................... [PASS in 0.70s]
+01:31:43  49 of 88 START test not_null_dim_hs_codes_cmd_code ............................. [RUN]
+01:31:43  46 of 88 PASS unique_dim_countries_partner_code ................................ [PASS in 0.69s]
+01:31:43  50 of 88 START test not_null_dim_hs_codes_code_level ........................... [RUN]
+01:31:43  48 of 88 PASS compound_unique_dim_hs_codes_hs_version__cmd_code ................ [PASS in 0.65s]
+01:31:43  51 of 88 START test not_null_dim_hs_codes_hs_version ........................... [RUN]
+01:31:43  47 of 88 PASS assert_hs_reference_contract ..................................... [PASS in 0.69s]
+01:31:43  52 of 88 START sql table model trade_analytics_day10_dev.audit_partner_mapping_issues  [RUN]
+01:31:44  49 of 88 PASS not_null_dim_hs_codes_cmd_code ................................... [PASS in 0.66s]
+01:31:44  50 of 88 PASS not_null_dim_hs_codes_code_level ................................. [PASS in 0.65s]
+01:31:44  51 of 88 PASS not_null_dim_hs_codes_hs_version ................................. [PASS in 0.73s]
+01:31:44  53 of 88 START sql table model trade_analytics_day10_dev.fct_monthly_semiconductor_imports  [RUN]
+01:31:45  52 of 88 OK created sql table model trade_analytics_day10_dev.audit_partner_mapping_issues  [CREATE TABLE (31.0 rows, 495.4 KiB processed) in 1.98s]
+01:31:45  54 of 88 START test assert_missing_country_audited ............................. [RUN]
+01:31:45  55 of 88 START test not_null_audit_partner_mapping_issues_issue_type ........... [RUN]
+01:31:45  56 of 88 START test not_null_audit_partner_mapping_issues_observed_at .......... [RUN]
+01:31:46  56 of 88 PASS not_null_audit_partner_mapping_issues_observed_at ................ [PASS in 0.69s]
+01:31:46  57 of 88 START test not_null_audit_partner_mapping_issues_partner_code ......... [RUN]
+01:31:46  55 of 88 PASS not_null_audit_partner_mapping_issues_issue_type ................. [PASS in 0.70s]
+01:31:46  53 of 88 OK created sql table model trade_analytics_day10_dev.fct_monthly_semiconductor_imports  [CREATE TABLE (2.0k rows, 731.4 KiB processed) in 1.96s]
+01:31:46  58 of 88 START test accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review  [RUN]
+01:31:46  59 of 88 START test accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown  [RUN]
+01:31:46  54 of 88 PASS assert_missing_country_audited ................................... [PASS in 1.23s]
+01:31:46  60 of 88 START test accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved  [RUN]
+01:31:46  58 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_classification_status__verified__needs_review  [PASS in 0.64s]
+01:31:46  61 of 88 START test assert_fact_contract ....................................... [RUN]
+01:31:46  57 of 88 PASS not_null_audit_partner_mapping_issues_partner_code ............... [PASS in 0.67s]
+01:31:46  62 of 88 START test assert_fact_preserves_staging .............................. [RUN]
+01:31:47  59 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_partner_type__country__world__aggregate__special__unknown  [PASS in 0.72s]
+01:31:47  63 of 88 START test compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:31:47  61 of 88 PASS assert_fact_contract ............................................. [PASS in 0.70s]
+01:31:47  63 of 88 PASS compound_unique_fct_monthly_semiconductor_imports_period_start_date__partner_code__cmd_code__hs_version  [PASS in 0.63s]
+01:31:47  64 of 88 START test not_null_fct_monthly_semiconductor_imports_cmd_code ........ [RUN]
+01:31:47  65 of 88 START test not_null_fct_monthly_semiconductor_imports_country_mapping_found  [RUN]
+01:31:48  62 of 88 PASS assert_fact_preserves_staging .................................... [PASS in 1.25s]
+01:31:48  66 of 88 START test not_null_fct_monthly_semiconductor_imports_hs_mapping_found  [RUN]
+01:31:48  64 of 88 PASS not_null_fct_monthly_semiconductor_imports_cmd_code .............. [PASS in 0.66s]
+01:31:48  67 of 88 START test not_null_fct_monthly_semiconductor_imports_hs_version ...... [RUN]
+01:31:48  65 of 88 PASS not_null_fct_monthly_semiconductor_imports_country_mapping_found . [PASS in 0.67s]
+01:31:48  68 of 88 START test not_null_fct_monthly_semiconductor_imports_month_mapping_found  [RUN]
+01:31:49  68 of 88 PASS not_null_fct_monthly_semiconductor_imports_month_mapping_found ... [PASS in 0.64s]
+01:31:49  66 of 88 PASS not_null_fct_monthly_semiconductor_imports_hs_mapping_found ...... [PASS in 0.78s]
+01:31:49  69 of 88 START test not_null_fct_monthly_semiconductor_imports_partner_code .... [RUN]
+01:31:49  70 of 88 START test not_null_fct_monthly_semiconductor_imports_period_start_date  [RUN]
+01:31:49  60 of 88 PASS accepted_values_fct_monthly_semiconductor_imports_reconciliation_role__detail__overlap__world__unresolved  [PASS in 2.20s]
+01:31:49  67 of 88 PASS not_null_fct_monthly_semiconductor_imports_hs_version ............ [PASS in 0.72s]
+01:31:49  70 of 88 PASS not_null_fct_monthly_semiconductor_imports_period_start_date ..... [PASS in 0.73s]
+01:31:49  69 of 88 PASS not_null_fct_monthly_semiconductor_imports_partner_code .......... [PASS in 0.76s]
+01:31:49  71 of 88 START unit_test int_partner_market_share::day09_invalid_denominators_and_zero_current  [RUN]
+01:31:52  71 of 88 PASS int_partner_market_share::day09_invalid_denominators_and_zero_current  [PASS in 2.57s]
+01:31:52  72 of 88 START unit_test int_partner_market_share::day09_calendar_growth_and_weights  [RUN]
+01:31:54  72 of 88 PASS int_partner_market_share::day09_calendar_growth_and_weights ...... [PASS in 2.40s]
+01:31:54  73 of 88 START unit_test int_partner_market_share::day09_partner_and_version_isolation  [RUN]
+01:31:57  73 of 88 PASS int_partner_market_share::day09_partner_and_version_isolation .... [PASS in 2.59s]
+01:31:57  74 of 88 START sql view model trade_analytics_day10_dev.int_partner_market_share  [RUN]
+01:31:58  74 of 88 OK created sql view model trade_analytics_day10_dev.int_partner_market_share  [CREATE VIEW (0 processed) in 0.93s]
+01:31:58  75 of 88 START test accepted_values_int_partner_market_share_market_share_status__ok__missing_world__invalid_world__missing_value  [RUN]
+01:31:58  76 of 88 START test compound_unique_int_partner_market_share_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:31:58  77 of 88 START test not_null_int_partner_market_share_market_share_status ...... [RUN]
+01:31:59  76 of 88 PASS compound_unique_int_partner_market_share_period_start_date__partner_code__cmd_code__hs_version  [PASS in 1.04s]
+01:31:59  77 of 88 PASS not_null_int_partner_market_share_market_share_status ............ [PASS in 1.04s]
+01:31:59  75 of 88 PASS accepted_values_int_partner_market_share_market_share_status__ok__missing_world__invalid_world__missing_value  [PASS in 1.24s]
+01:31:59  78 of 88 START unit_test int_market_concentration_hhi::day09_hhi_unreviewed_country  [RUN]
+01:32:02  78 of 88 PASS int_market_concentration_hhi::day09_hhi_unreviewed_country ....... [PASS in 2.58s]
+01:32:02  79 of 88 START unit_test int_market_concentration_hhi::day09_hhi_hand_calculations_and_coverage  [RUN]
+01:32:04  79 of 88 PASS int_market_concentration_hhi::day09_hhi_hand_calculations_and_coverage  [PASS in 2.66s]
+01:32:04  80 of 88 START sql view model trade_analytics_day10_dev.int_market_concentration_hhi  [RUN]
+01:32:05  80 of 88 OK created sql view model trade_analytics_day10_dev.int_market_concentration_hhi  [CREATE VIEW (0 processed) in 1.02s]
+01:32:05  81 of 88 START test accepted_values_int_market_concentration_hhi_hhi_status__ok__missing_world__invalid_world__no_countries__missing_country_value__negative_country_value__unreviewed_country__insufficient_coverage  [RUN]
+01:32:05  82 of 88 START test compound_unique_int_market_concentration_hhi_period_start_date__cmd_code__hs_version  [RUN]
+01:32:05  83 of 88 START test not_null_int_market_concentration_hhi_hhi_status ........... [RUN]
+01:32:07  83 of 88 PASS not_null_int_market_concentration_hhi_hhi_status ................. [PASS in 1.19s]
+01:32:07  82 of 88 PASS compound_unique_int_market_concentration_hhi_period_start_date__cmd_code__hs_version  [PASS in 1.21s]
+01:32:07  81 of 88 PASS accepted_values_int_market_concentration_hhi_hhi_status__ok__missing_world__invalid_world__no_countries__missing_country_value__negative_country_value__unreviewed_country__insufficient_coverage  [PASS in 1.26s]
+01:32:07  84 of 88 START sql table model trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate  [RUN]
+01:32:09  84 of 88 OK created sql table model trade_analytics_day10_dev.mart_us_semiconductor_supply_chain_candidate  [CREATE TABLE (2.0k rows, 890.0 KiB processed) in 2.04s]
+01:32:09  85 of 88 START test assert_day09_candidate_preserves_fact ...................... [RUN]
+01:32:09  86 of 88 START test assert_day09_metric_contract ............................... [RUN]
+01:32:09  87 of 88 START test compound_unique_mart_us_semiconductor_supply_chain_candidate_period_start_date__partner_code__cmd_code__hs_version  [RUN]
+01:32:09  88 of 88 START test not_null_mart_us_semiconductor_supply_chain_candidate_hhi_status  [RUN]
+01:32:09  85 of 88 PASS assert_day09_candidate_preserves_fact ............................ [PASS in 0.80s]
+01:32:09  86 of 88 PASS assert_day09_metric_contract ..................................... [PASS in 0.81s]
+01:32:09  88 of 88 PASS not_null_mart_us_semiconductor_supply_chain_candidate_hhi_status . [PASS in 0.84s]
+01:32:10  87 of 88 PASS compound_unique_mart_us_semiconductor_supply_chain_candidate_period_start_date__partner_code__cmd_code__hs_version  [PASS in 0.86s]
+01:32:10
+01:32:10  Finished running 2 seeds, 6 table models, 71 data tests, 5 unit tests, 4 view models in 0 hours 0 minutes and 39.19 seconds (39.19s).
+01:32:10
+01:32:10  Completed successfully
+01:32:10
+01:32:10  Done. PASS=88 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=88
+{"period": "202507", "status": "success", "step": "build", "vars": {"month_spine_end_date": "2025-07-01", "month_spine_start_date": "2023-01-01", "raw_end_date": "2025-08-01", "raw_start_date": "2023-01-01"}}
+
+2026-10-02T01:32:10.469928Z [info     ] Done. Returned value was: {'period': '202507', 'status': 'success', 'step': 'build', 'vars': {'month_spine_end_date': '2025-07-01', 'month_spine_start_date': '2023-01-01', 'raw_end_date': '2025-08-01', 'raw_start_date': '2023-01-01'}} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:32:10.470770Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:32:10.471256Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bd0-78bb-862b-ce85d7ce14d3'), task_id='build_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): build_3>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 31, 27, 392911, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:32:10.514733Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-8389-7ae8-a87a-81cd8b3df3af loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bd0-78bb-862b-ce85d7ce14d3
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): build_3>
+2026-10-02T01:32:10.518201Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:32:10.522764Z [info     ] [DAG TEST] end task task_id=build_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:32:10.529970Z [info     ] [DAG TEST] starting task_id=audit_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:32:10.530034Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.audit_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bd1-76f9-9997-4f9c26d17f65> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:32:10.535373Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-83a3-7231-a383-16a1c542a069 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bd1-76f9-9997-4f9c26d17f65
+2026-10-02T01:32:10.536026Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-83a3-7231-a383-16a1c542a069 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bd1-76f9-9997-4f9c26d17f65
+2026-10-02T01:32:10.547680Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-83b1-7c76-90f3-d626b5809f77 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bd1-76f9-9997-4f9c26d17f65
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:audit_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:32:10.551479Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "audit", "kind": null, "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"jobs": [{"job_id": "086d0172-b7c3-4c14-986f-98835af0a7ed", "result": "success"}, {"job_id": "fc5e4c66-24ef-4bfd-9044-c04970492405", "result": "success"}, {"job_id": "26c1ef68-7d38-47df-88f1-a3aeb8c69deb", "result": "success"}], "period": "202507", "reason_codes": [], "run_id": "backfill-202507-0e137046013f5e9c", "status": "PASS", "step": "audit"}
+
+2026-10-02T01:32:18.482718Z [info     ] Done. Returned value was: {'jobs': [{'job_id': '086d0172-b7c3-4c14-986f-98835af0a7ed', 'result': 'success'}, {'job_id': 'fc5e4c66-24ef-4bfd-9044-c04970492405', 'result': 'success'}, {'job_id': '26c1ef68-7d38-47df-88f1-a3aeb8c69deb', 'result': 'success'}], 'period': '202507', 'reason_codes': [], 'run_id': 'backfill-202507-0e137046013f5e9c', 'status': 'PASS', 'step': 'audit'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:32:18.482854Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:32:18.482977Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bd1-76f9-9997-4f9c26d17f65'), task_id='audit_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): audit_3>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 32, 10, 531192, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:32:18.521627Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a2d4-75da-be8e-f4e27b546f3b loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bd1-76f9-9997-4f9c26d17f65
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): audit_3>
+2026-10-02T01:32:18.523665Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:32:18.526334Z [info     ] [DAG TEST] end task task_id=audit_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:32:18.532413Z [info     ] [DAG TEST] starting task_id=gate_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:32:18.532479Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.gate_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bd2-7276-b8cb-73d535c4e530> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:32:18.537535Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a2e5-7342-aec9-d8a885471a83 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bd2-7276-b8cb-73d535c4e530
+2026-10-02T01:32:18.538066Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a2e5-7342-aec9-d8a885471a83 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bd2-7276-b8cb-73d535c4e530
+2026-10-02T01:32:18.547395Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a2f1-7864-9253-6fe61b1c01bc field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bd2-7276-b8cb-73d535c4e530
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:gate_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:32:18.550455Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "gate", "kind": null, "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"jobs": [{"job_id": "f8579f00-1b95-4252-8afd-ee0c3e1e2204", "result": "success"}], "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c", "status": "PASS", "step": "gate"}
+
+2026-10-02T01:32:19.739169Z [info     ] Done. Returned value was: {'jobs': [{'job_id': 'f8579f00-1b95-4252-8afd-ee0c3e1e2204', 'result': 'success'}], 'period': '202507', 'run_id': 'backfill-202507-0e137046013f5e9c', 'status': 'PASS', 'step': 'gate'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:32:19.739272Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:32:19.739368Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bd2-7276-b8cb-73d535c4e530'), task_id='gate_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): gate_3>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 32, 18, 533488, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:32:19.769170Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a7b5-7b8d-895f-0de96f49a678 loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bd2-7276-b8cb-73d535c4e530
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): gate_3>
+2026-10-02T01:32:19.770727Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:32:19.772948Z [info     ] [DAG TEST] end task task_id=gate_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:32:19.777412Z [info     ] [DAG TEST] starting task_id=publish_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1501
+2026-10-02T01:32:19.777467Z [info     ] [DAG TEST] running task <TaskInstance: trade_backfill_pipeline.publish_3 manual__2026-10-02T01:27:21.687223+00:00 [TaskInstanceState.SCHEDULED] ti_id=01a0fa39-1bd3-7574-86cf-4d5772d4eece> [airflow.sdk.definitions.dag] loc=dag.py:1504
+2026-10-02T01:32:19.782038Z [info     ] Task started                   [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a7c2-7d38-ba18-539030da0456 hostname=afe341678f81 loc=task_instances.py:226 previous_state=queued ti_id=01a0fa39-1bd3-7574-86cf-4d5772d4eece
+2026-10-02T01:32:19.782607Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a7c2-7d38-ba18-539030da0456 loc=task_instances.py:254 rows_affected=1 ti_id=01a0fa39-1bd3-7574-86cf-4d5772d4eece
+2026-10-02T01:32:19.792241Z [info     ] Updating RenderedTaskInstanceFields [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-a7ce-744b-af30-3dd8ab3c0573 field_count=3 loc=task_instances.py:1017 ti_id=01a0fa39-1bd3-7574-86cf-4d5772d4eece
+Task instance is in running state
+ Previous state of the Task instance: TaskInstanceState.QUEUED
+Current task name:publish_3
+Dag name:trade_backfill_pipeline
+2026-10-02T01:32:19.795017Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2232
+{"step": "publish", "kind": null, "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c"}
+{"jobs": [{"job_id": "9f075d99-acc1-42f5-be74-3f90753d401d", "result": "success"}, {"job_id": "59aa8234-f513-40d7-b141-ff75e6984e25", "result": "success"}, {"job_id": "50a19b88-982e-4997-a0f7-f734c13a9fcc", "result": "success"}], "period": "202507", "run_id": "backfill-202507-0e137046013f5e9c", "status": "published", "step": "publish"}
+
+2026-10-02T01:32:28.680721Z [info     ] Done. Returned value was: {'jobs': [{'job_id': '9f075d99-acc1-42f5-be74-3f90753d401d', 'result': 'success'}, {'job_id': '59aa8234-f513-40d7-b141-ff75e6984e25', 'result': 'success'}, {'job_id': '50a19b88-982e-4997-a0f7-f734c13a9fcc', 'result': 'success'}], 'period': '202507', 'run_id': 'backfill-202507-0e137046013f5e9c', 'status': 'published', 'step': 'publish'} [airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator] loc=python.py:233
+2026-10-02T01:32:28.681171Z [info     ] ::group::Post Execute          [task] loc=task_runner.py:1580
+2026-10-02T01:32:28.681481Z [info     ] Pushing xcom                   [task] loc=task_runner.py:2280 ti=RuntimeTaskInstance(id=UUID('01a0fa39-1bd3-7574-86cf-4d5772d4eece'), task_id='publish_3', dag_id='trade_backfill_pipeline', run_id='manual__2026-10-02T01:27:21.687223+00:00', try_number=1, dag_version_id=UUID('01a0f340-b3af-72cd-8aa4-d8e453a1915b'), map_index=-1, hostname='afe341678f81', context_carrier=None, queue='default', task=<Task(_PythonDecoratedOperator): publish_3>, max_tries=0, start_date=datetime.datetime(2026, 10, 2, 1, 32, 19, 778275, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None, sentry_integration='')
+2026-10-02T01:32:28.726231Z [info     ] Task instance state updated    [airflow.api_fastapi.execution_api.routes.task_instances] correlation_id=01a0fa3d-caaf-73a0-934b-5081d13ce82f loc=task_instances.py:485 new_state=success rows_affected=1 ti_id=01a0fa39-1bd3-7574-86cf-4d5772d4eece
+Task instance in success state
+ Previous state of the Task instance: TaskInstanceState.RUNNING
+Task operator:<Task(_PythonDecoratedOperator): publish_3>
+2026-10-02T01:32:28.728885Z [info     ] ::endgroup::                   [task] loc=task_runner.py:2379
+2026-10-02T01:32:28.732564Z [info     ] [DAG TEST] end task task_id=publish_3 map_index=-1 [airflow.sdk.definitions.dag] loc=dag.py:1563
+2026-10-02T01:32:28.735212Z [info     ] Marking run <DagRun trade_backfill_pipeline @ 2026-10-02 01:27:21.191620+00:00: manual__2026-10-02T01:27:21.687223+00:00, state:running, queued_at: None. run_type: manual> successful [airflow.models.dagrun.DagRun] loc=dagrun.py:1249
+Dag run in success state
+Dag run start:2026-10-02 01:27:21.191620+00:00 end:2026-10-02 01:32:28.735272+00:00
+2026-10-02T01:32:28.735875Z [info     ] DagRun Finished: dag_id=trade_backfill_pipeline, logical_date=2026-10-02 01:27:21.191620+00:00, run_id=manual__2026-10-02T01:27:21.687223+00:00, run_start_date=2026-10-02 01:27:21.191620+00:00, run_end_date=2026-10-02 01:32:28.735272+00:00, run_duration=307.543652, state=success, run_type=manual, data_interval_start=2026-10-02 01:27:21.191620+00:00, data_interval_end=2026-10-02 01:27:21.191620+00:00, [airflow.models.dagrun.DagRun] loc=dagrun.py:1315

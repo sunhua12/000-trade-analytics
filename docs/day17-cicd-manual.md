@@ -1,6 +1,6 @@
 # Day 17：CI／CD 與 OIDC 部署操作手冊
 
-> 現行設定：Day 19 已將精確 OIDC trust 與 `AWS_DEPLOY_REF` 同步為 `main`，自動部署仍關閉，並補入指定 SNS topic 的 subscription refresh 唯讀權限。下方 Day 17 feature 分支值為歷史驗收設定；現行操作見 [重建與復原手冊](day19-recovery-manual.md)。
+> 現行設定：Day 19 已將精確 OIDC trust 與 `AWS_DEPLOY_REF` 同步為 `main`，持續營運變更已將 push trigger 同步 main 並啟用自動部署，真實 push 驗證見 [營運紀錄](continuous-operations-record.md)；並補入指定 SNS topic 的 subscription refresh 唯讀權限。下方 Day 17 feature 分支值為歷史驗收設定；現行操作見 [重建與復原手冊](day19-recovery-manual.md)。
 
 ## 1. 檢查與身分邊界
 

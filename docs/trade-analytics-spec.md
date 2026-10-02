@@ -95,11 +95,11 @@ USITC 關稅整合、HTS crosswalk、HS 6 碼擴充、2015 年起完整回填、
 | [ ] | Day 1 | 現有 Python 分層、依賴注入、fixture | 執行既有檢查；畫出呼叫流程；確認 AWS／GCP、Docker 與 API 存取條件 | 能解釋 query → client → service → storage；列出可用環境與阻礙 |
 | [x] | Day 2 | API 契約、HS 分類、資料完整性 | 抽查起訖月份的兩類查詢；確定 endpoint、分類版本、24 個月範圍及重量可用性；建立資料契約 | 有真實回應摘要；若改範圍或切換正式 API，記錄理由及代價 |
 | [x] | Day 3 | 冪等、版本與數值精度 | 補 query 分類驗證、商品碼／版本儲存路徑、Decimal 處理、重跑政策及 regression tests | 相同輸入 checksum 穩定；不同商品不撞路徑；不覆寫修訂資料 |
-| [ ] | Day 4 | Terraform、Lambda container、IAM、S3 | 完成 AWS bootstrap／remote state；以 Terraform 建立 S3、ECR、Lambda、IAM、Log Group；部署 image 並執行同月兩類查詢與重跑 | 保存 plan／apply、image digest、invocation、S3 URI、筆數與 checksum；重跑無新增有效資料；不以 Console 建置代替 IaC |
-| [ ] | Day 5 | BigQuery schema、分區、跨雲載入 | 完成一個月份的 S3 載入 PoC、landing／raw schema 與載入設定；確定單一載入方案 | 真實 BigQuery 查詢成功；明細與 World 均入倉 |
-| [ ] | Day 6 | 載入稽核、MERGE、失敗重跑 | 完成正規化、load audit、raw MERGE 與單月重跑；先核對 Manifest 筆數與金額 | 連跑兩次 raw grain 不重複；錯誤可定位至檔案與 job |
-| [ ] | Day 7 | dbt source、staging、型別轉換 | 建立 dbt project、source、兩個 staging models、日期 spine 與 model descriptions | 開發 Dataset 可 build；日期、金額、代碼與 metadata 正確 |
-| [ ] | Day 8 | 維度與事實表、國家代碼 | 建立國家 seed／dimension、HS dimension、fact；標示 World、國家與特殊代碼 | fact grain 唯一；未對應資料可追查，不靜默丟棄 |
+| [x] | Day 4 | Terraform、Lambda container、IAM、S3 | 完成 AWS bootstrap／remote state；以 Terraform 建立 S3、ECR、Lambda、IAM、Log Group；部署 image 並執行同月兩類查詢與重跑 | 保存 plan／apply、image digest、invocation、S3 URI、筆數與 checksum；重跑無新增有效資料；不以 Console 建置代替 IaC；實測見 [紀錄](day04-deployment-record.md) |
+| [x] | Day 5 | BigQuery schema、分區、跨雲載入 | 完成一個月份的 S3 載入 PoC、landing／raw schema 與載入設定；確定單一載入方案 | 真實 BigQuery 查詢成功；明細與 World 均入倉；實測見 [紀錄](day05-load-record.md) |
+| [x] | Day 6 | 載入稽核、MERGE、失敗重跑 | 完成正規化、load audit、raw MERGE 與單月重跑；先核對 Manifest 筆數與金額 | 連跑兩次 raw grain 不重複；錯誤可定位至檔案與 job；實測見 [紀錄](day06-load-record.md) |
+| [x] | Day 7 | dbt source、staging、型別轉換 | 建立 dbt project、source、兩個 staging models、日期 spine 與 model descriptions | 開發 Dataset 可 build；日期、金額、代碼與 metadata 正確；實測見 [紀錄](day07-dbt-record.md) |
+| [x] | Day 8 | 維度與事實表、國家代碼 | 建立國家 seed／dimension、HS dimension、fact；標示 World、國家與特殊代碼 | fact grain 唯一；未對應資料可追查，不靜默丟棄；實測見 [紀錄](day08-modeling-record.md) |
 | [x] | Day 9 | SQL 指標、window function | 完成金額、市占率、MoM、YoY、HHI 與有效重量單位價值；補固定資料測試 | 手算結果一致；缺月、缺分母及 0 分母處理正確；見 [驗收紀錄](day09-metrics-record.md) |
 | [x] | Day 10 | 對帳、PASS／WARN／FAIL、發布門檻 | 建立 audit model 與品質 gate；展示單月完整分析 SQL | 真實單月已發布；異常 fixture 阻擋與回滾驗證通過；M2 技術驗收，見 [紀錄](day10-quality-publish-record.md) |
 | [x] | Day 11 | 小批次回填、覆蓋率與資料修訂 | 先跑 3 個月，再完成 24 個月；核對每月兩類資料、版本與品質狀態 | 24 個月均 PASS／已發布；修訂於隔離 fixture 驗證，真實修訂尚未發生；見[執行紀錄](day11-backfill-record.md) |
@@ -433,3 +433,5 @@ docs/analysis-findings.md
 - [x] 履歷敘述只使用實測月份、資料量、執行時間與完成狀態，不把規劃當成果。
 
 完成定義：上述必要項目全部通過，才稱為本版 MVP 完成。若僅本機可展示或尚缺雲端驗證，應明確標示目前交付層級與未完成項目。
+
+2026-10-02 同步早期技術勾選：Day 4～8 依既有實測紀錄補勾；Day 1 本人理解與 Day 20／M5 展示仍未代填。後續 43 月資料與持續營運屬原 MVP 後續工作，見 [營運紀錄](continuous-operations-record.md)。

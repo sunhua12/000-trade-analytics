@@ -1,0 +1,78 @@
+{
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "autoscaling.knative.dev/maxScale": "1",
+          "run.googleapis.com/client-name": "gcloud",
+          "run.googleapis.com/client-version": "585.0.0",
+          "run.googleapis.com/startup-cpu-boost": "true"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "TRADE_BQ_PROJECT",
+                "value": "trade-analytics-508604"
+              },
+              {
+                "name": "TRADE_BQ_LOCATION",
+                "value": "asia-northeast1"
+              },
+              {
+                "name": "TRADE_BQ_MAX_BYTES_BILLED",
+                "value": "1000000000"
+              },
+              {
+                "name": "TRADE_DASHBOARD_CACHE_TTL",
+                "value": "3600"
+              },
+              {
+                "name": "TRADE_DASHBOARD_FIRST_MONTH",
+                "value": "2023-01-01"
+              },
+              {
+                "name": "TRADE_DASHBOARD_AFTER_LAST_MONTH",
+                "value": "2026-08-01"
+              }
+            ],
+            "image": "asia-northeast1-docker.pkg.dev/trade-analytics-508604/trade-dashboard/dashboard@sha256:bf659188d8f1c4a7bc4cf910bb48e1d72db2c43d4a9610e2183846b40d9b2819",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "http1"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "1Gi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 1,
+              "periodSeconds": 240,
+              "tcpSocket": {
+                "port": 8080
+              },
+              "timeoutSeconds": 240
+            }
+          }
+        ],
+        "serviceAccountName": "trade-dashboard-runtime@trade-analytics-508604.iam.gserviceaccount.com"
+      }
+    }
+  },
+  "status": {
+    "latestReadyRevisionName": "trade-dashboard-continuous-20261002",
+    "traffic": [
+      {
+        "percent": 100,
+        "revisionName": "trade-dashboard-continuous-20261002"
+      }
+    ],
+    "url": "https://trade-dashboard-e242237ytq-an.a.run.app"
+  }
+}
