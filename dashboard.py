@@ -296,22 +296,27 @@ def main() -> None:
         st.info("此條件沒有可顯示的 YoY 資料。")
     st.caption("缺去年同月或基期不大於 0 時保留空白；百分比不加總或平均。")
 
-    st.subheader("國家覆蓋與 HHI 狀態")
+    st.subheader("來源國資料覆蓋率")
     monthly = [row for row in data["monthly"] if start <= row["month"] <= end]
     if monthly:
+        has_valid_hhi = any(row["hhi_status"] == "ok" and row["hhi"] is not None for row in monthly)
         coverage_rows = [
             {
                 "月份": row["month"].strftime("%Y-%m"),
                 "國家覆蓋率": f"{Decimal(str(row['country_coverage'])):.2%}"
                 if row["country_coverage"] is not None
                 else "資料不足",
-                "HHI": f"{Decimal(str(row['hhi'])):,.2f}"
-                if row["hhi_status"] == "ok" and row["hhi"] is not None
-                else "資料不足",
-                "HHI 狀態": row["hhi_status"] or "未提供",
             }
             for row in monthly
         ]
+        if has_valid_hhi:
+            for coverage_row, row in zip(coverage_rows, monthly, strict=True):
+                coverage_row["HHI"] = (
+                    f"{Decimal(str(row['hhi'])):,.2f}"
+                    if row["hhi_status"] == "ok" and row["hhi"] is not None
+                    else "資料不足"
+                )
+                coverage_row["HHI 狀態"] = row["hhi_status"] or "未提供"
         st.dataframe(coverage_rows, hide_index=True, width="stretch")
         coverage_frame = pd.DataFrame(
             {
@@ -326,12 +331,13 @@ def main() -> None:
         ).set_index("月份")
         if coverage_frame["國家覆蓋率（%）"].notna().any():
             st.line_chart(coverage_frame)
-        if not any(row["hhi_status"] == "ok" and row["hhi"] is not None for row in monthly):
-            st.info("所選月份的 HHI 均不可顯示；請查看各月覆蓋率與狀態。")
-        st.caption(
-            "HHI 以 World 為分母，僅在國家覆蓋差距不超過 0.5% 且狀態為 ok 時顯示。"
-            "品質 PASS 不代表 HHI 可用。"
-        )
+        if has_valid_hhi:
+            st.caption(
+                "HHI 以 World 為分母，僅在國家覆蓋差距不超過 0.5% 且狀態為 ok 時顯示。"
+                "品質 PASS 不代表 HHI 可用。"
+            )
+        else:
+            st.caption("部分金額未能歸屬至已確認國家／地區，因此暫不提供完整集中度分析。")
     else:
         st.info("此期間沒有逐月覆蓋資料。")
 
