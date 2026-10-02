@@ -81,7 +81,9 @@ def test_empty_dashboard_results_do_not_crash(monkeypatch: pytest.MonkeyPatch) -
     app = AppTest.from_file(APP, default_timeout=10).run()
     assert not app.exception
     assert not app.error
-    assert len(app.info) == 6
+    assert any(item.value == "此期間沒有逐月覆蓋資料。" for item in app.info)
+    assert "年增率 YoY" not in [item.value for item in app.subheader]
+    assert "最新月份：進口金額與 YoY" not in [item.value for item in app.subheader]
 
 
 def test_query_failure_shows_error_instead_of_stale_results(

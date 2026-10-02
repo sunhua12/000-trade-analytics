@@ -120,6 +120,22 @@ def display_time(value: Any) -> str:
     return str(value)
 
 
+def date_line_chart(frame: pd.DataFrame) -> None:
+    """Display the latest month first on all date-based chart axes."""
+    value_column = frame.columns[0]
+    st.vega_lite_chart(
+        frame.sort_index(ascending=False).reset_index(),
+        {
+            "mark": "line",
+            "encoding": {
+                "x": {"field": "月份", "type": "temporal", "scale": {"reverse": True}},
+                "y": {"field": value_column, "type": "quantitative"},
+            },
+        },
+        width="stretch",
+    )
+
+
 def main() -> None:
     st.set_page_config(page_title="美國半導體進口分析", layout="wide")
     st.title("美國半導體進口分析")
@@ -137,12 +153,13 @@ def main() -> None:
         if not months:
             st.info("指定的展示範圍尚無已發布月份。")
             return
+        months = sorted(months, reverse=True)
         with st.sidebar:
             start = st.selectbox(
-                "起始月份", months, index=0, format_func=lambda d: d.strftime("%Y-%m")
+                "起始月份", months, index=len(months) - 1, format_func=lambda d: d.strftime("%Y-%m")
             )
             end = st.selectbox(
-                "結束月份", months, index=len(months) - 1, format_func=lambda d: d.strftime("%Y-%m")
+                "結束月份", months, index=0, format_func=lambda d: d.strftime("%Y-%m")
             )
             if start > end:
                 st.warning("起始月份不可晚於結束月份。")
@@ -258,7 +275,7 @@ def main() -> None:
                 ],
             }
         ).set_index("月份")
-        st.line_chart(frame)
+        date_line_chart(frame)
         st.caption(
             "僅加總已確認國家／地區的金額；缺月保留空白，不補成 0。"
             "圖表使用浮點數顯示，精確核對以 BigQuery NUMERIC 為準。"
@@ -266,38 +283,44 @@ def main() -> None:
     else:
         st.info("此篩選條件沒有月度趨勢資料。")
 
-    st.subheader("年增率 YoY")
     if len(selected) == 1:
         yoy_rows = [{"月份": row["month"], "YoY": row["yoy"]} for row in data["partner_metrics"]]
-        st.caption(f"來源國／地區 {selected[0]} 的本月金額與去年同月比較。")
     else:
         yoy_rows = world_yoy(data["monthly"], start, end)
-        st.caption("World 月度金額與去年同月比較；此參考指標不隨 Partner 多選改變。")
-    yoy_table = [
-        {
-            "月份": row["月份"].strftime("%Y-%m"),
-            "YoY": f"{Decimal(str(row['YoY'])):.2%}" if row["YoY"] is not None else "無可比較基期",
-        }
-        for row in yoy_rows
-    ]
-    if yoy_table:
-        st.dataframe(yoy_table, hide_index=True, width="stretch")
+    yoy_rows = sorted(
+        (row for row in yoy_rows if row["YoY"] is not None),
+        key=lambda row: row["月份"],
+        reverse=True,
+    )
+    if yoy_rows:
+        st.subheader("年增率 YoY")
+        if len(selected) == 1:
+            st.caption(f"來源國／地區 {selected[0]} 的本月金額與去年同月比較。")
+        else:
+            st.caption("World 月度金額與去年同月比較；此參考指標不隨 Partner 多選改變。")
+        st.dataframe(
+            [
+                {"月份": row["月份"].strftime("%Y-%m"), "YoY": f"{Decimal(str(row['YoY'])):.2%}"}
+                for row in yoy_rows
+            ],
+            hide_index=True,
+            width="stretch",
+        )
         yoy_frame = pd.DataFrame(
             {
                 "月份": [row["月份"] for row in yoy_rows],
-                "YoY（%）": [
-                    float(row["YoY"] * 100) if row["YoY"] is not None else None for row in yoy_rows
-                ],
+                "YoY（%）": [float(row["YoY"] * 100) for row in yoy_rows],
             }
         ).set_index("月份")
-        if yoy_frame["YoY（%）"].notna().any():
-            st.line_chart(yoy_frame)
-    else:
-        st.info("此條件沒有可顯示的 YoY 資料。")
-    st.caption("缺去年同月或基期不大於 0 時保留空白；百分比不加總或平均。")
+        date_line_chart(yoy_frame)
+        st.caption("僅顯示有去年同月且基期大於 0 的資料；百分比不加總或平均。")
 
     st.subheader("來源國資料覆蓋率")
-    monthly = [row for row in data["monthly"] if start <= row["month"] <= end]
+    monthly = sorted(
+        (row for row in data["monthly"] if start <= row["month"] <= end),
+        key=lambda row: row["month"],
+        reverse=True,
+    )
     if monthly:
         has_valid_hhi = any(row["hhi_status"] == "ok" and row["hhi"] is not None for row in monthly)
         coverage_rows = [
@@ -330,7 +353,7 @@ def main() -> None:
             }
         ).set_index("月份")
         if coverage_frame["國家覆蓋率（%）"].notna().any():
-            st.line_chart(coverage_frame)
+            date_line_chart(coverage_frame)
         if has_valid_hhi:
             st.caption(
                 "HHI 以 World 為分母，僅在國家覆蓋差距不超過 0.5% 且狀態為 ok 時顯示。"
@@ -389,9 +412,9 @@ def main() -> None:
     else:
         st.info("此範圍沒有可映射的國家／地區資料。")
 
-    st.subheader("最新月份：進口金額與 YoY")
-    scatter = data["scatter"]
+    scatter = [row for row in data["scatter"] if row["yoy"] is not None]
     if scatter:
+        st.subheader("最新月份：進口金額與 YoY")
         scatter_frame = pd.DataFrame(
             {
                 "來源國／地區": [
@@ -408,11 +431,9 @@ def main() -> None:
             f"僅從所選期間排名前 {top_n} 名中取金額與 YoY 均有效的資料。"
             f"有效點數：{len(scatter)}。"
         )
-    else:
-        st.info("最新月份沒有可比較的來源國／地區散佈資料。")
 
     st.subheader("發布與品質摘要")
-    quality = data["quality"]
+    quality = sorted(data["quality"], key=lambda row: row["period"], reverse=True)
     if quality:
         st.dataframe(
             quality_table_rows(quality),
