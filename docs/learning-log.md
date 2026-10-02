@@ -493,3 +493,11 @@ Bootstrap 新增 GitHub provider 與受限部署角色，trust 精確匹配含 i
 - 14 項驗收中 13 項通過，第 13 項本人 5 分鐘講解／理解待完成；因此 Day 20／M5／完整 MVP 仍保留未完成。
 - 本人實際工時、理解測驗及帳單未提供；不由 AI 文件產出代替。Monthly DAG 仍暫停，剩餘積欠另追蹤。
 - 詳見 [最終驗收](day20-final-acceptance.md)、[展示稿](demo-script.md)與 [限制](known-limitations.md)。
+
+## 持續營運：積欠補齊、排程與自動部署
+
+- 2026-10-02 補齊 202505～202606；恢復 monthly 後 scheduler 自動發布 202607，連續 43 月。202608／202609 來源未就緒，更舊缺月清空。
+- 首批因新夥伴 422 缺維度被 gate 阻擋；按官方快照審核 13 個新夥伴，seed 增至 163 筆，未知代碼仍需審核。獨立 SQL 核對 grain、來源、金額及原 28 月發布狀態不變。
+- PR #19 修正 main push trigger，受限 OIDC 自動部署真實通過、Lambda digest 一致且無 drift。服務重啟復原、Cloud Run 43 月 UI 與有限資源清理完成。
+- 本人選擇本機常駐、接受關機／休眠不排程，採手動清單；展示先跳過，預算通知未實收。跨 2～4 週穩定性、首個完整 10 月帳單待後續驗收，不代填工時或理解。
+- 詳見 [營運紀錄](continuous-operations-record.md)、[手動檢查清單](continuous-operations-checklist.md)。

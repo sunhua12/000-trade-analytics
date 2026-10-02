@@ -1,10 +1,10 @@
 # Day 18：Cloud Run 展示操作手冊
 
-> 現行服務：Day 19 使用原 digest 復原至 `trade-dashboard-recovered-original`，流量 100％、最小 instances 0、最大 instances 1。直接回切首次 revision 曾發生 429；可用的舊 digest 重新部署入口與真實結果見 [復原手冊](day19-recovery-manual.md)及 [執行紀錄](day19-run-record.md)。本頁首次 revision 資料保留作歷史證據。
+> 現行服務：持續營運更新沿用原 digest，部署至 `trade-dashboard-continuous-20261002`（見 [營運紀錄](continuous-operations-record.md)）；Day 19 復原 revision 為 `trade-dashboard-recovered-original`，流量 100％、最小 instances 0、最大 instances 1。直接回切首次 revision 曾發生 429；可用的舊 digest 重新部署入口與真實結果見 [復原手冊](day19-recovery-manual.md)及 [執行紀錄](day19-run-record.md)。本頁首次 revision 資料保留作歷史證據。
 
 ## 服務與執行邊界
 
-[Live Demo](https://trade-dashboard-898093147725.asia-northeast1.run.app) 使用專案 `trade-analytics-508604`、region `asia-northeast1`、服務 `trade-dashboard` 與 Artifact Registry repository `trade-dashboard`。公開頁面只展示已發布的美國月度進口 `8542／H6`；目前雲端展示範圍為 `202301～202504`，共 28 個已發布月份，不代表最新可取得月份。
+[Live Demo](https://trade-dashboard-898093147725.asia-northeast1.run.app) 使用專案 `trade-analytics-508604`、region `asia-northeast1`、服務 `trade-dashboard` 與 Artifact Registry repository `trade-dashboard`。公開頁面只展示已發布的美國月度進口 `8542／H6`；目前雲端展示範圍為 `202301～202607`，共 43 個已發布月份，不代表最新可取得月份。
 
 Runtime 為 `trade-dashboard-runtime@trade-analytics-508604.iam.gserviceaccount.com`，只取得專案 `roles/bigquery.jobUser` 與 `trade_analytics_published` Dataset `READER`。部署使用既有授權的 gcloud 使用者，首次操作需要 API 啟用、registry／Service Account 建立及 IAM 設定權限；日常部署需要推送映像、更新 Cloud Run 及對 runtime 的 `iam.serviceAccounts.actAs` 權限。本日未建立 GCP WIF，也未使用 Day 17 的 AWS OIDC role 部署 GCP。
 

@@ -1,0 +1,47 @@
+[
+  {
+    "start": "202505",
+    "end": "202507",
+    "started_at_utc": "2026-10-02T01:27:20.158281+00:00",
+    "ended_at_utc": "2026-10-02T01:32:29.701138+00:00",
+    "exit_code": 0,
+    "success": true,
+    "log": "backfill-202505-202507-verified.log"
+  },
+  {
+    "start": "202508",
+    "end": "202510",
+    "started_at_utc": "2026-10-02T01:32:29.701442+00:00",
+    "ended_at_utc": "2026-10-02T01:38:14.014166+00:00",
+    "exit_code": 0,
+    "success": true,
+    "log": "backfill-202508-202510-verified.log"
+  },
+  {
+    "start": "202511",
+    "end": "202601",
+    "started_at_utc": "2026-10-02T01:38:14.014444+00:00",
+    "ended_at_utc": "2026-10-02T01:43:58.234100+00:00",
+    "exit_code": 0,
+    "success": true,
+    "log": "backfill-202511-202601-verified.log"
+  },
+  {
+    "start": "202602",
+    "end": "202604",
+    "started_at_utc": "2026-10-02T01:43:58.235236+00:00",
+    "ended_at_utc": "2026-10-02T01:52:00.601190+00:00",
+    "exit_code": 0,
+    "success": true,
+    "log": "backfill-202602-202604-verified.log"
+  },
+  {
+    "start": "202605",
+    "end": "202606",
+    "started_at_utc": "2026-10-02T01:52:00.602956+00:00",
+    "ended_at_utc": "2026-10-02T01:59:12.595285+00:00",
+    "exit_code": 0,
+    "success": true,
+    "log": "backfill-202605-202606-verified.log"
+  }
+]

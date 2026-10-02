@@ -1,0 +1,11 @@
+{
+  "image_uri": "816079797958.dkr.ecr.ap-northeast-1.amazonaws.com/trade-analytics-ingestion@sha256:f7370058ab3f19906330a0611f59d7d6c275ae5598c9f4854b913166dc8af3f0",
+  "changes": [
+    {
+      "address": "aws_lambda_function.ingestion",
+      "actions": [
+        "update"
+      ]
+    }
+  ]
+}

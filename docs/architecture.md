@@ -60,4 +60,4 @@ GCP 採既有可重做手動部署入口，未建立 WIF 或完整 GCP Terraform
 | 唯讀展示 | 訪客僅使用有限篩選／固定參數化 SQL，不能寫資料或提交任意 SQL |
 | 可觀測性 | 原生 Alarm 不含 run ID；由 Alarm 時間／函數找到 request／run ID，再追查 manifest、load、audit |
 
-服務 image 回復不撤銷已發布資料。Cloud Run 實測復原採舊 digest 建立新 revision，直接舊 revision 回切失敗保留。Monthly DAG 仍暫停；本機服務停機時不執行排程。更多界線見 [限制](known-limitations.md)與 [操作索引](runbook.md)。
+服務 image 回復不撤銷已發布資料。Cloud Run 實測復原採舊 digest 建立新 revision，直接舊 revision 回切失敗保留。Monthly DAG 已恢復並自動發布 202607；本機服務停機時不執行排程。長期驗收仍待手動觀察，見 [營運紀錄](continuous-operations-record.md)。更多界線見 [限制](known-limitations.md)與 [操作索引](runbook.md)。

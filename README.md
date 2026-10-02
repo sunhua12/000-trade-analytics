@@ -4,7 +4,7 @@
 
 [開啟 Live Demo](https://trade-dashboard-898093147725.asia-northeast1.run.app)｜[架構與取捨](docs/architecture.md)｜[資料字典](docs/data-dictionary.md)｜[操作索引](docs/runbook.md)｜[已知限制](docs/known-limitations.md)｜[5 分鐘展示稿](docs/demo-script.md)｜[最終驗收](docs/day20-final-acceptance.md)
 
-截至 2026-10-02，原始驗收 `202301～202412` 連續 24 月皆已查驗及發布，延伸至 `202504`，線上展示 28 月。乾淨來源重建、真實 SNS 實收／來源復原、正式同月安全重跑與 OIDC 部署已有證據；本人 5 分鐘講解仍未實測，完整 M5／MVP 驗收尚未全數勾選。Monthly DAG 保持暫停，剩餘積欠另批處理。
+截至 2026-10-02，正式資料與線上展示已連續涵蓋 `202301～202607`，共 43 月。積欠已補至來源可用終點，monthly 已恢復並以真實 scheduled run 自動發布 7 月；8、9 月來源尚未就緒。main push 的 AWS 自動部署已啟用並驗證。詳見 [持續營運紀錄](docs/continuous-operations-record.md)與 [手動檢查清單](docs/continuous-operations-checklist.md)。本機關機／休眠期間不排程；跨週穩定性、完整帳單與預算通知實收仍待驗，本人講解依本人決定暫緩，M5 保留未完成。
 
 ### 三項分析觀察
 
@@ -24,7 +24,7 @@ python3.11 -m venv .venv
 .venv/bin/streamlit run dashboard.py
 ```
 
-從專案根目錄執行；本機預設展示 202301～202412。要與線上 28 月一致，啟動前設定 `TRADE_DASHBOARD_FIRST_MONTH=202301`、`TRADE_DASHBOARD_AFTER_LAST_MONTH=202505`。無 ADC／正式資料的新環境先依 [操作索引](docs/runbook.md)完成授權與建置；不要把個人憑證寫入 repository 或 image。
+從專案根目錄執行；本機預設展示 202301～202412。要與線上 43 月一致，啟動前設定 `TRADE_DASHBOARD_FIRST_MONTH=2023-01-01`、`TRADE_DASHBOARD_AFTER_LAST_MONTH=2026-08-01`。無 ADC／正式資料的新環境先依 [操作索引](docs/runbook.md)完成授權與建置；不要把個人憑證寫入 repository 或 image。
 
 完整乾淨環境與部署依 [重建手冊](docs/day19-recovery-manual.md)：先安裝 application 依賴，再驗證容器／Airflow／dbt，AWS 依 bootstrap → ECR／image → application Terraform，GCP 採既有部署指令。共用 backend／OIDC provider 的範圍與隔離資源實測分開記錄。
 
@@ -340,4 +340,4 @@ docker compose -f docker-compose.yaml -f compose.aws.yaml down
 
 排程每月 1 日依台北時間檢查最近最多 3 個完整月份，依序處理其中可用且未發布的月份；超出三期範圍的未發布月份列在 `older_unpublished`，須人工處置。Airflow 只在本機服務運行時排程，且 `catchup=False` 不會補建停機期間的所有排程 run。暫時性遠端錯誤最多額外重試 3 次；永久錯誤直接失敗。設定、月份語意與操作細節見 [Airflow 指南](docs/day14-airflow-manual.md)與 [Day 15 操作手冊](docs/day15-operations-manual.md)，歷史單月實測見 [Day 14 執行紀錄](docs/day14-run-record.md)。
 
-歷史積欠使用無排程的 `trade_backfill_pipeline`，明確指定起訖月份，每次最多三個連續完整月份；與 monthly DAG 共用單 slot Pool。`202501`～`202503` 的真實回填與 `202504` 載入回報遺失後重試，見 [Day 16 操作手冊](docs/day16-backfill-manual.md)及[執行紀錄](docs/day16-run-record.md)。正式 monthly DAG 目前仍保持暫停；其餘積欠月份需逐批查核後處理。
+歷史積欠使用無排程的 `trade_backfill_pipeline`，明確指定起訖月份，每次最多三個連續完整月份；與 monthly DAG 共用單 slot Pool。`202501`～`202503` 的真實回填與 `202504` 載入回報遺失後重試，見 [Day 16 操作手冊](docs/day16-backfill-manual.md)及[執行紀錄](docs/day16-run-record.md)。持續營運已補至 202607 並恢復 monthly，見 [營運紀錄](docs/continuous-operations-record.md)；手動回填前先暫停 monthly，維持單 writer。

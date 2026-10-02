@@ -4,7 +4,7 @@
 
 目前來源擷取、raw 載入、來源查驗、dbt、品質 audit 與發布都能分別執行，但需要人工掌握順序與停損點。Airflow 負責依月份排程、管理任務相依、記錄每次執行狀態與日誌，並在上游失敗時阻止下游發布。資料仍由現有 Lambda、S3、BigQuery、dbt 與 `Publisher` 處理；Airflow 不儲存原始貿易資料。XCom 只傳月份、URI、checksum、筆數、run ID 等小型 metadata。
 
-本專案採本機 Docker Compose：只有本機服務啟動時，排程才會運作。Compose、獨立的 Airflow image、`hello_world_dag` 練習流程與正式 `trade_monthly_pipeline` 均已建立並驗證。正式 DAG 目前暫停，避免未驗證的新月份自動寫入。
+本專案採本機 Docker Compose：只有本機服務啟動時，排程才會運作。Compose、獨立的 Airflow image、`hello_world_dag` 練習流程與正式 `trade_monthly_pipeline` 均已建立並驗證。正式 monthly 已於持續營運工作恢復，且真實 scheduled run 發布 202607，見 [營運紀錄](continuous-operations-record.md)。下方 Day 14 驗收狀態保留為歷史；手動正式寫入前仍需先暫停 monthly。
 
 ## 已備妥的單月工作入口
 
