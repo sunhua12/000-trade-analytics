@@ -1,4 +1,4 @@
-"""Bounded, parameterized reads from the published BigQuery dataset."""
+"""Bounded, parameterized reads from the dbt Analytics Mart."""
 
 import os
 import re
@@ -11,12 +11,13 @@ FIRST_MONTH = date(2023, 1, 1)
 AFTER_LAST_MONTH = date(2025, 1, 1)
 CMD_CODE = "8542"
 HS_VERSION = "H6"
-DATASET = "trade_analytics_published"
+DATASET = "trade_analytics"
 
 
 @dataclass(frozen=True)
 class Settings:
     project: str
+    dataset: str = DATASET
     location: str = "asia-northeast1"
     maximum_bytes_billed: int = 1_000_000_000
     cache_ttl_seconds: int = 3600
@@ -36,6 +37,8 @@ class Settings:
             raise ValueError("展示範圍須為完整月份，且最多 60 個月")
         if not re.fullmatch(r"[a-z][a-z0-9-]{4,61}[a-z0-9]", self.project):
             raise ValueError("TRADE_BQ_PROJECT 不是有效的 GCP 專案 ID")
+        if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,1023}", self.dataset):
+            raise ValueError("TRADE_BQ_DATASET 不是有效的 Dataset ID")
         if not re.fullmatch(r"[a-z]+-[a-z]+\d", self.location):
             raise ValueError("TRADE_BQ_LOCATION 不是有效的 BigQuery location")
         if self.maximum_bytes_billed <= 0 or self.cache_ttl_seconds <= 0:
@@ -45,6 +48,7 @@ class Settings:
     def from_env(cls) -> "Settings":
         return cls(
             project=os.environ.get("TRADE_BQ_PROJECT", "trade-analytics-508604"),
+            dataset=os.environ.get("TRADE_BQ_DATASET", DATASET),
             location=os.environ.get("TRADE_BQ_LOCATION", "asia-northeast1"),
             maximum_bytes_billed=int(os.environ.get("TRADE_BQ_MAX_BYTES_BILLED", "1000000000")),
             cache_ttl_seconds=int(os.environ.get("TRADE_DASHBOARD_CACHE_TTL", "3600")),
@@ -57,9 +61,9 @@ class Settings:
         )
 
     def table(self, name: str) -> str:
-        if name not in {"mart_us_semiconductor_supply_chain", "publication_quality_summary"}:
+        if name != "mart_us_semiconductor_supply_chain":
             raise ValueError("不允許查詢此資料表")
-        return f"`{self.project}.{DATASET}.{name}`"
+        return f"`{self.project}.{self.dataset}.{name}`"
 
 
 def next_month(month: date) -> date:
@@ -75,7 +79,7 @@ def validate_range(
         raise ValueError("月份超出已規劃的展示範圍")
 
 
-class PublishedQueries:
+class AnalyticsQueries:
     """One client per Streamlit run; each query has parameters and a cost ceiling."""
 
     def __init__(self, settings: Settings, client: Any | None = None) -> None:
@@ -183,15 +187,14 @@ class PublishedQueries:
         table = self.settings.table("mart_us_semiconductor_supply_chain")
         rows = self._run(
             f"""WITH monthly AS (
-              SELECT period_start_date, MAX(world_value) AS world_value,
-                     MAX(published_at) AS published_at
+              SELECT period_start_date, MAX(world_value) AS world_value
               FROM {table}
               WHERE period_start_date >= @start_date AND period_start_date < @end_exclusive
                 AND cmd_code=@cmd_code AND hs_version=@hs_version
               GROUP BY period_start_date
             )
-            SELECT COUNT(*) AS published_months, SUM(world_value) AS world_value,
-                   MAX(period_start_date) AS latest_month, MAX(published_at) AS latest_published_at
+            SELECT COUNT(*) AS available_months, SUM(world_value) AS world_value,
+                   MAX(period_start_date) AS latest_month
             FROM monthly""",
             self._scope(start, end),
         )
@@ -276,23 +279,4 @@ class PublishedQueries:
                   AND (@all_partners OR partner_code IN UNNEST(@partners))
                 GROUP BY map_iso3 ORDER BY map_iso3""",
             params,
-        )
-
-    def quality(self, start: date, end: date) -> list[dict[str, Any]]:
-        validate_range(start, end, self.settings.first_month, self.settings.after_last_month)
-        table = self.settings.table("publication_quality_summary")
-        scalar = self.bigquery.ScalarQueryParameter
-        return self._run(
-            f"""SELECT period, published_quality_status, published_run_id, published_at,
-                   latest_quality_status, latest_run_id, latest_tested_at, reason_codes,
-                   latest_publish_status, latest_attempted_at
-            FROM {table}
-            WHERE period >= @start_period AND period <= @end_period
-              AND cmd_code=@cmd_code AND hs_version=@hs_version ORDER BY period""",
-            [
-                scalar("start_period", "STRING", start.strftime("%Y%m")),
-                scalar("end_period", "STRING", end.strftime("%Y%m")),
-                scalar("cmd_code", "STRING", CMD_CODE),
-                scalar("hs_version", "STRING", HS_VERSION),
-            ],
         )

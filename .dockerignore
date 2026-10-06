@@ -1,23 +1,43 @@
+# Local files are never part of a container build
 .git
 .github
-.venv
-.venv-dbt
+.venv*
 .env
 .env.*
+docker/compose.aws.yaml
+**/profiles.yml
+**/.user.yml
 .DS_Store
 **/.DS_Store
+.idea
+
+# Runtime data and generated files
 logs
 config
+data
+**/__pycache__
+*.py[cod]
+*.egg-info
 .pytest_cache
 .mypy_cache
 .ruff_cache
 .coverage
+coverage.json
 htmlcov
-__pycache__
-*.py[cod]
-*.egg-info
-data
+**/target
+**/logs
+
+# Legacy infrastructure state and private settings
+**/.terraform
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/*.tfplan.json
+**/*.tfvars
+**/*.tfvars.json
+**/*.backend.hcl
+infrastructure/aws/local
+
+# Documentation and tests are not needed by the images
 docs
 tests
-docs/trade-analytics.md
-docs/trade-analytics-spec.md

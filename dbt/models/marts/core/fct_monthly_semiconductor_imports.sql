@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 select
-    {{ day08_source_columns('s.') }},
+    {{ source_columns('s.') }},
     c.source_name,
     coalesce(c.partner_type, 'unknown') as partner_type,
     coalesce(c.classification_status, 'needs_review') as classification_status,

@@ -18,12 +18,10 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.monthly_plan import (  # noqa: E402
     AWS_REGION,
-    bigquery_client,
-    current_published,
     source_available,
 )
 from scripts.pipeline_exit import exit_for_error  # noqa: E402
-from trade_analytics.warehouse.backfill import KINDS, source_key  # noqa: E402
+from trade_analytics.warehouse.loader import KINDS, source_key  # noqa: E402
 
 
 def periods_between(start: str, end: str) -> list[str]:
@@ -85,19 +83,10 @@ def validate_conf(conf: dict[str, Any]) -> tuple[list[str], dict[str, int], dict
 
 def plan(conf: dict[str, Any], dag_run_id: str) -> dict[str, Any]:
     periods, revisions, replay = validate_conf(conf)
-    client = bigquery_client()
     s3 = boto3.client("s3", region_name=AWS_REGION)
     items: list[dict[str, Any]] = []
     with httpx.Client(timeout=httpx.Timeout(30.0)) as http_client:
         for period in periods:
-            published_run_id = current_published(client, period)
-            if published_run_id and (conf.get("recovery_probe") or {}).get("period") == period:
-                raise ValueError("recovery probe requires an unpublished month")
-            if published_run_id and period not in replay:
-                items.append({"period": period, "status": "already_published"})
-                continue
-            if period in replay and replay[period] != published_run_id:
-                raise ValueError(f"replay run ID does not match published month: {period}")
             sources = {
                 kind: source_available(s3, http_client, period, kind, revisions[kind])
                 for kind in KINDS

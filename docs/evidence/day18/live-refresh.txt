@@ -1,4 +1,0 @@
-Browser tab: 1, Title: "美國半導體進口分析", URL: "https://trade-dashboard-898093147725.asia-northeast1.run.app/".
-The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
-~					49 text 所選期間最新資料月份：2024-12；所選期間最近成功發布：2026-09-24 12:19 :50  Asia/Taipei；所選期間最新發布嘗試：2026-09-30 19:17 :12  Asia/Taipei；畫面資料讀取：2026-10-02 01:13 :35  Asia/Taipei。
-The focused UI element is 7 button 重新讀取已發布資料

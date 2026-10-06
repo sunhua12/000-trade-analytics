@@ -1,3 +1,0 @@
-2026-10-01T17:53:55.132299Z [info     ] Filling up the DagBag from /opt/trade-analytics/dags [airflow.dag_processing.dagbag.DagBag] loc=dagbag.py:460
-trade_monthly_pipeline: imported 31 tasks; serial dependencies verified
-trade_backfill_pipeline: imported 31 tasks; serial dependencies verified

@@ -1,7 +1,0 @@
-{
-  "deleted_datasets": [
-    "trade_analytics_day10_rebuild_acceptance_inputs_fixture",
-    "trade_analytics_day10_rebuild_acceptance_publish_fixture"
-  ],
-  "production_datasets_untouched": true
-}

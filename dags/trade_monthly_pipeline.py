@@ -1,33 +1,13 @@
 """Monthly trade pipeline: up to three safe months in serial order."""
 
 import json
-import subprocess
 from datetime import timedelta
 
 import pendulum
 from airflow.sdk import dag, task
-from airflow.sdk.exceptions import AirflowFailException, AirflowSkipException
+from airflow.sdk.exceptions import AirflowSkipException
 from airflow.timetables.interval import CronDataIntervalTimetable
-
-PYTHON = "/opt/trade-venv/bin/python"
-DBT = "/opt/trade-venv/bin/dbt"
-ROOT = "/opt/trade-analytics"
-
-
-def run_command(command: list[str]) -> dict:
-    process = subprocess.run(command, capture_output=True, text=True, check=False)
-    if process.stdout:
-        print(process.stdout)
-    if process.stderr:
-        print(process.stderr)
-    if process.returncode:
-        if process.returncode == 75:
-            raise RuntimeError("transient command failure; task may retry")
-        raise AirflowFailException(f"permanent command failure: exit code {process.returncode}")
-    try:
-        return json.loads(process.stdout.splitlines()[-1])
-    except (IndexError, json.JSONDecodeError) as error:
-        raise RuntimeError("command did not return JSON metadata") from error
+from trade_pipeline.common import PYTHON, ROOT, TRANSIENT_RETRY, run_command, wire_months
 
 
 @dag(
@@ -44,10 +24,7 @@ def trade_monthly_pipeline():
     @task(
         task_id="check_availability",
         execution_timeout=timedelta(minutes=15),
-        retries=3,
-        retry_delay=timedelta(minutes=2),
-        retry_exponential_backoff=True,
-        max_retry_delay=timedelta(minutes=15),
+        **TRANSIENT_RETRY,
     )
     def check_availability(**context) -> dict:
         dag_run = context["dag_run"]
@@ -83,71 +60,16 @@ def trade_monthly_pipeline():
     def select_month(plan: dict, index: int) -> dict:
         print(
             json.dumps(
-                {"checks": plan["checks"], "older_unpublished": plan["older_unpublished"]},
+                {"checks": plan["checks"]},
                 sort_keys=True,
             )
         )
         if index >= len(plan["selected"]):
-            raise AirflowSkipException("no more available unpublished months in this run")
+            raise AirflowSkipException("no more available months in this run")
         return plan["selected"][index]
 
-    @task(pool="trade_pipeline", execution_timeout=timedelta(hours=1))
-    def monthly_step(spec: dict, step: str, kind: str | None = None) -> dict:
-        command = [
-            PYTHON,
-            f"{ROOT}/scripts/monthly_steps.py",
-            step,
-            "--period",
-            spec["period"],
-        ]
-        if kind:
-            command.extend(["--kind", kind, "--revision", str(spec["revisions"][kind])])
-        if step in ("ingest", "audit", "gate", "publish"):
-            command.extend(["--run-id", spec["run_id"]])
-        if step == "build":
-            command.extend(["--dbt-executable", DBT])
-        print(
-            json.dumps(
-                {"step": step, "kind": kind, "period": spec["period"], "run_id": spec["run_id"]}
-            )
-        )
-        return run_command(command)
-
     plan = check_availability()
-    previous_publish = None
-    transient_retry = {
-        "retries": 3,
-        "retry_delay": timedelta(minutes=2),
-        "retry_exponential_backoff": True,
-        "max_retry_delay": timedelta(minutes=15),
-    }
-    for index in range(3):
-        suffix = "" if index == 0 else f"_{index + 1}"
-        spec = select_month.override(task_id=f"select_month{suffix}")(plan, index)
-        if previous_publish is not None:
-            previous_publish >> spec
-        detail = monthly_step.override(task_id=f"ingest_detail{suffix}", **transient_retry)(
-            spec, "ingest", "partner_detail"
-        )
-        world = monthly_step.override(task_id=f"ingest_world{suffix}", **transient_retry)(
-            spec, "ingest", "world_total"
-        )
-        detail_load = monthly_step.override(task_id=f"load_detail{suffix}", **transient_retry)(
-            spec, "load", "partner_detail"
-        )
-        world_load = monthly_step.override(task_id=f"load_world{suffix}", **transient_retry)(
-            spec, "load", "world_total"
-        )
-        attest = monthly_step.override(task_id=f"attest{suffix}")(spec, "attest")
-        build = monthly_step.override(task_id=f"build{suffix}")(spec, "build")
-        audit = monthly_step.override(task_id=f"audit{suffix}")(spec, "audit")
-        gate = monthly_step.override(task_id=f"gate{suffix}")(spec, "gate")
-        publish = monthly_step.override(task_id=f"publish{suffix}")(spec, "publish")
-
-        detail >> detail_load
-        world >> world_load
-        [detail_load, world_load] >> attest >> build >> audit >> gate >> publish
-        previous_publish = publish
+    wire_months(plan, select_month)
 
 
 trade_monthly_pipeline()

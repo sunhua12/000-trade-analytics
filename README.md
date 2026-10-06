@@ -1,343 +1,175 @@
-# U.S. Semiconductor Import Intelligence
+# 美國半導體進口分析
 
-分析美國半導體月度進口金額、來源國變化與資料覆蓋限制的端到端資料作品。UN Comtrade → AWS Lambda／S3 → BigQuery／dbt → 品質 gate／正式發布 → Streamlit／Cloud Run；Airflow 編排 monthly／backfill，GitHub Actions 透過受限 AWS OIDC 部署。
+分析美國月度半導體進口金額、來源國、市占率、MoM、YoY 與 HHI。商品固定 HS 8542，分類版本 H6。
 
-[開啟 Live Demo](https://trade-dashboard-898093147725.asia-northeast1.run.app)｜[架構與取捨](docs/architecture.md)｜[資料字典](docs/data-dictionary.md)｜[操作索引](docs/runbook.md)｜[已知限制](docs/known-limitations.md)｜[5 分鐘展示稿](docs/demo-script.md)｜[最終驗收](docs/day20-final-acceptance.md)
+固定 reporter 842、美國月度進口；擷取 `partner_detail` 與 `world_total`，預設展示 202301～202412。
 
-截至 2026-10-02，正式資料與線上展示已連續涵蓋 `202301～202607`，共 43 月。積欠已補至來源可用終點，monthly 已恢復並以真實 scheduled run 自動發布 7 月；8、9 月來源尚未就緒。main push 的 AWS 自動部署已啟用並驗證。詳見 [持續營運紀錄](docs/continuous-operations-record.md)與 [手動檢查清單](docs/continuous-operations-checklist.md)。本機關機／休眠期間不排程；跨週穩定性、完整帳單與預算通知實收仍待驗，本人講解依本人決定暫緩，M5 保留未完成。
+部署採手動維護 Lambda／S3；Streamlit 在本機展示。GitHub Actions 僅執行程式、DAG 與容器檢查。詳細操作見 [操作手冊](docs/runbook.md)。
 
-### 三項分析觀察
+## 專案架構
 
-- 2024 年 World 金額 USD 40,386,451,682，較 2023 年 USD 36,062,821,301 成長約 11.99％。
-- Malaysia 2024 年 USD 9,598,343,899，在已確認國家／地區中第一；排名排除特殊代碼 490。
-- 原 24 月國家覆蓋率約 63.01％～82.92％，HHI 均不可用，不能解讀為 0 或低集中度。
+```mermaid
+flowchart TD
+    API[Comtrade API] --> Lambda[Python / Lambda]
+    API --> CLI[Python CLI]
+    Lambda --> S3[S3 Raw + Manifest]
+    CLI --> Local[Local Raw + Manifest]
+    S3 --> Loader[Python RawLoader]
+    Loader --> Raw[BigQuery Raw + load audit]
+    Raw --> Staging[dbt staging]
+    Staging --> Core[Dimensions / Fact]
+    Core --> Metrics[Intermediate metrics]
+    Metrics --> Mart[Analytics Mart]
+    Mart --> UI[Streamlit]
+    Airflow[Airflow monthly / backfill] -.編排.-> Lambda
+    Airflow -.編排.-> Loader
+    Airflow -.dbt build / test.-> Staging
+```
 
-數值的條件、SQL／job ID 與限制見 [查詢證據](docs/evidence/day13-verification.json)。World 每月只計一次；國家趨勢圖合計與 World 含特殊項目的總額不同。
+Python 驗證 S3 checksum、Manifest、NUMERIC 精度與 grain，再以交易式分區替換寫入 Raw。dbt 直接建立 `mart_us_semiconductor_supply_chain`，Streamlit 直接查詢該表；國家映射問題保留 audit model 以便追查。
 
-### 最短本機展示路徑
+CLI 透過 `trade-ingest` 將來源及 Manifest 寫入本機，用於除錯；入口位於 `src/trade_analytics/ingestion/cli.py`。目前 RawLoader 讀取 S3，因此 CLI 不會直接更新 BigQuery。執行方式見 [操作手冊：本機 CLI 擷取](docs/runbook.md#本機-cli-擷取)。
 
-需 Python 3.11，並已取得 BigQuery query job 與正式 Dataset 唯讀權限的 Google ADC：
+## 核心規格
+
+- 十進位金額從解析到 BigQuery NUMERIC 保持精度。
+- S3 保存 immutable 原檔、Manifest、checksum 與 revision，支援部分檔復原。
+- Python adapter 驗證來源後，交易式替換 BigQuery Raw partition；重跑不新增重複 grain，舊 revision 不覆蓋新版。
+- dbt 建立 staging、dimensions、fact、metrics 與單一 Analytics Mart。
+- 指標包含市占率、MoM、YoY、HHI／覆蓋率及條件式 USD／kg。
+- Streamlit 使用參數化 SQL、日期篩選、查詢量上限與快取。
+- Airflow 支援月度最近三期冪等重跑、手動單月與每批最多三個月 backfill，暫時性失敗有限重試。
+- 每個核心功能保留代表測試；dbt 驗證來源契約、grain、資料保留、日期完整性、指標邏輯與映射追蹤。
+- Lambda container 使用 ECR、Lambda 執行角色與基本 Logs 權限；AWS 資源手動維護。
+
+資料身份為月份 × 查詢類型 × HS 商品 × HS 版本 × revision。來源歷史放在 S3，BigQuery Raw 保存最新接受版本。來源擷取 run_id、Raw loader 識別碼與 Airflow run_id 各有用途，不應假設相同。
+
+## 安裝與設定
+
+Python 3.11；Airflow、dbt 使用獨立環境。
 
 ```bash
 python3.11 -m venv .venv
-.venv/bin/python -m pip install -e '.[dashboard]'
-.venv/bin/streamlit run dashboard.py
-```
-
-從專案根目錄執行；本機預設展示 202301～202412。要與線上 43 月一致，啟動前設定 `TRADE_DASHBOARD_FIRST_MONTH=2023-01-01`、`TRADE_DASHBOARD_AFTER_LAST_MONTH=2026-08-01`。無 ADC／正式資料的新環境先依 [操作索引](docs/runbook.md)完成授權與建置；不要把個人憑證寫入 repository 或 image。
-
-完整乾淨環境與部署依 [重建手冊](docs/day19-recovery-manual.md)：先安裝 application 依賴，再驗證容器／Airflow／dbt，AWS 依 bootstrap → ECR／image → application Terraform，GCP 採既有部署指令。共用 backend／OIDC provider 的範圍與隔離資源實測分開記錄。
-
-目前固定資料範圍：
-
-- Reporter：美國，`reporterCode=842`。
-- Frequency：月，`C/M/HS`。
-- Flow：進口，`flowCode=M`。
-- 預設期間：`202401`。
-- 預設商品：HS `8542`。
-- Query Type：`partner_detail`、`world_total`。
-- 固定維度：`partner2Code=0`、`customsCode=C00`、`motCode=0`，均在回應中驗證。
-- Revision：正整數，預設 `1`。必要金額必須有限且非負；World 必須大於 0。
-
-## 環境需求
-
-- Python 3.11。
-- Docker Desktop，用於建置與本機驗證 Lambda Image。
-- 不需要 UN Comtrade API Key；Phase 1 使用公開 Preview API。
-
-建立專案虛擬環境：
-
-```bash
-python3.11 -m venv .venv
-.venv/bin/pip install -e '.[dev]'
-```
-
-所有 Python dependencies 都會安裝於專案的 `.venv`，不會安裝到全域 Python site-packages。
-
-## 執行擷取
-
-Partner Detail：
-
-```bash
-.venv/bin/python ingest.py \
-  --period 202401 \
-  --cmd-code 8542 \
-  --query-type partner_detail
-```
-
-World Total：
-
-```bash
-.venv/bin/python ingest.py \
-  --period 202401 \
-  --cmd-code 8542 \
-  --query-type world_total
-```
-
-自訂輸出根目錄：
-
-```bash
-.venv/bin/python ingest.py \
-  --query-type partner_detail \
-  --output-dir /tmp/trade-preview
-```
-
-明確保存來源修訂，使用新 revision：
-
-```bash
-.venv/bin/python ingest.py --period 202401 --query-type partner_detail --revision 2
-```
-
-revision 不送給 API，僅作為本地／S3 原檔身分；`expected_hs_version` 同樣不是 API 參數，MVP 固定為 H6。
-
-成功時 CLI 只輸出 metadata：
-
-```json
-{
-  "checksum": "sha256:...",
-  "data_path": "data/preview/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/data.ndjson",
-  "manifest_path": "data/preview/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/manifest.json",
-  "period": "202401",
-  "query_type": "partner_detail",
-  "row_count": 62,
-  "status": "success"
-}
-```
-
-## 輸出結構
-
-```text
-data/preview/v2/hs_version=H6/cmd_code=8542/period=202401/
-    ├── query_type=partner_detail/revision=1/
-    │   ├── data.ndjson
-    │   └── manifest.json
-    └── query_type=world_total/revision=1/
-        ├── data.ndjson
-        └── manifest.json
-```
-
-`data.ndjson` 保存 API 欄位名稱，schema version 為 `2.0.0`。金額、重量與數量從 JSON 解析起使用 Decimal，輸出為無指數、無多餘尾零的十進位字串；NULL 保持 NULL。相同資料會穩定排序，使相同內容產生相同 checksum。
-
-受影響欄位為 `primaryValue`、`cifvalue`、`fobvalue`、`netWgt`、`grossWgt`、`qty`、`altQty`。例如 `100.00` 存為 `"100"`，`-0.0` 存為 `"0"`。其他新出現的 JSON 小數也保存為十進位字串。BigQuery 載入時需要正規化為 NUMERIC，超出其精度範圍必須另行處理。Manifest 合計使用足夠的 Decimal 精度，避免預設 28 位有效數造成加總捨入。
-
-舊版 `data/preview/period=...` 與 Day 2 檔案保留，不自動搬移；格式不同的 checksum 不應直接比較。
-
-`manifest.json` 包含：
-
-- Request parameters。
-- SHA-256 checksum。
-- Schema version 與 HS version。
-- Row count。
-- Primary value sum。
-- Ingestion timestamp。
-- Period、query type、commodity code 與 revision。
-
-本機與 S3 採相同重跑規則：
-
-| 狀態 | 行為 |
-|---|---|
-| 首次寫入 | `success` |
-| 相同內容、相同 revision | `already_exists`；保留檔案及原始 ingested_at |
-| 同 revision 內容或 Manifest 身分／合計不符 | `StorageConflictError`；不覆寫 |
-| 只存在一個吻合的檔案 | 只補缺檔，回傳 `success` |
-| 需要保存來源更正 | 操作者明確指定新 revision；保留舊版 |
-
-Manifest 核對排除 ingested_at，其餘契約欄位都需符合本次資料。採單 writer 操作，兩個檔案不是整體原子交易；可以安全重跑補檔，不提供跨 writer 鎖定。重跑仍會呼叫 API，再比較內容。
-
-本機 `data/` 已由 `.gitignore` 排除。
-
-## 測試
-
-Unit Tests 不會呼叫真實網路：
-
-```bash
-.venv/bin/pytest tests/unit -q
-```
-
-執行 coverage：
-
-```bash
-.venv/bin/pytest tests/unit -q \
-  --cov=trade_analytics.ingestion \
-  --cov-report=term-missing \
-  --cov-fail-under=90
-```
-
-手動執行真實 Preview API Integration Tests：
-
-```bash
-.venv/bin/pytest tests/integration/test_preview_api.py \
-  --run-integration \
-  -v
-```
-
-程式品質檢查：
-
-```bash
-.venv/bin/ruff format --check src tests ingest.py
-.venv/bin/ruff check src tests ingest.py
-.venv/bin/mypy -p trade_analytics
-```
-
-Ruff 排除與專案無關的個人 `tests/TEST/` 字典轉換目錄；專案測試仍全部檢查。開發依賴包含 `boto3-stubs[s3]`，以便驗證真實 SDK 與測試替身的介面。
-
-Day 17 的完整離線 Python CI 需要 warehouse／dashboard 測試依賴：
-
-```bash
 .venv/bin/python -m pip install -e '.[dev,warehouse,dashboard]'
+python3.11 -m venv .venv-dbt
+.venv-dbt/bin/python -m pip install -r dbt/requirements.txt
+cp .env.example .env
+cp dbt/profiles.yml.example dbt/profiles.yml
+```
+
+填入 `.env` 的 AWS profile、S3 bucket、GCP project 與 Dataset；shell 操作前載入環境設定：
+
+```bash
+set -a
+source .env
+set +a
+aws sso login --profile "$AWS_PROFILE"
+gcloud auth application-default login
+```
+
+AWS 身分需可呼叫指定 Lambda 並讀取來源 S3；GCP 身分需可執行 BigQuery jobs、寫入 Raw／dbt Dataset。Dashboard 僅需 job 權限與 Analytics Mart Dataset 唯讀權限。憑證不放進 image 或 Git。
+
+## 手動部署與首次建表
+
+建立或沿用 S3、ECR、Lambda 與執行角色。Lambda 設定 `RAW_BUCKET`、`RAW_PREFIX=un_comtrade`，reserved concurrency 為 1。從專案根目錄建置 Lambda image，再手動推送至 ECR 並更新 Lambda：
+
+```bash
+docker buildx build --platform linux/amd64 --provenance=false --load \
+  -f docker/Dockerfile.lambda -t trade-analytics-ingestion:local .
+```
+
+在 BigQuery 編輯器依序執行以下 SQL；已依目前本機設定填入 project、Raw Dataset 與 location。若換環境，先同步修改 SQL 與 `.env`。第一份 SQL 會建立 Raw Dataset：
+
+1. [Raw tables](sql/raw-tables.sql)。
+2. [Load audit](sql/audit-ingestion-runs.sql)。
+
+目前載入採 Python adapter，直接驗證 S3 後以 BigQuery 暫存資料和交易式分區替換寫入 Raw，不需要共用 landing table 或 S3 Transfer。
+
+## 單月流程
+
+```bash
+.venv/bin/python scripts/monthly_steps.py ingest --period 202412 --kind partner_detail --run-id manual-202412
+.venv/bin/python scripts/monthly_steps.py ingest --period 202412 --kind world_total --run-id manual-202412
+.venv/bin/python scripts/monthly_steps.py load --period 202412 --kind partner_detail
+.venv/bin/python scripts/monthly_steps.py load --period 202412 --kind world_total
+.venv/bin/python scripts/monthly_steps.py build --period 202412 --dbt-executable .venv-dbt/bin/dbt
+```
+
+同內容重跑驗證既有來源與 Raw snapshot，不新增重複 grain。來源修訂需明確使用下一個 `--revision`，S3 保留前版。dbt 建置涵蓋已接受 Raw 資料；回填較早月份不截掉後續月份。
+
+## 本機 Streamlit
+
+介面入口位於 `src/trade_analytics/dashboard/app.py`，BigQuery 查詢邏輯位於同目錄的 `queries.py`。啟動指令與 GCP 認證方式見 [操作手冊：啟動 Streamlit demo](docs/runbook.md#啟動-streamlit-demo)。
+
+預設讀取 `trade_analytics.mart_us_semiconductor_supply_chain`；`TRADE_BQ_DATASET` 應與 dbt profile 一致。提供日期、Partner、Top N、金額趨勢、YoY、HHI／覆蓋率、地圖與金額／YoY 散佈圖。查詢使用參數、日期篩選與 bytes 上限；快取預設 1 小時。
+
+展示預設 202301～202412。新增月份需同步調整 `TRADE_DASHBOARD_AFTER_LAST_MONTH`，上界不含該月；最多 60 個月。
+
+## 本機 Airflow
+
+首次設定、啟動、登入、Pool 設定與狀態檢查見 [操作手冊：啟動 Airflow Web UI](docs/runbook.md#啟動-airflow-web-ui)。
+
+UI：http://localhost:8080。啟用 `trade_monthly_pipeline` 後，每月 1 日依台北時間檢查最近 3 個完整月份，依序冪等重跑可用月份。來源未提供時記錄 `not_available`。手動單月輸入 `{"period":"202412"}`；backfill DAG 輸入 `{"start_period":"202301","end_period":"202303"}`，每批最多 3 個月。
+
+Airflow 只在本機服務運行時排程。兩個 DAG 共用 `dags/trade_pipeline/common.py` 的命令執行、task 參數、重試設定與月份依賴。`trade_pipeline` Pool 為單 slot，只允許一個 pipeline task 同時執行；各 DAG 限制單一 active run。跨 DAG 的整個月份流程仍可能交錯，手動回填時應暫停月度排程並等待既有 run 結束。
+
+Cloud credential 只唯讀掛入 Airflow worker，XCom 僅傳 metadata。暫時性遠端錯誤最多額外重試 3 次，永久驗證錯誤不盲目重試。
+
+### Airflow 單月任務
+
+```mermaid
+flowchart LR
+    A[Availability / Backfill preflight] --> S[Select month]
+    S --> ID[Ingest detail]
+    S --> IW[Ingest World]
+    ID --> LD[Load detail]
+    IW --> LW[Load World]
+    LD --> B[dbt build / test]
+    LW --> B
+    B --> Next[Select next month]
+```
+
+兩種來源都載入成功才開始 dbt，任一 task 失敗會阻擋該月後續步驟。月份依序處理；backfill DAG 僅接受手動執行。
+
+## 品質檢查
+
+```bash
 PATH="$PWD/.venv/bin:$PATH" bash scripts/ci_checks.sh
 ```
 
-Strict mypy 檢查可重用的 `trade_analytics` package；scripts、DAG 與測試另經 Ruff／對應測試驗證。Airflow import、Docker 與 Terraform 檢查，以及 OIDC 部署設定見 [CI／CD 手冊](docs/day17-cicd-manual.md)。
+包含 Ruff、mypy 與 18 個核心功能的代表性 unit tests；coverage 只輸出報告，不設百分比門檻。CI 另有真實 DAG import、Lambda Docker smoke check。dbt 的 unit／data tests 在 BigQuery 執行，可用 `scripts/test_dbt_cloud.py --help` 查看隔離 Dataset 驗證入口。
 
-## Lambda Container Image
+## 精簡測試範圍
 
-建置與 AWS Lambda `x86_64` 相同架構的 Image：
+Python 每個核心功能保留一個案例，共 18 個離線 unit tests，集中於 `test_ingestion.py`、`test_warehouse.py`、`test_dashboard.py`；另保留 1 個真實 Preview API integration test，預設跳過，以 `--run-integration` 啟用。
 
-```bash
-docker buildx build \
-  --platform linux/amd64 \
-  --provenance=false --load \
-  -t trade-analytics-ingestion:phase2 \
-  .
-```
+dbt 將 6 個核心 SQL 契約集中於 `assert_data_flow.sql` 與 `assert_analytics.sql`，另保留必要 grain／seed 測試，以及市占／成長／單位價值與 HHI 各一個固定輸入的 unit test。部分 schema、狀態與邊界案例已移除；精簡測試通過只表示代表情境正常。
 
-啟動 AWS Lambda Runtime Interface Emulator：
+## 驗收方式
 
-```bash
-docker run \
-  --platform linux/amd64 \
-  --rm \
-  -p 9000:8080 \
-  -e RAW_BUCKET=local-smoke-only \
-  trade-analytics-ingestion:phase2
-```
+執行 Python 品質檢查、真實 DAG import、dbt BigQuery build／tests，並驗證真實單月兩類來源與重跑、歷史月份回填後仍保留新月份，以及 Streamlit 人工核對。雲端驗收須保存真實結果，本機測試不能代替雲端驗收。
 
-另一個 Terminal 使用非法事件驗證 Handler 可以載入，而且不會呼叫 Comtrade 或 S3：
+## 已知限制
 
-```bash
-curl -sS -X POST \
-  http://localhost:9000/2015-03-31/functions/function/invocations \
-  -d '{"action":"unsupported","period":"202401","query_type":"partner_detail"}'
-```
+- 固定美國月度進口、HS 8542／H6，預設展示 24 個月；無關稅、HTS crosswalk 或跨分類版本比較。
+- Preview API 有限流與截斷檢查；空資料與永久失敗分開處理。
+- S3 保留 immutable 原檔，Raw 僅保存最新接受版本與 load audit；不建立完整 warehouse history。
+- Lambda concurrency、Airflow Pool 設為 1；手動操作不得與 DAG 交錯。
+- Monthly 每次冪等重跑最近 3 個完整月份；更早期需人工 backfill，來源修訂需明確指定 revision。
+- Airflow 只在本機服務運行時排程，`catchup=False` 不自動補完停機期間。
+- dbt build／test 失敗會讓流程失敗，但不會自動回復已建立的模型。Dashboard 可能讀到此次流程已更新的部分資料，沒有 last-known-good 發布層。
+- 來源缺月、無 World 分母或重量缺失以 NULL／覆蓋資訊呈現。HHI 使用 World 分母，必須搭配國家覆蓋率；分母無效時為 NULL。USD／kg 不是晶片單顆價格。
+- Dashboard 日期範圍最多 60 個月，新增月份需調整環境變數；快取預設 1 小時。
+- AWS 手動部署，沒有 IaC 重建或 GitHub 雲端部署流程；瘦身未改動現有雲端服務。
 
-預期收到 Pydantic Validation Error。這個 smoke test 只驗證 Container 與 Handler 載入；成功寫入 S3 必須部署至具有 IAM Role 的 Lambda 後測試。
+詳細欄位與資料規則見 [資料契約](docs/data-contract.md)及 [資料字典](docs/data-dictionary.md)。dbt 保留 unique、not_null、relationships、grain、指標邏輯與國家映射追蹤。
 
-Lambda 成功事件格式：
+## 五分鐘展示流程
 
-```json
-{
-  "action": "ingest",
-  "period": "202401",
-  "cmd_code": "8542",
-  "query_type": "partner_detail",
-  "revision": 1,
-  "run_id": "manual-test"
-}
-```
+1. 說明 Comtrade → Lambda／S3 → BigQuery Raw → dbt Mart → Streamlit，Airflow 串接流程。
+2. 在 Dashboard 選定月份與 Partner，展示金額、市占率、YoY 與 HHI，搭配國家覆蓋率說明限制。
+3. 以固定 BigQuery 查詢核對一個數字，不將圖表觀察當成因果。
+4. 展示同月安全重跑：S3 checksum 穩定、Raw grain 不重複，dbt 重新建立 Mart。
+5. 說明 Manifest、revision、load audit 與 Airflow log 如何協助排查；dbt tests 失敗會停止流程，但不提供模型自動 rollback。
 
-必要環境變數是 `RAW_BUCKET`；`RAW_PREFIX` 預設為 `un_comtrade`，`COMTRADE_BASE_URL` 預設使用 Phase 1 Preview endpoint。
-
-S3 的新路徑為 `un_comtrade/v2/hs_version=H6/cmd_code=8542/period=202401/query_type=partner_detail/revision=1/`；`RAW_PREFIX` 不必額外附加 v2。
-
-AWS S3、ECR、IAM 與 Lambda 的網頁操作請參考 [AWS Console 手動部署指南](docs/aws-console-lambda-deployment.md)。
-
-## 錯誤與重試
-
-- HTTP `429` 與 `500／502／503／504` 最多執行 4 次 request。
-- HTTP `401／403` 不重試。
-- Connect／read timeout 與 transport error 會重試。
-- `count >= 500` 視為 Preview API 疑似截斷，拒絕寫入不完整資料。
-- CLI 與 Log 不輸出完整 response、Authorization header 或 credential。
-
-## Preview API 限制
-
-- Preview API 單次最多回傳 500 筆；本專案會偵測並拒絕疑似截斷結果。
-- Preview response 的國家名稱、ISO、重量及部分描述欄位可能為 `null`。
-- Phase 1 使用月度端點 `C/M/HS`，不使用年度端點 `C/A/HS`。
-- Lambda image 專責 Preview API 擷取與 S3 寫入；BigQuery／dbt／Airflow 位於後續載入、建模與編排元件。正式 API Key 未導入。
-
-## 本機 Streamlit Dashboard
-
-Dashboard 從 BigQuery 的 `trade_analytics_published.mart_us_semiconductor_supply_chain` 與 `publication_quality_summary` 唯讀取數。它提供日期、Partner 與 Top N 篩選、來源國／地區金額排名及地圖、月度趨勢、YoY、國家覆蓋與 HHI 狀態、最新月份金額／YoY 散佈圖、資料新鮮度及品質摘要；商品與分類固定為 `8542／H6`。需先有可查詢正式 Dataset 的 Google ADC 身分，以及執行 BigQuery job 的權限。
-
-```bash
-.venv/bin/python -m pip install -e '.[dashboard]'
-.venv/bin/streamlit run dashboard.py
-```
-
-從專案根目錄執行。預設 GCP 專案為 `trade-analytics-508604`、location 為 `asia-northeast1`；可用 `TRADE_BQ_PROJECT` 與 `TRADE_BQ_LOCATION` 指定其他同結構環境。`TRADE_BQ_MAX_BYTES_BILLED` 預設 `1000000000`，限制每次 BigQuery 查詢的處理量；`TRADE_DASHBOARD_CACHE_TTL` 預設 `3600` 秒。畫面提供「重新讀取已發布資料」以清除快取。憑證由 ADC 提供，勿將金鑰放進 repository。
-
-Dashboard 僅讀正式表與品質摘要，不讀 candidate／raw，也不修改資料。期間 World 金額按月只取一次，不能加總重複在夥伴列上的 `world_value`；來源國排名排除特殊代碼 490。對固定條件重跑唯讀核對：
-
-```bash
-.venv-dbt/bin/python scripts/verify_day12.py
-```
-
-Day 12 基本查詢的實測結果見 [查詢驗證](docs/evidence/day12-verification.json)與 [UI 驗證](docs/evidence/day12-ui-verification.json)。Day 13 的年度 World、單一來源國 YoY、覆蓋／HHI 與地圖映射核對見 [查詢驗證](docs/evidence/day13-verification.json)，篩選畫面見 [UI 驗證](docs/evidence/day13-ui-verification.json)。固定條件可重跑：
-
-```bash
-.venv-dbt/bin/python scripts/verify_day13.py
-.venv-dbt/bin/python scripts/verify_day13_ui.py
-```
-
-未選或多選 Partner 時，YoY 區塊顯示 World 月度 YoY；只選一個 Partner 時顯示該來源國／地區的 YoY。2023 年沒有 2022 年基期，顯示「無可比較基期」。目前 24 個月國家覆蓋率為 63.01%～82.92%，HHI 均為 `insufficient_coverage`，不畫成 0。地圖僅含有 `map_iso3` 的已確認國家／地區，畫面另列未映射筆數與金額；特殊代碼 490 不畫入地圖。圖表以浮點數顯示，精確金額以 BigQuery `NUMERIC` 核對。詳見 [Day 13 展示與分析紀錄](docs/day13-dashboard-record.md)。
-
-## Cloud Run Live Demo
-
-[開啟美國半導體進口分析 Dashboard](https://trade-dashboard-898093147725.asia-northeast1.run.app)。線上展示 `202301～202504` 的 28 個已發布月份，使用專用 BigQuery 唯讀身分；本機預設仍為 `202301～202412`。以 `TRADE_DASHBOARD_FIRST_MONTH` 與 `TRADE_DASHBOARD_AFTER_LAST_MONTH`（不含）設定展示邊界，最多 60 個月。
-
-部署、權限、TWD 250 月度預算通知、停止／清理與固定條件查核見 [Cloud Run 操作手冊](docs/day18-cloud-run-manual.md)，真實線上與單月安全重跑證據見 [Day 18 執行紀錄](docs/day18-run-record.md)。
-
-乾淨來源重建、SNS 實收與故障／版本復原見 [Day 19 手冊](docs/day19-recovery-manual.md)與 [驗收紀錄](docs/day19-run-record.md)。目前 OIDC 精確信任 `main`；Cloud Run 已用原 digest 復原到新 revision，保留直接舊 revision 回切遇到 429 的實測限制。
-
-## 設計與實作計畫
-
-- [AWS Terraform 管理與接管流程](infrastructure/aws/README.md)
-- [Terraform 實際接管驗證](docs/evidence/aws/terraform-adoption.md)
-
-- [20 天規格](docs/trade-analytics-spec.md)
-- [資料契約](docs/data-contract.md)
-- [Day 3 學習計畫](docs/day-03-learning-plan.md)
-- [學習日誌](docs/learning-log.md)
-- [Day 17 CI／CD 與 OIDC 部署手冊](docs/day17-cicd-manual.md)
-
-- [Phase 1 Design](docs/superpowers/specs/2026-08-28-un-comtrade-preview-ingestion-design.md)
-- [Phase 1 Implementation Plan](docs/superpowers/plans/2026-08-28-un-comtrade-preview-ingestion.md)
-- [Lambda Container and S3 Design](docs/superpowers/specs/2026-08-29-lambda-container-s3-ingestion-design.md)
-- [Lambda Container and S3 Implementation Plan](docs/superpowers/plans/2026-08-29-lambda-container-s3-ingestion.md)
-
-### 對帳與正式發布
-
-Day 10 以固定候選批次、追加品質 audit 及交易式分區替換管理正式資料。一般 dbt build 不會發布；只有 PASS／WARN 才能更新正式表，FAIL 保留舊版。來源原檔查驗、操作命令、Dataset 與失敗復原方式見 [對帳與發布操作紀錄](docs/day10-quality-publish-record.md)，實際結果見 [驗收摘要](docs/evidence/day10-verification.md)。
-
-### 24 個月回填
-
-Day 11 已將 202301～202412 的兩類來源逐月載入、查驗、建置與發布；24 個月份皆為品質 PASS。實際操作採 S3 原檔驗證後的 Python／BigQuery 交易式 raw 載入，不沿用早期單月 Transfer PoC。指令、修訂 fixture、品質限制與證據見 [Day 11 執行紀錄](docs/day11-backfill-record.md)及[覆蓋清單](docs/evidence/day11/coverage.csv)。
-
-### 單月執行與 Airflow 學習
-
-Day 14 已建立 `trade_monthly_pipeline`，以本機 Airflow 3.3.2 編排可用性檢查、兩種來源擷取／載入、查驗、dbt、品質審計與發布。單月入口為 `scripts/monthly_steps.py`。AWS 使用本機 `hua` profile，GCP 使用 ADC；身分檔僅唯讀掛入 worker。Day 14 曾以已發布的 `202412` 和原 run ID 在真實雲端跑完單月，正式表維持原 67 筆與 `published_at`。目前 monthly DAG 可在三期窗口內串行處理；Day 16 另以獨立 backfill DAG 完成 `202501`～`202503` 的真實首次發布。
-
-啟動和檢查（先依 [身分範本](compose.identity.example.yaml)備妥未追蹤的 `compose.aws.yaml`，將其中的 `AWS_PROFILE` 設為 `hua`；不必修改主機 `default` profile）：
-
-```bash
-docker compose -f docker-compose.yaml -f compose.aws.yaml up -d --build
-docker compose -f docker-compose.yaml -f compose.aws.yaml ps
-docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-dag-processor airflow dags list-import-errors --local
-docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow pools get trade_pipeline
-```
-
-在 `http://localhost:8080` 檢查 `trade_monthly_pipeline` 的 Grid／Task logs。手動執行須指定月份；已發布月份需附原 run ID 才會安全重跑，否則在可用性檢查後略過：
-
-```bash
-docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow dags test trade_monthly_pipeline -c '{"period":"202412","replay_run_id":"day11-202412-final-v1"}'
-docker compose -f docker-compose.yaml -f compose.aws.yaml exec airflow-worker airflow dags list-runs trade_monthly_pipeline
-docker compose -f docker-compose.yaml -f compose.aws.yaml down
-```
-
-若從 UI 觸發，在 DAG 頁面的 Trigger 表單填入相同 JSON conf；執行後從 Grid 選擇該 run，再點各 task 查看 log。`dags test` 會建立可追查的測試 run，正式新月份應先確認來源、權限與發布意圖後再解除暫停或從 UI 觸發。
-
-排程每月 1 日依台北時間檢查最近最多 3 個完整月份，依序處理其中可用且未發布的月份；超出三期範圍的未發布月份列在 `older_unpublished`，須人工處置。Airflow 只在本機服務運行時排程，且 `catchup=False` 不會補建停機期間的所有排程 run。暫時性遠端錯誤最多額外重試 3 次；永久錯誤直接失敗。設定、月份語意與操作細節見 [Airflow 指南](docs/day14-airflow-manual.md)與 [Day 15 操作手冊](docs/day15-operations-manual.md)，歷史單月實測見 [Day 14 執行紀錄](docs/day14-run-record.md)。
-
-歷史積欠使用無排程的 `trade_backfill_pipeline`，明確指定起訖月份，每次最多三個連續完整月份；與 monthly DAG 共用單 slot Pool。`202501`～`202503` 的真實回填與 `202504` 載入回報遺失後重試，見 [Day 16 操作手冊](docs/day16-backfill-manual.md)及[執行紀錄](docs/day16-run-record.md)。持續營運已補至 202607 並恢復 monthly，見 [營運紀錄](docs/continuous-operations-record.md)；手動回填前先暫停 monthly，維持單 writer。
+僅展示目前已實測的資料與結果。三項分析觀察須自行保存查詢條件及證據。
