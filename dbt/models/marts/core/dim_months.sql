@@ -12,7 +12,11 @@ select
 from unnest(
     generate_date_array(
         date '{{ var("month_spine_start_date") }}',
-        date '{{ var("month_spine_end_date") }}',
+        greatest(
+            date '{{ var("month_spine_end_date") }}',
+            coalesce((select max(period_start_date) from {{ ref('stg_un_comtrade__partner_trades') }}), date '{{ var("month_spine_start_date") }}'),
+            coalesce((select max(period_start_date) from {{ ref('stg_un_comtrade__world_totals') }}), date '{{ var("month_spine_start_date") }}')
+        ),
         interval 1 month
     )
 ) as month_start_date

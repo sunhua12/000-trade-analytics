@@ -1,1 +1,1 @@
-"""Read-only dashboard for published import analytics."""
+"""Read-only dashboard for the dbt Analytics Mart."""

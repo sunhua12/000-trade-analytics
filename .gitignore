@@ -1,20 +1,34 @@
-.venv/
+# Local environments and credentials
+.venv*/
+.env
+.env.*
+!.env.example
+/docker/compose.aws.yaml
+profiles.yml
+
+# Python and tool output
+__pycache__/
+*.py[cod]
+*.egg-info/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .coverage
 coverage.json
-.env
-compose.aws.yaml
+htmlcov/
+
+# Runtime data and local Airflow configuration
+/data/
 /logs/
 /config/airflow.cfg
-htmlcov/
-__pycache__/
-*.py[cod]
-*.egg-info/
-data/
 
-# Terraform local state, credentials, plans and downloaded providers.
+# dbt output
+/dbt/**/target/
+/dbt/**/logs/
+/dbt/dbt_packages/
+/dbt/**/.user.yml
+
+# Preserve exclusion of legacy infrastructure state, plans and private settings
 **/.terraform/
 *.tfstate
 *.tfstate.*
@@ -25,17 +39,10 @@ data/
 *.backend.hcl
 crash.log
 crash.*.log
-infrastructure/aws/bootstrap/backend.tf
-infrastructure/aws/local/
-.venv-dbt/
-profiles.yml
-!dbt/day11-profile/profiles.yml
-dbt/target/
-dbt/logs/
-dbt/dbt_packages/
-dbt/**/.user.yml
-dbt/**/logs/
-dbt/**/target/
+/infrastructure/aws/bootstrap/backend.tf
+/infrastructure/aws/local/
+/docs/evidence/continuous-operations/private/
 
-# Account billing details remain local; only acceptance status is published.
-docs/evidence/continuous-operations/private/
+# Editor and operating-system output
+.DS_Store
+.idea/

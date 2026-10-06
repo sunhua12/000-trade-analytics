@@ -1,8 +1,0 @@
-{
-  "date": "2026-10-01",
-  "bootstrap_plan_exit_code": 0,
-  "application_plan_exit_code": 0,
-  "application_image_uri": "816079797958.dkr.ecr.ap-northeast-1.amazonaws.com/trade-analytics-ingestion@sha256:befb469c96c356b086152b6fd5d68b3679bacc950b84ee4fe238016b68154a09",
-  "bootstrap_result": "No changes. Your infrastructure matches the configuration.",
-  "application_result": "No changes. Your infrastructure matches the configuration."
-}

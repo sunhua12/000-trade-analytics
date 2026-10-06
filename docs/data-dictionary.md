@@ -1,6 +1,6 @@
 # 資料字典與指標口徑
 
-依目前 raw DDL、dbt SQL／schema 與 Publisher 定義整理，核對日期為 2026-10-02；正式 mart 型別另以 [實際 schema](evidence/day20/published-schema.json)查核。此文件描述資料模型；歷史數值見 [最終驗收](day20-final-acceptance.md)，來源接受規則見 [資料契約](data-contract.md)。
+依目前 Raw DDL 與 dbt models 整理。來源接受規則見 [資料契約](data-contract.md)。
 
 ## 資料層與粒度
 
@@ -12,13 +12,9 @@
 | `fct_monthly_semiconductor_imports` | 與明細相同 | 追加國家／商品／月份映射；保留特殊代碼 |
 | `int_partner_market_share` | 與 fact 相同 | 市占、前月／去年同月基期、MoM／YoY、單位價值 |
 | `int_market_concentration_hhi` | 月份 × 商品 × 分類 | 月份級國家覆蓋與 HHI 狀態 |
-| `mart_us_semiconductor_supply_chain_candidate` | 與 fact 相同 | dbt 可重建候選，不供正式 Dashboard 直接讀取 |
-| `trade_analytics_published.candidate_batches` | candidate_batch_id × fact grain | 凍結候選快照，供品質查核及發布 |
-| `trade_analytics_published.mart_us_semiconductor_supply_chain` | 與 fact 相同 | 通過 gate 的正式 partition；追加發布 metadata |
-| `quality_audit_history` | 一次 run_id／candidate_batch_id 的品質嘗試 | 追加 audit／reason codes／tested_at，不覆寫歷史 |
-| `publication_quality_summary` | period × cmd_code × hs_version | 最新品質、最新發布嘗試與正式版本分開顯示 |
+| `mart_us_semiconductor_supply_chain` | 與 fact 相同 | dbt 直接建立，供 Streamlit 查詢 |
 
-Raw DDL 見 [raw-tables.sql](../infrastructure/gcp/raw-tables.sql)，正式表由 [Publisher](../src/trade_analytics/warehouse/publish.py)建立。模型 Dataset 依 dbt target／環境設定；不能假設所有歷史 dev Dataset 都是正式 target。
+Raw DDL 見 [raw-tables.sql](../sql/raw-tables.sql)。Mart 位於 dbt target Dataset，預設 `trade_analytics`，可透過 `TRADE_BQ_DATASET` 設定。
 
 ## Raw 與 lineage 欄位
 
@@ -33,10 +29,10 @@ Raw DDL 見 [raw-tables.sql](../infrastructure/gcp/raw-tables.sql)，正式表�
 | ingested_at | TIMESTAMP | 來源寫入時間；安全重跑保留既有來源時間 |
 | source_file | STRING | S3 原檔 URI，查找 manifest／revision |
 | checksum | STRING | SHA-256 內容校驗，並與 manifest／load audit 查驗 |
-| run_id | STRING | raw 載入／來源鏈路身分，與 published_run_id 分別解讀 |
+| run_id | STRING | Raw 載入識別，與來源 Manifest 及 Airflow run_id 分別解讀 |
 | revision | INT64 | 正整數來源版本；新 revision 保留 S3 歷史 |
 
-來源 landing schema 的金額／重量／數量為 STRING，load 正規化成 NUMERIC；不將早期 Transfer PoC 當目前載入實作。來源固定 `partner2Code=0`、`customsCode=C00`、`motCode=0`，由 ingestion 驗證，未全部保存成 normalized raw 欄位。
+來源十進位字串經 Python 驗證，以 BigQuery 暫存資料正規化成 NUMERIC，再交易式替換 Raw partition。來源固定 `partner2Code=0`、`customsCode=C00`、`motCode=0`，由 ingestion 驗證，未全部保存成 normalized raw 欄位。
 
 ## 維度與 fact 追加欄位
 
@@ -66,19 +62,6 @@ Raw DDL 見 [raw-tables.sql](../infrastructure/gcp/raw-tables.sql)，正式表�
 | hhi_raw | NUMERIC | SUM((country 金額 ÷ World × 100)²)；內部診斷值 |
 | hhi／hhi_status | NUMERIC／STRING | 覆蓋與 1 的差距 ≤ 0.005 且國家值／分類有效才顯示；否則 NULL 並標示原因 |
 
-HHI 狀態由模型檢查 missing_world、invalid_world、no_countries、missing_country_value、negative_country_value、unreviewed_country、insufficient_coverage，最後才為 ok。HHI 以 World 為分母，不把剩餘國家重新正規化成完整市場。原 24 月皆覆蓋不足，不能聲稱集中度低或把 NULL 畫成 0。
+HHI 狀態由模型檢查 missing_world、invalid_world、no_countries、missing_country_value、negative_country_value、unreviewed_country、insufficient_coverage，最後才為 ok。HHI 以 World 為分母，不把剩餘國家重新正規化成完整市場。覆蓋不足時不能聲稱集中度低或把 NULL 畫成 0。
 
 Dashboard 的期間排名占比＝該來源期間金額合計 ÷ 期間各月 World 合計；期間 World 每月只取一次。未選／多選 Partner 時展示 World 月度 YoY，單選時展示該 Partner YoY；百分比不跨月份或 Partner 加總／平均。
-
-## 品質與發布欄位
-
-| 欄位 | 型別 | 語意 |
-|---|---|---|
-| candidate_batch_id／candidate_hash | STRING | 凍結候選身分／內容 hash，防止品質與發布對象不一致 |
-| quality_status／published_quality_status | STRING | 正式版本品質 PASS／WARN，不等於最新品質嘗試 |
-| published_run_id／published_at | STRING／TIMESTAMP | 正式版本與成功發布時間；同版本安全重跑不更新 |
-| latest_run_id／latest_quality_status／latest_tested_at | STRING／STRING／TIMESTAMP | 最新品質嘗試；FAIL 仍可與較早正式版本並存 |
-| reason_codes | ARRAY<STRING> | 品質原因，可為空陣列 |
-| latest_publish_run_id／latest_publish_status／latest_attempted_at | STRING／STRING／TIMESTAMP | 最新發布操作；缺操作時 NULL，unknown 必須追查 job／交易，不能當成功 |
-
-對帳使用 `reconciliation_role=detail` 合計對 World 的絕對差異率：其餘檢查皆通過時，≤ 0.5％ 為 PASS，> 0.5％ 且 ≤ 2％ 為 WARN，> 2％ 為 FAIL；來源、映射、grain、候選指標等硬性錯誤直接 FAIL。PASS／WARN 可發布，FAIL 不更新正式 partition。品質 PASS 與 HHI 可用是不同條件。

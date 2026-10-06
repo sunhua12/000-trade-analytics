@@ -1,0 +1,18 @@
+# Copy to docker/compose.aws.yaml and set AWS_PROFILE to an existing local profile.
+# The credential files stay on the host and are mounted only into the worker.
+services:
+  airflow-worker:
+    environment:
+      AWS_PROFILE: ${AWS_PROFILE:?Set AWS_PROFILE in the shell or .env}
+      GOOGLE_APPLICATION_CREDENTIALS: /home/airflow/.config/gcloud/application_default_credentials.json
+      GOOGLE_CLOUD_PROJECT: ${DBT_RAW_PROJECT:-trade-analytics-508604}
+      DBT_RAW_PROJECT: ${DBT_RAW_PROJECT:-trade-analytics-508604}
+      DBT_RAW_DATASET: ${DBT_RAW_DATASET:-trade_raw}
+      TRADE_BQ_DATASET: ${TRADE_BQ_DATASET:-trade_analytics}
+      TRADE_BQ_LOCATION: ${TRADE_BQ_LOCATION:-asia-northeast1}
+      RAW_BUCKET: ${RAW_BUCKET:?Set RAW_BUCKET in the shell or .env}
+      TRADE_LAMBDA_FUNCTION: ${TRADE_LAMBDA_FUNCTION:-trade-analytics-ingestion}
+      AWS_REGION: ${AWS_REGION:-ap-northeast-1}
+    volumes:
+      - ${HOME}/.aws:/home/airflow/.aws:ro
+      - ${HOME}/.config/gcloud/application_default_credentials.json:/home/airflow/.config/gcloud/application_default_credentials.json:ro

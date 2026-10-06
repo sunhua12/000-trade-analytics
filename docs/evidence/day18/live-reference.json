@@ -1,6 +1,0 @@
-{
-  "partner_458_value": "9598343899",
-  "world_value": 40386451682,
-  "job_id": "b8d2a9ca-8afb-47e2-a830-6a9e816011be",
-  "sql": "SELECT SUM(IF(partner_code='458' AND partner_type='country', primary_value,0)) partner_458_value FROM `trade-analytics-508604.trade_analytics_published.mart_us_semiconductor_supply_chain` WHERE period_start_date >= DATE '2024-01-01' AND period_start_date < DATE '2025-01-01' AND cmd_code='8542' AND hs_version='H6'"
-}

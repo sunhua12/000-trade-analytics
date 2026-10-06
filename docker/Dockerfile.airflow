@@ -1,0 +1,13 @@
+FROM apache/airflow:3.3.2-python3.11
+
+USER root
+RUN python -m venv /opt/trade-venv \
+    && chown -R airflow:0 /opt/trade-venv
+
+USER airflow
+WORKDIR /tmp/trade-build
+COPY --chown=airflow:root pyproject.toml .
+COPY --chown=airflow:root src ./src
+COPY --chown=airflow:root dbt/requirements.txt ./requirements-dbt.txt
+RUN /opt/trade-venv/bin/python -m pip install --no-cache-dir \
+    '.[warehouse]' -r requirements-dbt.txt

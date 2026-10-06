@@ -1,3 +1,0 @@
-dag_id                 | is_paused
-=======================+==========
-trade_monthly_pipeline | True

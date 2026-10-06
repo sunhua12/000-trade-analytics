@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 import sys
 import time
 from datetime import UTC, datetime
@@ -20,15 +21,13 @@ sys.path.insert(0, str(ROOT))
 from scripts.pipeline_exit import exit_for_error  # noqa: E402
 from trade_analytics.ingestion.client import ComtradeClient  # noqa: E402
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType  # noqa: E402
-from trade_analytics.warehouse.backfill import (  # noqa: E402
+from trade_analytics.warehouse.loader import (  # noqa: E402
     BUCKET,
     KINDS,
-    PROJECT,
     source_key,
 )
 
-AWS_REGION = "ap-northeast-1"
-BIGQUERY_LOCATION = "asia-northeast1"
+AWS_REGION = os.environ.get("AWS_REGION", "ap-northeast-1")
 API_REQUEST_SPACING_SECONDS = 1.0
 
 
@@ -50,60 +49,6 @@ def candidate_periods(interval_end: datetime, count: int = 3) -> list[str]:
     for _ in range(count - 1):
         periods.append(previous_month(periods[-1]))
     return [period for period in reversed(periods) if period >= "202301"]
-
-
-def current_published(client: Any, period: str) -> str | None:
-    from google.cloud import bigquery
-
-    table = f"`{PROJECT}.trade_analytics_published.mart_us_semiconductor_supply_chain`"
-    job = client.query(
-        f"SELECT DISTINCT published_run_id FROM {table} "
-        "WHERE period_start_date=PARSE_DATE('%Y%m',@period) "
-        "AND cmd_code='8542' AND hs_version='H6'",
-        location=BIGQUERY_LOCATION,
-        job_config=bigquery.QueryJobConfig(
-            query_parameters=[bigquery.ScalarQueryParameter("period", "STRING", period)],
-            maximum_bytes_billed=10**9,
-        ),
-    )
-    rows = list(job.result(timeout=180))
-    if len(rows) > 1:
-        raise ValueError(f"multiple published run IDs for {period}")
-    return rows[0].published_run_id if rows else None
-
-
-def older_unpublished(client: Any, oldest_candidate: str) -> list[str]:
-    """Expose months before the bounded lookback without probing their remote sources."""
-    if oldest_candidate <= "202301":
-        return []
-    from google.cloud import bigquery
-
-    table = f"`{PROJECT}.trade_analytics_published.mart_us_semiconductor_supply_chain`"
-    job = client.query(
-        f"SELECT DISTINCT FORMAT_DATE('%Y%m', period_start_date) AS period FROM {table} "
-        "WHERE period_start_date < PARSE_DATE('%Y%m',@oldest) "
-        "AND cmd_code='8542' AND hs_version='H6'",
-        location=BIGQUERY_LOCATION,
-        job_config=bigquery.QueryJobConfig(
-            query_parameters=[bigquery.ScalarQueryParameter("oldest", "STRING", oldest_candidate)],
-            maximum_bytes_billed=10**9,
-        ),
-    )
-    published = {row.period for row in job.result(timeout=180)}
-    missing: list[str] = []
-    period = "202301"
-    while period < oldest_candidate:
-        if period not in published:
-            missing.append(period)
-        year, month = int(period[:4]), int(period[4:])
-        period = f"{year + (month == 12):04d}{month % 12 + 1:02d}"
-    return missing
-
-
-def bigquery_client() -> Any:
-    from google.cloud import bigquery
-
-    return bigquery.Client(project=PROJECT, location=BIGQUERY_LOCATION)
 
 
 def source_available(
@@ -153,6 +98,8 @@ def plan(
             datetime.now(UTC).astimezone(ZoneInfo("Asia/Taipei")).strftime("%Y%m")
         ):
             raise ValueError("manual period must be a completed month")
+    if replay_run_id is not None and not replay_run_id.strip():
+        raise ValueError("replay_run_id must be nonempty")
     if replay_run_id and manual_period is None:
         raise ValueError("replay_run_id requires manual period")
     chosen_revisions = {kind: 1 for kind in KINDS}
@@ -163,20 +110,12 @@ def plan(
         ):
             raise ValueError("revisions must contain positive integers for both source kinds")
         chosen_revisions = revisions
-    client = bigquery_client()
     s3 = boto3.client("s3", region_name=AWS_REGION)
     selected: list[dict[str, Any]] = []
     checks: list[dict[str, Any]] = []
-    backlog = older_unpublished(client, candidates[0]) if manual_period is None else []
     with httpx.Client(timeout=httpx.Timeout(30.0)) as http_client:
         for period in candidates:
-            existing = current_published(client, period)
             checked_at = datetime.now(UTC).isoformat()
-            if existing and replay_run_id != existing:
-                checks.append(
-                    {"period": period, "status": "already_published", "checked_at": checked_at}
-                )
-                continue
             sources = {
                 kind: source_available(s3, http_client, period, kind, chosen_revisions[kind])
                 for kind in KINDS
@@ -199,7 +138,7 @@ def plan(
             checks.append(
                 {"period": period, "status": "ready", "checked_at": checked_at, "sources": sources}
             )
-    return {"selected": selected, "checks": checks, "older_unpublished": backlog}
+    return {"selected": selected, "checks": checks}
 
 
 def main() -> None:

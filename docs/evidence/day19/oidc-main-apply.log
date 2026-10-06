@@ -1,9 +1,0 @@
-aws_iam_role.github_deploy[0]: Modifying... [id=trade-analytics-github-deploy]
-aws_iam_role.github_deploy[0]: Modifications complete after 2s [id=trade-analytics-github-deploy]
-
-Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
-
-Outputs:
-
-github_deployment_role_arn = "arn:aws:iam::816079797958:role/trade-analytics-github-deploy"
-state_bucket = "trade-analytics-tfstate-816079797958-ap-northeast-1"

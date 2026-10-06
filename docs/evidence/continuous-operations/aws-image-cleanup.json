@@ -1,9 +1,0 @@
-{
-  "deleted_at": "2026-10-02",
-  "image_ids": [
-    {
-      "imageDigest": "sha256:5b2948913e5a3fb51b184fbf728a53362937f59ad32fa4edc12717d4546db997"
-    }
-  ],
-  "reason": "Untagged artifact from failed OIDC deployment, not referenced by project Lambda; current and proven rollback images retained"
-}

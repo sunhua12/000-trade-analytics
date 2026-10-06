@@ -1,6 +1,0 @@
-{
-  "git_sha": "ff59ba5296eb02f29214980a8d6fdd80bd832ed9",
-  "image_uri": "816079797958.dkr.ecr.ap-northeast-1.amazonaws.com/trade-analytics-ingestion@sha256:eadbfd0b1599935d8aeb64db18c04ebd8b4e5be529421f0e990071c4e3f94a66",
-  "run_id": "36901101994",
-  "drift": false
-}

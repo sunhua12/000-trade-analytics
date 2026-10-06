@@ -12,9 +12,10 @@
 | 商品碼 | `8542` |
 | 目標期間 | `202301～202412`，連續 24 個月 |
 | 本日實測 | `202301`、`202412`，各含 partner_detail 與 world_total |
-| 詳細證據 | [day02-audit.json](evidence/day02-audit.json)，含來源路徑、時間、checksum、逐項檢查與特殊代碼 |
 
 官方參考檔將 H6 定義為 HS2022。[UN Comtrade H6](https://comtradeapi.un.org/files/v1/app/reference/H6.json)
+
+以下抽查結果為歷史紀錄，未於本次瘦身重新呼叫 API；目前模型與操作以 README 為準。
 
 ## 1. 抽查結果
 
@@ -63,7 +64,7 @@
 | 202301 | 630,972,428 | 22.54% |
 | 202412 | 1,151,535,965 | 28.40% |
 
-因此正式 HHI／地圖尚不能直接發布。Day 8 必須釐清代碼語意及映射來源，保留原始代碼；若依契約只計可確認的一般國家而排除 490，需顯示覆蓋不足，依 spec 將公開 HHI 標成資料不足，不能把偏低結果當成完整市場集中度。
+HHI／地圖需依已確認的分類與映射判斷，保留原始代碼；若依契約只計可確認的一般國家而排除 490，需顯示覆蓋不足，依 spec 將公開 HHI 標成資料不足，不能把偏低結果當成完整市場集中度。
 
 ## 3. Endpoint 與分類選擇
 
@@ -91,7 +92,7 @@
 | World | partnerCode=0、恰一筆且 primaryValue > 0 | 已實作與測試 |
 | 金額 | primaryValue 不得 NULL、非有限值或負值；明細允許 0 | 已實作與測試 |
 | 重量 | NULL 保留，僅 > 0 計算單位價值 | 後續模型處理 |
-| 特殊夥伴 | 保存 490 等原碼及金額，維度註明類別與映射依據 | Day 8 建模，不直接套一般 ISO |
+| 特殊夥伴 | 保存 490 等原碼及金額，維度註明類別與映射依據 | 依目前 country seed 建模，不直接套一般 ISO |
 | 截斷 | 達 Preview 上限拒絕寫入 | 已有 count 檢查 |
 
 ## 6. Day 3 已完成的儲存契約
@@ -102,10 +103,9 @@
 - Manifest 的 `primary_value_sum` 為精確加總後的十進位字串，另保存月份、商品、查詢類型、H6 與 revision。後續 BigQuery 正規化需轉為 NUMERIC 並檢查範圍。
 - CLI 與 Lambda 支援正整數 revision，預設 1。相同內容回傳 `already_exists` 並保留原檔；checksum 或 Manifest 契約欄位不符則 conflict，來源修訂須明確指定新 revision。
 - 本機與 S3 共用路徑及核對函式。僅缺一檔且現有檔案吻合時補缺檔；採單 writer，不宣稱兩檔是整體原子交易。
-- HHI 與 490 的業務映射留在 Day 8～10 處理，不在 ingestion 靜默刪除。
+- HHI 與 490 的業務映射由 dbt 處理，不在 ingestion 靜默刪除。
 
-驗收詳見 [Day 3 驗證紀錄](evidence/day03-verification.md) 與 [真實 API smoke](evidence/day03-smoke.json)。S3 本日使用假 client 測試；真實 AWS 驗收留待 Day 4。
 
-### Day 10 分類與發布補充（2026-09-23）
+### 特殊代碼分類補充（歷史決策，2026-09-23）
 
-依 UN Comtrade [490 官方說明](https://uncomtrade.org/docs/taiwan-province-of-china-trade-data/) 及已保存的非群組標記，490 的 `reconciliation_role` 更新為 `detail`。仍為 `special`，地圖 ISO 維持 NULL，不加入 HHI 國家集合；完整判斷見 [Day 10 紀錄](day10-quality-publish-record.md)。原先未確認的對帳角色由此補充取代，國家覆蓋限制仍保留。
+依 UN Comtrade [490 官方說明](https://uncomtrade.org/docs/taiwan-province-of-china-trade-data/) 及已保存的非群組標記，490 的 `reconciliation_role` 更新為 `detail`。仍為 `special`，地圖 ISO 維持 NULL，不加入 HHI 國家集合。原先未確認的對帳角色由此補充取代，國家覆蓋限制仍保留。

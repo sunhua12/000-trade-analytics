@@ -1,8 +1,0 @@
-[
-  {
-    "SubscriptionArn": "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms:b9d851f9-9e80-4b2a-8a34-0a77fa14e1bd",
-    "Owner": "816079797958",
-    "Protocol": "email",
-    "TopicArn": "arn:aws:sns:ap-northeast-1:816079797958:trade-analytics-ingestion-alarms"
-  }
-]

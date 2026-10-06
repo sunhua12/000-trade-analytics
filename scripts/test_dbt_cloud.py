@@ -49,7 +49,6 @@ def main() -> None:
                 project,
                 ignore=shutil.ignore_patterns(
                     "local",
-                    "day11-profile",
                     "target",
                     "logs",
                     "dbt_packages",
@@ -82,9 +81,6 @@ def main() -> None:
                 "DBT_RAW_DATASET": "trade_raw",
                 "DBT_SEND_ANONYMOUS_USAGE_STATS": "false",
             }
-            variables = json.dumps(
-                {"enable_publication_audit": False, "publication_dataset": dataset_name}
-            )
             # Empty parents supply schemas required by unit tests; all relations
             # are built inside the fresh target. Raw sources remain read-only.
             commands = [("seed", []), ("run", ["--empty"]), ("build", [])]
@@ -98,8 +94,6 @@ def main() -> None:
                         str(project),
                         "--profiles-dir",
                         str(workspace),
-                        "--vars",
-                        variables,
                     ]
                     result = subprocess.run(
                         invocation, env=environment, text=True, capture_output=True, check=False
