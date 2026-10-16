@@ -34,53 +34,21 @@ def run_command(command: list[str]) -> dict:
         raise RuntimeError("command did not return JSON metadata") from error
 
 
-@task(pool="trade_pipeline", execution_timeout=timedelta(hours=1))
-def pipeline_step(
-    spec: dict, step: str, kind: str | None = None, recovery_probe: bool = False, **context
-) -> dict:
-    if spec.get("status", "ready") != "ready":
-        return {"step": step, "period": spec.get("period"), "status": spec["status"]}
-    command = [PYTHON, f"{ROOT}/scripts/monthly_steps.py", step, "--period", spec["period"]]
-    if kind:
-        command.extend(["--kind", kind, "--revision", str(spec["revisions"][kind])])
-    if step == "ingest":
-        command.extend(["--run-id", spec["run_id"]])
-    if step == "build":
-        command.extend(["--dbt-executable", DBT])
-    print(
-        json.dumps({"step": step, "kind": kind, "period": spec["period"], "run_id": spec["run_id"]})
-    )
-    result = run_command(command)
-    if recovery_probe:
+@task(pool="trade_pipeline", execution_timeout=timedelta(hours=6), **TRANSIENT_RETRY)
+def process_batch(plan: dict, recovery_probe: bool = False, **context) -> dict:
+    """Hold the single-slot pool for all writes, tests, export and website build."""
+    command = [
+        PYTHON,
+        f"{ROOT}/scripts/run_batch.py",
+        "--plan",
+        json.dumps(plan),
+        "--dbt-executable",
+        DBT,
+        "--output-dir",
+        f"{ROOT}/data",
+    ]
+    if recovery_probe and context["ti"].try_number == 1:
         probe = (context["dag_run"].conf or {}).get("recovery_probe")
-        if (
-            step == "load"
-            and probe == {"period": spec["period"], "kind": kind}
-            and context["ti"].try_number == 1
-        ):
-            raise RuntimeError("intentional post-commit load acknowledgment loss; retry same task")
-    return result
-
-
-def wire_months(plan, select_month, *, recovery_probe: bool = False) -> None:
-    """Keep task IDs stable and process at most three months in old-to-new order."""
-    previous_build = None
-    for index in range(3):
-        suffix = "" if index == 0 else f"_{index + 1}"
-        spec = select_month.override(task_id=f"select_month{suffix}")(plan, index)
-        if previous_build is not None:
-            previous_build >> spec
-        loads = []
-        for label, kind in (("detail", "partner_detail"), ("world", "world_total")):
-            ingest = pipeline_step.override(task_id=f"ingest_{label}{suffix}", **TRANSIENT_RETRY)(
-                spec, "ingest", kind, recovery_probe=recovery_probe
-            )
-            load = pipeline_step.override(task_id=f"load_{label}{suffix}", **TRANSIENT_RETRY)(
-                spec, "load", kind, recovery_probe=recovery_probe
-            )
-            ingest >> load
-            loads.append(load)
-        build = pipeline_step.override(task_id=f"build{suffix}")(spec, "build")
-        for load in loads:
-            load >> build
-        previous_build = build
+        if probe:
+            command.extend(["--recovery-probe", json.dumps(probe)])
+    return run_command(command)

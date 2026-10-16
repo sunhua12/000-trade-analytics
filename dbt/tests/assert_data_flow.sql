@@ -1,5 +1,4 @@
-select 'staging_contract' as failed_check
-where exists (
+-- Named CTEs avoid BigQuery's unsupported nested correlated EXISTS plans.
 with combined as (
     select
         'partner_detail' as source_type,
@@ -36,8 +35,7 @@ with combined as (
         run_id,
         revision
     from {{ ref('stg_un_comtrade__world_totals') }}
-)
-
+), staging_violations as (
 select * except (grain_count)
 from (
     select *, count(*) over (
@@ -84,36 +82,36 @@ where grain_count > 1 or
         source_type = 'world_total'
         and (partner_code != '0' or primary_value <= 0)
     )
-)
-union all
-select 'fact_preserves_staging' as failed_check
-where exists (
-with s as (
+), staging as (
     select {{ source_columns() }} from {{ ref('stg_un_comtrade__partner_trades') }}
-), f as (
+), fact as (
     select {{ source_columns() }} from {{ ref('fct_monthly_semiconductor_imports') }}
-), missing as (select * from s except distinct select * from f),
-extra as (select * from f except distinct select * from s)
-select 'missing_or_changed' as issue from unnest([1]) where exists (select 1 from missing)
-union all
-select 'extra_or_changed' from unnest([1]) where exists (select 1 from extra)
-union all
-select 'row_count' from unnest([1]) where (select count(*) from s) != (select count(*) from f)
-union all
-select 'amount' from unnest([1]) where (select sum(primary_value) from s) is distinct from (select sum(primary_value) from f)
-)
-union all
-select 'mart_preserves_fact' as failed_check
-where exists (
--- Both directions retain values and lineage; compound_unique separately guards fanout.
-with original as (
-    select {{ source_columns() }}
-    from {{ ref('fct_monthly_semiconductor_imports') }}
 ), mart as (
-    select {{ source_columns() }}
-    from {{ ref('mart_us_semiconductor_supply_chain') }}
+    select {{ source_columns() }} from {{ ref('mart_us_semiconductor_supply_chain') }}
+), fact_missing as (
+    select * from staging except distinct select * from fact
+), fact_extra as (
+    select * from fact except distinct select * from staging
+), mart_missing as (
+    select * from fact except distinct select * from mart
+), mart_extra as (
+    select * from mart except distinct select * from fact
+), fact_totals as (
+    select
+        (select count(*) from staging) as staging_count,
+        (select count(*) from fact) as fact_count,
+        (select sum(primary_value) from staging) as staging_amount,
+        (select sum(primary_value) from fact) as fact_amount
 )
-(select * from original except distinct select * from mart)
+select 'staging_contract' as failed_check from (select count(*) as violations from staging_violations) where violations > 0
 union all
-(select * from mart except distinct select * from original)
-)
+select 'fact_preserves_staging' from (select count(*) as violations from fact_missing) where violations > 0
+union all
+select 'fact_preserves_staging' from (select count(*) as violations from fact_extra) where violations > 0
+union all
+select 'fact_preserves_staging' from fact_totals
+where staging_count != fact_count or staging_amount is distinct from fact_amount
+union all
+select 'mart_preserves_fact' from (select count(*) as violations from mart_missing) where violations > 0
+union all
+select 'mart_preserves_fact' from (select count(*) as violations from mart_extra) where violations > 0

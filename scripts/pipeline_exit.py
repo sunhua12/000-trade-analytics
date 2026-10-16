@@ -45,6 +45,7 @@ def is_transient(error: Exception) -> bool:
     ):
         return True
     return type(error).__name__ in {
+        "WriterBusyError",
         "TooManyRequests",
         "ServiceUnavailable",
         "DeadlineExceeded",

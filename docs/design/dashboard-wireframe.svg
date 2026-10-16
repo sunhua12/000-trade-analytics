@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1320" viewBox="0 0 1200 1320"><rect width="1200" height="1320" fill="#f5f5f2"/><style>text {font-family:Arial,"Noto Sans CJK TC","PingFang TC",sans-serif;fill:#202c35}.title{font-size:18px;font-weight:600}.note{font-size:13px;fill:#65717a}.axis{stroke:#dde2e4;stroke-width:1}</style>
+<text x="40" y="39" class="title">SEMICONDUCTOR TRADE EXPLORER</text>
+<text x="910" y="39" class="note">資料來源與分析方法 →</text>
+<text x="40" y="104" class="title">美國半導體進口，來自哪裡？</text>
+<text x="40" y="137" class="note">觀察進口規模、主要來源與供應來源結構的變化。</text>
+<text x="40" y="166" class="note">UN Comtrade · 美國進口 · HS 8542 / H6 · USD</text>
+<text x="920" y="104" class="note">WIREFRAME / v1</text>
+<rect x="40" y="193" width="1120" height="90" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="62" y="225" class="title">日期區間  [ 2023-01 — 2024-12 ]     來源國  [ 全部已確認國家 ▾ ]     排名  [ Top 10 ▾ ]</text>
+<text x="62" y="249" class="note">篩選規則：World、覆蓋率與 HHI 保持整體市場口徑；Top N 不截斷趨勢與地圖。</text>
+<rect x="40" y="303" width="360" height="125" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="62" y="335" class="title">期間 World 金額</text>
+<text x="62" y="359" class="note">整體市場 · 有效月份 / 選定月份</text>
+<text x="62" y="400" class="note">— 待載入真實 JSON —</text>
+<rect x="420" y="303" width="360" height="125" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="442" y="335" class="title">已選國家合計</text>
+<text x="442" y="359" class="note">選定來源 · 占期間 World 比例</text>
+<text x="442" y="400" class="note">— 待載入真實 JSON —</text>
+<rect x="800" y="303" width="360" height="125" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="822" y="335" class="title">最新資料月份</text>
+<text x="822" y="359" class="note">資料所屬月份與 JSON 匯出時間分開</text>
+<text x="822" y="400" class="note">— 待載入真實 JSON —</text>
+<rect x="40" y="450" width="690" height="245" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="62" y="482" class="title">月度進口趨勢</text>
+<text x="62" y="506" class="note">選定國家的逐月金額；缺月保留斷點。</text>
+<path d="M70 655H695M70 525V655" class="axis"/><path d="M80 620L160 590L240 605L320 560 M420 575L500 540L580 557L680 525" fill="none" stroke="#d98b46" stroke-width="3" stroke-dasharray="6 4"/>
+<text x="270" y="675" class="note">示意線條，非實際數據</text>
+<rect x="750" y="450" width="410" height="245" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="772" y="482" class="title">來源國排名</text>
+<text x="772" y="506" class="note">各國期間金額與市占；先篩選再取 Top N。</text>
+<rect x="780" y="536" width="300" height="16" rx="3" fill="#e7d6c5"/>
+<rect x="780" y="567" width="240" height="16" rx="3" fill="#e7d6c5"/>
+<rect x="780" y="598" width="185" height="16" rx="3" fill="#e7d6c5"/>
+<rect x="780" y="629" width="125" height="16" rx="3" fill="#e7d6c5"/>
+<rect x="40" y="717" width="550" height="190" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="62" y="749" class="title">月度 YoY</text>
+<text x="62" y="773" class="note">單國：該國 YoY；多國 / 全部：World YoY。</text>
+<text x="65" y="830" class="note">[ 百分比折線與基期不足提示 ]</text>
+<rect x="610" y="717" width="550" height="190" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="632" y="749" class="title">來源國覆蓋率 / HHI</text>
+<text x="632" y="773" class="note">整體月份指標；HHI 僅在狀態為 ok 時顯示。</text>
+<text x="635" y="830" class="note">[ 覆蓋率走勢與 HHI 不可用原因 ]</text>
+<rect x="40" y="929" width="550" height="180" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="62" y="961" class="title">來源國地圖</text>
+<text x="62" y="985" class="note">期間金額；另揭露未映射金額。</text>
+<text x="65" y="1037" class="note">[ 依 map_iso3 呈現；色階採對數 ]</text>
+<rect x="610" y="929" width="550" height="180" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="632" y="961" class="title">進口金額 × YoY</text>
+<text x="632" y="985" class="note">選定結束月份；有效點取自期間 Top N。</text>
+<text x="635" y="1037" class="note">[ 散佈圖與有效資料點數 ]</text>
+<rect x="40" y="1131" width="1120" height="90" rx="12" fill="white" stroke="#e0e4e3"/>
+<text x="62" y="1163" class="title">資料明細</text>
+<text x="62" y="1187" class="note">月份｜來源國代碼｜名稱｜進口金額｜月度市占｜YoY；跟隨篩選，保留完整結果。</text>
+<text x="40" y="1258" class="note">指標定義 · 分類與覆蓋限制 · 更新流程 · 可重現數據核對</text>
+<text x="40" y="1292" class="note">此為資訊架構草圖；所有示意圖形均非真實數據。手機版依區塊順序排列成單欄。</text>
+</svg>

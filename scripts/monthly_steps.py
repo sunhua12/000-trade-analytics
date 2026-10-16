@@ -217,7 +217,10 @@ def main() -> None:
         command.error("--kind is required for ingest and load")
     if args.step == "ingest" and not args.run_id:
         command.error("--run-id is required for ingest")
-    print(json.dumps(execute(args), default=str, sort_keys=True))
+    from trade_analytics.warehouse.writer_lock import writer_lock
+
+    with writer_lock(ROOT / "data/pipeline.lock"):
+        print(json.dumps(execute(args), default=str, sort_keys=True))
 
 
 if __name__ == "__main__":

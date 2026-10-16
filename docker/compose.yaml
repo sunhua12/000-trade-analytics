@@ -85,6 +85,8 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/scripts:/opt/trade-analytics/scripts:ro
     - ${AIRFLOW_PROJ_DIR:-.}/src:/opt/trade-analytics/src:ro
     - ${AIRFLOW_PROJ_DIR:-.}/dbt:/opt/trade-analytics/dbt
+    - ${AIRFLOW_PROJ_DIR:-.}/data:/opt/trade-analytics/data
+    - ${AIRFLOW_PROJ_DIR:-.}/frontend:/opt/trade-analytics/frontend:ro
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on

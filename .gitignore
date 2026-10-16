@@ -46,3 +46,9 @@ crash.*.log
 # Editor and operating-system output
 .DS_Store
 .idea/
+
+# Static frontend build output
+/frontend/dist/
+/frontend/.dist-*/
+/frontend/.dist-backup-*/
+/frontend/node_modules/
