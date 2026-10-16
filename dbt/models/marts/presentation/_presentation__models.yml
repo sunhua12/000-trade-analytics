@@ -1,0 +1,40 @@
+version: 2
+models:
+  - name: mart_dashboard_monthly
+    description: 靜態網站月份摘要；日曆缺月仍保留，World 與 HHI 每月只出現一次。
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [month, cmd_code, hs_version]
+    columns:
+      - name: month
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_months')
+                field: month_start_date
+      - name: hhi_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [ok, missing_world, invalid_world, no_countries, missing_country_value, negative_country_value, unreviewed_country, insufficient_coverage]
+  - name: mart_dashboard_partners
+    description: 靜態網站已確認國家／地區明細；月份 × partner × HS 商品與版本，不重複月份摘要。
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [month, partner_code, cmd_code, hs_version]
+    columns:
+      - name: month
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('mart_dashboard_monthly')
+                field: month
+      - name: partner_code
+        data_tests: [not_null]
+      - name: import_value
+        data_tests: [not_null]

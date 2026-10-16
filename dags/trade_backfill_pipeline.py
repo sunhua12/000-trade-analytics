@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from airflow.sdk import dag, task
 from airflow.sdk.exceptions import AirflowFailException
-from trade_pipeline.common import PYTHON, ROOT, TRANSIENT_RETRY, run_command, wire_months
+from trade_pipeline.common import PYTHON, ROOT, TRANSIENT_RETRY, process_batch, run_command
 
 
 @dag(
@@ -37,14 +37,8 @@ def trade_backfill_pipeline():
             ]
         )
 
-    @task(task_id="select_month")
-    def select_month(plan: dict, index: int) -> dict:
-        if index >= len(plan["items"]):
-            return {"status": "unused"}
-        return plan["items"][index]
-
     plan = preflight()
-    wire_months(plan, select_month, recovery_probe=True)
+    process_batch(plan, recovery_probe=True)
 
 
 trade_backfill_pipeline()

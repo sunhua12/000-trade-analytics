@@ -1,0 +1,37 @@
+version: 2
+unit_tests:
+  - name: dashboard_month_spine_and_world_growth
+    model: mart_dashboard_monthly
+    given:
+      - input: ref('dim_months')
+        rows:
+          - {month_start_date: '2023-01-01'}
+          - {month_start_date: '2023-02-01'}
+          - {month_start_date: '2024-01-01'}
+      - input: ref('dim_hs_codes')
+        rows:
+          - {cmd_code: '8542', hs_version: H6}
+      - input: ref('stg_un_comtrade__world_totals')
+        rows:
+          - {period_start_date: '2023-01-01', cmd_code: '8542', hs_version: H6, primary_value: 100}
+          - {period_start_date: '2024-01-01', cmd_code: '8542', hs_version: H6, primary_value: 150}
+      - input: ref('int_market_concentration_hhi')
+        rows:
+          - {period_start_date: '2023-01-01', cmd_code: '8542', hs_version: H6, country_count: 0, country_value: null, country_coverage: null, hhi: null, hhi_status: no_countries}
+          - {period_start_date: '2024-01-01', cmd_code: '8542', hs_version: H6, country_count: 0, country_value: null, country_coverage: null, hhi: null, hhi_status: no_countries}
+    expect:
+      rows:
+        - {month: '2023-01-01', world_value: 100, world_yoy: null, has_world: true, has_countries: false, hhi_status: no_countries}
+        - {month: '2023-02-01', world_value: null, world_yoy: null, has_world: false, has_countries: false, hhi_status: missing_world}
+        - {month: '2024-01-01', world_value: 150, world_yoy: 0.5, has_world: true, has_countries: false, hhi_status: no_countries}
+  - name: dashboard_only_verified_countries
+    model: mart_dashboard_partners
+    given:
+      - input: ref('int_partner_market_share')
+        rows:
+          - {period_start_date: '2023-01-01', cmd_code: '8542', hs_version: H6, partner_code: '156', partner_type: country, classification_status: verified, primary_value: 50}
+          - {period_start_date: '2023-01-01', cmd_code: '8542', hs_version: H6, partner_code: '490', partner_type: special, classification_status: verified, primary_value: 50}
+          - {period_start_date: '2023-01-01', cmd_code: '8542', hs_version: H6, partner_code: '999', partner_type: country, classification_status: needs_review, primary_value: 10}
+    expect:
+      rows:
+        - {month: '2023-01-01', partner_code: '156', import_value: 50}

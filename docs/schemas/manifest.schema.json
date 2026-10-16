@@ -1,0 +1,131 @@
+{
+  "$defs": {
+    "FileIndex": {
+      "additionalProperties": false,
+      "properties": {
+        "monthly.json": {
+          "$ref": "#/$defs/FileInfo"
+        },
+        "partners.json": {
+          "$ref": "#/$defs/FileInfo"
+        }
+      },
+      "required": [
+        "monthly.json",
+        "partners.json"
+      ],
+      "title": "FileIndex",
+      "type": "object"
+    },
+    "FileInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "row_count",
+        "bytes",
+        "sha256"
+      ],
+      "title": "FileInfo",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^[a-f0-9]{32}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "start_month": {
+      "format": "date",
+      "title": "Start Month",
+      "type": "string"
+    },
+    "end_exclusive": {
+      "format": "date",
+      "title": "End Exclusive",
+      "type": "string"
+    },
+    "latest_data_month": {
+      "format": "date",
+      "title": "Latest Data Month",
+      "type": "string"
+    },
+    "currency": {
+      "const": "USD",
+      "title": "Currency",
+      "type": "string"
+    },
+    "reporter_code": {
+      "const": "842",
+      "title": "Reporter Code",
+      "type": "string"
+    },
+    "cmd_code": {
+      "const": "8542",
+      "title": "Cmd Code",
+      "type": "string"
+    },
+    "hs_version": {
+      "const": "H6",
+      "title": "Hs Version",
+      "type": "string"
+    },
+    "decimal_encoding": {
+      "const": "string",
+      "title": "Decimal Encoding",
+      "type": "string"
+    },
+    "hhi_coverage_tolerance": {
+      "const": "0.005",
+      "title": "Hhi Coverage Tolerance",
+      "type": "string"
+    },
+    "files": {
+      "$ref": "#/$defs/FileIndex"
+    }
+  },
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "generated_at",
+    "start_month",
+    "end_exclusive",
+    "latest_data_month",
+    "currency",
+    "reporter_code",
+    "cmd_code",
+    "hs_version",
+    "decimal_encoding",
+    "hhi_coverage_tolerance",
+    "files"
+  ],
+  "title": "SnapshotManifest",
+  "type": "object"
+}

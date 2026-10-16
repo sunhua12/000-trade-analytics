@@ -5,9 +5,8 @@ from datetime import timedelta
 
 import pendulum
 from airflow.sdk import dag, task
-from airflow.sdk.exceptions import AirflowSkipException
 from airflow.timetables.interval import CronDataIntervalTimetable
-from trade_pipeline.common import PYTHON, ROOT, TRANSIENT_RETRY, run_command, wire_months
+from trade_pipeline.common import PYTHON, ROOT, TRANSIENT_RETRY, process_batch, run_command
 
 
 @dag(
@@ -56,20 +55,8 @@ def trade_monthly_pipeline():
         )
         return run_command(command)
 
-    @task(task_id="select_month")
-    def select_month(plan: dict, index: int) -> dict:
-        print(
-            json.dumps(
-                {"checks": plan["checks"]},
-                sort_keys=True,
-            )
-        )
-        if index >= len(plan["selected"]):
-            raise AirflowSkipException("no more available months in this run")
-        return plan["selected"][index]
-
     plan = check_availability()
-    wire_months(plan, select_month)
+    process_batch(plan)
 
 
 trade_monthly_pipeline()

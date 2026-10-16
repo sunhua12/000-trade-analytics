@@ -19,28 +19,13 @@ def check(folder: str) -> None:
         assert dag.max_active_runs == 1
         assert dag.max_active_tasks == 1
         assert first in dag.task_ids
-        assert len(dag.tasks) == 19
-        for index in range(3):
-            suffix = "" if index == 0 else f"_{index + 1}"
-            build = dag.get_task(f"build{suffix}")
-            assert {f"load_detail{suffix}", f"load_world{suffix}"} <= build.upstream_task_ids
-            assert build.trigger_rule == "all_success"
-            assert build.retries == 0
-            assert not any(
-                dag_step + suffix in dag.task_ids
-                for dag_step in ("audit", "gate", "publish", "attest")
-            )
-            for step in ("ingest_detail", "ingest_world", "load_detail", "load_world", "build"):
-                assert dag.get_task(step + suffix).pool == "trade_pipeline"
-            for kind in ("detail", "world"):
-                ingest = dag.get_task(f"ingest_{kind}{suffix}")
-                load = dag.get_task(f"load_{kind}{suffix}")
-                assert ingest.task_id in load.upstream_task_ids
-                assert ingest.retries == load.retries == 3
-            if index:
-                prior = "build" if index == 1 else "build_2"
-                assert prior in dag.get_task("select_month" + suffix).upstream_task_ids
-        print(f"{name}: imported {len(dag.tasks)} tasks; serial dependencies verified")
+        assert len(dag.tasks) == 2
+        batch = dag.get_task("process_batch")
+        assert batch.upstream_task_ids == {first}
+        assert batch.pool == "trade_pipeline"
+        assert batch.trigger_rule == "all_success"
+        assert batch.retries == 3
+        print(f"{name}: imported two tasks; whole-batch pool boundary verified")
     assert isinstance(bag.dags["trade_backfill_pipeline"].timetable, NullTimetable)
 
 

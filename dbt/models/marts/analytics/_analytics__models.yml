@@ -1,7 +1,7 @@
 version: 2
 models:
 - name: mart_us_semiconductor_supply_chain
-  description: 供 Streamlit 直接讀取的 Analytics Mart，粒度同 fact；保留 lineage、指標與 HHI 可用性。月份級 HHI 重複於夥伴列，不可跨夥伴 SUM。
+  description: 保留原有分析與 lineage 的 Analytics Mart；網站另讀 presentation views，粒度同 fact；保留 lineage、指標與 HHI 可用性。月份級 HHI 重複於夥伴列，不可跨夥伴 SUM。
   columns:
   - name: hhi_status
   data_tests:

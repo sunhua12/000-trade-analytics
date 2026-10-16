@@ -1,0 +1,26 @@
+{
+  "cmd_code": "8542",
+  "currency": "USD",
+  "decimal_encoding": "string",
+  "end_exclusive": "2025-01-01",
+  "files": {
+    "monthly.json": {
+      "bytes": 10310,
+      "row_count": 24,
+      "sha256": "sha256:c7a0eabc4bdd5eb9288ec599f10582cb2110724910f84ecb1710a228b32301a2"
+    },
+    "partners.json": {
+      "bytes": 630832,
+      "row_count": 1536,
+      "sha256": "sha256:959c7c7177b4eeed3354c1e4bce940a4657b0d94690a552e7c38a1b282d25ac5"
+    }
+  },
+  "generated_at": "2026-10-16T06:40:28.684478+00:00",
+  "hhi_coverage_tolerance": "0.005",
+  "hs_version": "H6",
+  "latest_data_month": "2024-12-01",
+  "reporter_code": "842",
+  "schema_version": "1.0.0",
+  "snapshot_id": "d7c91dfa3ea9477d8d2f41b02b956afa",
+  "start_month": "2023-01-01"
+}
