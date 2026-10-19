@@ -50,8 +50,9 @@ class IngestionService:
         if len(response.data) != 1:
             raise DataContractError("world_total response must contain exactly one World record")
         value = response.data[0].primary_value
-        if value is None or value <= 0:
-            raise DataContractError("world_total primaryValue must be greater than zero")
+        zero_allowed = query.cmd_code in {"854231", "854232", "854233", "854239", "854290"}
+        if value is None or value < 0 or (value == 0 and not zero_allowed):
+            raise DataContractError("world_total primaryValue violated its amount contract")
         return IngestionDataset(query=query, rows=tuple(response.data))
 
     @staticmethod
@@ -66,6 +67,11 @@ class IngestionService:
         for field, expected in expected_fields.items():
             if getattr(row, field) != expected:
                 raise DataContractError(f"record {field} must equal {expected}")
+        if (
+            query.cmd_code in {"854231", "854232", "854233", "854239", "854290"}
+            and row.is_original_classification is not True
+        ):
+            raise DataContractError("IC detail requires the original reported HS edition")
         value = row.primary_value
         if value is None or not value.is_finite() or value < 0:
             raise DataContractError("primaryValue must be a finite non-negative amount")
@@ -73,9 +79,9 @@ class IngestionService:
             raise DataContractError(
                 f"record period {row.period} did not match requested period {query.period}"
             )
-        if row.reporter_code != 842:
+        if row.reporter_code != query.reporter_code:
             raise DataContractError(
-                f"record reporter {row.reporter_code} was not U.S. reporter 842"
+                f"record reporter {row.reporter_code} did not match requested {query.reporter_code}"
             )
         if row.flow_code != "M":
             raise DataContractError(f"record flow {row.flow_code} was not import flow M")
@@ -86,9 +92,9 @@ class IngestionService:
 
     @staticmethod
     def _validate_unique_grain(rows: tuple[TradeRecord, ...]) -> None:
-        seen: set[tuple[str, int, str]] = set()
+        seen: set[tuple[str, int, int, str, str]] = set()
         for row in rows:
-            key = (row.period, row.partner_code, row.cmd_code)
+            key = (row.period, row.reporter_code, row.partner_code, row.cmd_code, row.flow_code)
             if key in seen:
                 raise DataContractError(
                     "duplicate grain detected for "

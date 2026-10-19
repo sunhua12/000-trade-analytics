@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import sys
 from collections.abc import Callable, Sequence
 from pathlib import Path
@@ -22,7 +23,9 @@ def run_ingestion(query: ComtradeQuery, output_dir: Path) -> StoredIngestion:
     """Run one query through the live Preview API and local storage."""
     timeout = httpx.Timeout(connect=10.0, read=30.0, write=30.0, pool=10.0)
     with httpx.Client() as http_client:
-        client = ComtradeClient(http_client=http_client, timeout=timeout)
+        client = ComtradeClient(
+            http_client=http_client, timeout=timeout, api_key=os.environ.get("COMTRADE_API_KEY")
+        )
         dataset = IngestionService(client).fetch_dataset(query)
     return LocalStorage(root=output_dir).write(dataset)
 
@@ -32,6 +35,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Fetch UN Comtrade monthly Preview data")
     parser.add_argument("--period", default="202401", help="Monthly period in YYYYMM format")
     parser.add_argument("--cmd-code", default="8542", help="HS commodity code")
+    parser.add_argument("--reporter-code", type=int, default=842)
+    parser.add_argument("--hs-version", choices=[f"H{i}" for i in range(7)], default="H6")
     parser.add_argument("--revision", type=int, default=1, help="Positive source revision")
     parser.add_argument(
         "--query-type",
@@ -57,6 +62,8 @@ def main(argv: Sequence[str] | None = None, *, runner: Runner = run_ingestion) -
             cmd_code=arguments.cmd_code,
             query_type=arguments.query_type,
             revision=arguments.revision,
+            reporter_code=arguments.reporter_code,
+            expected_hs_version=arguments.hs_version,
         )
         stored = runner(query, arguments.output_dir)
     except (ValidationError, ComtradeError) as error:

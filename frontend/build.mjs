@@ -4,7 +4,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 const root=path.dirname(fileURLToPath(import.meta.url));
 const manifest=JSON.parse(await readFile(path.join(root,'public/data/manifest.json'),'utf8'));
-if(manifest.schema_version!=='1.0.0')throw new Error('Unsupported schema');
+if(!['1.0.0','2.0.0'].includes(manifest.schema_version))throw new Error('Unsupported schema');
 for(const name of ['monthly','partners']) {
  const payload=await readFile(path.join(root,`public/data/${name}.json`));
  const document=JSON.parse(payload);

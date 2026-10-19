@@ -28,7 +28,9 @@ def sha256(data: bytes) -> str:
     return "sha256:" + hashlib.sha256(data).hexdigest()
 
 
-def validate_build(artifacts: Path, settings: Settings) -> dict[str, str]:
+def validate_build(
+    artifacts: Path, settings: Settings, *, multi_market: bool = False
+) -> dict[str, str]:
     """Require a fresh successful build including both views and their data tests."""
     manifest_bytes = (artifacts / "manifest.json").read_bytes()
     results_bytes = (artifacts / "run_results.json").read_bytes()
@@ -50,6 +52,11 @@ def validate_build(artifacts: Path, settings: Settings) -> dict[str, str]:
         "model.trade_analytics.mart_dashboard_monthly",
         "model.trade_analytics.mart_dashboard_partners",
     }
+    if multi_market:
+        models = {
+            "model.trade_analytics.mart_multi_market_ic_monthly",
+            "model.trade_analytics.mart_multi_market_ic_partners",
+        }
     for key in models:
         node = nodes[key]
         if node["database"] != settings.project or node["schema"] != settings.dataset:
@@ -60,7 +67,7 @@ def validate_build(artifacts: Path, settings: Settings) -> dict[str, str]:
         if node["resource_type"] == "test"
         and models.intersection(node.get("depends_on", {}).get("nodes", []))
     }
-    if "test.trade_analytics.assert_presentation" not in tests:
+    if not multi_market and "test.trade_analytics.assert_presentation" not in tests:
         raise ValueError("missing presentation consistency test")
     statuses = {result["unique_id"]: result["status"] for result in results["results"]}
     if any(status not in ("success", "pass") for status in statuses.values()):
@@ -197,8 +204,18 @@ def publish_snapshot(
     *,
     build: dict[str, str],
     jobs: list[dict[str, Any]],
+    multi_market: bool = False,
+    require_row_target: bool = False,
 ) -> dict[str, Any]:
-    monthly, partners = validate_snapshot(raw, start, end_exclusive)
+    version = "2.0.0" if multi_market else SCHEMA_VERSION
+    if multi_market:
+        from trade_analytics.export.v2 import validate_v2
+
+        monthly, partners = validate_v2(raw, start, end_exclusive)
+    else:
+        monthly, partners = validate_snapshot(raw, start, end_exclusive)
+    if require_row_target and len(partners) < 100000:
+        raise ValueError("accepted release requires at least 100000 valid partner detail rows")
     snapshot_id = uuid.uuid4().hex
     output.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix=".staging-", dir=output))
@@ -206,18 +223,31 @@ def publish_snapshot(
     try:
         files = {}
         for name, rows in (("monthly.json", monthly), ("partners.json", partners)):
-            payload = json_bytes(
-                {
-                    "schema_version": SCHEMA_VERSION,
-                    "snapshot_id": snapshot_id,
-                    "rows": [row.model_dump(mode="json") for row in rows],
-                }
+            document = {
+                "schema_version": version,
+                "snapshot_id": snapshot_id,
+                "rows": [row.model_dump(mode="json") for row in rows],
+            }
+            payload = (
+                (
+                    json.dumps(
+                        document,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                        allow_nan=False,
+                    )
+                    + "\n"
+                ).encode()
+                if multi_market
+                else json_bytes(document)
             )
+            del document
             (stage / name).write_bytes(payload)
             files[name] = {"row_count": len(rows), "sha256": sha256(payload), "bytes": len(payload)}
         available = [row.month for row in monthly if row.has_world or row.has_countries]
         manifest = {
-            "schema_version": SCHEMA_VERSION,
+            "schema_version": version,
             "snapshot_id": snapshot_id,
             "generated_at": datetime.now(UTC).isoformat(),
             "start_month": start.isoformat(),
@@ -231,8 +261,19 @@ def publish_snapshot(
             "hhi_coverage_tolerance": "0.005",
             "files": files,
         }
+        if multi_market:
+            from trade_analytics.export.v2 import scope_metadata
+
+            for key in ("reporter_code", "cmd_code", "hs_version"):
+                manifest.pop(key)
+            manifest.update(scope_metadata(monthly, partners))
         manifest_payload = json_bytes(manifest)
-        SnapshotManifest.model_validate_json(manifest_payload)
+        if multi_market:
+            from trade_analytics.export.v2 import SnapshotManifestV2
+
+            SnapshotManifestV2.model_validate_json(manifest_payload)
+        else:
+            SnapshotManifest.model_validate_json(manifest_payload)
         (stage / "manifest.json").write_bytes(manifest_payload)
         # Internal evidence stays outside the directory consumed by the website.
         audit = output / "audit"
@@ -241,7 +282,7 @@ def publish_snapshot(
         destination = output / snapshot_id
         stage.rename(destination)
         pointer = {
-            "schema_version": SCHEMA_VERSION,
+            "schema_version": version,
             "snapshot_id": snapshot_id,
             "manifest": f"{snapshot_id}/manifest.json",
             "manifest_sha256": sha256(manifest_payload),
@@ -275,6 +316,10 @@ def verify_snapshot(output: Path) -> dict[str, Any]:
         SnapshotManifest,
     )
 
+    if json.loads((output / "current.json").read_bytes())["schema_version"] == "2.0.0":
+        from trade_analytics.export.v2 import verify_v2
+
+        return verify_v2(output)
     pointer = CurrentPointer.model_validate_json((output / "current.json").read_bytes())
     if pointer.manifest != f"{pointer.snapshot_id}/manifest.json":
         raise ValueError("manifest path does not match snapshot ID")

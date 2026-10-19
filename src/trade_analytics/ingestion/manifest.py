@@ -21,7 +21,7 @@ class Manifest(BaseModel):
     request_parameters: dict[str, str | int]
     checksum: str
     schema_version: Literal["2.0.0"]
-    hs_version: Literal["H6"]
+    hs_version: Literal["H0", "H1", "H2", "H3", "H4", "H5", "H6"]
     period: str
     query_type: QueryType
     cmd_code: str
@@ -92,6 +92,8 @@ def build_manifest(
     ingested_at: datetime,
 ) -> Manifest:
     """Build audit metadata from a validated dataset and serialized bytes."""
+    if dataset.query.reporter_codes:
+        raise DataContractError("split grouped responses into individual reporter artifacts")
     hs_versions = {row.classification_code for row in dataset.rows}
     if hs_versions != {dataset.query.expected_hs_version}:
         raise DataContractError(
@@ -126,8 +128,13 @@ def build_manifest(
 
 def artifact_partition(query: ComtradeQuery) -> str:
     """Common local/S3 identity; never reuse the legacy directory."""
+    reporter_partition = (
+        "v2/"
+        if query.reporter_code == 842 and query.cmd_code == "8542"
+        else f"v3/reporter_code={query.reporter_code}/"
+    )
     return (
-        f"v2/hs_version={query.expected_hs_version}/cmd_code={query.cmd_code}/"
+        f"{reporter_partition}hs_version={query.expected_hs_version}/cmd_code={query.cmd_code}/"
         f"period={query.period}/query_type={query.query_type.value}/revision={query.revision}"
     )
 

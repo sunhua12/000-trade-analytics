@@ -1,2 +1,22 @@
 hs_version,cmd_code,hs_description,code_level,parent_code,source_url,retrieved_at
 H6,8542,8542 - Electronic integrated circuits,4,85,https://comtradeapi.un.org/files/v1/app/reference/H6.json,2026-09-20T07:14:14.303469+00:00
+H3,854231,"854231 - --  Processors and controllers, whether or not combined with memories, converters, logic circuits, amplifiers, clock and timing circuits, or other circuits",6,8542,https://comtradeapi.un.org/files/v1/app/reference/H3.json,2026-10-17T04:58:36.931447+00:00
+H3,854232,854232 - --  Memories,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H3.json,2026-10-17T04:58:36.931887+00:00
+H3,854233,854233 - --  Amplifiers,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H3.json,2026-10-17T04:58:36.931891+00:00
+H3,854239,854239 - --  Other,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H3.json,2026-10-17T04:58:36.931893+00:00
+H3,854290,854290 - -  Parts,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H3.json,2026-10-17T04:58:36.931895+00:00
+H4,854231,"854231 - -- Processors and controllers, whether or not combined with memories, converters, logic circuits, amplifiers, clock and timing circuits, or other circuits",6,8542,https://comtradeapi.un.org/files/v1/app/reference/H4.json,2026-10-17T04:58:36.940063+00:00
+H4,854232,854232 - -- Memories,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H4.json,2026-10-17T04:58:36.940073+00:00
+H4,854233,854233 - -- Amplifiers,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H4.json,2026-10-17T04:58:36.940075+00:00
+H4,854239,854239 - -- Other,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H4.json,2026-10-17T04:58:36.940077+00:00
+H4,854290,854290 - -Parts,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H4.json,2026-10-17T04:58:36.940079+00:00
+H5,854231,"854231 - Electronic integrated circuits; processors and controllers, whether or not combined with memories, converters, logic circuits, amplifiers, clock and timing circuits, or other circuits",6,8542,https://comtradeapi.un.org/files/v1/app/reference/H5.json,2026-10-17T04:58:36.946663+00:00
+H5,854232,854232 - Electronic integrated circuits; memories,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H5.json,2026-10-17T04:58:36.946675+00:00
+H5,854233,854233 - Electronic integrated circuits; amplifiers,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H5.json,2026-10-17T04:58:36.946677+00:00
+H5,854239,854239 - Electronic integrated circuits; n.e.c. in heading no. 8542,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H5.json,2026-10-17T04:58:36.946679+00:00
+H5,854290,854290 - Parts of electronic integrated circuits,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H5.json,2026-10-17T04:58:36.946681+00:00
+H6,854231,"854231 - Electronic integrated circuits; processors and controllers, whether or not combined with memories, converters, logic circuits, amplifiers, clock and timing circuits, or other circuits",6,8542,https://comtradeapi.un.org/files/v1/app/reference/H6.json,2026-10-17T04:58:36.953616+00:00
+H6,854232,854232 - Electronic integrated circuits; memories,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H6.json,2026-10-17T04:58:36.953627+00:00
+H6,854233,854233 - Electronic integrated circuits; amplifiers,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H6.json,2026-10-17T04:58:36.953629+00:00
+H6,854239,854239 - Electronic integrated circuits; n.e.c. in heading no. 8542,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H6.json,2026-10-17T04:58:36.953631+00:00
+H6,854290,854290 - Parts of electronic integrated circuits,6,8542,https://comtradeapi.un.org/files/v1/app/reference/H6.json,2026-10-17T04:58:36.953633+00:00

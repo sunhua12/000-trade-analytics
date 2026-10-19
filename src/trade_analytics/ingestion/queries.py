@@ -15,15 +15,24 @@ class QueryType(StrEnum):
 
 
 class ComtradeQuery(BaseModel):
-    """A validated monthly U.S. semiconductor import query."""
+    """A validated monthly semiconductor import query."""
 
     model_config = ConfigDict(frozen=True)
 
     period: str = "202401"
     cmd_code: str = "8542"
     query_type: QueryType
-    expected_hs_version: Literal["H6"] = "H6"
+    reporter_code: int = Field(default=842, gt=0, strict=True)
+    reporter_codes: tuple[int, ...] = ()
+    expected_hs_version: Literal["H0", "H1", "H2", "H3", "H4", "H5", "H6"] = "H6"
     revision: int = Field(default=1, gt=0, strict=True)
+
+    @field_validator("reporter_codes")
+    @classmethod
+    def validate_reporters(cls, values: tuple[int, ...]) -> tuple[int, ...]:
+        if len(values) > 10 or len(set(values)) != len(values) or any(v <= 0 for v in values):
+            raise ValueError("reporter group requires at most ten unique positive codes")
+        return values
 
     @field_validator("period")
     @classmethod
@@ -46,7 +55,11 @@ class ComtradeQuery(BaseModel):
     def to_params(self) -> dict[str, str | int]:
         """Return Preview API query parameters for this extract."""
         params: dict[str, str | int] = {
-            "reporterCode": 842,
+            "reporterCode": (
+                ",".join(map(str, self.reporter_codes))
+                if self.reporter_codes
+                else self.reporter_code
+            ),
             "period": self.period,
             "cmdCode": self.cmd_code,
             "flowCode": "M",

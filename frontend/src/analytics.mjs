@@ -48,13 +48,68 @@ export function analyze(monthly, partners, {start, end, countries = [], topN = 1
   const last = months.filter(row => row.has_world || row.has_countries).at(-1)?.month ?? null;
   return {months, scope, world, selected, selectedShare: share(selected, world), rankings, top, trend, yoy, last,
     worldMonths: months.filter(row => row.world_value !== null).length,
-    scatter: scope.filter(row => row.month === end && row.yoy !== null && top.some(p => p.code === row.partner_code)),
+    comparison: scope.filter(row => row.month === end),
+    scatter: scope.filter(row => row.month === end && row.yoy !== null),
     unmapped: sum(scope.filter(row => !row.map_iso3).map(row => row.import_value)),
     yoyLabel: selectedPartner ? `${scope[0]?.source_name || selectedPartner} YoY` : 'World YoY',
   };
 }
 export function csv(rows) {
-  const fields = ['month','partner_code','source_name','import_value','market_share','yoy','mom'];
+  const fields = ['month','reporter_code','cmd_code','hs_version','partner_code','source_name','import_value','market_share','yoy','mom'];
   const cell = value => `"${String(value ?? '').replace(/^[=+@-]/, "'$&").replaceAll('"','""')}"`;
-  return '\ufeff' + [fields.join(','), ...rows.map(row => fields.map(key => cell(row[key])).join(','))].join('\r\n');
+  return '\ufeff' + [fields.join(','), ...rows.map(row => fields.map(key => cell(key==='reporter_code'?(row[key]??'842'):row[key])).join(','))].join('\r\n');
+}
+
+// Build one market/product scope before any ranking, chart, or CSV calculation.
+export function marketScope(monthly, partners, reporter, products) {
+  if (!products.length) throw new Error('請至少選擇一項商品。');
+  const match = row => row.reporter_code === reporter && products.includes(row.cmd_code);
+  const monthlyGroups = new Map();
+  for (const row of monthly.filter(match)) {
+    const group = monthlyGroups.get(row.month) ?? [];
+    group.push(row); monthlyGroups.set(row.month, group);
+  }
+  const completeSum = values => values.length === products.length && values.every(v => v !== null) ? sum(values) : null;
+  const scopedMonths = [...monthlyGroups].sort(([a],[b])=>a.localeCompare(b)).map(([month, rows]) => {
+    const world = completeSum(rows.map(row=>row.world_value));
+    const previous = completeSum(rows.map(row=>row.previous_year_world_value));
+    const ratio = share(world, previous);
+    return {month, reporter_code:reporter, cmd_code:products.join('+'), world_value:world,
+      world_yoy:ratio === null ? null : decimal(units(ratio)-SCALE),
+      has_world:world !== null, has_countries:rows.some(row=>row.has_countries)};
+  });
+  const buckets = new Map();
+  for (const row of partners.filter(match)) {
+    const key = `${row.month}/${row.partner_code}`;
+    const group = buckets.get(key) ?? [];
+    group.push(row); buckets.set(key,group);
+  }
+  const totalFor = (month, code, currentRows) => {
+    const prior = buckets.get(`${month}/${code}`);
+    if (!prior || prior.length !== products.length || currentRows.length !== products.length || !currentRows.every(row=>prior.some(p=>p.cmd_code===row.cmd_code))) return null;
+    return sum(prior.map(row=>row.import_value));
+  };
+  const shift = (month, offset) => {
+    const date = new Date(month); date.setUTCMonth(date.getUTCMonth()+offset);
+    return date.toISOString().slice(0,10);
+  };
+  const scopedPartners = [...buckets.values()].map(rows=>{
+    const first = rows[0]; const value = sum(rows.map(row=>row.import_value));
+    const world = scopedMonths.find(row=>row.month===first.month)?.world_value ?? null;
+    const previousMonth = totalFor(shift(first.month,-1),first.partner_code,rows);
+    const previousYear = totalFor(shift(first.month,-12),first.partner_code,rows);
+    const growth = prior => {const ratio=share(value,prior);return ratio===null?null:decimal(units(ratio)-SCALE);};
+    return {...first,cmd_code:products.join('+'),hs_version:[...new Set(rows.map(row=>row.hs_version))].join('+'),
+      import_value:value,market_share:share(value,world),previous_month_value:previousMonth,
+      previous_year_value:previousYear,mom:growth(previousMonth),yoy:growth(previousYear)};
+  });
+  return {monthly:scopedMonths,partners:scopedPartners,rawPartners:partners.filter(match)};
+}
+
+// Exact intersection includes internal gaps, rather than only overlapping endpoints.
+export function commonMonths(availability, reporters, products) {
+  const scopes = reporters.flatMap(reporter=>products.map(product=>
+    availability.find(row=>row.reporter_code===reporter&&row.cmd_code===product)?.months ?? []));
+  if (!scopes.length) return [];
+  return scopes[0].filter(month=>scopes.every(scope=>scope.includes(month))).sort();
 }

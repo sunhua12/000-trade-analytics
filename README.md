@@ -1,8 +1,8 @@
 # 積體電路進口分析
 
-目標採用方案 A：多市場、5 個積體電路子類、2016 年起月度進口資料，至少 100,000 筆去重有效明細。詳見 [正式規格](docs/specs/multi-market-integrated-circuits.md)。目前程式與快照尚為下述單市場版本，多市場遷移尚未完成。
+目標採用方案 A：多市場、5 個積體電路子類、2016 年起月度進口資料，至少 100,000 筆去重有效明細。詳見 [正式規格](docs/specs/multi-market-integrated-circuits.md)。多市場歷史查詢、全量載入與 JSON v2 驗收已完成，共 222,959 筆有效明細；已查核 2016-01 至 2026-09，最新可用資料為 2026-08。正式離線頁面為 `data/website/index.html`，各市場實際期間見驗證紀錄。原有美國單市場流程保留供相容使用。
 
-分析美國月度積體電路進口金額、來源國、市占率、MoM、YoY 與 HHI。商品固定 HS 8542，分類版本 H6。
+多市場流程分析各報告市場及五類商品的月度進口規模、來源、市占率與成長率，保留原始 HS 版本。下述原有流程仍使用美國、HS 8542 與 H6；新入口與驗收方式見本文的「多市場積體電路分析」章節。
 
 固定 reporter 842、美國月度進口；擷取 `partner_detail` 與 `world_total`，預設展示 202301～202412。
 
@@ -16,6 +16,7 @@ flowchart TD
     API --> CLI[Python CLI]
     Lambda --> S3[S3 Raw + Manifest]
     CLI --> Local[Local Raw + Manifest]
+    Local -->|validated upload| S3
     S3 --> Loader[Python RawLoader]
     Loader --> Raw[BigQuery Raw + load audit]
     Raw --> Staging[dbt staging]
@@ -118,7 +119,7 @@ docker buildx build --platform linux/amd64 --provenance=false --load \
 
 [開啟網站](https://silicon-atlas-trade-observatory.honest-badge-7365.chatgpt.site)（私人存取，需登入擁有者的 ChatGPT 帳號）。
 
-採 Apple／Notion 風格的輕量研究工作台，提供日期／國家／Top N 篩選、趨勢、排名、YoY、覆蓋率／HHI、地圖、散佈圖、分頁明細與完整 CSV 匯出。包含獨立方法頁，說明資料來源、指標與必要限制。
+採 Apple／Notion 風格的輕量研究工作台，提供日期／國家／Top N 篩選、趨勢、排名、YoY、覆蓋率／HHI、橘色分級地圖、跨年度月度比較、分頁明細與完整 CSV 匯出。包含獨立方法頁，說明資料來源、指標與必要限制。
 
 可直接雙擊根目錄的 `index.html` 預覽單檔版本，不需伺服器或登入。更新單檔版本：
 
@@ -201,3 +202,48 @@ dbt 將原有 6 個核心 SQL 契約集中於 `assert_data_flow.sql` 與 `assert
 5. 說明 Manifest、revision、load audit 與 Airflow log 如何協助排查；dbt tests 失敗會停止流程，但不提供模型自動 rollback。
 
 僅展示目前已實測的資料與結果。三項分析觀察須自行保存查詢條件及證據。
+
+
+## 多市場積體電路分析（JSON v2）
+
+多市場入口為 `scripts/multi_market_pipeline.py`；原有美國 HS 8542 流程仍保留。
+報告市場包含美國、中國、香港、日本、韓國、新加坡、馬來西亞、德國、荷蘭與越南。
+商品為 854231、854232、854233、854239 與 854290（零件），歷史範圍自 2016 年 1 月起。
+
+```bash
+# 使用公開 API；遇到額度限制會遵守 Retry-After，檔案及進度可以續跑。
+.venv/bin/python scripts/multi_market_pipeline.py \
+  --complete-backfill --start 201601 --end 202609 \
+  --max-requests 1000 --max-sources 20000 --full-refresh --build --publish
+
+# 本機驗證目前的 JSON v2 快照，不需雲端連線。
+.venv/bin/python -m trade_analytics.export.cli \
+  --verify-only --output-dir data/frontend-v2
+
+# 去重有效明細及正金額筆數；不計 World、特殊彙總與歷史副本。
+.venv/bin/python scripts/audit_multi_market.py \
+  --output data/multi-market/acceptance.json
+```
+
+首次遷移使用 `--full-refresh` 建立新模型；後續月份省略此參數，只替換本次受影響的月份分區。國家或商品參考映射變動時，另做一次完整更新以同步既有資料。
+`--max-requests` 限制每批邏輯查詢；截斷拆分與重試會另外呼叫 API。
+完整模式會持續處理下一批，並以至少 100,000 筆有效來源明細作為正式輸出門檻。
+若只需要檢查目前資料，可使用 `--sync-only --build --publish`，畫面會標示未達筆數門檻的狀態。
+
+進度位於 `data/multi-market/pipeline-state.json`，成功來源與雲端檢查點分別位於
+`batch-ledger.json` 與 `cloud-ledger.json`。原始檔使用
+`v3/reporter_code=.../hs_version=.../cmd_code=.../period=.../query_type=.../revision=...`，
+避免市場分區互相覆蓋；原始檔契約版本與公開 JSON 版本分開管理。
+
+正式離線成品為 `data/website/index.html`，版本化網站與資料位於
+`data/website/` 及 `data/frontend-v2/`。公開 JSON 與離線成品不含 API Key。
+可選的 `COMTRADE_API_KEY` 僅供後端使用，請透過本機環境或秘密管理機制設定。
+
+新月度 DAG 為 `trade_multi_market_pipeline`，共用原有 `trade_pipeline` 寫入池，
+啟用後每月 15 日台北時間 04:00 優先檢查最近三個完整月份，並依最久未檢查的順序重查歷史缺檔，以處理延遲公布。
+預設 `TRADE_MULTI_MARKET_SCHEDULE_ENABLED=auto`：完整回補流程成功寫入驗收狀態後，
+新 DAG 才會自動取得月度排程。可設為 `false` 明確停用，或設為 `true` 手動啟用。
+月度執行使用獨立狀態檔，且正式輸出同樣要求至少 100,000 筆有效明細。
+新排程接手後，原有美國單市場 DAG 自動改為手動模式，避免兩版展示互相替換。
+
+詳細契約與驗收說明見 [多市場驗證紀錄](docs/validation/multi-market-integrated-circuits.md)。
