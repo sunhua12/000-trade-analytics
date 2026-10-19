@@ -1,0 +1,23 @@
+version: 2
+models:
+  - name: fct_multi_market_ic_imports
+    description: 原始 HS 分類、多市場積體電路進口有效國家明細。
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [period_start_date, reporter_code, partner_code, cmd_code, flow_code]
+    columns:
+      - name: primary_value
+        data_tests: [not_null]
+      - name: reporter_code
+        data_tests: [not_null]
+  - name: mart_multi_market_ic_monthly
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [month, reporter_code, cmd_code]
+  - name: mart_multi_market_ic_partners
+    data_tests:
+      - compound_unique:
+          arguments:
+            columns: [month, reporter_code, cmd_code, partner_code]

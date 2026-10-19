@@ -5,7 +5,7 @@
 ## 資料邊界
 
 - dbt 定義月度指標，Python 負責匯出與驗證，前端負責呈現與使用者選擇造成的聚合。
-- 預設展示 2023-01 至 2024-12；匯出日期採 `[start_month, end_exclusive)`，皆為每月第一天，最多 60 個月。
+- 預設展示 2023-01 至 2024-12；匯出日期採 `[start_month, end_exclusive)`，皆為每月第一天，最多 180 個月；多市場 v2 目前涵蓋自 2016 年起的範圍。
 - 月份摘要保留完整月份日曆；月份有資料與否由 `has_world`、`has_countries` 判斷，不能把摘要列數當成有效資料月份數。
 - 國家資料只包含 `partner_type = country` 且 `classification_status = verified`。特殊代碼 490 保留於原資料管線，但不進入前端國家集合。
 - 無資料的月份仍有摘要列；各國缺月不製造明細，不補零。繪圖應使用月份日曆補出 null 斷點。
@@ -84,7 +84,7 @@ HHI 狀態：`ok`、`missing_world`、`invalid_world`、`no_countries`、`missin
 
 ## 圖表與篩選語意
 
-日期與國家影響如下；Top N 只限制排名與散佈圖的候選國家，不影響 KPI、趨勢、World 分母或地圖總額。
+日期與國家影響如下；Top N 只限制來源國排名，不影響 KPI、趨勢、World 分母或地圖總額。
 
 | 畫面 | 使用欄位 | 日期篩選 | 國家篩選 |
 |---|---|---|---|
@@ -97,7 +97,7 @@ HHI 狀態：`ok`、`missing_world`、`invalid_world`、`no_countries`、`missin
 | YoY | partners.yoy 或 monthly.world_yoy | 顯示選定月份的月度 YoY | 單國使用該國；多國／全部使用 World 並標示 |
 | 覆蓋率、HHI | monthly.country_coverage、hhi、hhi_status | 顯示選定月份的整體數值 | 不變，不重算選定國家的 HHI |
 | 來源國地圖 | map_iso3、import_value | 各國期間金額合計 | 隨選定國家改變，揭露無地圖碼金額 |
-| 金額／YoY 散佈圖 | import_value、yoy | 固定選定結束月；缺資料不替換月份 | 取期間 Top N 中有有效當月數值的國家 |
+| 跨年度月度比較 | month、import_value | 按市場、商品及來源國精確加總；每年度一條線，橫軸固定 1 至 12 月 | 依日期與國家篩選，缺月斷線，不受 Top N 限制 |
 
 期間 World 合計沿用 SQL SUM 的可用值語意，但只要所選月份有缺 World，畫面必須顯示缺月提示與有效月份數；全部缺值時顯示資料不足。期間市占也必須揭露分母缺月，不可把不完整期間說成完整覆蓋。
 
@@ -114,3 +114,20 @@ dbt artifacts 是建置證據，不是 warehouse lock。執行 build 至 export 
 驗證完成後先寫完整版本目錄，再以同檔案系統 os.replace 切換 current.json。查詢、驗證或版本切換失敗時保留舊指標。若失敗發生於版本目錄完成之後，可能留下未被指標引用的版本與 audit，不能將它誤認為已發布；本階段不自動刪除舊版本，也不宣稱斷電情境的完整耐久性。
 
 `--verify-only` 可離線驗證 checksum、檔案大小、筆數、型別、版本與跨檔一致性。網站發布將前端程式與 JSON 作為同一版本部署。
+
+
+## JSON v2：多市場積體電路
+
+v1 繼續相容；v2 的正式 JSON Schema 位於 `frontend/schemas/v2/`。
+月度粒度為月份 × 報告市場 × 商品；來源明細另加入來源代碼。流向固定為進口 M，
+HS 版本保留於資料列，並先選定完整的接受修訂，不把歷史副本相加。
+
+每列新增 `reporter_code`，`cmd_code` 限定五類積體電路子類。
+Manifest 新增 `markets`、`products`、`availability`、`valid_detail_count`、
+`positive_amount_count` 及 `row_target_met`，不再以單一市場或 H6 描述全部資料。
+金額／比率仍為精確十進位字串，缺月及缺基期維持 null；來源實際申報的 0 仍保留。
+
+兩份資料以同一 BigQuery SQL 敘述的逐列 STRUCT 結果讀取並分頁，保留 DATE／NUMERIC 型別。
+檔案、manifest 與 current pointer 均驗證版本、筆數、bytes 及 SHA-256。
+多商品圖表重新加總同範圍分子與分母；明細及 CSV 保留商品與原始 HS 版本。
+跨市場比較取實際可用月份交集。未達 100,000 筆的預覽明確標示回補中；正式輸出另有筆數門檻。

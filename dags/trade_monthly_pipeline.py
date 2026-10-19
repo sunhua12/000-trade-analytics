@@ -6,13 +6,24 @@ from datetime import timedelta
 import pendulum
 from airflow.sdk import dag, task
 from airflow.timetables.interval import CronDataIntervalTimetable
-from trade_pipeline.common import PYTHON, ROOT, TRANSIENT_RETRY, process_batch, run_command
+from trade_pipeline.common import (
+    PYTHON,
+    ROOT,
+    TRANSIENT_RETRY,
+    multi_market_schedule_enabled,
+    process_batch,
+    run_command,
+)
 
 
 @dag(
     dag_id="trade_monthly_pipeline",
     description="Check and process up to three completed months in serial order",
-    schedule=CronDataIntervalTimetable("0 0 1 * *", timezone="Asia/Taipei"),
+    schedule=(
+        None
+        if multi_market_schedule_enabled()
+        else CronDataIntervalTimetable("0 0 1 * *", timezone="Asia/Taipei")
+    ),
     start_date=pendulum.datetime(2026, 9, 1, tz="Asia/Taipei"),
     catchup=False,
     max_active_runs=1,

@@ -32,7 +32,9 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
     digest = "sha256:" + hashlib.sha256(data).hexdigest()
     if manifest["checksum"] != digest:
         raise ValueError("checksum mismatch")
-    if manifest["schema_version"] != "2.0.0" or manifest["hs_version"] != "H6":
+    if manifest["schema_version"] != "2.0.0" or manifest["hs_version"] not in {
+        f"H{i}" for i in range(7)
+    }:
         raise ValueError("unsupported schema or classification")
     period, kind, commodity = (manifest[k] for k in ("period", "query_type", "cmd_code"))
     if kind not in ("partner_detail", "world_total"):
@@ -41,8 +43,13 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
     revision = manifest["revision"]
     if type(revision) is not int or revision < 1:
         raise ValueError("invalid revision")
+    hs_version = manifest["hs_version"]
+    reporter = manifest["request_parameters"]["reporterCode"]
+    partition = (
+        "/v2/" if reporter == 842 and commodity == "8542" else f"/v3/reporter_code={reporter}/"
+    )
     suffix = (
-        f"/v2/hs_version=H6/cmd_code={commodity}/period={period}/"
+        f"{partition}hs_version={hs_version}/cmd_code={commodity}/period={period}/"
         f"query_type={kind}/revision={revision}/data.ndjson"
     )
     if not source_uri.startswith("s3://") or not source_uri.endswith(suffix):
@@ -52,7 +59,7 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
         raise ValueError("source timestamp must include timezone")
     fixed = {
         "period": period,
-        "reporterCode": 842,
+        "reporterCode": reporter,
         "flowCode": "M",
         "cmdCode": commodity,
         "partner2Code": 0,
@@ -71,9 +78,14 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
     for row in rows:
         if any(
             row.get(k) != v
-            for k, v in {**fixed, "freqCode": "M", "classificationCode": "H6"}.items()
+            for k, v in {**fixed, "freqCode": "M", "classificationCode": hs_version}.items()
         ):
             raise ValueError("row identity mismatch")
+        if (
+            commodity in {"854231", "854232", "854233", "854239", "854290"}
+            and row.get("isOriginalClassification") is not True
+        ):
+            raise ValueError("multi-market source must retain original classification")
         partner = row.get("partnerCode")
         if type(partner) is not int or partner < 0:
             raise ValueError("invalid partner")
@@ -84,17 +96,24 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
         seen.add(partner)
         amount = numeric(row.get("primaryValue"))
         assert amount is not None
-        if Decimal(amount) < 0 or (kind == "world_total" and Decimal(amount) <= 0):
+        legacy_world = kind == "world_total" and commodity not in {
+            "854231",
+            "854232",
+            "854233",
+            "854239",
+            "854290",
+        }
+        if Decimal(amount) < 0 or (legacy_world and Decimal(amount) == 0):
             raise ValueError("invalid amount")
         expected.append(
             {
                 "period": period,
                 "period_start_date": f"{period[:4]}-{period[4:]}-01",
-                "reporter_code": "842",
+                "reporter_code": str(reporter),
                 "partner_code": str(partner),
                 "cmd_code": commodity,
                 "flow_code": "M",
-                "hs_version": "H6",
+                "hs_version": hs_version,
                 "primary_value": amount,
                 "net_weight": numeric(row.get("netWgt"), nullable=True),
                 "quantity": numeric(row.get("qty"), nullable=True),

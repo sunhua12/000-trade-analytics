@@ -34,21 +34,39 @@ SOURCE_FIELDS = (
 )
 
 
-def source_key(period: str, kind: str, revision: int = 1) -> str:
+def source_key(
+    period: str,
+    kind: str,
+    revision: int = 1,
+    *,
+    reporter_code: int = 842,
+    cmd_code: str = "8542",
+    hs_version: str = "H6",
+) -> str:
     if not re.fullmatch(r"[0-9]{6}", period):
         raise ValueError("period must be YYYYMM")
     try:
         parsed = datetime.strptime(period, "%Y%m")
     except ValueError as error:
         raise ValueError("period must be a valid YYYYMM") from error
-    if parsed.strftime("%Y%m") != period or period < "202301":
-        raise ValueError("period must be 202301 or later")
+    if parsed.strftime("%Y%m") != period or period < "201601":
+        raise ValueError("period must be 201601 or later")
     if kind not in KINDS or revision < 1:
         raise ValueError("invalid source identity")
-    return (
-        f"un_comtrade/v2/hs_version=H6/cmd_code=8542/period={period}/"
-        f"query_type={kind}/revision={revision}"
+    from trade_analytics.ingestion.manifest import artifact_partition
+    from trade_analytics.ingestion.queries import ComtradeQuery
+
+    query = ComtradeQuery.model_validate(
+        {
+            "period": period,
+            "query_type": kind,
+            "revision": revision,
+            "reporter_code": reporter_code,
+            "cmd_code": cmd_code,
+            "expected_hs_version": hs_version,
+        }
     )
+    return "un_comtrade/" + artifact_partition(query)
 
 
 def decision(existing: list[dict[str, Any]], revision: int, checksum: str) -> str:
@@ -108,12 +126,27 @@ class RawLoader:
         *,
         project: str = PROJECT,
         raw_dataset: str = RAW_DATASET,
+        reporter_code: int = 842,
+        cmd_code: str = "8542",
+        hs_version: str = "H6",
     ) -> None:
         if not re.fullmatch(r"[a-z][a-z0-9-]+", project):
             raise ValueError("invalid project")
         if not re.fullmatch(r"[a-z][a-z0-9_]*", raw_dataset):
             raise ValueError("invalid raw dataset")
         self.client, self.s3, self.project, self.raw_dataset = client, s3, project, raw_dataset
+        source_key(
+            "202401",
+            KINDS[0],
+            reporter_code=reporter_code,
+            cmd_code=cmd_code,
+            hs_version=hs_version,
+        )
+        self.scope = {
+            "reporter_code": str(reporter_code),
+            "cmd_code": cmd_code,
+            "hs_version": hs_version,
+        }
         self.jobs: list[dict[str, Any]] = []
 
     def table(self, kind: str) -> str:
@@ -132,7 +165,8 @@ class RawLoader:
             location=os.environ.get("TRADE_BQ_LOCATION", "asia-northeast1"),
             job_config=bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ScalarQueryParameter(k, "STRING", v) for k, v in params.items()
+                    bigquery.ScalarQueryParameter(k, "STRING", v)
+                    for k, v in {**self.scope, **params}.items()
                 ],
                 maximum_bytes_billed=10**9,
             ),
@@ -148,7 +182,14 @@ class RawLoader:
             raise
 
     def source(self, period: str, kind: str, revision: int) -> dict[str, Any]:
-        prefix = source_key(period, kind, revision)
+        prefix = source_key(
+            period,
+            kind,
+            revision,
+            reporter_code=int(self.scope["reporter_code"]),
+            cmd_code=self.scope["cmd_code"],
+            hs_version=self.scope["hs_version"],
+        )
         data = self.s3.get_object(Bucket=BUCKET, Key=prefix + "/data.ndjson")["Body"].read()
         manifest = self.s3.get_object(Bucket=BUCKET, Key=prefix + "/manifest.json")["Body"].read()
         return verify(data, manifest, f"s3://{BUCKET}/{prefix}/data.ndjson")
@@ -157,7 +198,9 @@ class RawLoader:
         sql = f"""
 SELECT TO_JSON_STRING(r) payload FROM {self.table(kind)} r
 WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code='8542' AND hs_version='H6'
+
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code
 """
         return [
             json.loads(row["payload"], parse_float=Decimal)
@@ -176,7 +219,9 @@ WHERE period_start_date=PARSE_DATE('%Y%m',@period)
         run_id = f"day11-{period}-{kind}-r{revision}"
         rows = expected_rows(attested, run_id)
         if action == "already_loaded":
-            if {canonical(r) for r in current} != {canonical(r) for r in rows}:
+            if len(current) != len(rows) or {canonical(r) for r in current} != {
+                canonical(r) for r in rows
+            }:
                 # Day 6 used a different run id; the source fields still must match.
                 raise ValueError("raw snapshot differs from same-revision source")
             return {"period": period, "kind": kind, "status": action, "rows": len(rows)}
@@ -227,38 +272,53 @@ ASSERT (SELECT COUNT(DISTINCT partner_code) FROM day11_rows)=CAST(@row_count AS 
  AS 'duplicate partner grain';
 BEGIN TRANSACTION;
 ASSERT (SELECT COALESCE(MAX(revision),0) FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6')
+ WHERE period_start_date=PARSE_DATE('%Y%m',@period)
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code)
  =CAST(@old_revision AS INT64) AS 'revision changed during load';
 ASSERT (SELECT COUNT(DISTINCT checksum) FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6')
+ WHERE period_start_date=PARSE_DATE('%Y%m',@period)
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code)
  =IF(@old_revision='0',0,1) AS 'checksum identity changed during load';
 ASSERT (SELECT COALESCE(MAX(checksum),'') FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6')
+ WHERE period_start_date=PARSE_DATE('%Y%m',@period)
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code)
  =@old_checksum AS 'checksum changed during load';
 DELETE FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6';
+ WHERE period_start_date=PARSE_DATE('%Y%m',@period)
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code;
 {"ASSERT FALSE AS 'fixture_rollback_probe';" if rollback_probe else ""}
 INSERT INTO {self.table(kind)}
  (period,period_start_date,reporter_code,partner_code,flow_code,cmd_code,hs_version,
  primary_value,net_weight,quantity,ingested_at,source_file,checksum,run_id,revision)
 SELECT * FROM day11_rows;
 ASSERT (SELECT COUNT(*) FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period) AND cmd_code='8542' AND hs_version='H6')
+ WHERE period_start_date=PARSE_DATE('%Y%m',@period)
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code)
  =CAST(@row_count AS INT64) AS 'raw row count mismatch';
 ASSERT NOT EXISTS(
  (SELECT {fields} FROM day11_rows EXCEPT DISTINCT
   SELECT {fields} FROM {self.table(kind)} WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code='8542' AND hs_version='H6')
+
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code)
  UNION ALL
  (SELECT {fields} FROM {self.table(kind)} WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code='8542' AND hs_version='H6' EXCEPT DISTINCT SELECT {fields} FROM day11_rows)
+
+  AND cmd_code=@cmd_code AND hs_version=@hs_version
+  AND reporter_code=@reporter_code
+  EXCEPT DISTINCT SELECT {fields} FROM day11_rows)
 ) AS 'raw full snapshot mismatch';
 INSERT INTO `{self.project}.{self.raw_dataset}.audit_ingestion_runs`
  (event_id,run_id,attempt_id,period,query_type,cmd_code,hs_version,revision,
  source_file,manifest_file,checksum,expected_row_count,actual_row_count,
  expected_primary_value_sum,actual_primary_value_sum,status,source_ingested_at,event_at,
  contract_fingerprint,snapshot_hash)
-VALUES(@event_id,@run_id,@event_id,@period,@kind,'8542','H6',CAST(@revision AS INT64),
+VALUES(@event_id,@run_id,@event_id,@period,@kind,@cmd_code,@hs_version,CAST(@revision AS INT64),
  @source_file,@manifest_file,@checksum,CAST(@row_count AS INT64),CAST(@row_count AS INT64),
  @amount,CAST(@amount AS NUMERIC),'success',TIMESTAMP(@ingested_at),CURRENT_TIMESTAMP(),
  @fingerprint,@snapshot_hash);
@@ -284,6 +344,6 @@ COMMIT TRANSACTION;
         }
         self.query(sql, params)
         final = self.existing(period, kind)
-        if {canonical(r) for r in final} != {canonical(r) for r in rows}:
+        if len(final) != len(rows) or {canonical(r) for r in final} != {canonical(r) for r in rows}:
             raise ValueError("post-commit source snapshot mismatch")
         return {"period": period, "kind": kind, "status": "success", "rows": len(rows)}

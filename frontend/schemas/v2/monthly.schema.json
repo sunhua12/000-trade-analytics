@@ -1,0 +1,185 @@
+{
+  "$defs": {
+    "MonthlyRowV2": {
+      "additionalProperties": false,
+      "properties": {
+        "month": {
+          "format": "date",
+          "title": "Month",
+          "type": "string"
+        },
+        "cmd_code": {
+          "enum": [
+            "854231",
+            "854232",
+            "854233",
+            "854239",
+            "854290"
+          ],
+          "title": "Cmd Code",
+          "type": "string"
+        },
+        "hs_version": {
+          "anyOf": [
+            {
+              "pattern": "^H[0-6]$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Hs Version"
+        },
+        "world_value": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "World Value"
+        },
+        "previous_year_world_value": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Year World Value"
+        },
+        "world_yoy": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "World Yoy"
+        },
+        "country_value": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Country Value"
+        },
+        "country_count": {
+          "title": "Country Count",
+          "type": "integer"
+        },
+        "country_coverage": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Country Coverage"
+        },
+        "hhi": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Hhi"
+        },
+        "hhi_status": {
+          "enum": [
+            "ok",
+            "missing_world",
+            "invalid_world",
+            "no_countries",
+            "missing_country_value",
+            "negative_country_value",
+            "unreviewed_country",
+            "insufficient_coverage"
+          ],
+          "title": "Hhi Status",
+          "type": "string"
+        },
+        "has_world": {
+          "title": "Has World",
+          "type": "boolean"
+        },
+        "has_countries": {
+          "title": "Has Countries",
+          "type": "boolean"
+        },
+        "reporter_code": {
+          "pattern": "^\\d+$",
+          "title": "Reporter Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "month",
+        "cmd_code",
+        "hs_version",
+        "world_value",
+        "previous_year_world_value",
+        "world_yoy",
+        "country_value",
+        "country_count",
+        "country_coverage",
+        "hhi",
+        "hhi_status",
+        "has_world",
+        "has_countries",
+        "reporter_code"
+      ],
+      "title": "MonthlyRowV2",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^[a-f0-9]{32}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "$ref": "#/$defs/MonthlyRowV2"
+      },
+      "title": "Rows",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "rows"
+  ],
+  "title": "MonthlyDocumentV2",
+  "type": "object"
+}

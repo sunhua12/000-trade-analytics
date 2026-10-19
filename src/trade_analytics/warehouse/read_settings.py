@@ -29,9 +29,9 @@ class Settings:
             or (self.after_last_month.year - self.first_month.year) * 12
             + self.after_last_month.month
             - self.first_month.month
-            > 60
+            > 180
         ):
-            raise ValueError("展示範圍須為完整月份，且最多 60 個月")
+            raise ValueError("展示範圍須為完整月份，且最多 180 個月")
         if not re.fullmatch(r"[a-z][a-z0-9-]{4,61}[a-z0-9]", self.project):
             raise ValueError("TRADE_BQ_PROJECT 不是有效的 GCP 專案 ID")
         if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,1023}", self.dataset):

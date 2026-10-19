@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "trade-analytics"
 version = "0.1.0"
-description = "U.S. semiconductor import analytics pipeline"
+description = "Multi-market integrated circuit import analytics pipeline"
 requires-python = ">=3.11,<3.12"
 dependencies = [
     "boto3>=1.35,<2",

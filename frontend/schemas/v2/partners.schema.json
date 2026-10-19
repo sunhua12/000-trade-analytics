@@ -1,0 +1,181 @@
+{
+  "$defs": {
+    "PartnerRowV2": {
+      "additionalProperties": false,
+      "properties": {
+        "month": {
+          "format": "date",
+          "title": "Month",
+          "type": "string"
+        },
+        "cmd_code": {
+          "enum": [
+            "854231",
+            "854232",
+            "854233",
+            "854239",
+            "854290"
+          ],
+          "title": "Cmd Code",
+          "type": "string"
+        },
+        "hs_version": {
+          "pattern": "^H[0-6]$",
+          "title": "Hs Version",
+          "type": "string"
+        },
+        "partner_code": {
+          "title": "Partner Code",
+          "type": "string"
+        },
+        "source_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Name"
+        },
+        "map_iso3": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Map Iso3"
+        },
+        "import_value": {
+          "pattern": "^-?\\d+(?:\\.\\d+)?$",
+          "title": "Import Value",
+          "type": "string"
+        },
+        "market_share": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Market Share"
+        },
+        "market_share_status": {
+          "enum": [
+            "ok",
+            "missing_world",
+            "invalid_world",
+            "missing_value"
+          ],
+          "title": "Market Share Status",
+          "type": "string"
+        },
+        "previous_month_value": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Month Value"
+        },
+        "previous_year_value": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Year Value"
+        },
+        "mom": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mom"
+        },
+        "yoy": {
+          "anyOf": [
+            {
+              "pattern": "^-?\\d+(?:\\.\\d+)?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Yoy"
+        },
+        "reporter_code": {
+          "pattern": "^\\d+$",
+          "title": "Reporter Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "month",
+        "cmd_code",
+        "hs_version",
+        "partner_code",
+        "source_name",
+        "map_iso3",
+        "import_value",
+        "market_share",
+        "market_share_status",
+        "previous_month_value",
+        "previous_year_value",
+        "mom",
+        "yoy",
+        "reporter_code"
+      ],
+      "title": "PartnerRowV2",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^[a-f0-9]{32}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "$ref": "#/$defs/PartnerRowV2"
+      },
+      "title": "Rows",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "rows"
+  ],
+  "title": "PartnerDocumentV2",
+  "type": "object"
+}

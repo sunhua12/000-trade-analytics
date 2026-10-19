@@ -210,3 +210,57 @@ tbody tr:hover { background: #222730; }
 
 .dashboard-footer { display: flex; justify-content: space-between; gap: 8px; flex-shrink: 0; padding-top: 0; color: var(--muted); font-size: 10px; }
 @media (max-width: 640px) { .dashboard-footer { flex-wrap: wrap; font-size: 9px; } .dashboard-footer > :last-child { margin-left: auto; } }
+
+#products{display:flex;flex-wrap:wrap;gap:12px;border:0;margin:0;padding:8px}#products label{display:flex;gap:6px;align-items:center}#market-controls{flex-wrap:wrap;margin-bottom:12px}
+
+.scatter-reference { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 5 5; opacity: .8; }
+.scatter-label { paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.scatter-dot:hover, .scatter-dot:focus { stroke: var(--text); stroke-width: 2; }
+
+.map-legend { flex-wrap: wrap; gap: 8px 12px; padding-top: 8px; }
+.map-key { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.map-legend .map-key i { width: 12px; height: 12px; border-radius: 3px; border: 1px solid #ffffff25; flex-shrink: 0; }
+.map-legend .map-scale { width: 100%; margin-left: 0; font-size: 10px; }
+
+.comparison-chart { padding: 0 16px 12px; }
+.comparison-heading, .comparison-row { display: grid; grid-template-columns: minmax(90px, 1fr) minmax(85px, 1fr) minmax(100px, 1fr); gap: 12px; align-items: center; }
+.comparison-heading { color: var(--muted); font-size: 10px; padding: 0 6px 12px; }
+.comparison-scroll { max-height: 340px; overflow-y: auto; scrollbar-width: thin; }
+.comparison-row { padding: 12px 6px; border-top: 1px solid #ffffff0b; font-size: 12px; }
+.comparison-row:hover, .comparison-row:focus { background: #ffffff06; outline: none; }
+.comparison-country { overflow-wrap: anywhere; }
+.comparison-country small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
+.comparison-money>span, .comparison-growth>span { display: block; text-align: right; font-variant-numeric: tabular-nums; font-size: 11px; margin-bottom: 7px; }
+.comparison-track, .comparison-diverging { height: 7px; background: #ffffff09; border-radius: 2px; position: relative; }
+.comparison-track i { display: block; height: 7px; background: var(--accent); border-radius: 2px; }
+.comparison-diverging i { display: block; height: 7px; position: absolute; border-radius: 2px; }
+.comparison-diverging::after { content: ''; position: absolute; left: 50%; top: -3px; height: 13px; border-left: 1px solid var(--muted); }
+
+.comparison-heading.change-heading, .comparison-row.change-row { grid-template-columns: minmax(90px, 1fr) minmax(160px, 2fr); }
+
+.dumbbell-legend { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:0 6px 16px; font-size:11px; color:var(--muted); }
+.dumbbell-legend span { display:inline-flex; align-items:center; gap:5px; }
+.dumbbell-legend i { display:inline-block; width:8px; height:8px; border-radius:50%; }
+.dumbbell-legend small { font-size:10px; }
+.prior-dot { background:#919ba8; }
+.current-dot { background:var(--accent); }
+.dumbbell-values { display:flex; justify-content:space-between; gap:6px; font-size:11px; font-variant-numeric:tabular-nums; }
+.dumbbell-values small { font-size:10px; color:var(--muted); }
+.dumbbell-track { position:relative; height:18px; margin-top:6px; }
+.dumbbell-track::before { content:''; position:absolute; top:8px; left:5%; right:5%; border-top:1px solid #ffffff10; }
+.dumbbell-link { position:absolute; top:7px; height:3px; background:#bd875c; }
+.dumbbell-dot { position:absolute; top:4px; width:9px; height:9px; border-radius:50%; transform:translateX(-50%); }
+.dumbbell-dot.current-dot { top:3px; width:11px; height:11px; border:1px solid var(--surface); }
+
+.annual-legend { display:flex; flex-wrap:wrap; gap:10px 16px; padding:4px 8px 12px; font-size:11px; }
+.annual-legend span { display:inline-flex; align-items:center; gap:5px; }
+.annual-legend i { display:inline-block; width:16px; height:3px; border-radius:2px; }
+.annual-legend small { color:var(--muted); font-size:10px; }
+.annual-series circle:hover, .annual-series circle:focus { r:5; stroke:var(--text); stroke-width:1; }
+
+/* The annual legend occupies its own row beneath a fixed-height plot. */
+.chart.annual-chart { flex: 0 0 auto; min-height: 0; padding-bottom: 8px; }
+.chart.annual-chart svg { display: block; width: 100%; height: 300px; min-height: 0; }
+.annual-legend { min-height: 24px; padding-top: 12px; padding-bottom: 8px; line-height: 1.5; }
+.annual-legend span { white-space: nowrap; }
+.panel:has(.annual-chart) .panel-footer { flex-wrap: wrap; line-height: 1.6; }

@@ -1,8 +1,10 @@
 """Shared command execution and serial month tasks for the trade pipelines."""
 
 import json
+import os
 import subprocess
 from datetime import timedelta
+from pathlib import Path
 
 from airflow.sdk import task
 from airflow.sdk.exceptions import AirflowFailException
@@ -16,6 +18,23 @@ TRANSIENT_RETRY = {
     "retry_exponential_backoff": True,
     "max_retry_delay": timedelta(minutes=15),
 }
+
+
+def multi_market_schedule_enabled() -> bool:
+    mode = os.environ.get("TRADE_MULTI_MARKET_SCHEDULE_ENABLED", "auto").strip().lower()
+    if mode == "true":
+        return True
+    if mode != "auto":
+        return False
+    try:
+        evidence = json.loads((Path(ROOT) / "data/multi-market/pipeline-state.json").read_text())
+        return (
+            isinstance(evidence, dict)
+            and evidence.get("stage") == "complete"
+            and evidence.get("history_complete") is True
+        )
+    except (ValueError, OSError):
+        return False
 
 
 def run_command(command: list[str]) -> dict:

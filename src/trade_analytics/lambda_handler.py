@@ -28,6 +28,8 @@ class LambdaEvent(BaseModel):
     action: Literal["ingest"]
     period: str
     cmd_code: str = "8542"
+    reporter_code: int = Field(default=842, gt=0, strict=True)
+    hs_version: Literal["H0", "H1", "H2", "H3", "H4", "H5", "H6"] = "H6"
     query_type: QueryType
     run_id: str | None = None
     revision: int = Field(default=1, gt=0, strict=True)
@@ -61,6 +63,7 @@ def run_ingestion(
         client = ComtradeClient(
             http_client=http_client,
             base_url=base_url,
+            api_key=os.environ.get("COMTRADE_API_KEY"),
             timeout=timeout,
         )
         dataset = IngestionService(client).fetch_dataset(query)
@@ -99,6 +102,8 @@ def handler(
             cmd_code=validated.cmd_code,
             query_type=validated.query_type,
             revision=validated.revision,
+            reporter_code=validated.reporter_code,
+            expected_hs_version=validated.hs_version,
         )
         bucket = os.environ.get("RAW_BUCKET", "").strip()
         if not bucket:

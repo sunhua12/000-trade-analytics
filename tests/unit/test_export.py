@@ -281,3 +281,76 @@ def test_verify_cli_needs_no_cloud(
     monkeypatch.setattr(cli, "SnapshotReader", Mock(side_effect=AssertionError("must be offline")))
     assert cli.main() == 0
     assert json.loads(capsys.readouterr().out)["status"] == "verified"
+
+
+def test_v2_roundtrip_and_market_denominators(snapshot: dict, tmp_path: Path) -> None:
+    raw = {key: [] for key in snapshot}
+    for reporter in ("842", "156"):
+        for key, rows in snapshot.items():
+            raw[key].extend(
+                {**row, "reporter_code": reporter, "cmd_code": "854231", "hs_version": "H4"}
+                for row in rows
+            )
+    result = service.publish_snapshot(
+        raw, tmp_path, START, END, build={}, jobs=[], multi_market=True
+    )
+    assert service.verify_snapshot(tmp_path)["snapshot_id"] == result["snapshot_id"]
+    manifest = json.loads((Path(result["path"]) / "manifest.json").read_bytes())
+    assert manifest["schema_version"] == "2.0.0"
+    assert len(manifest["availability"]) == 2
+    with pytest.raises(ValueError, match="at least 100000"):
+        service.publish_snapshot(
+            raw, tmp_path, START, END, build={}, jobs=[], multi_market=True, require_row_target=True
+        )
+    assert service.verify_snapshot(tmp_path)["snapshot_id"] == result["snapshot_id"]
+    assert "reporter_code" not in manifest
+    raw["monthly"][0]["world_value"] = Decimal(1)
+    with pytest.raises(ValueError):
+        service.publish_snapshot(raw, tmp_path, START, END, build={}, jobs=[], multi_market=True)
+    assert service.verify_snapshot(tmp_path)["snapshot_id"] == result["snapshot_id"]
+
+
+def test_v2_reader_paginates_typed_rows_without_large_array(
+    snapshot: dict, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    api = SimpleNamespace(
+        ScalarQueryParameter=lambda *args: args,
+        QueryJobConfig=lambda **kwargs: SimpleNamespace(**kwargs),
+    )
+    monkeypatch.setattr(queries, "import_module", lambda _: api)
+    client = Mock()
+    client.query.return_value = SimpleNamespace(
+        result=lambda timeout: iter(
+            [
+                {"kind": "monthly", "monthly": snapshot["monthly"][0], "partners": None},
+                {"kind": "partners", "monthly": None, "partners": snapshot["partners"][0]},
+            ]
+        ),
+        job_id="streamed",
+        total_bytes_processed=100,
+        total_bytes_billed=100,
+    )
+    raw = queries.SnapshotReader(
+        Settings("trade-analytics-508604"), client, multi_market=True
+    ).read(START, END)
+    assert raw["partners"][0]["import_value"] == AMOUNT
+    assert raw["monthly"][0]["month"] == START
+    assert client.query.call_count == 1
+    sql = client.query.call_args.args[0]
+    assert "UNION ALL" in sql and "ARRAY(" not in sql
+    assert "STRUCT<" in sql
+
+
+def test_export_range_supports_full_history_with_a_finite_bound() -> None:
+    from datetime import date
+
+    settings = Settings(
+        "trade-analytics-508604", first_month=date(2016, 1, 1), after_last_month=date(2026, 10, 1)
+    )
+    assert settings.first_month == date(2016, 1, 1)
+    with pytest.raises(ValueError, match="180"):
+        Settings(
+            "trade-analytics-508604",
+            first_month=date(2016, 1, 1),
+            after_last_month=date(2031, 2, 1),
+        )

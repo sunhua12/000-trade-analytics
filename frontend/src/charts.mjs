@@ -26,7 +26,9 @@ export function lineChart(container, rows, {ratio = false, compact = false, mini
   const values = valid.map(row => Number(row.value));
   const scale = axisScale(values, {ratio});
   const {low, high} = scale;
-  const x = index => left + (width - left - right) * index / Math.max(1, rows.length - 1);
+  const monthIndex = month => Number(month.slice(0,4))*12+Number(month.slice(5,7))-1;
+  const firstMonth = monthIndex(rows[0].month), lastMonth = monthIndex(rows.at(-1).month);
+  const x = index => left + (width - left - right) * (monthIndex(rows[index].month)-firstMonth) / Math.max(1,lastMonth-firstMonth);
   const y = value => top + (height - top - bottom) * (high - Number(value)) / (high - low);
   const format = scale.format;
   let content = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escape(label)}"><title>${escape(label)}，${valid.length} 個有效月份</title>`;
@@ -34,7 +36,7 @@ export function lineChart(container, rows, {ratio = false, compact = false, mini
     content += `<line class="grid-line" x1="${left}" x2="${width-right}" y1="${y(value)}" y2="${y(value)}"/><text class="axis-label" x="${left-10}" y="${y(value)+3}" text-anchor="end">${format(value)}</text>`;
   }
   let segments = [], current = [];
-  rows.forEach((row,index) => {if(row.value === null) {if(current.length) segments.push(current); current=[];} else current.push([x(index), y(row.value)]);});
+  rows.forEach((row,index) => {if(index>0&&monthIndex(row.month)-monthIndex(rows[index-1].month)>1) {if(current.length) segments.push(current);current=[];}if(row.value === null) {if(current.length) segments.push(current); current=[];} else current.push([x(index), y(row.value)]);});
   if(current.length) segments.push(current);
   for (const points of segments) {
     const path = points.map(([px,py], index) => `${index?'L':'M'}${px.toFixed(2)},${py.toFixed(2)}`).join(' ');
@@ -53,34 +55,53 @@ export function rankChart(container, rows, world) {
   const max = Number(rows[0].value);
   container.innerHTML = rows.map((row,index) => `<div class="ranking-row" ${tooltipAttributes(`${row.name}（${row.code}）\nUSD ${amount(row.value, false)}\n占期間 World：${percent(share(row.value,world))}`)}><span class="rank-number">${String(index+1).padStart(2,'0')}</span><span class="rank-name">${escape(row.name)}</span><span class="rank-bar"><i style="width:${max>0 ? Number(row.value)/max*100:0}%"></i></span><span class="rank-value">${amount(row.value)}</span></div>`).join('');
 }
-export function scatterChart(container, rows) {
-  if(!rows.length) {container.innerHTML=empty('此月份沒有有效比較點','需要同時有進口金額與去年同月基期');return;}
-  const width=Math.max(300,container.clientWidth-32),height=280,left=62,right=25,top=30,bottom=48;
-  const moneyScale=axisScale(rows.map(row=>row.import_value));
-  const growthScale=axisScale(rows.map(row=>row.yoy),{ratio:true});
-  const max=moneyScale.high;
-  const {low,high}=growthScale;
-  const x=value=>left+(width-left-right)*Number(value)/max;
-  const y=value=>top+(height-top-bottom)*(high-Number(value))/(high-low);
-  let content=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="進口金額與 YoY 散佈圖"><title>進口金額與 YoY，${rows.length} 個有效來源國</title>`;
-  for(const v of growthScale.ticks) {
-    content+=`<line class="grid-line" x1="${left}" x2="${width-right}" y1="${y(v)}" y2="${y(v)}"/><text class="axis-label" x="${left-10}" y="${y(v)+3}" text-anchor="end">${growthScale.format(v)}</text>`;
-  }
-  for(const v of moneyScale.ticks) {
-    content+=`<text class="axis-label" x="${x(v)}" y="${height-25}" text-anchor="middle">${moneyScale.format(v)}</text>`;
-  }
-  content+=`<text class="axis-label" x="${width/2}" y="${height-5}" text-anchor="middle">進口金額（USD）</text>`;
-  for(const [index,row] of rows.entries()) {
-    content+=`<circle class="scatter-dot" cx="${x(row.import_value)}" cy="${y(row.yoy)}" r="4.5" ${tooltipAttributes(`${row.source_name || row.partner_code}\nUSD ${amount(row.import_value,false)}\nYoY：${percent(row.yoy)}`)}/>`;
-    if(index<4) content+=`<text class="scatter-label" x="${x(row.import_value)+8}" y="${y(row.yoy)-7}">${escape(row.source_name || row.partner_code)}</text>`;
-  }
-  container.innerHTML=content+'</svg>';
+export function annualSeries(rows) {
+  const years=[...new Set(rows.map(row=>row.month.slice(0,4)))].sort();
+  return years.map(year=>({year,months:Array.from({length:12},(_,index)=>{
+    const month=`${year}-${String(index+1).padStart(2,'0')}-01`;
+    return {month,value:rows.find(row=>row.month===month)?.value??null};
+  })}));
+}
+export function annualChart(container, rows) {
+  const series=annualSeries(rows),valid=rows.filter(row=>row.value!==null);
+  if(!valid.length) {container.innerHTML=empty('此期間沒有可比較資料','請調整年度或來源國');return;}
+  const width=Math.max(320,container.clientWidth-32),height=300,left=62,right=22,top=20,bottom=40;
+  const scale=axisScale(valid.map(row=>row.value));
+  const x=index=>left+(width-left-right)*index/11;
+  const y=value=>top+(height-top-bottom)*(scale.high-Number(value))/(scale.high-scale.low);
+  const colors=['#eaa46a','#a7b3c2','#b97645','#e4ceab','#8d9ca4','#f4bd8d','#b3a798','#d98c59','#cad1d5','#a47753'];
+  let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="跨年度月度進口比較圖"><title>各年度一至十二月進口總額，缺月保留斷點</title>`;
+  for(const tick of scale.ticks) svg+=`<line class="grid-line" x1="${left}" x2="${width-right}" y1="${y(tick)}" y2="${y(tick)}"/><text class="axis-label" x="${left-8}" y="${y(tick)+3}" text-anchor="end">${scale.format(tick)}</text>`;
+  for(let month=0;month<12;month++) svg+=`<text class="axis-label" x="${x(month)}" y="${height-12}" text-anchor="middle">${month+1}</text>`;
+  series.forEach((item,index)=>{
+    const color=colors[index%colors.length],dash=index>=colors.length?'5 3':'none';
+    let path='',connected=false;
+    item.months.forEach((row,month)=>{
+      if(row.value===null) {connected=false;return;}
+      path+=`${connected?'L':'M'}${x(month)},${y(row.value)} `;connected=true;
+    });
+    svg+=`<g class="annual-series" data-year="${item.year}"><path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-dasharray="${dash}"/>`;
+    item.months.forEach((row,month)=>{if(row.value!==null)svg+=`<circle cx="${x(month)}" cy="${y(row.value)}" r="3" fill="${color}" ${tooltipAttributes(`${item.year} 年 ${month+1} 月\nUSD ${amount(row.value,false)}`)}/>`;});
+    svg+='</g>';
+  });
+  container.innerHTML=svg+'</svg><div class="annual-legend">'+series.map((item,index)=>`<span><i style="background:${colors[index%colors.length]}"></i>${item.year}<small>${item.months.filter(row=>row.value!==null).length}/12 月</small></span>`).join('')+'</div>';
+}
+export const mapBands = [
+  {limit:1e6,color:'#57382a',label:'低於 1M'},
+  {limit:1e7,color:'#875031',label:'1M–10M'},
+  {limit:1e8,color:'#bd7643',label:'10M–100M'},
+  {limit:1e9,color:'#eaa46a',label:'100M–1B'},
+  {limit:Infinity,color:'#ffdbab',label:'1B 以上'},
+];
+export function mapColor(value) {
+  if(value===undefined||value===null) return '#2b3038';
+  if(Number(value)===0) return '#8b929c';
+  return mapBands.find(band=>Number(value)<band.limit).color;
 }
 export function mapChart(container, geometry, rankings) {
   const byIso = new Map();
   for(const row of rankings) if(row.iso3) byIso.set(row.iso3, sum([byIso.get(row.iso3) ?? '0',row.value]));
-  const max = Math.max(1,...[...byIso.values()].map(Number));
-  let content='<svg viewBox="0 0 900 390" role="img" aria-label="所選來源國進口金額世界地圖"><title>來源國進口金額分布，對數色階</title>';
+  let content='<svg viewBox="0 0 900 390" role="img" aria-label="所選來源國進口金額世界地圖"><title>來源國進口金額分布，固定金額五級配色</title>';
   for(const feature of geometry.features) {
     if(feature.properties.iso3==='ATA') continue;
     const polygons=feature.geometry.type==='Polygon'?[feature.geometry.coordinates]:feature.geometry.coordinates;
@@ -95,9 +116,12 @@ export function mapChart(container, geometry, rankings) {
       path+='Z ';
     }
     const value=byIso.get(feature.properties.iso3);
-    const ratio=value===undefined?0:Math.log10(Number(value)+1)/Math.log10(max+1);
-    const color=value===undefined?'#2b3038':`rgb(${Math.round(80+140*ratio)},${Math.round(65+80*ratio)},${Math.round(56+42*ratio)})`;
+    const color=mapColor(value);
     content+=`<path class="map-country${value===undefined?'':' has-data'}" fill="${color}" d="${path}" ${value===undefined?'':tooltipAttributes(`${feature.properties.name}\nUSD ${amount(value)}\n精確金額請見排名與明細`)}/>`;
   }
   container.innerHTML=content+'</svg>';
+}
+
+export function mapLegend(container) {
+  container.innerHTML=mapBands.map(band=>`<span class="map-key"><i style="background:${band.color}"></i>${band.label}</span>`).join('')+'<span class="map-key"><i style="background:#8b929c"></i>零金額</span><span class="map-key"><i style="background:#2b3038"></i>無資料</span><span class="map-scale">USD · 期間總額 · M＝百萬，B＝十億</span>';
 }

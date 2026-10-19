@@ -1,0 +1,28 @@
+version: 2
+unit_tests:
+  - name: accepted_extract_removes_obsolete_partners_and_isolates_markets
+    model: fct_multi_market_ic_imports
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: source('un_comtrade', 'partner_detail')
+        rows:
+          - {period: '201601', period_start_date: '2016-01-01', reporter_code: '842', partner_code: '156', flow_code: M, cmd_code: '854231', hs_version: H4, primary_value: 10, revision: 1, ingested_at: '2016-02-01 00:00:00+00', source_file: old}
+          - {period: '201601', period_start_date: '2016-01-01', reporter_code: '842', partner_code: '392', flow_code: M, cmd_code: '854231', hs_version: H4, primary_value: 20, revision: 1, ingested_at: '2016-02-01 00:00:00+00', source_file: old}
+          - {period: '201601', period_start_date: '2016-01-01', reporter_code: '842', partner_code: '156', flow_code: M, cmd_code: '854231', hs_version: H5, primary_value: 15, revision: 2, ingested_at: '2016-02-02 00:00:00+00', source_file: new}
+          - {period: '201601', period_start_date: '2016-01-01', reporter_code: '842', partner_code: '490', flow_code: M, cmd_code: '854231', hs_version: H5, primary_value: 5, revision: 2, ingested_at: '2016-02-02 00:00:00+00', source_file: new}
+          - {period: '201601', period_start_date: '2016-01-01', reporter_code: '156', partner_code: '392', flow_code: M, cmd_code: '854231', hs_version: H4, primary_value: 30, revision: 1, ingested_at: '2016-02-01 00:00:00+00', source_file: other_market}
+      - input: ref('dim_countries')
+        rows:
+          - {partner_code: '156', source_name: China, map_iso3: CHN, partner_type: country, classification_status: verified}
+          - {partner_code: '392', source_name: Japan, map_iso3: JPN, partner_type: country, classification_status: verified}
+          - {partner_code: '490', source_name: Other Asia nes, map_iso3: null, partner_type: special, classification_status: verified}
+      - input: ref('dim_hs_codes')
+        rows:
+          - {cmd_code: '854231', hs_version: H4, hs_description: Processors}
+          - {cmd_code: '854231', hs_version: H5, hs_description: Processors}
+    expect:
+      rows:
+        - {reporter_code: '842', partner_code: '156', cmd_code: '854231', hs_version: H5, primary_value: 15, revision: 2, hs_mapping_found: true}
+        - {reporter_code: '156', partner_code: '392', cmd_code: '854231', hs_version: H4, primary_value: 30, revision: 1, hs_mapping_found: true}

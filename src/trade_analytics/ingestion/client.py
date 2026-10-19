@@ -42,7 +42,7 @@ class _RetryAfterOrExponential(wait_base):
 
 
 class ComtradeClient:
-    """Fetch and parse monthly U.S. import records from the Preview API."""
+    """Fetch and parse monthly import records from the UN Comtrade API."""
 
     DEFAULT_BASE_URL = "https://comtradeapi.un.org/public/v1/preview/C/M/HS"
     MAX_ATTEMPTS = 4
@@ -53,12 +53,21 @@ class ComtradeClient:
         *,
         http_client: httpx.Client,
         base_url: str = DEFAULT_BASE_URL,
+        api_key: str | None = None,
         timeout: httpx.Timeout | float = 30.0,
         wait: wait_base | Callable[[RetryCallState], float] | None = None,
         sleep: Callable[[float], None] = sleep_seconds,
     ) -> None:
         self._http_client = http_client
         self._base_url = base_url
+        self._headers = {}
+        self._record_limit = self.PREVIEW_RECORD_LIMIT
+        if api_key:
+            if base_url != self.DEFAULT_BASE_URL:
+                raise ValueError("API key requires the official Comtrade endpoint")
+            self._base_url = "https://comtradeapi.un.org/data/v1/get/C/M/HS"
+            self._headers = {"Ocp-Apim-Subscription-Key": api_key}
+            self._record_limit = 100_000
         self._timeout = timeout
         self._wait = wait or _RetryAfterOrExponential()
         self._sleep = sleep
@@ -84,11 +93,15 @@ class ComtradeClient:
         raise AssertionError("retry loop completed without a response")
 
     def _request(self, query: ComtradeQuery) -> ComtradeResponse:
+        parameters = query.to_params()
+        if self._headers:
+            parameters["maxRecords"] = self._record_limit
         try:
             response = self._http_client.get(
                 self._base_url,
-                params=query.to_params(),
+                params=parameters,
                 timeout=self._timeout,
+                headers=self._headers,
             )
         except (httpx.TimeoutException, httpx.TransportError) as error:
             raise _RetryableRequestError(type(error).__name__) from error
@@ -104,10 +117,11 @@ class ComtradeClient:
 
         if parsed.error:
             raise ComtradeResponseError(f"UN Comtrade API error: {parsed.error}")
-        if parsed.count >= self.PREVIEW_RECORD_LIMIT:
+        if parsed.count != len(parsed.data):
+            raise ComtradeResponseError("response count differs from returned rows")
+        if parsed.count >= self._record_limit:
             raise ResponseTruncatedError(
-                f"Preview response count {parsed.count} reached the "
-                f"{self.PREVIEW_RECORD_LIMIT}-row limit"
+                f"Preview response count {parsed.count} reached the {self._record_limit}-row limit"
             )
         return parsed
 
@@ -124,6 +138,11 @@ class ComtradeClient:
     @staticmethod
     def _raise_for_status(response: httpx.Response) -> None:
         status = response.status_code
+        if status == 403 and response.headers.get("Retry-After") is not None:
+            raise _RetryableRequestError(
+                "UN Comtrade call quota exhausted",
+                retry_after=ComtradeClient._parse_retry_after(response.headers.get("Retry-After")),
+            )
         if status in {401, 403}:
             raise ComtradeAuthenticationError(
                 f"UN Comtrade authentication failed with HTTP {status}"
