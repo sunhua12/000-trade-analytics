@@ -14,16 +14,14 @@ from trade_analytics.warehouse.read_settings import Settings
 from trade_analytics.warehouse.writer_lock import WriterBusyError, writer_lock
 
 ROOT = Path(__file__).resolve().parents[2]
+# Legacy batch tests use v1 regression data, never the production v2 snapshot.
+FIXTURES = ROOT / "frontend/tests/fixtures"
 
 
 @pytest.fixture
 def raw_snapshot() -> dict:
-    monthly = MonthlyDocument.model_validate_json(
-        (ROOT / "frontend/public/data/monthly.json").read_bytes()
-    )
-    partners = PartnerDocument.model_validate_json(
-        (ROOT / "frontend/public/data/partners.json").read_bytes()
-    )
+    monthly = MonthlyDocument.model_validate_json((FIXTURES / "monthly.json").read_bytes())
+    partners = PartnerDocument.model_validate_json((FIXTURES / "partners.json").read_bytes())
     return {
         "monthly": [row.model_dump() for row in monthly.rows],
         "partners": [row.model_dump() for row in partners.rows],
