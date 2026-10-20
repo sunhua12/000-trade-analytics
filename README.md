@@ -4,9 +4,9 @@
 
 多市場流程分析各報告市場及五類商品的月度進口規模、來源、市占率與成長率，保留原始 HS 版本。下述原有流程仍使用美國、HS 8542 與 H6；新入口與驗收方式見本文的「多市場積體電路分析」章節。
 
-固定 reporter 842、美國月度進口；擷取 `partner_detail` 與 `world_total`，預設展示 202301～202412。
+原有相容流程固定 reporter 842、美國月度進口；擷取 `partner_detail` 與 `world_total`，預設展示 202301～202412。
 
-資料擷取採 Lambda／S3；Silicon Atlas 靜態網站讀取已驗證 JSON。GitHub Actions 執行 Python、前端、DAG 與容器檢查。詳細操作見 [操作手冊](docs/runbook.md)。
+資料擷取採 Lambda／S3；Silicon Atlas 靜態網站讀取已驗證 JSON。GitHub Actions 執行 Python、前端、DAG 與容器檢查。公開網站與發布流程見 [GitHub Pages 發布說明](docs/github-pages.md)。
 
 ## 專案架構
 
@@ -33,7 +33,7 @@ flowchart TD
 
 Python 驗證 S3 checksum、Manifest、NUMERIC 精度與 grain，再以交易式分區替換寫入 Raw。dbt 建立分析 Mart 與兩種粒度的 presentation views，通過測試後匯出 JSON 並建置完整網站版本；國家映射問題保留 audit model 以便追查。
 
-CLI 透過 `trade-ingest` 將來源及 Manifest 寫入本機，用於除錯；入口位於 `src/trade_analytics/ingestion/cli.py`。目前 RawLoader 讀取 S3，因此 CLI 不會直接更新 BigQuery。執行方式見 [操作手冊：本機 CLI 擷取](docs/runbook.md#本機-cli-擷取)。
+CLI 透過 `trade-ingest` 將來源及 Manifest 寫入本機，用於除錯；入口位於 `src/trade_analytics/ingestion/cli.py`。目前 RawLoader 讀取 S3，因此 CLI 不會直接更新 BigQuery。可執行 `trade-ingest --help` 查看參數。
 
 ## 核心規格
 
@@ -106,28 +106,31 @@ docker buildx build --platform linux/amd64 --provenance=false --load \
 
 已新增前端專用的 `mart_dashboard_monthly` 與 `mart_dashboard_partners` dbt views，以及通過建置證據與跨檔數據驗證後產生 JSON 的匯出工具。月份摘要保留缺月與 World-only 月份，國家明細不重複月份級 World／HHI；金額與比率以十進位字串保存。
 
-已完成靜態互動前端、Airflow 批次匯出與網站產物建置，並移除 Streamlit 程式與依賴。正式網站版本透過 Sites 發布，資料刷新與網站發布分開執行。
+已完成靜態互動前端、Airflow 批次匯出與網站產物建置，並移除 Streamlit 程式與依賴。正式網站使用 GitHub Pages 公開展示，資料刷新與網站發布分開執行。
 
 - [前端資料契約](docs/frontend-data-contract.md)
 - [頁面草圖](docs/dashboard-wireframe.md)
-- [匯出操作](docs/runbook.md#匯出靜態前端-json)
 - [完整遷移計畫](docs/static-frontend-migration-plan.md)
 - [真實資料驗收紀錄](docs/validation/static-data-layer.md)
-- [網站與流程驗收](docs/validation/static-website.md)
+- [GitHub Pages 發布說明](docs/github-pages.md)
 
 ## Silicon Atlas 網站
 
-[開啟網站](https://silicon-atlas-trade-observatory.honest-badge-7365.chatgpt.site)（私人存取，需登入擁有者的 ChatGPT 帳號）。
+[開啟公開圖表網站](https://sunhua12.github.io/000-trade-analytics/)（不需登入或雲端憑證）。
+
+網站提供 10 個市場、5 類商品及自 2016 年起的月度資料，共 222,959 筆有效來源明細。各市場公布進度不同，請以頁面顯示的可用月份為準。
+
+網站原始碼由 `main` 的 `frontend/` 維護；功能分支通過 PR 檢查、手動合併後，由 GitHub Actions 部署。首次切換設定及固定資料快照來源見 [GitHub Pages 發布說明](docs/github-pages.md)。
 
 採 Apple／Notion 風格的輕量研究工作台，提供日期／國家／Top N 篩選、趨勢、排名、YoY、覆蓋率／HHI、橘色分級地圖、跨年度月度比較、分頁明細與完整 CSV 匯出。包含獨立方法頁，說明資料來源、指標與必要限制。
 
-可直接雙擊根目錄的 `index.html` 預覽單檔版本，不需伺服器或登入。更新單檔版本：
+正式多市場離線版本為 `data/website/index.html`，可直接雙擊開啟。根目錄的 `index.html` 與 `frontend/public/data/` 保留舊版快照，並非目前公開網站的完整資料。以下指令依預設前端資料產生單檔版本：
 
 ```bash
 .venv/bin/python scripts/build_standalone.py
 ```
 
-單檔內嵌樣式、程式、真實 JSON 與地圖；保留篩選、圖表與 CSV 匯出。已提交的公開快照亦可建置成分檔網站，不需 BigQuery 認證：
+單檔內嵌樣式、程式、真實 JSON 與地圖；保留篩選、圖表與 CSV 匯出。儲存庫內的舊版快照亦可用於本機建置測試，不需 BigQuery 認證；正式多市場網站的建置使用 Pages 工作流程指定的已驗證快照：
 
 ```bash
 node --test frontend/tests/*.test.mjs
@@ -135,13 +138,13 @@ node frontend/build.mjs
 node frontend/serve.mjs
 ```
 
-需要 Node 22 以上；預覽位址為 http://127.0.0.1:4173。更新快照與發布步驟見 [操作手冊](docs/runbook.md#建置與發布網站)。設計取捨見 [設計紀錄](docs/design/frontend-decisions.md)。
+需要 Node 22 以上；預覽位址為 http://127.0.0.1:4173。更新快照與發布步驟見 [GitHub Pages 發布說明](docs/github-pages.md)。設計取捨見 [設計紀錄](docs/design/frontend-decisions.md)。
 
 ## 本機 Airflow
 
-首次設定、啟動、登入、Pool 設定與狀態檢查見 [操作手冊：啟動 Airflow Web UI](docs/runbook.md#啟動-airflow-web-ui)。
+使用 `docker/compose.yaml` 啟動本機服務；雲端身分掛載依本機設定處理。主要月度排程見本文「多市場積體電路分析」章節。
 
-UI：http://localhost:8080。啟用 `trade_monthly_pipeline` 後，每月 1 日依台北時間檢查最近 3 個完整月份，依序冪等重跑可用月份。來源未提供時記錄 `not_available`。手動單月輸入 `{"period":"202412"}`；backfill DAG 輸入 `{"start_period":"202301","end_period":"202303"}`，每批最多 3 個月。
+UI：http://localhost:8080。原有相容 DAG `trade_monthly_pipeline` 目前保留為手動流程；若重新啟用其排程，每月 1 日依台北時間檢查最近 3 個完整月份，依序冪等重跑可用月份。來源未提供時記錄 `not_available`。手動單月輸入 `{"period":"202412"}`；backfill DAG 輸入 `{"start_period":"202301","end_period":"202303"}`，每批最多 3 個月。
 
 Airflow 只在本機服務運行時排程。每個 DAG 有前置檢查與 `process_batch` 兩個 task。`trade_pipeline` Pool 為單 slot；整個批次占用該 slot，直到所有月份完成 ingest／load／dbt build，再匯出一次 JSON 並建置網站產物，避免兩個 DAG 的寫入交錯。
 
@@ -155,10 +158,10 @@ flowchart LR
     B --> T[dbt build + tests]
     T --> J[Export verified JSON once]
     J --> W[Build immutable website release]
-    W --> P[Separate Sites publication]
+    W --> P[Separate GitHub Pages deployment]
 ```
 
-實際每月均執行一次 dbt build；上圖將批次階段簡化呈現。所有選定月份成功才匯出，沒有可用月份時回傳 not_available 並保留前版。`data/website/current.json` 指向完整網站產物；這不會自動更新已發布的 Sites 網站。
+實際每月均執行一次 dbt build；上圖將批次階段簡化呈現。所有選定月份成功才匯出，沒有可用月份時回傳 not_available 並保留前版。`data/website/current.json` 指向完整網站產物；這不會自動更新已發布的 GitHub Pages 網站。
 
 ## 品質檢查
 
@@ -180,7 +183,7 @@ dbt 將原有 6 個核心 SQL 契約集中於 `assert_data_flow.sql` 與 `assert
 
 ## 已知限制
 
-- 固定美國月度進口、HS 8542／H6，預設展示 24 個月；無關稅、HTS crosswalk 或跨分類版本比較。
+- 原有相容流程固定美國、HS 8542／H6；主要流程支援 10 個市場與 5 類商品。無關稅、HTS crosswalk 或跨分類版本比較。
 - Preview API 有限流與截斷檢查；空資料與永久失敗分開處理。
 - S3 保留 immutable 原檔，Raw 僅保存最新接受版本與 load audit；不建立完整 warehouse history。
 - Lambda concurrency、Airflow Pool 設為 1；手動操作不得與 DAG 交錯。
@@ -188,8 +191,8 @@ dbt 將原有 6 個核心 SQL 契約集中於 `assert_data_flow.sql` 與 `assert
 - Airflow 只在本機服務運行時排程，`catchup=False` 不自動補完停機期間。
 - dbt build／test 失敗不會自動回復 warehouse 模型，但不會更新網站發布版本；JSON 與網站產物保留上一版指標。
 - 來源缺月、無 World 分母或重量缺失以 NULL／覆蓋資訊呈現。HHI 使用 World 分母，必須搭配國家覆蓋率；分母無效時為 NULL。USD／kg 不是晶片單顆價格。
-- 展示範圍最多 60 個月。批次更新會延伸至最新處理月份並保留既有上界；舊年份回填不縮短範圍。
-- AWS 手動部署，沒有 IaC 重建或 GitHub 雲端部署流程；瘦身未改動現有雲端服務。
+- 多市場匯出範圍最多 180 個月。批次更新會延伸至最新處理月份並保留既有上界；舊年份回填不縮短範圍。
+- AWS 後端手動部署；GitHub Actions 僅負責檢查及靜態網站部署。網站資料快照與 Airflow 更新尚未自動串接。
 
 詳細欄位與資料規則見 [資料契約](docs/data-contract.md)及 [資料字典](docs/data-dictionary.md)。dbt 保留 unique、not_null、relationships、grain、指標邏輯與國家映射追蹤。
 
