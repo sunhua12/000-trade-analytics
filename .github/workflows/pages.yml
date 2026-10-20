@@ -22,23 +22,12 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      # Reuse the accepted public snapshot, never the legacy sample in main.
-      # Update this SHA through a reviewed PR when a new snapshot is accepted.
-      - name: Checkout accepted public data
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          ref: 1f73c41d00e679ae20b2c964b5d7f22e0e65d12a
-          path: accepted-snapshot
-          sparse-checkout: data
-          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      # Regression tests use the checked-in single-market fixture.
+      # Regression fixtures are separate from production data.
       - name: Test analytics against regression fixture
         run: node --test frontend/tests/*.test.mjs
-      - name: Stage verified production snapshot
-        run: cp accepted-snapshot/data/{manifest,monthly,partners}.json frontend/public/data/
       - name: Build and verify checksums
         run: node frontend/build.mjs
       - uses: actions/upload-pages-artifact@v3

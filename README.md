@@ -69,9 +69,9 @@ node frontend/build.mjs
 node frontend/serve.mjs
 ```
 
-開啟 http://127.0.0.1:4173。上述指令使用儲存庫內的單市場回歸快照，供開發與測試使用，與公開網站的完整多市場資料不同。
+開啟 http://127.0.0.1:4173。上述指令直接使用 `frontend/public/data/` 中的正式多市場快照，與公開網站使用相同資料。測試使用獨立的 `frontend/tests/fixtures/`，不會覆蓋正式資料。
 
-完整多市場網站由 Pages 工作流程取得固定版本的正式快照，再搭配 `frontend/src/` 建置。若本機已執行完整管線，正式離線版本位於 `data/website/index.html`，可直接雙擊開啟；分檔網站版本由 `data/website/current.json` 指向。
+網站程式與正式資料都保存在 `main`，Pages 僅需 checkout 同一提交即可建置，不再讀取其他分支。若本機已執行完整管線，正式離線版本位於 `data/website/index.html`，可直接雙擊開啟；分檔網站版本由 `data/website/current.json` 指向。
 
 ## 網站修改與發布
 
@@ -79,9 +79,9 @@ node frontend/serve.mjs
 2. 推送分支並建立 PR，執行前端測試與正式資料建置驗證。
 3. 手動合併至 `main` 後，GitHub Actions 部署網站。
 
-`gh-pages` 保留原有部署資料，不需合併回 `main`。首次切換至 Actions 的設定、快照更新方式與部署條件見 [GitHub Pages 發布說明](docs/github-pages.md)。
+合併後網站不再依賴 `gh-pages`，確認部署成功即可刪除舊分支。快照更新方式與部署條件見 [GitHub Pages 發布說明](docs/github-pages.md)。
 
-正式快照具有固定提交版本及 checksum。PR 先使用回歸資料執行測試，再換上正式快照驗證建置；部署只允許從 `main` 執行。
+程式與正式快照隨同一提交版本管理，並以 checksum 驗證。PR 使用獨立回歸資料執行測試，再驗證正式資料建置；部署只允許從 `main` 執行。
 
 ## 執行資料管線
 

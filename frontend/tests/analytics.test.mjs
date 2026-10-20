@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 import {sum,share,analyze,csv,units} from '../src/analytics.mjs';
-const load=name=>JSON.parse(readFileSync(new URL(`../public/data/${name}.json`,import.meta.url))).rows;
+const load=name=>JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`,import.meta.url))).rows;
 const monthly=load('monthly'),partners=load('partners');
 test('large NUMERIC sums preserve every digit and null stays null',()=>{assert.equal(sum(['9007199254740993.123456789','0.000000001']),'9007199254740993.12345679');assert.equal(sum([null,null]),null);assert.throws(()=>units(0.1));assert.equal(share('25','100'),'0.25');assert.equal(share('1','0'),null);});
 test('country filters and Top N do not change World or full trend totals',()=>{const base={start:'2023-01-01',end:'2024-12-01',topN:10};const all=analyze(monthly,partners,base);const code=partners[0].partner_code;const one=analyze(monthly,partners,{...base,countries:[code],topN:5});assert.equal(all.world,one.world);assert.equal(one.selected,sum(partners.filter(row=>row.partner_code===code).map(row=>row.import_value)));assert.equal(one.yoy[0].value,partners.find(row=>row.month==='2023-01-01'&&row.partner_code===code)?.yoy??null);const top5=analyze(monthly,partners,{...base,topN:5});assert.deepEqual(all.trend,top5.trend);assert.equal(top5.top.length,5);assert.equal(sum(all.trend.map(row=>row.value)),all.selected);});
