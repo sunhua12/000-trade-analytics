@@ -1,3 +1,5 @@
+import {countryName} from './countries.mjs';
+import {localize, setupLanguage, getLanguage} from './i18n.mjs';
 import {analyze, amount, percent, monthLabel, csv, marketScope, commonMonths, sum} from './analytics.mjs';
 import {lineChart, rankChart, annualChart, mapChart, mapLegend, escape} from './charts.mjs';
 const $ = id => document.getElementById(id);
@@ -39,16 +41,16 @@ function filters() {return {start:$('start').value,end:$('end').value,countries:
 function renderCountries() {
   const query=$('country-search').value.toLowerCase();
   const options=[...new Map(dataset.partners.filter(row=>dataset.manifest.schema_version!=='2.0.0'||row.reporter_code===$('reporter').value).map(row=>[row.partner_code,row])).values()].sort((a,b)=>(a.source_name||a.partner_code).localeCompare(b.source_name||b.partner_code));
-  $('country-options').innerHTML=options.filter(row=>`${row.source_name} ${row.partner_code}`.toLowerCase().includes(query)).map(row=>`<label><input type="checkbox" value="${escape(row.partner_code)}" ${selectedCountries.has(row.partner_code)?'checked':''}><span>${escape(row.source_name||row.partner_code)}</span><small>${escape(row.partner_code)}</small></label>`).join('');
+  $('country-options').innerHTML=options.filter(row=>`${row.source_name} ${countryName(row)} ${row.map_iso3} ${row.partner_code}`.toLowerCase().includes(query)).map(row=>`<label><input type="checkbox" value="${escape(row.partner_code)}" ${selectedCountries.has(row.partner_code)?'checked':''}><span>${escape(countryName(row,getLanguage()))}</span><small>${escape(row.partner_code)}</small></label>`).join('');
   $('selected-count').textContent=selectedCountries.size?`已選 ${selectedCountries.size} 個來源`:'未選＝全部';
-  $('country-label').innerHTML=(selectedCountries.size===1?escape(options.find(row=>selectedCountries.has(row.partner_code))?.source_name||[...selectedCountries][0]):selectedCountries.size?`已選 ${selectedCountries.size} 個來源`:'全部已確認國家')+'<span class="chevron">⌄</span>';
+  $('country-label').innerHTML=(selectedCountries.size===1?escape(countryName(options.find(row=>selectedCountries.has(row.partner_code))||{partner_code:[...selectedCountries][0]},getLanguage())):selectedCountries.size?`已選 ${selectedCountries.size} 個來源`:'全部已確認國家')+'<span class="chevron">⌄</span>';
 }
 function renderTable() {
   const query=$('table-search').value.toLowerCase();
-  const rows=(current.detailScope??current.scope).filter(row=>`${row.source_name} ${row.partner_code}`.toLowerCase().includes(query)).sort((a,b)=>b.month.localeCompare(a.month)||a.partner_code.localeCompare(b.partner_code)||(a.cmd_code??'').localeCompare(b.cmd_code??''));
+  const rows=(current.detailScope??current.scope).filter(row=>`${row.source_name} ${countryName(row)} ${row.map_iso3} ${row.partner_code}`.toLowerCase().includes(query)).sort((a,b)=>b.month.localeCompare(a.month)||a.partner_code.localeCompare(b.partner_code)||(a.cmd_code??'').localeCompare(b.cmd_code??''));
   const pages=Math.max(1,Math.ceil(rows.length/pageSize));pageIndex=Math.min(pageIndex,pages-1);
-  $('table-body').innerHTML=rows.slice(pageIndex*pageSize,(pageIndex+1)*pageSize).map(row=>`<tr><td>${monthLabel(row.month)}</td><td>${escape(row.partner_code)}</td><td>${escape(row.source_name||'未提供名稱')}</td><td>${escape(row.cmd_code??'8542')}</td><td>${escape(row.hs_version??'H6')}</td><td class="numeric">${amount(row.import_value,false)}</td><td class="numeric">${percent(row.market_share)}</td><td class="numeric">${percent(row.yoy)}</td><td class="numeric">${percent(row.mom)}</td></tr>`).join('')||'<tr><td colspan="9">此篩選條件沒有資料。</td></tr>';
-  $('table-count').textContent=`共 ${rows.length.toLocaleString()} 筆 · 每頁 ${pageSize} 筆`;$('page-number').textContent=`${pageIndex+1} / ${pages}`;$('previous-page').disabled=pageIndex===0;$('next-page').disabled=pageIndex>=pages-1;
+  $('table-body').innerHTML=rows.slice(pageIndex*pageSize,(pageIndex+1)*pageSize).map(row=>`<tr><td>${monthLabel(row.month)}</td><td>${escape(row.partner_code)}</td><td>${escape(countryName(row,getLanguage())||'未提供名稱')}</td><td>${escape(row.cmd_code??'8542')}</td><td>${escape(row.hs_version??'H6')}</td><td class="numeric">${amount(row.import_value,false)}</td><td class="numeric">${percent(row.market_share)}</td><td class="numeric">${percent(row.yoy)}</td><td class="numeric">${percent(row.mom)}</td></tr>`).join('')||'<tr><td colspan="9">此篩選條件沒有資料。</td></tr>';
+  $('table-count').textContent=`共 ${rows.length.toLocaleString()} 筆 · 每頁 ${pageSize} 筆`;$('page-number').textContent=`${pageIndex+1} / ${pages}`;$('previous-page').disabled=pageIndex===0;$('next-page').disabled=pageIndex>=pages-1;localize();
 }
 function render() {
   try {
@@ -67,26 +69,29 @@ function render() {
     current=analyze(scoped.monthly,scoped.partners,filters());
     const config=filters();
     current.detailScope=(scoped.rawPartners??scoped.partners).filter(row=>row.month>=config.start&&row.month<=config.end&&(!config.countries.length||config.countries.includes(row.partner_code)));$('filter-error').textContent='';$('filter-error').hidden=true;$('download').disabled=false;}
-  catch(error) {current=null;$('filter-error').textContent=error.message;$('filter-error').hidden=false;$('download').disabled=true;for(const key of ['overview','data'])$(key+'-page').hidden=true;return;}
+  catch(error) {current=null;$('filter-error').textContent=error.message;$('filter-error').hidden=false;$('download').disabled=true;for(const key of ['overview','data'])$(key+'-page').hidden=true;localize();return;}
   showPage();
   const config=filters();
   const market=$('reporter').selectedOptions[0]?.textContent||'美國';
   const products=[...document.querySelectorAll('#products input:checked')];
   $('scope-summary').textContent=`${market} · ${monthLabel(config.start)}—${monthLabel(config.end)} · ${products.length||1} 類商品 · ${selectedCountries.size?`已選 ${selectedCountries.size} 個來源`:'全部來源'}${$('common-period').checked?' · 共同月份':''}`;
+  const marketName=dataset.manifest.markets?.find(item=>item.reporter_code===$('reporter').value)?.name||'美國';
+  $('world-description').textContent=`${marketName}從全球進口的總額，不受來源國篩選影響。`;
+  $('selected-description').textContent=selectedCountries.size?`${marketName}從目前所選來源國進口的合計金額。`:`${marketName}從全部已確認來源國進口的合計金額。`;
   $('world-kpi').textContent=amount(current.world);$('selected-kpi').textContent=amount(current.selected);$('latest-kpi').textContent=current.last?monthLabel(current.last):'資料不足';
   $('world-months').textContent=`${current.worldMonths} / ${current.months.length} 個有效月份`;$('selected-share').textContent=percent(current.selectedShare);$('country-kpi').textContent=`${current.rankings.length} 個國家／地區`;
   $('world-kpi').parentElement.title=current.world===null?'資料不足':`USD ${amount(current.world,false)}`;$('selected-kpi').parentElement.title=current.selected===null?'資料不足':`USD ${amount(current.selected,false)}`;
   const incomplete=current.worldMonths<current.months.length;
   $('missing-notice').hidden=location.hash==='#method'||!incomplete;$('missing-notice').textContent=incomplete?`所選期間有 ${current.months.length-current.worldMonths} 個月份缺少 World 金額。期間總額與市占僅反映可用分母，請留意缺月。`:'';
   lineChart($('trend-chart'),current.trend,{label:'進口金額'});$('trend-foot').textContent=`${current.trend.filter(row=>row.value!==null).length} 個有效月份`;
-  rankChart($('ranking-chart'),current.top,current.world);$('ranking-top').textContent=`TOP ${config.topN}`;
+  rankChart($('ranking-chart'),current.top.map(row=>({...row,name:countryName(row,getLanguage())})),current.world);$('ranking-top').textContent=`前 ${config.topN} 名`;
   mapChart($('map-chart'),dataset.geometry,current.rankings);mapLegend($('map-legend'));const geometryCodes=new Set(dataset.geometry.features.filter(feature=>feature.properties.iso3!=='ATA').map(feature=>feature.properties.iso3));const unmapped=sum(current.rankings.filter(row=>!geometryCodes.has(row.iso3)).map(row=>row.value));$('map-note').textContent=`未映射金額：USD ${amount(unmapped??'0')}`;
   annualChart($('scatter-chart'),current.trend);$('scatter-caption').textContent=`${monthLabel(config.start)}–${monthLabel(config.end)} · 所選來源國月度總額 · USD`;
   $('scatter-note').textContent=`${new Set(current.trend.map(row=>row.month.slice(0,4))).size} 個年度 · 同月份對照`;
 
-  renderTable();
+  renderTable();localize();
 }
-function toast(message) {$('toast').textContent=message;$('toast').hidden=false;setTimeout(()=>$('toast').hidden=true,3000);}
+function toast(message) {$('toast').textContent=message;localize();$('toast').hidden=false;setTimeout(()=>$('toast').hidden=true,3000);}
 function bind() {
   for(const id of ['start','end','top-n']) $(id).addEventListener('change',()=>{pageIndex=0;render();});
   $('reporter').addEventListener('change',()=>{selectedCountries.clear();pageIndex=0;renderCountries();render();});
@@ -125,7 +130,7 @@ async function init() {
     $('data-updated').textContent=`資料更新時間：${new Date(manifest.generated_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',hour12:false})}（台北）`;
     const availableMonths=[...new Set(monthly.map(row=>row.month))].sort();
     if(manifest.schema_version==='2.0.0'){
-      document.title='Trade Atlas｜多市場積體電路貿易研究';
+      document.title='半導體進口數據觀察';
       $('hero-coverage').textContent=`${manifest.markets.length} 個市場 · ${manifest.products.length} 類商品`;
       $('market-controls').hidden=false;
       $('row-target-status').hidden=false;
@@ -139,8 +144,9 @@ async function init() {
     }
     for(const id of ['start','end'])$(id).innerHTML=availableMonths.map(month=>({month})).map(row=>`<option value="${row.month}">${row.month.slice(0,7)}</option>`).join('');
     $('start').value=availableMonths[0];$('end').value=manifest.latest_data_month;
-    $('method-latest').textContent=monthLabel(manifest.latest_data_month);$('version-note').textContent=`Snapshot ${manifest.snapshot_id}\nSchema ${manifest.schema_version}\n匯出時間 ${new Date(manifest.generated_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'})}（台北）`;
+    $('method-latest').textContent=monthLabel(manifest.latest_data_month);$('version-note').textContent=`Snapshot ${manifest.snapshot_id}\nSchema ${manifest.schema_version}\n匯出時間 ${new Date(manifest.generated_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',hour12:false})}（台北）`;
     $('load-state').hidden=true;$('app').hidden=false;renderCountries();bind();render();
-  }catch(error){$('load-state').innerHTML=`<h1>資料載入失敗。</h1><p>${escape(error.message)}</p><button type="button" id="retry" class="download-button">重新載入</button>`;$('retry').addEventListener('click',()=>location.reload());console.error(error);}
+  }catch(error){$('load-state').innerHTML=`<h1>資料載入失敗。</h1><p>${escape(error.message)}</p><button type="button" id="retry" class="download-button">重新載入</button>`;$('retry').addEventListener('click',()=>location.reload());console.error(error);localize();}
 }
+setupLanguage(()=>{if(dataset){renderCountries();render();}});
 init();
