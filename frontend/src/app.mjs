@@ -4,12 +4,12 @@ const $ = id => document.getElementById(id);
 let dataset, current, pageIndex=0;
 const selectedCountries = new Set();
 const pageSize=50;
-const pageTitles={overview:'晶片貿易的流動軌跡',data:'月度國家明細',method:'資料來源與指標定義'};
+const pageTitles={overview:'半導體進口數據觀察',data:'月度國家明細',method:'資料來源與指標定義'};
 function showPage() {
   const key=location.hash.slice(1) in pageTitles ? location.hash.slice(1) : 'overview';
   document.querySelectorAll('[data-page]').forEach(link=>{const active=link.dataset.page===key;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
   for(const name of Object.keys(pageTitles)) $(name+'-page').hidden=name!==key||(name!=='method'&&!current);
-  $('heading').innerHTML=key==='overview'?'晶片貿易的流動軌跡':escape(pageTitles[key]);
+  $('heading').innerHTML=key==='overview'?'半導體進口數據觀察':escape(pageTitles[key]);
   document.querySelector('.hero-deck').hidden=key!=='overview';
   document.querySelector('.editorial-hero').classList.toggle('compact-hero',key!=='overview');
   $('research-filters').hidden=key==='method';
