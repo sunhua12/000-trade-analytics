@@ -1,15 +1,19 @@
-import {analyze, amount, percent, monthLabel, csv, marketScope, commonMonths, sum} from './analytics.mjs';
+import {analyze, amount, percent, monthLabel, csv, marketScope, commonMonths, sum, units} from './analytics.mjs';
 import {lineChart, rankChart, annualChart, mapChart, mapLegend, escape} from './charts.mjs';
 const $ = id => document.getElementById(id);
 let dataset, current, pageIndex=0;
 const selectedCountries = new Set();
 const pageSize=50;
-const pageTitles={overview:'美國半導體進口分析',data:'月度國家明細',method:'資料來源與指標定義'};
+const pageTitles={overview:'晶片貿易的流動軌跡',data:'月度國家明細',method:'資料來源與指標定義'};
 function showPage() {
   const key=location.hash.slice(1) in pageTitles ? location.hash.slice(1) : 'overview';
   document.querySelectorAll('[data-page]').forEach(link=>{const active=link.dataset.page===key;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
   for(const name of Object.keys(pageTitles)) $(name+'-page').hidden=name!==key||(name!=='method'&&!current);
-  $('heading').textContent=pageTitles[key];
+  $('heading').innerHTML=key==='overview'?'晶片貿易的<br>流動軌跡':escape(pageTitles[key]);
+  document.querySelector('.hero-aside').hidden=key!=='overview';
+  document.querySelector('.hero-deck').hidden=key!=='overview';
+  document.querySelector('.editorial-hero').classList.toggle('compact-hero',key!=='overview');
+  $('research-filters').hidden=key==='method';
   $('analysis-controls').hidden=key==='method';
   $('market-controls').hidden=key==='method'||dataset.manifest.schema_version!=='2.0.0';
   $('filter-error').hidden=key==='method'||!$('filter-error').textContent;
@@ -67,14 +71,19 @@ function render() {
   catch(error) {current=null;$('filter-error').textContent=error.message;$('filter-error').hidden=false;$('download').disabled=true;for(const key of ['overview','data'])$(key+'-page').hidden=true;return;}
   showPage();
   const config=filters();
+  const market=$('reporter').selectedOptions[0]?.textContent||'美國';
+  const products=[...document.querySelectorAll('#products input:checked')];
+  $('scope-summary').textContent=`${market} · ${monthLabel(config.start)}—${monthLabel(config.end)} · ${products.length||1} 類商品 · ${selectedCountries.size?`已選 ${selectedCountries.size} 個來源`:'全部來源'}${$('common-period').checked?' · 共同月份':''}`;
+  const valid=current.trend.filter(row=>row.value!==null);
+  const peak=valid.reduce((best,row)=>!best||units(row.value)>units(best.value)?row:best,null);
+  $('trend-insight').textContent=peak?`資料觀察｜目前篩選範圍內，最高月度來源國進口總額出現在 ${monthLabel(peak.month)}，為 USD ${amount(peak.value,false)}。僅比較有資料的月份。`:'目前篩選範圍沒有可供比較的月度金額。';
   $('world-kpi').textContent=amount(current.world);$('selected-kpi').textContent=amount(current.selected);$('latest-kpi').textContent=current.last?monthLabel(current.last):'資料不足';
   $('world-months').textContent=`${current.worldMonths} / ${current.months.length} 個有效月份`;$('selected-share').textContent=percent(current.selectedShare);$('country-kpi').textContent=`${current.rankings.length} 個國家／地區`;
   $('world-kpi').parentElement.title=current.world===null?'資料不足':`USD ${amount(current.world,false)}`;$('selected-kpi').parentElement.title=current.selected===null?'資料不足':`USD ${amount(current.selected,false)}`;
   const incomplete=current.worldMonths<current.months.length;
-  $('missing-notice').hidden=!incomplete;$('missing-notice').textContent=incomplete?`所選期間有 ${current.months.length-current.worldMonths} 個月份缺少 World 金額。期間總額與市占僅反映可用分母，請留意缺月。`:'';
+  $('missing-notice').hidden=location.hash==='#method'||!incomplete;$('missing-notice').textContent=incomplete?`所選期間有 ${current.months.length-current.worldMonths} 個月份缺少 World 金額。期間總額與市占僅反映可用分母，請留意缺月。`:'';
   lineChart($('trend-chart'),current.trend,{label:'進口金額'});$('trend-foot').textContent=`${current.trend.filter(row=>row.value!==null).length} 個有效月份`;
   rankChart($('ranking-chart'),current.top,current.world);$('ranking-top').textContent=`TOP ${config.topN}`;
-  const latest=current.months.find(row=>row.month===config.end);
   mapChart($('map-chart'),dataset.geometry,current.rankings);mapLegend($('map-legend'));const geometryCodes=new Set(dataset.geometry.features.filter(feature=>feature.properties.iso3!=='ATA').map(feature=>feature.properties.iso3));const unmapped=sum(current.rankings.filter(row=>!geometryCodes.has(row.iso3)).map(row=>row.value));$('map-note').textContent=`未映射金額：USD ${amount(unmapped??'0')}`;
   annualChart($('scatter-chart'),current.trend);$('scatter-caption').textContent=`${monthLabel(config.start)}–${monthLabel(config.end)} · 所選來源國月度總額 · USD`;
   $('scatter-note').textContent=`${new Set(current.trend.map(row=>row.month.slice(0,4))).size} 個年度 · 同月份對照`;
@@ -98,6 +107,15 @@ function bind() {
   let resizeFrame;addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>{if(current)render();});});
   document.addEventListener('click',event=>{if(!$('country-menu').contains(event.target))$('country-menu').open=false;});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'){$('country-menu').open=false;$('tooltip').hidden=true;}});
+  function highlightOrigin(event) {
+    const iso=event.target.closest('[data-iso]')?.dataset.iso;
+    for(const element of document.querySelectorAll('[data-iso]'))element.classList.toggle('is-highlighted',Boolean(iso)&&element.dataset.iso===iso);
+  }
+  function clearOrigin() {for(const element of document.querySelectorAll('.is-highlighted'))element.classList.remove('is-highlighted');}
+  document.addEventListener('pointerover',highlightOrigin);
+  document.addEventListener('focusin',highlightOrigin);
+  document.addEventListener('pointerout',clearOrigin);
+  document.addEventListener('focusout',clearOrigin);
   function tooltip(event) {const target=event.target.closest('[data-tooltip]');if(!target)return;const tip=$('tooltip');tip.textContent=target.dataset.tooltip;tip.style.whiteSpace='pre-line';tip.hidden=false;const rect=target.getBoundingClientRect();const x=event.clientX||rect.left+rect.width/2;const y=event.clientY||rect.top;tip.style.left=`${Math.max(8,Math.min(innerWidth-tip.offsetWidth-12,x+14))}px`;tip.style.top=`${Math.max(8,Math.min(innerHeight-tip.offsetHeight-12,y+16))}px`;}
   document.addEventListener('pointerover',tooltip);document.addEventListener('focusin',tooltip);
   document.addEventListener('pointerout',event=>{if(event.target.closest('[data-tooltip]'))$('tooltip').hidden=true;});document.addEventListener('focusout',()=>$('tooltip').hidden=true);
@@ -111,10 +129,11 @@ async function init() {
     $('data-updated').textContent=`資料更新時間：${new Date(manifest.generated_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',hour12:false})}（台北）`;
     const availableMonths=[...new Set(monthly.map(row=>row.month))].sort();
     if(manifest.schema_version==='2.0.0'){
-      pageTitles.overview='多市場積體電路進口分析';document.title=pageTitles.overview;
+      document.title='Trade Atlas｜多市場積體電路貿易研究';
+      $('hero-coverage').textContent=`${manifest.markets.length} 個市場 · ${manifest.products.length} 類商品`;
       $('market-controls').hidden=false;
       $('row-target-status').hidden=false;
-      $('row-target-status').textContent=`有效來源明細：${manifest.valid_detail_count.toLocaleString()} 筆；正金額：${manifest.positive_amount_count.toLocaleString()} 筆。${manifest.row_target_met?'已達 100,000 筆門檻。':'歷史回補中，尚未達 100,000 筆驗收門檻。'}`;
+      $('row-target-status').textContent=`有效來源明細：${manifest.valid_detail_count.toLocaleString()} 筆；正金額：${manifest.positive_amount_count.toLocaleString()} 筆。資料範圍依各市場實際公布月份而異。`;
       $('reporter').innerHTML=manifest.markets.filter(market=>monthly.some(row=>row.reporter_code===market.reporter_code)).map(market=>`<option value="${escape(market.reporter_code)}">${escape(market.name)}</option>`).join('');
       $('method-product').textContent='854231、854232、854233、854239 與 854290（零件）';
       $('method-classification').textContent='原始申報版本（依市場及月份保留）';
