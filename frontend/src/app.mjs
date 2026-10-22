@@ -1,4 +1,4 @@
-import {analyze, amount, percent, monthLabel, csv, marketScope, commonMonths, sum, units} from './analytics.mjs';
+import {analyze, amount, percent, monthLabel, csv, marketScope, commonMonths, sum} from './analytics.mjs';
 import {lineChart, rankChart, annualChart, mapChart, mapLegend, escape} from './charts.mjs';
 const $ = id => document.getElementById(id);
 let dataset, current, pageIndex=0;
@@ -9,8 +9,7 @@ function showPage() {
   const key=location.hash.slice(1) in pageTitles ? location.hash.slice(1) : 'overview';
   document.querySelectorAll('[data-page]').forEach(link=>{const active=link.dataset.page===key;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
   for(const name of Object.keys(pageTitles)) $(name+'-page').hidden=name!==key||(name!=='method'&&!current);
-  $('heading').innerHTML=key==='overview'?'晶片貿易的<br>流動軌跡':escape(pageTitles[key]);
-  document.querySelector('.hero-aside').hidden=key!=='overview';
+  $('heading').innerHTML=key==='overview'?'晶片貿易的流動軌跡':escape(pageTitles[key]);
   document.querySelector('.hero-deck').hidden=key!=='overview';
   document.querySelector('.editorial-hero').classList.toggle('compact-hero',key!=='overview');
   $('research-filters').hidden=key==='method';
@@ -74,9 +73,6 @@ function render() {
   const market=$('reporter').selectedOptions[0]?.textContent||'美國';
   const products=[...document.querySelectorAll('#products input:checked')];
   $('scope-summary').textContent=`${market} · ${monthLabel(config.start)}—${monthLabel(config.end)} · ${products.length||1} 類商品 · ${selectedCountries.size?`已選 ${selectedCountries.size} 個來源`:'全部來源'}${$('common-period').checked?' · 共同月份':''}`;
-  const valid=current.trend.filter(row=>row.value!==null);
-  const peak=valid.reduce((best,row)=>!best||units(row.value)>units(best.value)?row:best,null);
-  $('trend-insight').textContent=peak?`資料觀察｜目前篩選範圍內，最高月度來源國進口總額出現在 ${monthLabel(peak.month)}，為 USD ${amount(peak.value,false)}。僅比較有資料的月份。`:'目前篩選範圍沒有可供比較的月度金額。';
   $('world-kpi').textContent=amount(current.world);$('selected-kpi').textContent=amount(current.selected);$('latest-kpi').textContent=current.last?monthLabel(current.last):'資料不足';
   $('world-months').textContent=`${current.worldMonths} / ${current.months.length} 個有效月份`;$('selected-share').textContent=percent(current.selectedShare);$('country-kpi').textContent=`${current.rankings.length} 個國家／地區`;
   $('world-kpi').parentElement.title=current.world===null?'資料不足':`USD ${amount(current.world,false)}`;$('selected-kpi').parentElement.title=current.selected===null?'資料不足':`USD ${amount(current.selected,false)}`;

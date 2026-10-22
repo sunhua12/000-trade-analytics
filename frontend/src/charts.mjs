@@ -69,7 +69,7 @@ export function annualChart(container, rows) {
   const scale=axisScale(valid.map(row=>row.value));
   const x=index=>left+(width-left-right)*index/11;
   const y=value=>top+(height-top-bottom)*(scale.high-Number(value))/(scale.high-scale.low);
-  const colors=series.map((item,index)=>index===series.length-1?'#286b79':['#a9b7b5','#b9a68f','#879da5','#c7bdb0'][index%4]);
+  const colors=series.map((item,index)=>index===series.length-1?'#286b79':['#4377ad','#d47824','#8c5ba7','#659237','#bd4857','#92703c','#498d97','#b06691','#6263a9','#899b42'][index%10]);
   let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="跨年度月度進口比較圖"><title>各年度一至十二月進口總額，缺月保留斷點</title>`;
   for(const tick of scale.ticks) svg+=`<line class="grid-line" x1="${left}" x2="${width-right}" y1="${y(tick)}" y2="${y(tick)}"/><text class="axis-label" x="${left-8}" y="${y(tick)+3}" text-anchor="end">${scale.format(tick)}</text>`;
   for(let month=0;month<12;month++) svg+=`<text class="axis-label" x="${x(month)}" y="${height-12}" text-anchor="middle">${month+1}</text>`;
@@ -80,7 +80,7 @@ export function annualChart(container, rows) {
       if(row.value===null) {connected=false;return;}
       path+=`${connected?'L':'M'}${x(month)},${y(row.value)} `;connected=true;
     });
-    svg+=`<g class="annual-series" data-year="${item.year}"><path d="${path}" fill="none" stroke="${color}" stroke-width="${index===series.length-1?3:1.4}" stroke-dasharray="${dash}"/>`;
+    svg+=`<g class="annual-series" data-year="${item.year}"><path d="${path}" fill="none" stroke="${color}" stroke-width="${index===series.length-1?3:2}" stroke-dasharray="${dash}"/>`;
     item.months.forEach((row,month)=>{if(row.value!==null)svg+=`<circle cx="${x(month)}" cy="${y(row.value)}" r="3" fill="${color}" ${tooltipAttributes(`${month+1} 月 · 各年度比較\n`+series.map(year=>`${year.year}：${year.months[month].value===null?'無資料':'USD '+amount(year.months[month].value,false)}`).join('\n'))}/>`;});
     svg+='</g>';
   });

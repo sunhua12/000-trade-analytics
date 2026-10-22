@@ -463,3 +463,17 @@ tbody tr:hover { background: #e9eee8; }
 
 .filter-toggle::after { content: " ＋"; }
 .research-filters[open] .filter-toggle::after { content: " −"; }
+
+/* Compact research header and contextual notes. */
+.page-heading { min-height: 68px; justify-content: flex-end; }
+.editorial-hero { display: block; padding: 34px 0 30px; }
+#heading, .compact-hero #heading { font-size: clamp(23px, 3.2vw, 42px); white-space: nowrap; letter-spacing: -.7px; }
+#research-filters > #missing-notice { margin: 0 20px 14px; }
+.dashboard-footer { flex-wrap: wrap; }
+.dashboard-footer #row-target-status { width: 100%; margin: 0; padding: 0 0 10px; line-height: 1.8; }
+@media(max-width:760px) {
+ .page-heading { min-height: 64px; padding-block: 14px; }
+ .editorial-hero { padding: 24px 0; }
+ #heading, .compact-hero #heading { font-size: clamp(20px, 6vw, 32px); }
+ #research-filters > #missing-notice { margin-inline: 12px; }
+}
