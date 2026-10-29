@@ -1,6 +1,6 @@
 {
   "$defs": {
-    "PartnerRow": {
+    "PartnerRowV2": {
       "additionalProperties": false,
       "properties": {
         "month": {
@@ -9,12 +9,18 @@
           "type": "string"
         },
         "cmd_code": {
-          "const": "8542",
+          "enum": [
+            "854231",
+            "854232",
+            "854233",
+            "854239",
+            "854290"
+          ],
           "title": "Cmd Code",
           "type": "string"
         },
         "hs_version": {
-          "const": "H6",
+          "pattern": "^H[0-6]$",
           "title": "Hs Version",
           "type": "string"
         },
@@ -118,6 +124,11 @@
             }
           ],
           "title": "Yoy"
+        },
+        "reporter_code": {
+          "pattern": "^\\d+$",
+          "title": "Reporter Code",
+          "type": "string"
         }
       },
       "required": [
@@ -133,16 +144,17 @@
         "previous_month_value",
         "previous_year_value",
         "mom",
-        "yoy"
+        "yoy",
+        "reporter_code"
       ],
-      "title": "PartnerRow",
+      "title": "PartnerRowV2",
       "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "1.0.0",
+      "const": "2.0.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -153,7 +165,7 @@
     },
     "rows": {
       "items": {
-        "$ref": "#/$defs/PartnerRow"
+        "$ref": "#/$defs/PartnerRowV2"
       },
       "title": "Rows",
       "type": "array"
@@ -164,6 +176,6 @@
     "snapshot_id",
     "rows"
   ],
-  "title": "PartnerDocument",
+  "title": "PartnerDocumentV2",
   "type": "object"
 }

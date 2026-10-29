@@ -1,5 +1,45 @@
 {
   "$defs": {
+    "Availability": {
+      "additionalProperties": false,
+      "properties": {
+        "reporter_code": {
+          "title": "Reporter Code",
+          "type": "string"
+        },
+        "cmd_code": {
+          "title": "Cmd Code",
+          "type": "string"
+        },
+        "months": {
+          "items": {
+            "format": "date",
+            "type": "string"
+          },
+          "title": "Months",
+          "type": "array"
+        },
+        "start_month": {
+          "format": "date",
+          "title": "Start Month",
+          "type": "string"
+        },
+        "latest_data_month": {
+          "format": "date",
+          "title": "Latest Data Month",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reporter_code",
+        "cmd_code",
+        "months",
+        "start_month",
+        "latest_data_month"
+      ],
+      "title": "Availability",
+      "type": "object"
+    },
     "FileIndex": {
       "additionalProperties": false,
       "properties": {
@@ -43,12 +83,55 @@
       ],
       "title": "FileInfo",
       "type": "object"
+    },
+    "MarketMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "reporter_code": {
+          "title": "Reporter Code",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reporter_code",
+        "name"
+      ],
+      "title": "MarketMetadata",
+      "type": "object"
+    },
+    "ProductMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "cmd_code": {
+          "title": "Cmd Code",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "is_parts": {
+          "title": "Is Parts",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "cmd_code",
+        "name",
+        "is_parts"
+      ],
+      "title": "ProductMetadata",
+      "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "1.0.0",
+      "const": "2.0.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -82,21 +165,6 @@
       "title": "Currency",
       "type": "string"
     },
-    "reporter_code": {
-      "const": "842",
-      "title": "Reporter Code",
-      "type": "string"
-    },
-    "cmd_code": {
-      "const": "8542",
-      "title": "Cmd Code",
-      "type": "string"
-    },
-    "hs_version": {
-      "const": "H6",
-      "title": "Hs Version",
-      "type": "string"
-    },
     "decimal_encoding": {
       "const": "string",
       "title": "Decimal Encoding",
@@ -109,6 +177,41 @@
     },
     "files": {
       "$ref": "#/$defs/FileIndex"
+    },
+    "valid_detail_count": {
+      "minimum": 0,
+      "title": "Valid Detail Count",
+      "type": "integer"
+    },
+    "positive_amount_count": {
+      "minimum": 0,
+      "title": "Positive Amount Count",
+      "type": "integer"
+    },
+    "row_target_met": {
+      "title": "Row Target Met",
+      "type": "boolean"
+    },
+    "markets": {
+      "items": {
+        "$ref": "#/$defs/MarketMetadata"
+      },
+      "title": "Markets",
+      "type": "array"
+    },
+    "products": {
+      "items": {
+        "$ref": "#/$defs/ProductMetadata"
+      },
+      "title": "Products",
+      "type": "array"
+    },
+    "availability": {
+      "items": {
+        "$ref": "#/$defs/Availability"
+      },
+      "title": "Availability",
+      "type": "array"
     }
   },
   "required": [
@@ -119,13 +222,16 @@
     "end_exclusive",
     "latest_data_month",
     "currency",
-    "reporter_code",
-    "cmd_code",
-    "hs_version",
     "decimal_encoding",
     "hhi_coverage_tolerance",
-    "files"
+    "files",
+    "valid_detail_count",
+    "positive_amount_count",
+    "row_target_met",
+    "markets",
+    "products",
+    "availability"
   ],
-  "title": "SnapshotManifest",
+  "title": "SnapshotManifestV2",
   "type": "object"
 }

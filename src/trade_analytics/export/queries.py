@@ -41,11 +41,8 @@ def null_struct(fields: str) -> str:
 
 
 class SnapshotReader:
-    def __init__(
-        self, settings: Settings, client: Any | None = None, *, multi_market: bool = False
-    ) -> None:
+    def __init__(self, settings: Settings, client: Any | None = None) -> None:
         self.settings = settings
-        self.multi_market = multi_market
         self.bigquery = import_module("google.cloud.bigquery")
         self.client = client or self.bigquery.Client(
             project=settings.project, location=settings.location
@@ -61,66 +58,42 @@ class SnapshotReader:
         )
         if end_exclusive.day != 1 or start >= end_exclusive:
             raise ValueError("export bounds must be ascending month boundaries")
-        scope = (
-            "month >= @start_date AND month < @end_exclusive "
-            "AND cmd_code = @cmd_code AND hs_version = @hs_version"
-        )
-        monthly_fields, partner_fields = MONTHLY_FIELDS, PARTNER_FIELDS
-        monthly_table, partner_table = "mart_dashboard_monthly", "mart_dashboard_partners"
-        if self.multi_market:
-            scope = "month >= @start_date AND month < @end_exclusive"
-            monthly_fields += ", reporter_code"
-            partner_fields += ", reporter_code"
-            monthly_table, partner_table = (
-                "mart_multi_market_ic_monthly",
-                "mart_multi_market_ic_partners",
-            )
+        scope = "month >= @start_date AND month < @end_exclusive"
+        monthly_fields = MONTHLY_FIELDS + ", reporter_code"
+        partner_fields = PARTNER_FIELDS + ", reporter_code"
         prefix = f"{self.settings.project}.{self.settings.dataset}"
-        sql = f"""SELECT
-          ARRAY(SELECT AS STRUCT {monthly_fields}
-            FROM `{prefix}.{monthly_table}`
-            WHERE {scope} ORDER BY month) AS monthly,
-          ARRAY(SELECT AS STRUCT {partner_fields}
-            FROM `{prefix}.{partner_table}`
-            WHERE {scope} ORDER BY month, partner_code) AS partners"""
-        if self.multi_market:
-            # Keep one statement snapshot while allowing result pagination by row.
-            sql = f"""WITH documents AS (
-              SELECT 'monthly' AS kind, STRUCT({monthly_fields}) AS monthly,
-                {null_struct(partner_fields)} AS partners
-              FROM `{prefix}.{monthly_table}` WHERE {scope}
-              UNION ALL
-              SELECT 'partners' AS kind, {null_struct(monthly_fields)} AS monthly,
-                STRUCT({partner_fields}) AS partners
-              FROM `{prefix}.{partner_table}` WHERE {scope}
-            ) SELECT * FROM documents
-            ORDER BY COALESCE(monthly.month,partners.month), kind,
-              COALESCE(monthly.reporter_code,partners.reporter_code),
-              COALESCE(monthly.cmd_code,partners.cmd_code), partners.partner_code"""
+        monthly_table, partner_table = (
+            "mart_multi_market_ic_monthly",
+            "mart_multi_market_ic_partners",
+        )
+        sql = f"""WITH documents AS (
+          SELECT 'monthly' AS kind, STRUCT({monthly_fields}) AS monthly,
+            {null_struct(partner_fields)} AS partners
+          FROM `{prefix}.{monthly_table}` WHERE {scope}
+          UNION ALL
+          SELECT 'partners' AS kind, {null_struct(monthly_fields)} AS monthly,
+            STRUCT({partner_fields}) AS partners
+          FROM `{prefix}.{partner_table}` WHERE {scope}
+        ) SELECT * FROM documents
+        ORDER BY COALESCE(monthly.month,partners.month), kind,
+          COALESCE(monthly.reporter_code,partners.reporter_code),
+          COALESCE(monthly.cmd_code,partners.cmd_code), partners.partner_code"""
         scalar = self.bigquery.ScalarQueryParameter
         config = self.bigquery.QueryJobConfig(
             query_parameters=[
                 scalar("start_date", "DATE", start),
                 scalar("end_exclusive", "DATE", end_exclusive),
-                scalar("cmd_code", "STRING", "8542"),
-                scalar("hs_version", "STRING", "H6"),
             ],
             maximum_bytes_billed=self.settings.maximum_bytes_billed,
             use_query_cache=False,
         )
         job = self.client.query(sql, job_config=config, location=self.settings.location)
-        if self.multi_market:
-            raw: dict[str, list[dict[str, Any]]] = {"monthly": [], "partners": []}
-            for row in job.result(timeout=180):
-                kind = row["kind"]
-                if kind not in raw or row[kind] is None:
-                    raise ValueError("invalid streamed snapshot row")
-                raw[kind].append(dict(row[kind]))
-        else:
-            rows = list(job.result(timeout=180))
-            if len(rows) != 1:
-                raise ValueError("snapshot query must return one envelope")
-            raw = {key: [dict(row) for row in rows[0][key]] for key in ("monthly", "partners")}
+        raw: dict[str, list[dict[str, Any]]] = {"monthly": [], "partners": []}
+        for row in job.result(timeout=180):
+            kind = row["kind"]
+            if kind not in raw or row[kind] is None:
+                raise ValueError("invalid streamed snapshot row")
+            raw[kind].append(dict(row[kind]))
         self.jobs.append(
             {
                 "job_id": job.job_id,

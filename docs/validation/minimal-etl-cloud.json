@@ -1,0 +1,103 @@
+{
+  "status": "success",
+  "dataset": "trade_etl_fixture_refactor_20261029_b",
+  "s3_prefix": "_smoke/etl/refactor_20261029_b/un_comtrade",
+  "checks": {
+    "initial_load": {
+      "period": "201601",
+      "status": "success",
+      "sources": 4,
+      "rows": 6,
+      "loaded": [
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 2
+        },
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 1
+        },
+        {
+          "reporter_code": "156",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 2
+        },
+        {
+          "reporter_code": "156",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 1
+        }
+      ]
+    },
+    "idempotent_replay": {
+      "period": "201601",
+      "status": "already_loaded",
+      "sources": 4
+    },
+    "replacement": {
+      "period": "201601",
+      "status": "success",
+      "sources": 2,
+      "rows": 2,
+      "loaded": [
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 2,
+          "row_count": 1
+        },
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 2,
+          "row_count": 1
+        }
+      ]
+    },
+    "removed_partner_and_hs_replacement": true,
+    "stale_revision_rejected": true,
+    "concurrent_writer_outcomes": [
+      "committed",
+      "conflict_rejected"
+    ],
+    "dbt_and_json_v2": {
+      "monthly_rows": 2,
+      "partner_rows": 3
+    },
+    "failed_dbt_build_rejected": true,
+    "previous_snapshot_preserved": true
+  },
+  "cleanup": "complete",
+  "dbt_successful_nodes": 19,
+  "api_integration": "passed",
+  "airflow": {
+    "version": "3.3.2",
+    "schedule_disabled": "passed",
+    "schedule_enabled": "passed",
+    "cli_range_and_exit_policy": "passed"
+  },
+  "s3_versioned_cleanup": {
+    "versioning": "Enabled",
+    "removed_versions_and_markers": {
+      "refactor_20261029_a": 32,
+      "refactor_20261029_b": 32
+    },
+    "scope": "only the two smoke test prefixes"
+  },
+  "final_regression": {
+    "pytest_with_integration": {
+      "passed": 69,
+      "skipped": 0
+    },
+    "frontend_tests_passed": 15,
+    "ruff": "passed",
+    "mypy": "passed",
+    "frontend_build": "passed"
+  }
+}

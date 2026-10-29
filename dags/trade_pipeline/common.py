@@ -1,16 +1,13 @@
-"""Shared command execution and serial month tasks for the trade pipelines."""
+"""Command execution and retry policy shared by the four ETL stages."""
 
 import json
 import os
 import subprocess
 from datetime import timedelta
-from pathlib import Path
 
-from airflow.sdk import task
 from airflow.sdk.exceptions import AirflowFailException
 
 PYTHON = "/opt/trade-venv/bin/python"
-DBT = "/opt/trade-venv/bin/dbt"
 ROOT = "/opt/trade-analytics"
 TRANSIENT_RETRY = {
     "retries": 3,
@@ -21,20 +18,7 @@ TRANSIENT_RETRY = {
 
 
 def multi_market_schedule_enabled() -> bool:
-    mode = os.environ.get("TRADE_MULTI_MARKET_SCHEDULE_ENABLED", "auto").strip().lower()
-    if mode == "true":
-        return True
-    if mode != "auto":
-        return False
-    try:
-        evidence = json.loads((Path(ROOT) / "data/multi-market/pipeline-state.json").read_text())
-        return (
-            isinstance(evidence, dict)
-            and evidence.get("stage") == "complete"
-            and evidence.get("history_complete") is True
-        )
-    except (ValueError, OSError):
-        return False
+    return os.environ.get("TRADE_MULTI_MARKET_SCHEDULE_ENABLED", "false").strip().lower() == "true"
 
 
 def run_command(command: list[str]) -> dict:
@@ -51,23 +35,3 @@ def run_command(command: list[str]) -> dict:
         return json.loads(process.stdout.splitlines()[-1])
     except (IndexError, json.JSONDecodeError) as error:
         raise RuntimeError("command did not return JSON metadata") from error
-
-
-@task(pool="trade_pipeline", execution_timeout=timedelta(hours=6), **TRANSIENT_RETRY)
-def process_batch(plan: dict, recovery_probe: bool = False, **context) -> dict:
-    """Hold the single-slot pool for all writes, tests, export and website build."""
-    command = [
-        PYTHON,
-        f"{ROOT}/scripts/run_batch.py",
-        "--plan",
-        json.dumps(plan),
-        "--dbt-executable",
-        DBT,
-        "--output-dir",
-        f"{ROOT}/data",
-    ]
-    if recovery_probe and context["ti"].try_number == 1:
-        probe = (context["dag_run"].conf or {}).get("recovery_probe")
-        if probe:
-            command.extend(["--recovery-probe", json.dumps(probe)])
-    return run_command(command)

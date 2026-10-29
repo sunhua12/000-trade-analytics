@@ -1,95 +1,24 @@
 """Multi-market JSON v2; exact decimal fields and per-scope validation."""
 
-import json
+import hashlib
+from collections import defaultdict
 from datetime import date
 from pathlib import Path
-from typing import Any, Literal
-
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
+from typing import Any
 
 from trade_analytics.export.schemas import (
-    CurrentPointer,
-    ExactDecimal,
-    FileIndex,
-    MonthlyRow,
-    PartnerRow,
+    CurrentPointerV2,
+    MonthlyDocumentV2,
+    MonthlyRowV2,
+    PartnerDocumentV2,
+    PartnerRowV2,
+    SnapshotManifestV2,
 )
-from trade_analytics.export.service import sha256, validate_snapshot
 from trade_analytics.ingestion.multi_market import MARKETS, PRODUCTS
 
 
-class MonthlyRowV2(MonthlyRow):
-    reporter_code: str = Field(pattern=r"^\d+$")
-    cmd_code: Literal["854231", "854232", "854233", "854239", "854290"]  # type: ignore[assignment]
-    hs_version: str | None = Field(pattern=r"^H[0-6]$")  # type: ignore[assignment]
-
-
-class PartnerRowV2(PartnerRow):
-    reporter_code: str = Field(pattern=r"^\d+$")
-    cmd_code: Literal["854231", "854232", "854233", "854239", "854290"]  # type: ignore[assignment]
-    hs_version: str = Field(pattern=r"^H[0-6]$")  # type: ignore[assignment]
-    import_value: ExactDecimal
-
-
-class DocumentV2(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    schema_version: Literal["2.0.0"]
-    snapshot_id: str = Field(pattern=r"^[a-f0-9]{32}$")
-    rows: list[dict[str, Any]]
-
-
-class MonthlyDocumentV2(DocumentV2):
-    rows: list[MonthlyRowV2]  # type: ignore[assignment]
-
-
-class PartnerDocumentV2(DocumentV2):
-    rows: list[PartnerRowV2]  # type: ignore[assignment]
-
-
-class MarketMetadata(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    reporter_code: str
-    name: str
-
-
-class ProductMetadata(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    cmd_code: str
-    name: str
-    is_parts: bool
-
-
-class Availability(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    reporter_code: str
-    cmd_code: str
-    months: list[date]
-    start_month: date
-    latest_data_month: date
-
-
-class SnapshotManifestV2(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    schema_version: Literal["2.0.0"]
-    snapshot_id: str = Field(pattern=r"^[a-f0-9]{32}$")
-    generated_at: AwareDatetime
-    start_month: date
-    end_exclusive: date
-    latest_data_month: date
-    currency: Literal["USD"]
-    decimal_encoding: Literal["string"]
-    hhi_coverage_tolerance: Literal["0.005"]
-    files: FileIndex
-    valid_detail_count: int = Field(ge=0)
-    positive_amount_count: int = Field(ge=0)
-    row_target_met: bool
-    markets: list[MarketMetadata]
-    products: list[ProductMetadata]
-    availability: list[Availability]
-
-
-class CurrentPointerV2(CurrentPointer):
-    schema_version: Literal["2.0.0"]  # type: ignore[assignment]
+def sha256(data: bytes) -> str:
+    return "sha256:" + hashlib.sha256(data).hexdigest()
 
 
 def contract_schemas_v2() -> dict[str, Any]:
@@ -112,20 +41,25 @@ def validate_v2(raw: dict[str, Any], start: date, end: date) -> tuple[list[Any],
         raise ValueError("missing or unsupported market scope")
     if any((row.reporter_code, row.cmd_code) not in scopes for row in partners):
         raise ValueError("partner has no corresponding market/product scope")
-    for reporter, product in scopes:
-        # Reuse the v1 monetary/calendar validator independently for each scope.
-        subset: dict[str, Any] = {}
-        for name, rows in (("monthly", monthly), ("partners", partners)):
-            subset[name] = [
-                {
-                    **row.model_dump(exclude={"reporter_code"}),
-                    "cmd_code": "8542",
-                    "hs_version": "H6",
-                }
-                for row in rows
-                if row.reporter_code == reporter and row.cmd_code == product
-            ]
-        validate_snapshot(subset, start, end)
+    from trade_analytics.warehouse.read_settings import next_month
+
+    expected = []
+    month = start
+    while month < end:
+        expected.append(month)
+        month = next_month(month)
+    grouped = defaultdict(list)
+    for row in monthly:
+        grouped[row.reporter_code, row.cmd_code].append(row)
+    for rows in grouped.values():
+        if not expected or [r.month for r in rows] != expected:
+            raise ValueError("monthly snapshot must contain the complete ordered month spine")
+    if not any(r.has_world or r.has_countries for r in monthly):
+        raise ValueError("refusing to publish an entirely empty dataset")
+    monthly_keys = {(r.reporter_code, r.cmd_code, r.month) for r in monthly}
+    keys = [(r.reporter_code, r.cmd_code, r.month, r.partner_code) for r in partners]
+    if len(set(keys)) != len(keys) or any(k[:3] not in monthly_keys for k in keys):
+        raise ValueError("duplicate partner grain or partner outside monthly range")
     return monthly, partners
 
 
@@ -134,10 +68,6 @@ def verify_v2(output: Path) -> dict[str, Any]:
         (output / "current.json").read_bytes()
     ).model_dump()
     snapshot_id = pointer["snapshot_id"]
-    import re
-
-    if not re.fullmatch(r"[a-f0-9]{32}", snapshot_id):
-        raise ValueError("invalid snapshot identity")
     if pointer["manifest"] != f"{snapshot_id}/manifest.json":
         raise ValueError("invalid manifest path")
     folder = output / snapshot_id
@@ -155,13 +85,11 @@ def verify_v2(output: Path) -> dict[str, Any]:
         metadata = manifest["files"][f"{name}.json"]
         if sha256(data) != metadata["sha256"] or len(data) != metadata["bytes"]:
             raise ValueError("data checksum mismatch")
-        document = DocumentV2.model_validate_json(data)
+        document_model = MonthlyDocumentV2 if name == "monthly" else PartnerDocumentV2
+        document = document_model.model_validate_json(data)
         if document.snapshot_id != snapshot_id or len(document.rows) != metadata["row_count"]:
             raise ValueError("data identity mismatch")
-        model = MonthlyRowV2 if name == "monthly" else PartnerRowV2
-        raw[name] = [
-            model.model_validate_json(json.dumps(row)).model_dump() for row in document.rows
-        ]
+        raw[name] = [row.model_dump() for row in document.rows]
     monthly, partners = validate_v2(
         raw,
         date.fromisoformat(manifest["start_month"]),
@@ -182,14 +110,12 @@ def verify_v2(output: Path) -> dict[str, Any]:
 
 def scope_metadata(monthly: list[Any], partners: list[Any]) -> dict[str, Any]:
     availability = []
-    for reporter, product in sorted({(row.reporter_code, row.cmd_code) for row in monthly}):
-        months = sorted(
-            row.month.isoformat()
-            for row in monthly
-            if row.reporter_code == reporter
-            and row.cmd_code == product
-            and (row.has_world or row.has_countries)
-        )
+    grouped = defaultdict(list)
+    for row in monthly:
+        if row.has_world or row.has_countries:
+            grouped[row.reporter_code, row.cmd_code].append(row.month.isoformat())
+    for (reporter, product), values in sorted(grouped.items()):
+        months = sorted(values)
         availability.append(
             {
                 "reporter_code": reporter,

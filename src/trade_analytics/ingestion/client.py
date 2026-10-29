@@ -57,7 +57,9 @@ class ComtradeClient:
         timeout: httpx.Timeout | float = 30.0,
         wait: wait_base | Callable[[RetryCallState], float] | None = None,
         sleep: Callable[[float], None] = sleep_seconds,
+        before_request: Callable[[], None] = lambda: None,
     ) -> None:
+        self._before_request = before_request
         self._http_client = http_client
         self._base_url = base_url
         self._headers = {}
@@ -73,7 +75,6 @@ class ComtradeClient:
         self._sleep = sleep
 
     def fetch(self, query: ComtradeQuery) -> ComtradeResponse:
-        """For Test"""
         """Fetch one validated Preview API response."""
         retrying = Retrying(
             stop=stop_after_attempt(self.MAX_ATTEMPTS),
@@ -93,6 +94,7 @@ class ComtradeClient:
         raise AssertionError("retry loop completed without a response")
 
     def _request(self, query: ComtradeQuery) -> ComtradeResponse:
+        self._before_request()
         parameters = query.to_params()
         if self._headers:
             parameters["maxRecords"] = self._record_limit

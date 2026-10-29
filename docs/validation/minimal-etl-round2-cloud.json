@@ -1,0 +1,77 @@
+{
+  "status": "success",
+  "dataset": "trade_etl_fixture_refine_20261029_c",
+  "s3_prefix": "_smoke/etl/refine_20261029_c/un_comtrade",
+  "checks": {
+    "initial_load": {
+      "period": "201601",
+      "status": "success",
+      "sources": 4,
+      "rows": 6,
+      "loaded": [
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 2
+        },
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 1
+        },
+        {
+          "reporter_code": "156",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 2
+        },
+        {
+          "reporter_code": "156",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 1
+        }
+      ]
+    },
+    "idempotent_replay": {
+      "period": "201601",
+      "status": "already_loaded",
+      "sources": 4
+    },
+    "replacement": {
+      "period": "201601",
+      "status": "success",
+      "sources": 2,
+      "rows": 2,
+      "loaded": [
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 2,
+          "row_count": 1
+        },
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 2,
+          "row_count": 1
+        }
+      ]
+    },
+    "removed_partner_and_hs_replacement": true,
+    "stale_revision_rejected": true,
+    "concurrent_writer_outcomes": [
+      "conflict_rejected",
+      "committed"
+    ],
+    "dbt_and_json_v2": {
+      "monthly_rows": 2,
+      "partner_rows": 3
+    },
+    "failed_dbt_build_rejected": true,
+    "previous_snapshot_preserved": true
+  },
+  "cleanup": "complete"
+}

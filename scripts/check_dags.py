@@ -1,50 +1,68 @@
-"""Real Airflow import and serial-writer checks; never execute pipeline tasks."""
+"""Import the real DAG and verify dependency and retry contracts without cloud writes."""
 
+import subprocess
 import sys
+from unittest.mock import patch
 
+import pendulum
 from airflow.models import DagBag
 from airflow.sdk.definitions.timetables.simple import NullTimetable
+from airflow.sdk.exceptions import AirflowFailException
 
 
 def check(folder: str) -> None:
     sys.path.insert(0, folder)
     bag = DagBag(dag_folder=folder, known_pools={"default_pool", "trade_pipeline"})
-    if bag.import_errors:
-        raise SystemExit(str(bag.import_errors))
-    assert set(bag.dags) == {
-        "trade_monthly_pipeline",
-        "trade_backfill_pipeline",
-        "trade_multi_market_pipeline",
-    }
-    for name, first in (
-        ("trade_monthly_pipeline", "check_availability"),
-        ("trade_backfill_pipeline", "preflight"),
-    ):
-        dag = bag.dags[name]
-        assert dag.max_active_runs == 1
-        assert dag.max_active_tasks == 1
-        assert first in dag.task_ids
-        assert len(dag.tasks) == 2
-        batch = dag.get_task("process_batch")
-        assert batch.upstream_task_ids == {first}
-        assert batch.pool == "trade_pipeline"
-        assert batch.trigger_rule == "all_success"
-        assert batch.retries == 3
-        print(f"{name}: imported two tasks; whole-batch pool boundary verified")
-    multi = bag.dags["trade_multi_market_pipeline"]
-    assert multi.max_active_runs == 1 and multi.max_active_tasks == 1
-    assert multi.get_task("refresh").pool == "trade_pipeline"
-    assert multi.get_task("refresh").retries == 3
-    from trade_pipeline.common import multi_market_schedule_enabled
+    assert not bag.import_errors, bag.import_errors
+    assert set(bag.dags) == {"trade_multi_market_pipeline"}
+    dag = bag.dags["trade_multi_market_pipeline"]
+    assert dag.max_active_runs == 1 and dag.max_active_tasks == 1
+    stages = ["extract", "load", "transform", "publish"]
+    assert set(dag.task_ids) == set(stages)
+    from trade_pipeline.common import multi_market_schedule_enabled, run_command
 
-    if multi_market_schedule_enabled():
-        assert isinstance(bag.dags["trade_monthly_pipeline"].timetable, NullTimetable)
-        assert not isinstance(multi.timetable, NullTimetable)
-    else:
-        assert isinstance(multi.timetable, NullTimetable)
-        assert not isinstance(bag.dags["trade_monthly_pipeline"].timetable, NullTimetable)
-    print("trade_multi_market_pipeline: imported; shared writer pool and acceptance guard verified")
-    assert isinstance(bag.dags["trade_backfill_pipeline"].timetable, NullTimetable)
+    assert isinstance(dag.timetable, NullTimetable) != multi_market_schedule_enabled()
+    for index, stage in enumerate(stages):
+        task = dag.get_task(stage)
+        assert task.pool == "trade_pipeline" and task.retries == 3
+        assert task.trigger_rule == "all_success"
+        assert task.upstream_task_ids == (set() if index == 0 else {stages[index - 1]})
+        commands = []
+        with patch.dict(
+            task.python_callable.__globals__,
+            {
+                "run_command": lambda command, commands=commands: (
+                    commands.append(command) or {"artifact_uri": "s3://fixture/result"}
+                )
+            },
+        ):
+            context = {
+                "data_interval_end": pendulum.datetime(2026, 10, 15, tz="Asia/Taipei"),
+                "run_id": "scheduled-test",
+            }
+            if stage == "extract":
+                result = task.python_callable(**context)
+            else:
+                result = task.python_callable("s3://fixture/upstream", **context)
+        assert result == "s3://fixture/result"
+        command = commands[0]
+        assert command[command.index("--start") + 1] == "202607"
+        assert command[command.index("--end") + 1] == "202609"
+        assert command[command.index("--stage") + 1] == stage
+    for code, error in ((2, AirflowFailException), (1, AirflowFailException), (75, RuntimeError)):
+        with patch(
+            "trade_pipeline.common.subprocess.run",
+            return_value=subprocess.CompletedProcess(
+                args=[], returncode=code, stdout="", stderr=""
+            ),
+        ):
+            try:
+                run_command(["test-only"])
+            except error:
+                pass
+            else:
+                raise AssertionError(f"exit {code} should fail")
+    print("four stages: dependency, schedule, CLI range and retry verified")
 
 
 if __name__ == "__main__":

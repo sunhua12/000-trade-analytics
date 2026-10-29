@@ -20,7 +20,7 @@ class ComtradeQuery(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     period: str = "202401"
-    cmd_code: str = "8542"
+    cmd_code: str = "854231"
     query_type: QueryType
     reporter_code: int = Field(default=842, gt=0, strict=True)
     reporter_codes: tuple[int, ...] = ()
@@ -48,8 +48,8 @@ class ComtradeQuery(BaseModel):
     @field_validator("cmd_code")
     @classmethod
     def validate_cmd_code(cls, value: str) -> str:
-        if not value.isdigit() or len(value) not in {2, 4, 6}:
-            raise ValueError("cmd_code must contain 2, 4, or 6 digits")
+        if value not in {"854231", "854232", "854233", "854239", "854290"}:
+            raise ValueError("unsupported IC commodity")
         return value
 
     def to_params(self) -> dict[str, str | int]:

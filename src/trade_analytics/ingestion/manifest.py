@@ -128,11 +128,7 @@ def build_manifest(
 
 def artifact_partition(query: ComtradeQuery) -> str:
     """Common local/S3 identity; never reuse the legacy directory."""
-    reporter_partition = (
-        "v2/"
-        if query.reporter_code == 842 and query.cmd_code == "8542"
-        else f"v3/reporter_code={query.reporter_code}/"
-    )
+    reporter_partition = f"v3/reporter_code={query.reporter_code}/"
     return (
         f"{reporter_partition}hs_version={query.expected_hs_version}/cmd_code={query.cmd_code}/"
         f"period={query.period}/query_type={query.query_type.value}/revision={query.revision}"

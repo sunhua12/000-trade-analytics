@@ -1,6 +1,6 @@
 {
   "$defs": {
-    "MonthlyRow": {
+    "MonthlyRowV2": {
       "additionalProperties": false,
       "properties": {
         "month": {
@@ -9,14 +9,27 @@
           "type": "string"
         },
         "cmd_code": {
-          "const": "8542",
+          "enum": [
+            "854231",
+            "854232",
+            "854233",
+            "854239",
+            "854290"
+          ],
           "title": "Cmd Code",
           "type": "string"
         },
         "hs_version": {
-          "const": "H6",
-          "title": "Hs Version",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^H[0-6]$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Hs Version"
         },
         "world_value": {
           "anyOf": [
@@ -115,6 +128,11 @@
         "has_countries": {
           "title": "Has Countries",
           "type": "boolean"
+        },
+        "reporter_code": {
+          "pattern": "^\\d+$",
+          "title": "Reporter Code",
+          "type": "string"
         }
       },
       "required": [
@@ -130,16 +148,17 @@
         "hhi",
         "hhi_status",
         "has_world",
-        "has_countries"
+        "has_countries",
+        "reporter_code"
       ],
-      "title": "MonthlyRow",
+      "title": "MonthlyRowV2",
       "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "1.0.0",
+      "const": "2.0.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -150,7 +169,7 @@
     },
     "rows": {
       "items": {
-        "$ref": "#/$defs/MonthlyRow"
+        "$ref": "#/$defs/MonthlyRowV2"
       },
       "title": "Rows",
       "type": "array"
@@ -161,6 +180,6 @@
     "snapshot_id",
     "rows"
   ],
-  "title": "MonthlyDocument",
+  "title": "MonthlyDocumentV2",
   "type": "object"
 }

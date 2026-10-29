@@ -1,4 +1,4 @@
-"""Public JSON v1 contract. Monetary values and ratios are decimal strings."""
+"""Shared JSON row types; monetary values are exact decimal strings."""
 
 import re
 from datetime import date
@@ -15,8 +15,6 @@ from pydantic import (
     WithJsonSchema,
     field_validator,
 )
-
-SCHEMA_VERSION = "1.0.0"
 
 
 def decimal_value(value: Any) -> Decimal:
@@ -59,8 +57,9 @@ HHIStatus = Literal[
 class Row(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     month: date
-    cmd_code: Literal["8542"]
-    hs_version: Literal["H6"]
+    cmd_code: Literal["854231", "854232", "854233", "854239", "854290"]
+
+    hs_version: str | None = Field(pattern=r"^H[0-6]$")
 
     @field_validator("month")
     @classmethod
@@ -70,7 +69,7 @@ class Row(BaseModel):
         return value
 
 
-class MonthlyRow(Row):
+class MonthlyRowV2(Row):
     world_value: ExactDecimal | None
     previous_year_world_value: ExactDecimal | None
     world_yoy: ExactDecimal | None
@@ -81,9 +80,11 @@ class MonthlyRow(Row):
     hhi_status: HHIStatus
     has_world: bool
     has_countries: bool
+    reporter_code: str = Field(pattern=r"^\d+$")
 
 
-class PartnerRow(Row):
+class PartnerRowV2(Row):
+    hs_version: str = Field(pattern=r"^H[0-6]$")
     partner_code: str
     source_name: str | None
     map_iso3: str | None
@@ -94,6 +95,8 @@ class PartnerRow(Row):
     previous_year_value: ExactDecimal | None
     mom: ExactDecimal | None
     yoy: ExactDecimal | None
+
+    reporter_code: str = Field(pattern=r"^\d+$")
 
     @field_validator("partner_code")
     @classmethod
@@ -110,20 +113,6 @@ class PartnerRow(Row):
         return value
 
 
-class Envelope(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    schema_version: Literal["1.0.0"]
-    snapshot_id: Annotated[str, Field(pattern=r"^[a-f0-9]{32}$")]
-
-
-class MonthlyDocument(Envelope):
-    rows: list[MonthlyRow]
-
-
-class PartnerDocument(Envelope):
-    rows: list[PartnerRow]
-
-
 class FileInfo(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     row_count: Annotated[int, Field(ge=0)]
@@ -137,45 +126,65 @@ class FileIndex(BaseModel):
     partners: FileInfo = Field(alias="partners.json")
 
 
-class SnapshotManifest(Envelope):
+class CurrentPointerV2(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    schema_version: Literal["2.0.0"]
+    snapshot_id: Annotated[str, Field(pattern=r"^[a-f0-9]{32}$")]
+    manifest: str
+    manifest_sha256: Annotated[str, Field(pattern=r"^sha256:[a-f0-9]{64}$")]
+
+
+class DocumentV2(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    schema_version: Literal["2.0.0"]
+    snapshot_id: str = Field(pattern=r"^[a-f0-9]{32}$")
+
+
+class MonthlyDocumentV2(DocumentV2):
+    rows: list[MonthlyRowV2]
+
+
+class PartnerDocumentV2(DocumentV2):
+    rows: list[PartnerRowV2]
+
+
+class MarketMetadata(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    reporter_code: str
+    name: str
+
+
+class ProductMetadata(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    cmd_code: str
+    name: str
+    is_parts: bool
+
+
+class Availability(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    reporter_code: str
+    cmd_code: str
+    months: list[date]
+    start_month: date
+    latest_data_month: date
+
+
+class SnapshotManifestV2(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    schema_version: Literal["2.0.0"]
+    snapshot_id: str = Field(pattern=r"^[a-f0-9]{32}$")
     generated_at: AwareDatetime
     start_month: date
     end_exclusive: date
     latest_data_month: date
     currency: Literal["USD"]
-    reporter_code: Literal["842"]
-    cmd_code: Literal["8542"]
-    hs_version: Literal["H6"]
     decimal_encoding: Literal["string"]
     hhi_coverage_tolerance: Literal["0.005"]
     files: FileIndex
-
-
-class CurrentPointer(Envelope):
-    manifest: str
-    manifest_sha256: Annotated[str, Field(pattern=r"^sha256:[a-f0-9]{64}$")]
-
-
-def contract_schemas() -> dict[str, dict[str, Any]]:
-    return {
-        filename: model.model_json_schema(mode="serialization")
-        for filename, model in (
-            ("monthly.schema.json", MonthlyDocument),
-            ("partners.schema.json", PartnerDocument),
-            ("manifest.schema.json", SnapshotManifest),
-            ("current.schema.json", CurrentPointer),
-        )
-    }
-
-
-if __name__ == "__main__":
-    import argparse
-    import json
-    from pathlib import Path
-
-    parser = argparse.ArgumentParser(description="Generate public JSON Schema documents")
-    parser.add_argument("--output-dir", required=True, type=Path)
-    args = parser.parse_args()
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    for filename, schema in contract_schemas().items():
-        (args.output_dir / filename).write_text(json.dumps(schema, indent=2) + "\n")
+    valid_detail_count: int = Field(ge=0)
+    positive_amount_count: int = Field(ge=0)
+    row_target_met: bool
+    markets: list[MarketMetadata]
+    products: list[ProductMetadata]
+    availability: list[Availability]

@@ -2,7 +2,7 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "1.0.0",
+      "const": "2.0.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -27,6 +27,6 @@
     "manifest",
     "manifest_sha256"
   ],
-  "title": "CurrentPointer",
+  "title": "CurrentPointerV2",
   "type": "object"
 }
