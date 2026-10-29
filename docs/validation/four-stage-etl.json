@@ -1,0 +1,88 @@
+{
+  "status": "success",
+  "dataset": "trade_etl_fixture_four_stage_final_20261029_2035",
+  "s3_prefix": "_smoke/etl/four_stage_final_20261029_2035/un_comtrade",
+  "checks": {
+    "initial_load": {
+      "period": "201601",
+      "status": "success",
+      "sources": 4,
+      "rows": 6,
+      "loaded": [
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 2
+        },
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 1
+        },
+        {
+          "reporter_code": "156",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 2
+        },
+        {
+          "reporter_code": "156",
+          "cmd_code": "854231",
+          "revision": 1,
+          "row_count": 1
+        }
+      ]
+    },
+    "idempotent_replay": {
+      "period": "201601",
+      "status": "already_loaded",
+      "sources": 4
+    },
+    "replacement": {
+      "period": "201601",
+      "status": "success",
+      "sources": 2,
+      "rows": 2,
+      "loaded": [
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 2,
+          "row_count": 1
+        },
+        {
+          "reporter_code": "842",
+          "cmd_code": "854231",
+          "revision": 2,
+          "row_count": 1
+        }
+      ]
+    },
+    "removed_partner_and_hs_replacement": true,
+    "stale_revision_rejected": true,
+    "concurrent_writer_outcomes": [
+      "committed",
+      "conflict_rejected"
+    ],
+    "dbt_and_json_v2": {
+      "monthly_rows": 2,
+      "partner_rows": 3
+    },
+    "failed_dbt_build_rejected": true,
+    "previous_snapshot_preserved": true,
+    "four_durable_stages": {
+      "extract": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/_smoke/etl/four_stage_final_20261029_2035/stages/fixture/extract.json",
+      "load": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/_smoke/etl/four_stage_final_20261029_2035/stages/fixture/load.json",
+      "transform": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/_smoke/etl/four_stage_final_20261029_2035/stages/fixture/transform.json",
+      "publish": "s3://trade-analytics-prod-816079797958-ap-northeast-1-an/_smoke/etl/four_stage_final_20261029_2035/stages/fixture/publish.json",
+      "worker_local_raw_removed": true,
+      "website_built": true
+    },
+    "stage_transform_failure": true,
+    "failed_latest_transform_blocks_publish": true,
+    "transform_publish_recovery_without_extract_or_load": true
+  },
+  "cleanup": "complete"
+}

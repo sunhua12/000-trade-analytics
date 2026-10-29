@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-trade-ingest = "trade_analytics.ingestion.cli:main"
+trade-pipeline = "trade_analytics.pipeline:main"
 trade-export = "trade_analytics.export.cli:main"
 
 [project.optional-dependencies]

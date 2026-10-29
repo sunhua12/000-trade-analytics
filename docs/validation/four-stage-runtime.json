@@ -1,0 +1,32 @@
+{
+  "status": "success",
+  "date": "2026-10-29",
+  "image": "sha256:045fea59bcd3a275633423fe97f47ac8c7c86d4a6a95f9f7b0abfef1174ad196",
+  "services_healthy": [
+    "airflow-apiserver",
+    "airflow-scheduler",
+    "airflow-dag-processor",
+    "airflow-worker",
+    "airflow-triggerer"
+  ],
+  "serialized_dependencies": {
+    "extract": [],
+    "load": [
+      "extract"
+    ],
+    "transform": [
+      "load"
+    ],
+    "publish": [
+      "transform"
+    ]
+  },
+  "pool_slots": 1,
+  "schedule_enabled": false,
+  "node_version": "v22.23.4",
+  "aws_identity_verified": true,
+  "bigquery_select_one_verified": true,
+  "production_dag_triggered": false,
+  "database_and_redis_recreated": false,
+  "rollback_image": "trade-airflow:pre-four-stage-20261029"
+}

@@ -43,11 +43,11 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
     revision = manifest["revision"]
     if type(revision) is not int or revision < 1:
         raise ValueError("invalid revision")
+    if commodity not in {"854231", "854232", "854233", "854239", "854290"}:
+        raise ValueError("unsupported IC commodity")
     hs_version = manifest["hs_version"]
     reporter = manifest["request_parameters"]["reporterCode"]
-    partition = (
-        "/v2/" if reporter == 842 and commodity == "8542" else f"/v3/reporter_code={reporter}/"
-    )
+    partition = f"/v3/reporter_code={reporter}/"
     suffix = (
         f"{partition}hs_version={hs_version}/cmd_code={commodity}/period={period}/"
         f"query_type={kind}/revision={revision}/data.ndjson"
@@ -81,10 +81,7 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
             for k, v in {**fixed, "freqCode": "M", "classificationCode": hs_version}.items()
         ):
             raise ValueError("row identity mismatch")
-        if (
-            commodity in {"854231", "854232", "854233", "854239", "854290"}
-            and row.get("isOriginalClassification") is not True
-        ):
+        if row.get("isOriginalClassification") is not True:
             raise ValueError("multi-market source must retain original classification")
         partner = row.get("partnerCode")
         if type(partner) is not int or partner < 0:
@@ -96,14 +93,7 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
         seen.add(partner)
         amount = numeric(row.get("primaryValue"))
         assert amount is not None
-        legacy_world = kind == "world_total" and commodity not in {
-            "854231",
-            "854232",
-            "854233",
-            "854239",
-            "854290",
-        }
-        if Decimal(amount) < 0 or (legacy_world and Decimal(amount) == 0):
+        if Decimal(amount) < 0:
             raise ValueError("invalid amount")
         expected.append(
             {
@@ -127,17 +117,9 @@ def verify(data: bytes, manifest_bytes: bytes, source_uri: str) -> dict[str, Any
     if total != Decimal(manifest["primary_value_sum"]):
         raise ValueError("amount sum mismatch")
     numeric(manifest["primary_value_sum"])
-    fingerprint = hashlib.sha256(
-        json.dumps(
-            {k: v for k, v in manifest.items() if k != "checksum"},
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode()
-    ).hexdigest()
     return {
         "manifest": manifest,
         "source_file": source_uri,
         "manifest_file": source_uri.removesuffix("data.ndjson") + "manifest.json",
-        "contract_fingerprint": fingerprint,
         "expected": expected,
     }

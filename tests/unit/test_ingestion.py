@@ -13,17 +13,15 @@ import pytest
 import respx
 from botocore.exceptions import ClientError
 
-from trade_analytics.ingestion import cli
 from trade_analytics.ingestion.client import ComtradeClient
 from trade_analytics.ingestion.manifest import build_manifest, checksum, serialize_ndjson
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
-from trade_analytics.ingestion.s3_storage import S3Storage, StoredS3Ingestion
+from trade_analytics.ingestion.s3_storage import S3Storage
 from trade_analytics.ingestion.schemas import ComtradeResponse, TradeRecord
-from trade_analytics.ingestion.service import IngestionDataset, IngestionService
-from trade_analytics.ingestion.storage import LocalStorage, StoredIngestion
-from trade_analytics.lambda_handler import handler
+from trade_analytics.ingestion.service import IngestionDataset, validate_dataset
+from trade_analytics.ingestion.storage import LocalStorage
 
-QUERY = ComtradeQuery(period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL)
+QUERY = ComtradeQuery(period="202401", cmd_code="854231", query_type=QueryType.PARTNER_DETAIL)
 
 
 @respx.mock
@@ -33,7 +31,7 @@ def test_raw_decimal_survives_http_model_storage_and_sum(preview_payload: dict[s
     raw = json.dumps(preview_payload).replace('"DECIMAL_TOKEN"', "123456789012345678901.123456789")
     respx.get(ComtradeClient.DEFAULT_BASE_URL).mock(return_value=httpx.Response(200, content=raw))
     with httpx.Client() as http_client:
-        dataset = IngestionService(ComtradeClient(http_client=http_client)).fetch_dataset(QUERY)
+        dataset = validate_dataset(QUERY, ComtradeClient(http_client=http_client).fetch(QUERY))
     expected = Decimal("123456789012345678901.123456789")
     assert dataset.rows[0].primary_value == expected
     data = serialize_ndjson(dataset)
@@ -56,8 +54,8 @@ class FakeClient:
 
 def partner_dataset(preview_payload: dict[str, Any]) -> IngestionDataset:
     response = ComtradeResponse.model_validate(preview_payload)
-    query = ComtradeQuery(period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL)
-    return IngestionService(FakeClient(response)).fetch_dataset(query)
+    query = ComtradeQuery(period="202401", cmd_code="854231", query_type=QueryType.PARTNER_DETAIL)
+    return validate_dataset(query, response)
 
 
 def test_manifest_summarizes_dataset_without_float_drift(preview_payload: dict[str, Any]) -> None:
@@ -76,11 +74,11 @@ def test_manifest_summarizes_dataset_without_float_drift(preview_payload: dict[s
 
 
 def test_partner_detail_parameters_fix_us_monthly_import_scope() -> None:
-    query = ComtradeQuery(period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL)
+    query = ComtradeQuery(period="202401", cmd_code="854231", query_type=QueryType.PARTNER_DETAIL)
     assert query.to_params() == {
         "reporterCode": 842,
         "period": "202401",
-        "cmdCode": "8542",
+        "cmdCode": "854231",
         "flowCode": "M",
         "partner2Code": 0,
         "customsCode": "C00",
@@ -110,13 +108,15 @@ class FakeS3:
 
 def test_s3_storage_returns_already_exists_without_rewriting_identical_artifacts(
     preview_payload: dict[str, Any],
+    tmp_path: Path,
 ) -> None:
     dataset = partner_dataset(preview_payload)
+    local = LocalStorage(tmp_path).write(dataset)
     fake_s3 = FakeS3()
-    storage = S3Storage(bucket="raw-bucket", client=fake_s3, clock=lambda: FIXED_TIME)
-    first = storage.write(dataset)
+    storage = S3Storage(bucket="raw-bucket", client=fake_s3)
+    first = storage.write(local.data_path)
     fake_s3.puts.clear()
-    rerun = storage.write(dataset)
+    rerun = storage.write(local.data_path)
     assert first.status == "success"
     assert rerun.status == "already_exists"
     assert rerun.checksum == first.checksum
@@ -134,7 +134,9 @@ def test_preview_response_maps_camel_case_fields() -> None:
     assert response.data[0].primary_value == 100.0
 
 
-PARTNER_QUERY = ComtradeQuery(period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL)
+PARTNER_QUERY = ComtradeQuery(
+    period="202401", cmd_code="854231", query_type=QueryType.PARTNER_DETAIL
+)
 
 
 def parse_response(preview_payload: dict[str, Any]) -> ComtradeResponse:
@@ -143,7 +145,7 @@ def parse_response(preview_payload: dict[str, Any]) -> ComtradeResponse:
 
 def test_partner_detail_excludes_world_row(preview_payload: dict[str, Any]) -> None:
     response = parse_response(preview_payload)
-    dataset = IngestionService(FakeClient(response)).fetch_dataset(PARTNER_QUERY)
+    dataset = validate_dataset(PARTNER_QUERY, response)
     assert {row.partner_code for row in dataset.rows} == {156, 410}
     assert dataset.query == PARTNER_QUERY
 
@@ -160,120 +162,100 @@ def test_local_rerun_preserves_bytes_and_timestamps(
     assert [(p.read_bytes(), p.stat().st_mtime_ns) for p in paths] == before
 
 
-def successful_result(output_dir: Path, query: ComtradeQuery) -> StoredIngestion:
-    target = output_dir / f"period={query.period}" / f"query_type={query.query_type.value}"
-    return StoredIngestion(
-        data_path=target / "data.ndjson",
-        manifest_path=target / "manifest.json",
-        row_count=2,
-        checksum="sha256:abc123",
-    )
-
-
-def test_cli_uses_default_period_and_commodity(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
-    captured: list[ComtradeQuery] = []
-
-    def runner(query: ComtradeQuery, output_dir: Path) -> StoredIngestion:
-        captured.append(query)
-        return successful_result(output_dir, query)
-
-    exit_code = cli.main(
-        ["--query-type", "partner_detail", "--output-dir", str(tmp_path)], runner=runner
-    )
-    assert exit_code == 0
-    assert captured == [
-        ComtradeQuery(period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL)
-    ]
-    output = json.loads(capsys.readouterr().out)
-    assert output == {
-        "status": "success",
-        "period": "202401",
-        "query_type": "partner_detail",
-        "row_count": 2,
-        "data_path": str(tmp_path / "period=202401" / "query_type=partner_detail" / "data.ndjson"),
-        "manifest_path": str(
-            tmp_path / "period=202401" / "query_type=partner_detail" / "manifest.json"
-        ),
-        "checksum": "sha256:abc123",
-    }
-
-
-class RecordingRunner:
-    def __init__(self) -> None:
-        self.calls: list[dict[str, Any]] = []
-
-    def __call__(
-        self, query: ComtradeQuery, *, bucket: str, prefix: str, base_url: str
-    ) -> StoredS3Ingestion:
-        self.calls.append(
-            {"query": query, "bucket": bucket, "prefix": prefix, "base_url": base_url}
-        )
-        return StoredS3Ingestion(
-            status="success",
-            data_uri="s3://raw-bucket/un_comtrade/data.ndjson",
-            manifest_uri="s3://raw-bucket/un_comtrade/manifest.json",
-            row_count=2,
-            checksum="sha256:abc123",
-        )
-
-
-def test_handler_maps_a_valid_event_to_ingestion_and_response(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.setenv("RAW_BUCKET", "raw-bucket")
-    monkeypatch.setenv("RAW_PREFIX", "custom-prefix")
-    monkeypatch.setenv("COMTRADE_BASE_URL", "https://example.test/comtrade")
-    runner = RecordingRunner()
-    result = handler(
-        {
-            "action": "ingest",
-            "period": "202401",
-            "cmd_code": "8542",
-            "query_type": "partner_detail",
-            "run_id": "manual-test",
-        },
-        None,
-        runner=runner,
-    )
-    assert runner.calls == [
-        {
-            "query": ComtradeQuery(
-                period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL
-            ),
-            "bucket": "raw-bucket",
-            "prefix": "custom-prefix",
-            "base_url": "https://example.test/comtrade",
-        }
-    ]
-    assert result == {
-        "status": "success",
-        "period": "202401",
-        "query_type": "partner_detail",
-        "row_count": 2,
-        "checksum": "sha256:abc123",
-        "data_uri": "s3://raw-bucket/un_comtrade/data.ndjson",
-        "manifest_uri": "s3://raw-bucket/un_comtrade/manifest.json",
-    }
-
-
 @pytest.fixture
-def live_service() -> Iterator[IngestionService]:
+def live_service() -> Iterator[ComtradeClient]:
     timeout = httpx.Timeout(connect=10.0, read=30.0, write=30.0, pool=10.0)
     client = httpx.Client()
-    service = IngestionService(ComtradeClient(http_client=client, timeout=timeout))
+    service = ComtradeClient(http_client=client, timeout=timeout)
     yield service
     client.close()
 
 
 @pytest.mark.integration
-def test_live_partner_detail_contract(live_service: IngestionService) -> None:
-    query = ComtradeQuery(period="202401", cmd_code="8542", query_type=QueryType.PARTNER_DETAIL)
-    dataset = live_service.fetch_dataset(query)
+def test_live_partner_detail_contract(live_service: ComtradeClient) -> None:
+    query = ComtradeQuery(period="202401", cmd_code="854231", query_type=QueryType.PARTNER_DETAIL)
+    dataset = validate_dataset(query, live_service.fetch(query))
     assert 0 < len(dataset.rows) < ComtradeClient.PREVIEW_RECORD_LIMIT
     assert all(row.period == "202401" for row in dataset.rows)
     assert all(row.reporter_code == 842 for row in dataset.rows)
     assert all(row.flow_code == "M" for row in dataset.rows)
     assert all(row.partner_code != 0 for row in dataset.rows)
-    assert all(row.cmd_code == "8542" for row in dataset.rows)
+    assert all(row.cmd_code == "854231" for row in dataset.rows)
+
+
+def test_local_interrupted_directory_install_is_not_committed(
+    tmp_path, preview_payload, monkeypatch
+):
+    dataset = partner_dataset(preview_payload)
+    monkeypatch.setattr(
+        Path, "rename", lambda *args: (_ for _ in ()).throw(OSError("disk failure"))
+    )
+    with pytest.raises(OSError):
+        LocalStorage(tmp_path).write(dataset)
+    assert not list(tmp_path.rglob("data.ndjson"))
+    assert not list(tmp_path.rglob("manifest.json"))
+
+
+def test_s3_manifest_is_commit_marker_and_partial_upload_can_retry(preview_payload, tmp_path):
+    dataset = partner_dataset(preview_payload)
+    local = LocalStorage(tmp_path).write(dataset)
+    s3 = FakeS3()
+    original = s3.put_object
+
+    def interrupted(**kwargs):
+        if kwargs["Key"].endswith("manifest.json"):
+            raise OSError("upload interrupted")
+        return original(**kwargs)
+
+    s3.put_object = interrupted
+    storage = S3Storage(bucket="fixture", client=s3)
+    with pytest.raises(OSError):
+        storage.write(local.data_path)
+    assert all(key.endswith("data.ndjson") for bucket, key in s3.objects)
+    s3.put_object = original
+    assert storage.write(local.data_path).status == "success"
+    assert storage.write(local.data_path).status == "already_exists"
+
+
+def test_s3_upload_uses_create_only_writes(preview_payload, tmp_path):
+    storage_client = FakeS3()
+    S3Storage(bucket="fixture", client=storage_client).write(
+        LocalStorage(tmp_path).write(partner_dataset(preview_payload)).data_path
+    )
+    assert all(put["IfNoneMatch"] == "*" for put in storage_client.puts)
+    assert storage_client.puts[-1]["Key"].endswith("manifest.json")
+
+
+def test_s3_preserves_noncanonical_committed_bytes(preview_payload, tmp_path):
+    from trade_analytics.ingestion.manifest import serialize_manifest
+
+    local = LocalStorage(tmp_path).write(partner_dataset(preview_payload))
+    # Valid NDJSON with different whitespace must not be reserialized during upload.
+    data = b"".join(
+        (json.dumps(json.loads(line), separators=(", ", ": ")) + "\n").encode()
+        for line in local.data_path.read_bytes().splitlines()
+    )
+    from trade_analytics.ingestion.manifest import Manifest
+
+    manifest = Manifest.model_validate_json(local.manifest_path.read_bytes())
+    local.data_path.write_bytes(data)
+    local.manifest_path.write_bytes(
+        serialize_manifest(manifest.model_copy(update={"checksum": checksum(data)}))
+    )
+    client = FakeS3()
+    S3Storage(bucket="fixture", client=client).write(local.data_path)
+    assert client.puts[0]["Body"] == data
+    assert client.puts[1]["Body"] == local.manifest_path.read_bytes()
+
+
+def test_retired_commodity_rejected_and_zero_world_is_valid(preview_payload):
+    with pytest.raises(ValueError, match="unsupported IC commodity"):
+        ComtradeQuery(cmd_code="8542", query_type=QueryType.WORLD_TOTAL)
+    preview_payload["data"] = [row for row in preview_payload["data"] if row["partnerCode"] == 0]
+    preview_payload["data"][0]["primaryValue"] = "0"
+    preview_payload["count"] = 1
+    dataset = validate_dataset(
+        ComtradeQuery(query_type=QueryType.WORLD_TOTAL),
+        ComtradeResponse.model_validate(preview_payload),
+    )
+    assert dataset.rows[0].primary_value == 0

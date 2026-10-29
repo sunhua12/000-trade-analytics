@@ -17,12 +17,8 @@ from trade_analytics.ingestion.exceptions import ComtradeTransientError
 TRANSIENT_EXIT_CODE = 75
 
 
-class RetryablePipelineError(RuntimeError):
-    """A remote operation failed in a way that may succeed on a later task attempt."""
-
-
 def is_transient(error: Exception) -> bool:
-    if isinstance(error, (RetryablePipelineError, ComtradeTransientError, httpx.TransportError)):
+    if isinstance(error, (ComtradeTransientError, httpx.TransportError)):
         return True
     if isinstance(error, ClientError):
         response = error.response
@@ -33,6 +29,8 @@ def is_transient(error: Exception) -> bool:
             or status >= 500
             or code
             in {
+                "PreconditionFailed",
+                "ConditionalRequestConflict",
                 "TooManyRequestsException",
                 "Throttling",
                 "ThrottlingException",

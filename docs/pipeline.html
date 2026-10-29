@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多市場 ETL 導覽</title><style>body{font:17px/1.7 system-ui;max-width:960px;margin:3rem auto;padding:0 1rem;color:#243044}ol{display:flex;gap:1rem;flex-wrap:wrap;padding:0}li{list-style-position:inside;border:1px solid #ccd3df;padding:1rem;border-radius:8px}code{background:#f0f2f5;padding:.2rem}h1,h2{line-height:1.3}</style>
+<h1>多市場積體電路進口 ETL</h1><p>10 個市場、5 個 IC 商品；保留原始 HS 版本、World 與 Partner，缺資料不補零。</p>
+<ol><li>extract：API → S3 Raw</li><li>load：S3 → BigQuery</li><li>transform：dbt build＋tests</li><li>publish：JSON v2＋Website Build → S3</li></ol>
+<h2>一個可閱讀的主流程</h2><p><code>run_pipeline(config)</code> 共用四個階段函式；Airflow UI 呈現相同依賴。Python 擷取與載入，dbt 負責倉儲內的 SQL 轉換與品質測試，核心分析採 ELT。任何階段失敗都阻擋下游。</p>
+<h2>五個必要保護</h2><ul><li>每次 HTTP 嘗試計入額度，截斷拆分後仍須完整。</li><li>Manifest 是來源完成依據，半寫入不跳過。</li><li>Revision 與交易式完整替換，移除過期 Partner。</li><li>dbt 擁有分析公式與品質檢查，失敗不能匯出。</li><li>JSON v2 契約、Hash 與原子切換，保留可用快照。</li></ul>
+<h2>刻意精簡的能力</h2><p>移除 Ledger 狀態機、多重 Snapshot Hash、單市場／Lambda 入口、JSON v1 產生器、離線單檔網站與歷史自動回查。每月刷新近 3 個月，歷史資料手動指定範圍。</p>
+<h2>可獨立重跑的階段</h2><p>每批以 run id 區分，XCom 只傳 S3 成果 URI。Raw、來源清單、dbt 成功證據及網站成品持久保存在 S3；Task 暫存目錄刪除後仍可接續。額度不足保留進度，不產生成功交接成果。</p><h2>面試失敗示範</h2><p>在隔離測試環境讓 dbt data test 回傳錯誤資料列，transform 失敗，publish 被阻擋。修正後重跑 transform 與 publish，無須重抓 API。Raw 改變或 dbt 證據超過 24 小時則要求重新 transform。</p><p>publish 將成品保存到 S3；人工 review、commit 後才由 GitHub Pages workflow 公開。舊批次重跑接受最新倉儲資料，不宣稱歷史網站完全重現。操作與五分鐘解說見 <a href="runbook.md">操作手冊</a>。</p>
+</html>

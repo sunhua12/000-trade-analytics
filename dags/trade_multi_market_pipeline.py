@@ -1,13 +1,12 @@
-"""Monthly multi-market IC refresh using the existing Airflow writer pool."""
+"""Four durable ETL stages, visible separately in Airflow."""
 
-import os
+import hashlib
 from datetime import timedelta
 
 import pendulum
 from airflow.sdk import dag, task
 from airflow.timetables.interval import CronDataIntervalTimetable
 from trade_pipeline.common import (
-    DBT,
     PYTHON,
     ROOT,
     TRANSIENT_RETRY,
@@ -15,13 +14,15 @@ from trade_pipeline.common import (
     run_command,
 )
 
-ENABLED = multi_market_schedule_enabled()
-
 
 @dag(
     dag_id="trade_multi_market_pipeline",
-    description="Refresh recent IC imports and revisit delayed historical releases",
-    schedule=CronDataIntervalTimetable("0 4 15 * *", timezone="Asia/Taipei") if ENABLED else None,
+    description="Extract → load → dbt quality gate → website artifact",
+    schedule=(
+        CronDataIntervalTimetable("0 4 15 * *", timezone="Asia/Taipei")
+        if multi_market_schedule_enabled()
+        else None
+    ),
     start_date=pendulum.datetime(2026, 10, 1, tz="Asia/Taipei"),
     is_paused_upon_creation=False,
     catchup=False,
@@ -30,8 +31,7 @@ ENABLED = multi_market_schedule_enabled()
     tags=["trade", "multi-market"],
 )
 def trade_multi_market_pipeline():
-    @task(pool="trade_pipeline", execution_timeout=timedelta(hours=6), **TRANSIENT_RETRY)
-    def refresh(**context) -> dict:
+    def execute(stage, upstream, context):
         anchor = context.get("data_interval_end") or context.get("logical_date")
         if anchor is None:
             anchor = context["dag_run"].run_after
@@ -41,30 +41,63 @@ def trade_multi_market_pipeline():
             .start_of("month")
             .subtract(months=1)
         )
-        start = end.subtract(months=2)
-        os.environ["TRADE_DBT_EXECUTABLE"] = DBT
-        return run_command(
-            [
-                PYTHON,
-                f"{ROOT}/scripts/multi_market_pipeline.py",
-                "--start",
-                start.format("YYYYMM"),
-                "--end",
-                end.format("YYYYMM"),
-                "--max-requests",
-                "100",
-                "--max-sources",
-                "2000",
-                "--retry-unavailable",
-                "--build",
-                "--publish",
-                "--require-row-target",
-                "--state-file",
-                f"{ROOT}/data/multi-market/monthly-state.json",
-            ]
-        )
+        run_id = hashlib.sha256(context["run_id"].encode()).hexdigest()
+        command = [
+            PYTHON,
+            f"{ROOT}/scripts/multi_market_pipeline.py",
+            "--start",
+            end.subtract(months=2).format("YYYYMM"),
+            "--end",
+            end.format("YYYYMM"),
+            "--max-requests",
+            "100",
+            "--refresh",
+            "--run-id",
+            run_id,
+            "--stage",
+            stage,
+        ]
+        if upstream:
+            command.extend(["--upstream", upstream])
+        return run_command(command)["artifact_uri"]
 
-    refresh()
+    @task(
+        pool="trade_pipeline",
+        trigger_rule="all_success",
+        execution_timeout=timedelta(hours=6),
+        **TRANSIENT_RETRY,
+    )
+    def extract(**context):
+        return execute("extract", None, context)
+
+    @task(
+        pool="trade_pipeline",
+        trigger_rule="all_success",
+        execution_timeout=timedelta(hours=2),
+        **TRANSIENT_RETRY,
+    )
+    def load(upstream, **context):
+        return execute("load", upstream, context)
+
+    @task(
+        pool="trade_pipeline",
+        trigger_rule="all_success",
+        execution_timeout=timedelta(hours=2),
+        **TRANSIENT_RETRY,
+    )
+    def transform(upstream, **context):
+        return execute("transform", upstream, context)
+
+    @task(
+        pool="trade_pipeline",
+        trigger_rule="all_success",
+        execution_timeout=timedelta(hours=2),
+        **TRANSIENT_RETRY,
+    )
+    def publish(upstream, **context):
+        return execute("publish", upstream, context)
+
+    publish(transform(load(extract())))
 
 
 trade_multi_market_pipeline()

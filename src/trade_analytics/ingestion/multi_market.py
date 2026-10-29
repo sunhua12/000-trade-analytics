@@ -1,23 +1,21 @@
-"""Bounded, resumable original-classification IC extracts across reporting markets."""
+"""Bounded multi-market extraction; validated manifests are the resume authority."""
 
-import argparse
-import json
-import os
 import time
-from datetime import UTC, datetime
+from collections import defaultdict
+from collections.abc import Callable, Iterator
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
 import httpx
 
 from trade_analytics.ingestion.client import ComtradeClient
-from trade_analytics.ingestion.exceptions import DataContractError
-from trade_analytics.ingestion.manifest import checksum
-from trade_analytics.ingestion.paths import relative_artifact_path, resolve_artifact
+from trade_analytics.ingestion.exceptions import DataContractError, ResponseTruncatedError
+from trade_analytics.ingestion.manifest import checksum, serialize_ndjson
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
-from trade_analytics.ingestion.schemas import ComtradeResponse
-from trade_analytics.ingestion.service import IngestionService
-from trade_analytics.ingestion.storage import LocalStorage
+from trade_analytics.ingestion.schemas import ComtradeResponse, TradeRecord
+from trade_analytics.ingestion.service import validate_dataset
+from trade_analytics.ingestion.storage import LocalStorage, read_source, scan_sources
 
 MARKETS = {
     842: "美國",
@@ -53,14 +51,6 @@ def periods(start: str, end: str) -> list[str]:
     return result
 
 
-class CachedResponse:
-    def __init__(self, response: ComtradeResponse) -> None:
-        self.response = response
-
-    def fetch(self, query: ComtradeQuery) -> ComtradeResponse:
-        return self.response
-
-
 def accept_response(query: ComtradeQuery, response: ComtradeResponse) -> ComtradeQuery:
     """Discover the reported edition, never infer it from the calendar year."""
     versions = {row.classification_code for row in response.data}
@@ -76,243 +66,182 @@ def accept_response(query: ComtradeQuery, response: ComtradeResponse) -> Comtrad
     )
 
 
+class BudgetExhausted(Exception):
+    """The bounded run needs another explicitly requested invocation."""
+
+
+@dataclass
+class RequestBudget:
+    limit: int
+    interval: float = 1.1
+    requests: int = 0
+    last_request: float | None = None
+
+    def consume(self) -> None:
+        if self.requests >= self.limit:
+            raise BudgetExhausted
+        if self.last_request is not None:
+            time.sleep(max(0, self.interval - (time.monotonic() - self.last_request)))
+        self.requests += 1
+        self.last_request = time.monotonic()
+
+
+@dataclass
+class BatchResult:
+    accepted: list[dict[str, Any]] = field(default_factory=list)
+    unavailable: list[str] = field(default_factory=list)
+    requests: int = 0
+    complete: bool = False
+
+
+def plan_jobs(
+    months: list[str], reporters: tuple[int, ...], existing: dict[str, Any], refresh: bool
+) -> list[tuple[str, str, tuple[int, ...]]]:
+    jobs = []
+    for month in months:
+        for product in PRODUCTS:
+            group = tuple(
+                r
+                for r in reporters
+                if refresh
+                or any(f"{r}/{product}/{month}/{kind.value}" not in existing for kind in QueryType)
+            )
+            if group:
+                jobs.append((month, product, group))
+    return jobs
+
+
+def fetch_complete(
+    client: ComtradeClient, month: str, product: str, group: tuple[int, ...]
+) -> Iterator[tuple[tuple[int, ...], ComtradeResponse]]:
+    query = ComtradeQuery(
+        period=month, cmd_code=product, reporter_codes=group, query_type=QueryType.PARTNER_DETAIL
+    )
+    try:
+        yield group, client.fetch(query)
+    except ResponseTruncatedError:
+        if len(group) == 1:
+            raise
+        midpoint = len(group) // 2
+        yield from fetch_complete(client, month, product, group[:midpoint])
+        yield from fetch_complete(client, month, product, group[midpoint:])
+
+
+def save_extracts(
+    root: Path,
+    month: str,
+    product: str,
+    group: tuple[int, ...],
+    response: ComtradeResponse,
+    existing: dict[str, Any],
+    result: BatchResult,
+    refresh: bool,
+) -> None:
+    grouped: dict[tuple[int, QueryType], list[TradeRecord]] = defaultdict(list)
+    for row in response.data:
+        if row.reporter_code not in group:
+            raise DataContractError("response contains an unrequested reporter")
+        kind = QueryType.WORLD_TOTAL if row.partner_code == 0 else QueryType.PARTNER_DETAIL
+        grouped[row.reporter_code, kind].append(row)
+    for reporter in group:
+        for kind in QueryType:
+            save_source(
+                root,
+                ComtradeQuery(
+                    period=month, cmd_code=product, reporter_code=reporter, query_type=kind
+                ),
+                response,
+                grouped[reporter, kind],
+                existing,
+                result,
+                refresh,
+            )
+
+
+def save_source(
+    root: Path,
+    query: ComtradeQuery,
+    response: ComtradeResponse,
+    selected: list[TradeRecord],
+    existing: dict[str, Any],
+    result: BatchResult,
+    refresh: bool,
+) -> None:
+    reporter, product, month, kind = (
+        query.reporter_code,
+        query.cmd_code,
+        query.period,
+        query.query_type,
+    )
+    identity = f"{reporter}/{product}/{month}/{kind.value}"
+    previous = existing.get(identity)
+    if previous and not refresh:
+        return
+    if not selected:
+        if previous:
+            raise DataContractError("refresh omitted previously accepted extract")
+        result.unavailable.append(identity)
+        return
+    subset = response.model_copy(update={"data": selected, "count": len(selected)})
+    query = accept_response(
+        query,
+        subset,
+    )
+    dataset = validate_dataset(query, subset)
+    if previous and checksum(serialize_ndjson(dataset)) == previous["manifest"]["checksum"]:
+        return
+    revision = previous["manifest"]["revision"] + 1 if previous else 1
+    dataset = replace(dataset, query=query.model_copy(update={"revision": revision}))
+    stored = LocalStorage(root).write(dataset)
+    existing[identity] = read_source(stored.manifest_path)
+
+
 def run_batch(
     root: Path,
     *,
-    start: str,
-    end: str,
-    reporters: list[int],
+    months: list[str],
+    reporters: tuple[int, ...],
     max_requests: int = 100,
-    interval: float = 1.1,
-    revision: int = 1,
-    recent_from: str | None = None,
-    refresh_recent: bool = False,
-) -> dict[str, Any]:
-    from trade_analytics.ingestion.exceptions import ResponseTruncatedError
-    from trade_analytics.warehouse.writer_lock import writer_lock
-
-    if (
-        max_requests < 1
-        or type(revision) is not int
-        or revision < 1
-        or interval < 1
-        or not reporters
-        or any(code not in MARKETS for code in reporters)
-    ):
-        raise ValueError("invalid batch bounds, rate limit, or reporter")
-    months = periods(start, end)
-    if recent_from is not None:
-        ComtradeQuery(period=recent_from, query_type=QueryType.PARTNER_DETAIL)
-    root.mkdir(parents=True, exist_ok=True)
-    ledger_path = root / "batch-ledger.json"
-    with writer_lock(root / "batch.lock"):
-        ledger = json.loads(ledger_path.read_text()) if ledger_path.exists() else {}
-        requests = 0
-
-        def persist() -> None:
-            temporary = ledger_path.with_suffix(".tmp")
-            temporary.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n")
-            temporary.replace(ledger_path)
-
-        def refreshing(identity: str) -> bool:
-            return (
-                refresh_recent and recent_from is not None and identity.split("/")[2] >= recent_from
-            )
-
-        def ready(identity: str) -> bool:
-            previous = ledger.get(identity, {})
-            if previous.get("status") != "success":
-                return False
-            data = resolve_artifact(root, previous["data_path"])
-            if data.exists() and data.with_name("manifest.json").exists():
-                manifest = json.loads(data.with_name("manifest.json").read_bytes())
-                if manifest["revision"] < revision:
-                    return False
-                expected_identity = (
-                    f"{manifest['request_parameters']['reporterCode']}/"
-                    f"{manifest['cmd_code']}/{manifest['period']}/"
-                    f"{manifest['query_type']}"
-                )
-                if expected_identity != identity:
-                    raise DataContractError("resume manifest identity mismatch")
-                if checksum(data.read_bytes()) == manifest["checksum"]:
-                    return not refreshing(identity)
-            raise DataContractError(f"resume artifact failed validation: {identity}")
-
-        with httpx.Client() as http:
-            client = ComtradeClient(http_client=http, api_key=os.environ.get("COMTRADE_API_KEY"))
-
-            def extract(month: str, product: str, group: list[int]) -> bool:
-                nonlocal requests
-                if requests >= max_requests:
-                    return False
-                query = ComtradeQuery(
-                    period=month,
-                    cmd_code=product,
-                    reporter_codes=tuple(group),
-                    query_type=QueryType.PARTNER_DETAIL,
-                )
-                requests += 1
-                response = None
-                try:
-                    response = client.fetch(query)
-                except ResponseTruncatedError:
-                    if len(group) == 1:
-                        raise
-                finally:
-                    time.sleep(interval)
-                if response is None:
-                    midpoint = len(group) // 2
-                    return extract(month, product, group[:midpoint]) and extract(
-                        month, product, group[midpoint:]
-                    )
-                for reporter in group:
-                    rows = [row for row in response.data if row.reporter_code == reporter]
-                    if not rows:
-                        if any(
-                            ledger.get(f"{reporter}/{product}/{month}/{kind.value}", {}).get(
-                                "status"
-                            )
-                            == "success"
-                            for kind in QueryType
-                        ):
-                            raise DataContractError(
-                                "refresh omitted previously accepted market extract"
-                            )
-                        for kind in QueryType:
-                            ledger[f"{reporter}/{product}/{month}/{kind.value}"] = {
-                                "status": "unavailable",
-                                "checked_at": datetime.now(UTC).isoformat(),
-                            }
-                        persist()
-                        continue
-                    for kind in QueryType:
-                        identity = f"{reporter}/{product}/{month}/{kind.value}"
-                        if ready(identity):
-                            continue
-                        selected = [
-                            row
-                            for row in rows
-                            if (row.partner_code == 0) == (kind == QueryType.WORLD_TOTAL)
-                        ]
-                        if not selected:
-                            if ledger.get(identity, {}).get("status") == "success":
-                                raise DataContractError(
-                                    "refresh omitted previously accepted extract"
-                                )
-                            ledger[identity] = {
-                                "status": "unavailable",
-                                "checked_at": datetime.now(UTC).isoformat(),
-                            }
-                            persist()
-                            continue
-                        subset = response.model_copy(
-                            update={"data": selected, "count": len(selected)}
-                        )
-                        next_revision = revision
-                        previous = ledger.get(identity, {})
-                        if refreshing(identity) and previous.get("status") == "success":
-                            previous_data = resolve_artifact(root, previous["data_path"])
-                            previous_manifest = json.loads(
-                                previous_data.with_name("manifest.json").read_bytes()
-                            )
-                            next_revision = max(revision, previous_manifest["revision"] + 1)
-                        single = ComtradeQuery(
-                            period=month,
-                            reporter_code=reporter,
-                            cmd_code=product,
-                            query_type=kind,
-                            revision=next_revision,
-                        )
-                        single = accept_response(single, subset)
-                        dataset = IngestionService(CachedResponse(subset)).fetch_dataset(single)
-                        stored = LocalStorage(root).write(dataset)
-                        ledger[identity] = {
-                            "status": "success",
-                            "rows": stored.row_count,
-                            "data_path": relative_artifact_path(stored.data_path).as_posix(),
-                            "hs_version": single.expected_hs_version,
-                            "checked_at": datetime.now(UTC).isoformat(),
-                        }
-                        persist()
-                    print(
-                        json.dumps(
-                            {
-                                "reporter": reporter,
-                                "product": product,
-                                "month": month,
-                                "rows": len(rows),
-                            },
-                            ensure_ascii=False,
-                        ),
-                        flush=True,
-                    )
-                return True
-
-            plans: list[tuple[str, str, list[int], str]] = []
-            for month in months:
-                for product in PRODUCTS:
-                    group = [
-                        reporter
-                        for reporter in reporters
-                        if not all(
-                            ready(f"{reporter}/{product}/{month}/{kind.value}")
-                            for kind in QueryType
-                        )
-                    ]
-                    if group:
-                        checked = [
-                            ledger.get(f"{reporter}/{product}/{month}/{kind.value}", {}).get(
-                                "checked_at", ""
-                            )
-                            for reporter in group
-                            for kind in QueryType
-                            if ledger.get(f"{reporter}/{product}/{month}/{kind.value}", {}).get(
-                                "status"
-                            )
-                            != "success"
-                        ]
-                        plans.append((month, product, group, min(checked, default="")))
-            if recent_from is not None:
-                plans.sort(
-                    key=lambda item: (
-                        0 if item[0] >= recent_from else 1,
-                        -int(item[0]) if item[0] >= recent_from else 0,
-                        item[3],
-                        item[0],
-                        item[1],
-                    )
-                )
-            for month, product, group, _ in plans:
-                if not extract(month, product, group):
-                    return {"requests": requests, "entries": len(ledger), "complete": False}
-        return {"requests": requests, "entries": len(ledger), "complete": True}
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--start", default="201601")
-    parser.add_argument("--end", required=True)
-    parser.add_argument("--reporters", nargs="+", type=int, default=list(MARKETS))
-    parser.add_argument("--max-requests", type=int, default=100)
-    parser.add_argument("--revision", type=int, default=1)
-    parser.add_argument("--interval", type=float, default=1.1)
-    parser.add_argument("--output-dir", type=Path, default=Path("data/multi-market"))
-    args = parser.parse_args()
-    print(
-        json.dumps(
-            run_batch(
-                args.output_dir,
-                start=args.start,
-                end=args.end,
-                reporters=args.reporters,
-                max_requests=args.max_requests,
-                interval=args.interval,
-                revision=args.revision,
-            )
+    refresh: bool = False,
+    api_key: str | None = None,
+    completed: set[str] | None = None,
+    on_group: Callable[[dict[str, Any], list[str]], None] | None = None,
+) -> BatchResult:
+    existing = scan_sources(root)
+    completed = completed or set()
+    result = BatchResult(accepted=list(existing.values()))
+    budget = RequestBudget(max_requests)
+    if on_group is not None and not refresh:
+        on_group(existing, list(existing))
+    with httpx.Client() as http:
+        client = ComtradeClient(
+            http_client=http,
+            api_key=api_key,
+            before_request=budget.consume,
         )
-    )
-
-
-if __name__ == "__main__":
-    main()
+        try:
+            for month, product, group in plan_jobs(months, reporters, existing, refresh):
+                group = tuple(
+                    r
+                    for r in group
+                    if any(f"{r}/{product}/{month}/{k.value}" not in completed for k in QueryType)
+                )
+                if not group:
+                    continue
+                for accepted_group, response in fetch_complete(client, month, product, group):
+                    save_extracts(
+                        root, month, product, accepted_group, response, existing, result, refresh
+                    )
+                    if on_group is not None:
+                        identities = [
+                            f"{r}/{product}/{month}/{k.value}"
+                            for r in accepted_group
+                            for k in QueryType
+                        ]
+                        on_group(existing, identities)
+            result.complete = True
+        except BudgetExhausted:
+            pass
+    result.requests = budget.requests
+    result.accepted = list(existing.values())
+    return result

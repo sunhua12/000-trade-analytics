@@ -1,14 +1,11 @@
 """Shared bounded BigQuery read settings for JSON export."""
 
-import os
 import re
 from dataclasses import dataclass
 from datetime import date
 
 FIRST_MONTH = date(2023, 1, 1)
 AFTER_LAST_MONTH = date(2025, 1, 1)
-CMD_CODE = "8542"
-HS_VERSION = "H6"
 DATASET = "trade_analytics"
 
 
@@ -40,27 +37,6 @@ class Settings:
             raise ValueError("TRADE_BQ_LOCATION 不是有效的 BigQuery location")
         if self.maximum_bytes_billed <= 0:
             raise ValueError("查詢處理量上限必須大於 0")
-
-    @classmethod
-    def from_env(cls) -> "Settings":
-        return cls(
-            project=os.environ.get("TRADE_BQ_PROJECT", "trade-analytics-508604"),
-            dataset=os.environ.get("TRADE_BQ_DATASET", DATASET),
-            location=os.environ.get("TRADE_BQ_LOCATION", "asia-northeast1"),
-            maximum_bytes_billed=int(os.environ.get("TRADE_BQ_MAX_BYTES_BILLED", "1000000000")),
-            first_month=date.fromisoformat(
-                os.environ.get(
-                    "TRADE_EXPORT_FIRST_MONTH",
-                    os.environ.get("TRADE_DASHBOARD_FIRST_MONTH", "2023-01-01"),
-                )
-            ),
-            after_last_month=date.fromisoformat(
-                os.environ.get(
-                    "TRADE_EXPORT_AFTER_LAST_MONTH",
-                    os.environ.get("TRADE_DASHBOARD_AFTER_LAST_MONTH", "2025-01-01"),
-                )
-            ),
-        )
 
 
 def next_month(month: date) -> date:

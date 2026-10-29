@@ -1,20 +1,12 @@
-"""Verified, single-writer S3 to BigQuery raw partition loading."""
+"""One multi-market loader with transactional full-source replacement."""
 
-import hashlib
 import json
-import os
 import re
 import uuid
-from datetime import datetime
-from decimal import Decimal, localcontext
+from collections.abc import Iterable
 from importlib import import_module
 from typing import Any
 
-from .source_validation import verify
-
-BUCKET = os.environ.get("RAW_BUCKET", "trade-analytics-prod-816079797958-ap-northeast-1-an")
-PROJECT = os.environ.get("DBT_RAW_PROJECT", "trade-analytics-508604")
-RAW_DATASET = os.environ.get("DBT_RAW_DATASET", "trade_raw")
 KINDS = ("partner_detail", "world_total")
 SOURCE_FIELDS = (
     "period",
@@ -34,73 +26,25 @@ SOURCE_FIELDS = (
 )
 
 
-def source_key(
-    period: str,
-    kind: str,
-    revision: int = 1,
-    *,
-    reporter_code: int = 842,
-    cmd_code: str = "8542",
-    hs_version: str = "H6",
-) -> str:
-    if not re.fullmatch(r"[0-9]{6}", period):
-        raise ValueError("period must be YYYYMM")
-    try:
-        parsed = datetime.strptime(period, "%Y%m")
-    except ValueError as error:
-        raise ValueError("period must be a valid YYYYMM") from error
-    if parsed.strftime("%Y%m") != period or period < "201601":
-        raise ValueError("period must be 201601 or later")
-    if kind not in KINDS or revision < 1:
-        raise ValueError("invalid source identity")
-    from trade_analytics.ingestion.manifest import artifact_partition
-    from trade_analytics.ingestion.queries import ComtradeQuery
-
-    query = ComtradeQuery.model_validate(
-        {
-            "period": period,
-            "query_type": kind,
-            "revision": revision,
-            "reporter_code": reporter_code,
-            "cmd_code": cmd_code,
-            "expected_hs_version": hs_version,
-        }
-    )
-    return "un_comtrade/" + artifact_partition(query)
+def sql_projection(fields: Iterable[str], types: dict[str, str]) -> list[str]:
+    columns = []
+    for field in fields:
+        value = f"JSON_VALUE(r,'$.{field}')"
+        if field in types:
+            value = f"CAST({value} AS {types[field]})"
+        columns.append(f"{value} AS {field}")
+    return columns
 
 
-def decision(existing: list[dict[str, Any]], revision: int, checksum: str) -> str:
-    if not existing:
+def decision(existing: dict[str, Any] | None, revision: int, checksum: str) -> str:
+    if existing is None:
         return "load"
-    versions = {(int(row["revision"]), row["checksum"]) for row in existing}
-    if len(versions) != 1:
-        raise ValueError("raw partition mixes source versions")
-    old_revision, old_checksum = versions.pop()
+    old_revision, old_checksum = int(existing["revision"]), existing["checksum"]
     if revision < old_revision:
         return "stale_revision"
     if revision == old_revision:
         return "already_loaded" if checksum == old_checksum else "conflict"
     return "load"
-
-
-def canonical(row: dict[str, Any]) -> tuple[str | None, ...]:
-    values = []
-    for key in SOURCE_FIELDS:
-        value = row.get(key)
-        if key in ("primary_value", "net_weight", "quantity") and value is not None:
-            number = Decimal(str(value))
-            with localcontext() as context:
-                context.prec = max(38, len(number.as_tuple().digits))
-                value = format(number.normalize(), "f")
-        if key == "ingested_at" and value is not None:
-            value = datetime.fromisoformat(str(value).replace("Z", "+00:00")).isoformat()
-        values.append(None if value is None else str(value))
-    return tuple(values)
-
-
-def snapshot_hash(rows: list[dict[str, Any]]) -> str:
-    serialized = "\n".join(sorted(json.dumps(canonical(row)) for row in rows))
-    return hashlib.sha256(serialized.encode()).hexdigest()
 
 
 def expected_rows(attested: dict[str, Any], run_id: str) -> list[dict[str, Any]]:
@@ -122,56 +66,41 @@ class RawLoader:
     def __init__(
         self,
         client: Any,
-        s3: Any,
         *,
-        project: str = PROJECT,
-        raw_dataset: str = RAW_DATASET,
-        reporter_code: int = 842,
-        cmd_code: str = "8542",
-        hs_version: str = "H6",
+        project: str,
+        raw_dataset: str,
+        location: str = "asia-northeast1",
+        maximum_bytes_billed: int = 10**9,
     ) -> None:
         if not re.fullmatch(r"[a-z][a-z0-9-]+", project):
             raise ValueError("invalid project")
-        if not re.fullmatch(r"[a-z][a-z0-9_]*", raw_dataset):
+        if not re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", raw_dataset):
             raise ValueError("invalid raw dataset")
-        self.client, self.s3, self.project, self.raw_dataset = client, s3, project, raw_dataset
-        source_key(
-            "202401",
-            KINDS[0],
-            reporter_code=reporter_code,
-            cmd_code=cmd_code,
-            hs_version=hs_version,
-        )
-        self.scope = {
-            "reporter_code": str(reporter_code),
-            "cmd_code": cmd_code,
-            "hs_version": hs_version,
-        }
+        self.client, self.project, self.raw_dataset = client, project, raw_dataset
+        self.location = location
+        self.maximum_bytes_billed = maximum_bytes_billed
         self.jobs: list[dict[str, Any]] = []
 
     def table(self, kind: str) -> str:
-        if kind not in KINDS:
-            raise ValueError("invalid kind")
         return f"`{self.project}.{self.raw_dataset}.un_comtrade_{kind}`"
 
     def query(self, sql: str, params: dict[str, str]) -> list[dict[str, Any]]:
         bigquery = import_module("google.cloud.bigquery")
 
-        job_id = "day11_" + uuid.uuid4().hex
+        job_id = "trade_" + uuid.uuid4().hex
         job = self.client.query(
             sql,
             job_id=job_id,
             job_retry=None,
-            location=os.environ.get("TRADE_BQ_LOCATION", "asia-northeast1"),
+            location=self.location,
             job_config=bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ScalarQueryParameter(k, "STRING", v)
-                    for k, v in {**self.scope, **params}.items()
+                    bigquery.ScalarQueryParameter(k, "STRING", v) for k, v in params.items()
                 ],
-                maximum_bytes_billed=10**9,
+                maximum_bytes_billed=self.maximum_bytes_billed,
             ),
         )
-        record = {"job_id": job_id, "params": {k: v for k, v in params.items() if k != "rows"}}
+        record = {"job_id": job_id, "period": params.get("period")}
         self.jobs.append(record)
         try:
             result = [dict(row) for row in job.result(timeout=180)]
@@ -181,169 +110,149 @@ class RawLoader:
             record["status"] = "failed" if job.error_result else "unknown"
             raise
 
-    def source(self, period: str, kind: str, revision: int) -> dict[str, Any]:
-        prefix = source_key(
-            period,
-            kind,
-            revision,
-            reporter_code=int(self.scope["reporter_code"]),
-            cmd_code=self.scope["cmd_code"],
-            hs_version=self.scope["hs_version"],
-        )
-        data = self.s3.get_object(Bucket=BUCKET, Key=prefix + "/data.ndjson")["Body"].read()
-        manifest = self.s3.get_object(Bucket=BUCKET, Key=prefix + "/manifest.json")["Body"].read()
-        return verify(data, manifest, f"s3://{BUCKET}/{prefix}/data.ndjson")
-
-    def existing(self, period: str, kind: str) -> list[dict[str, Any]]:
-        sql = f"""
-SELECT TO_JSON_STRING(r) payload FROM {self.table(kind)} r
-WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code
-"""
-        return [
-            json.loads(row["payload"], parse_float=Decimal)
-            for row in self.query(sql, {"period": period})
-        ]
-
-    def load(
-        self, period: str, kind: str, revision: int = 1, *, rollback_probe: bool = False
-    ) -> dict[str, Any]:
-        if rollback_probe and not self.raw_dataset.endswith("_fixture"):
-            raise ValueError("rollback probe is restricted to fixture datasets")
-        attested = self.source(period, kind, revision)
-        manifest = attested["manifest"]
-        current = self.existing(period, kind)
-        action = decision(current, revision, manifest["checksum"])
-        run_id = f"day11-{period}-{kind}-r{revision}"
-        rows = expected_rows(attested, run_id)
-        if action == "already_loaded":
-            if len(current) != len(rows) or {canonical(r) for r in current} != {
-                canonical(r) for r in rows
-            }:
-                # Day 6 used a different run id; the source fields still must match.
-                raise ValueError("raw snapshot differs from same-revision source")
-            return {"period": period, "kind": kind, "status": action, "rows": len(rows)}
-        if action != "load":
-            raise ValueError(action)
-
-        self.query(
-            f"""
-ALTER TABLE `{self.project}.{self.raw_dataset}.audit_ingestion_runs`
- ADD COLUMN IF NOT EXISTS contract_fingerprint STRING;
-ALTER TABLE `{self.project}.{self.raw_dataset}.audit_ingestion_runs`
- ADD COLUMN IF NOT EXISTS snapshot_hash STRING;
-""",
-            {},
-        )
-
-        old_revision = str(current[0]["revision"]) if current else "0"
-        old_checksum = current[0]["checksum"] if current else ""
-        event_id = str(uuid.uuid4())
-        # The source is already validated byte-for-byte. JSON is only a transport for
-        # a single parameterized BigQuery transaction, never trusted as a new source.
-        payload = json.dumps(rows, default=str, separators=(",", ":"))
+    def load_month(self, period: str, sources: list[dict[str, Any]]) -> dict[str, Any]:
+        current: dict[tuple[str, str, str], dict[str, Any]] = {}
+        for kind in KINDS:
+            sql = f"""SELECT reporter_code,cmd_code,
+                MAX(revision) revision, MAX(checksum) checksum, COUNT(*) row_count,
+                COUNT(DISTINCT revision) revisions, COUNT(DISTINCT checksum) checksums
+                FROM {self.table(kind)} WHERE period_start_date=PARSE_DATE('%Y%m',@period)
+                AND flow_code='M'
+                AND cmd_code IN ('854231','854232','854233','854239','854290')
+                GROUP BY reporter_code,cmd_code"""
+            for row in self.query(sql, {"period": period}):
+                if row["revisions"] != 1 or row["checksums"] != 1:
+                    raise ValueError("raw partition mixes source versions")
+                current[(kind, row["reporter_code"], row["cmd_code"])] = row
+        rows: list[dict[str, Any]] = []
+        metadata: list[dict[str, Any]] = []
+        seen_sources = set()
+        for source in sources:
+            manifest = source["manifest"]
+            reporter = str(manifest["request_parameters"]["reporterCode"])
+            kind = manifest["query_type"]
+            key = (kind, reporter, manifest["cmd_code"])
+            if key in seen_sources:
+                raise ValueError("duplicate source partition in batch")
+            seen_sources.add(key)
+            if manifest["period"] != period:
+                raise ValueError("batch contains a different month")
+            existing = current.get(key)
+            action = decision(existing, manifest["revision"], manifest["checksum"])
+            run_id = f"multi-{period}-{reporter}-{manifest['cmd_code']}-r{manifest['revision']}"
+            expected = expected_rows(source, run_id)
+            if action == "already_loaded":
+                if existing is None or existing["row_count"] != len(expected):
+                    raise ValueError("same-revision row count differs from warehouse")
+                continue
+            if action != "load":
+                raise ValueError(action)
+            rows.extend({**row, "kind": kind} for row in expected)
+            metadata.append(
+                {
+                    "kind": kind,
+                    "reporter_code": reporter,
+                    "cmd_code": manifest["cmd_code"],
+                    "hs_version": manifest["hs_version"],
+                    "revision": manifest["revision"],
+                    "old_count": existing["row_count"] if existing else 0,
+                    "old_revision": existing["revision"] if existing else 0,
+                    "old_checksum": existing["checksum"] if existing else "",
+                    "checksum": manifest["checksum"],
+                    "row_count": len(expected),
+                    "amount": manifest["primary_value_sum"],
+                    "source_file": source["source_file"],
+                    "manifest_file": source["manifest_file"],
+                    "ingested_at": manifest["ingested_at"],
+                    "event_id": str(uuid.uuid4()),
+                    "run_id": run_id,
+                }
+            )
+        if not metadata:
+            return {"period": period, "status": "already_loaded", "sources": len(sources)}
         fields = ",".join(SOURCE_FIELDS) + ",run_id"
-        sql = f"""
-CREATE TEMP TABLE day11_rows AS
-SELECT
- JSON_VALUE(r,'$.period') period,
- PARSE_DATE('%Y-%m-%d',JSON_VALUE(r,'$.period_start_date')) period_start_date,
- JSON_VALUE(r,'$.reporter_code') reporter_code,
- JSON_VALUE(r,'$.partner_code') partner_code,
- JSON_VALUE(r,'$.flow_code') flow_code,
- JSON_VALUE(r,'$.cmd_code') cmd_code,
- JSON_VALUE(r,'$.hs_version') hs_version,
- CAST(JSON_VALUE(r,'$.primary_value') AS NUMERIC) primary_value,
- CAST(JSON_VALUE(r,'$.net_weight') AS NUMERIC) net_weight,
- CAST(JSON_VALUE(r,'$.quantity') AS NUMERIC) quantity,
- TIMESTAMP(JSON_VALUE(r,'$.ingested_at')) ingested_at,
- JSON_VALUE(r,'$.source_file') source_file,
- JSON_VALUE(r,'$.checksum') checksum,
- JSON_VALUE(r,'$.run_id') run_id,
- CAST(JSON_VALUE(r,'$.revision') AS INT64) revision
-FROM UNNEST(JSON_QUERY_ARRAY(@rows)) r;
-ASSERT (SELECT COUNT(*) FROM day11_rows)=CAST(@row_count AS INT64)
- AS 'normalized row count mismatch';
-ASSERT (SELECT SUM(primary_value) FROM day11_rows)=CAST(@amount AS NUMERIC)
- AS 'normalized amount mismatch';
-ASSERT (SELECT COUNT(DISTINCT partner_code) FROM day11_rows)=CAST(@row_count AS INT64)
- AS 'duplicate partner grain';
-BEGIN TRANSACTION;
-ASSERT (SELECT COALESCE(MAX(revision),0) FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code)
- =CAST(@old_revision AS INT64) AS 'revision changed during load';
-ASSERT (SELECT COUNT(DISTINCT checksum) FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code)
- =IF(@old_revision='0',0,1) AS 'checksum identity changed during load';
-ASSERT (SELECT COALESCE(MAX(checksum),'') FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code)
- =@old_checksum AS 'checksum changed during load';
-DELETE FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code;
-{"ASSERT FALSE AS 'fixture_rollback_probe';" if rollback_probe else ""}
-INSERT INTO {self.table(kind)}
- (period,period_start_date,reporter_code,partner_code,flow_code,cmd_code,hs_version,
- primary_value,net_weight,quantity,ingested_at,source_file,checksum,run_id,revision)
-SELECT * FROM day11_rows;
-ASSERT (SELECT COUNT(*) FROM {self.table(kind)}
- WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code)
- =CAST(@row_count AS INT64) AS 'raw row count mismatch';
-ASSERT NOT EXISTS(
- (SELECT {fields} FROM day11_rows EXCEPT DISTINCT
-  SELECT {fields} FROM {self.table(kind)} WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code)
- UNION ALL
- (SELECT {fields} FROM {self.table(kind)} WHERE period_start_date=PARSE_DATE('%Y%m',@period)
-
-  AND cmd_code=@cmd_code AND hs_version=@hs_version
-  AND reporter_code=@reporter_code
-  EXCEPT DISTINCT SELECT {fields} FROM day11_rows)
-) AS 'raw full snapshot mismatch';
+        row_sql = sql_projection(
+            (*SOURCE_FIELDS, "run_id", "kind"),
+            {
+                "period_start_date": "DATE",
+                "primary_value": "NUMERIC",
+                "net_weight": "NUMERIC",
+                "quantity": "NUMERIC",
+                "revision": "INT64",
+                "ingested_at": "TIMESTAMP",
+            },
+        )
+        meta_sql = sql_projection(
+            metadata[0],
+            {
+                "revision": "INT64",
+                "old_revision": "INT64",
+                "row_count": "INT64",
+                "old_count": "INT64",
+                "amount": "NUMERIC",
+            },
+        )
+        sql = (
+            "CREATE TEMP TABLE incoming AS SELECT "
+            + ",".join(row_sql)
+            + " FROM UNNEST(JSON_QUERY_ARRAY(@rows)) r;\n"
+            + "CREATE TEMP TABLE sources AS SELECT "
+            + ",".join(meta_sql)
+            + " FROM UNNEST(JSON_QUERY_ARRAY(@sources)) r;\nBEGIN TRANSACTION;\n"
+        )
+        identity = "r.reporter_code=s.reporter_code AND r.cmd_code=s.cmd_code AND r.flow_code='M'"
+        sql += """
+ASSERT NOT EXISTS(SELECT 1 FROM sources s WHERE
+ (SELECT COUNT(*) FROM incoming r WHERE r.kind=s.kind AND r.reporter_code=s.reporter_code
+  AND r.cmd_code=s.cmd_code AND r.hs_version=s.hs_version) != s.row_count OR
+ (SELECT SUM(primary_value) FROM incoming r WHERE r.kind=s.kind
+  AND r.reporter_code=s.reporter_code AND r.cmd_code=s.cmd_code
+  AND r.hs_version=s.hs_version) != s.amount OR
+ (SELECT COUNT(DISTINCT partner_code) FROM incoming r WHERE r.kind=s.kind
+  AND r.reporter_code=s.reporter_code AND r.cmd_code=s.cmd_code
+  AND r.hs_version=s.hs_version) != s.row_count
+) AS 'normalized source grain, count or sum mismatch';
+"""
+        for kind in KINDS:
+            table = self.table(kind)
+            scope = f"r.period_start_date=PARSE_DATE('%Y%m',@period) AND {identity}"
+            sql += f"""
+ASSERT NOT EXISTS (SELECT 1 FROM sources s WHERE s.kind='{kind}' AND (
+ (SELECT COUNT(*) FROM {table} r WHERE {scope}) != s.old_count OR
+ (SELECT COUNT(DISTINCT revision) FROM {table} r WHERE {scope}) != IF(s.old_revision=0,0,1) OR
+ (SELECT COALESCE(MAX(revision),0) FROM {table} r WHERE {scope}) != s.old_revision OR
+ (SELECT COUNT(DISTINCT checksum) FROM {table} r WHERE {scope}) != IF(s.old_revision=0,0,1) OR
+ (SELECT COALESCE(MAX(checksum),'') FROM {table} r WHERE {scope}) != s.old_checksum
+)) AS 'source changed during load';
+DELETE FROM {table} r WHERE r.period_start_date=PARSE_DATE('%Y%m',@period)
+ AND EXISTS(SELECT 1 FROM sources s WHERE s.kind='{kind}' AND {identity});
+INSERT INTO {table} ({fields}) SELECT {fields} FROM incoming WHERE kind='{kind}';
+"""
+        sql += f"""
 INSERT INTO `{self.project}.{self.raw_dataset}.audit_ingestion_runs`
  (event_id,run_id,attempt_id,period,query_type,cmd_code,hs_version,revision,
  source_file,manifest_file,checksum,expected_row_count,actual_row_count,
- expected_primary_value_sum,actual_primary_value_sum,status,source_ingested_at,event_at,
- contract_fingerprint,snapshot_hash)
-VALUES(@event_id,@run_id,@event_id,@period,@kind,@cmd_code,@hs_version,CAST(@revision AS INT64),
- @source_file,@manifest_file,@checksum,CAST(@row_count AS INT64),CAST(@row_count AS INT64),
- @amount,CAST(@amount AS NUMERIC),'success',TIMESTAMP(@ingested_at),CURRENT_TIMESTAMP(),
- @fingerprint,@snapshot_hash);
+ expected_primary_value_sum,actual_primary_value_sum,status,source_ingested_at,event_at)
+SELECT event_id,run_id,event_id,@period,kind,cmd_code,hs_version,revision,
+ source_file,manifest_file,checksum,row_count,row_count,CAST(amount AS STRING),amount,'success',
+ TIMESTAMP(ingested_at),CURRENT_TIMESTAMP() FROM sources;
 COMMIT TRANSACTION;
 """
-        params = {
-            "rows": payload,
+        self.query(
+            sql,
+            {
+                "period": period,
+                "rows": json.dumps(rows, default=str),
+                "sources": json.dumps(metadata, default=str),
+            },
+        )
+        return {
             "period": period,
-            "row_count": str(len(rows)),
-            "amount": manifest["primary_value_sum"],
-            "old_revision": old_revision,
-            "old_checksum": old_checksum,
-            "event_id": event_id,
-            "run_id": run_id,
-            "kind": kind,
-            "revision": str(revision),
-            "source_file": attested["source_file"],
-            "manifest_file": attested["manifest_file"],
-            "checksum": manifest["checksum"],
-            "ingested_at": manifest["ingested_at"],
-            "fingerprint": attested["contract_fingerprint"],
-            "snapshot_hash": snapshot_hash(rows),
+            "status": "success",
+            "sources": len(metadata),
+            "rows": len(rows),
+            "loaded": [
+                {k: m[k] for k in ("reporter_code", "cmd_code", "revision", "row_count")}
+                for m in metadata
+            ],
         }
-        self.query(sql, params)
-        final = self.existing(period, kind)
-        if len(final) != len(rows) or {canonical(r) for r in final} != {canonical(r) for r in rows}:
-            raise ValueError("post-commit source snapshot mismatch")
-        return {"period": period, "kind": kind, "status": "success", "rows": len(rows)}

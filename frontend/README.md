@@ -10,7 +10,7 @@ node frontend/serve.mjs
 
 When this directory is checked out independently, omit the `frontend/` prefix. Requires Node 22 or newer. Local preview: http://127.0.0.1:4173.
 
-The parent repository owns the Python/dbt pipeline. Refresh the public snapshot from the repository root with `python scripts/build_frontend.py --stage-data`, then build and publish the entire website as one version. `public/data/` contains only the three validated public files. Do not copy audit records, dbt artifacts, environment files or cloud credentials into this project.
+The parent repository owns the Python/dbt pipeline. Refresh the public snapshot from the repository root with `trade-export --snapshot-root data/frontend-v2 --stage-data frontend/public/data`, then build and publish the entire website as one version. `public/data/` contains only the three validated public files. Do not copy audit records, dbt artifacts, environment files or cloud credentials into this project.
 
 Frontend aggregation uses BigInt fixed-point NUMERIC arithmetic; charts alone convert values to Number. Date/country filters, World denominators, Top N, YoY and HHI follow the parent project's frontend data contract. CSV exports the complete date/country scope, rather than the displayed Top N or table page.
 

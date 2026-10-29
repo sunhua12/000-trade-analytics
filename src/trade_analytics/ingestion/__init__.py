@@ -11,7 +11,7 @@ from trade_analytics.ingestion.exceptions import (
     ResponseTruncatedError,
 )
 from trade_analytics.ingestion.queries import ComtradeQuery, QueryType
-from trade_analytics.ingestion.service import IngestionDataset, IngestionService
+from trade_analytics.ingestion.service import IngestionDataset, validate_dataset
 from trade_analytics.ingestion.storage import LocalStorage, StoredIngestion
 
 __all__ = [
@@ -24,7 +24,7 @@ __all__ = [
     "DataContractError",
     "EmptyDataError",
     "IngestionDataset",
-    "IngestionService",
+    "validate_dataset",
     "LocalStorage",
     "QueryType",
     "ResponseTruncatedError",
