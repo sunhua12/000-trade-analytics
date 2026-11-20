@@ -18,4 +18,28 @@ Design: Apple/Notion-inspired spacing, quiet surfaces and structured navigation;
 
 Map geometry is public-domain Natural Earth data; see `assets/NOTICE.md`.
 
+## Data delivery and loading performance
+
+The build verifies the original public snapshot, then generates lossless column-array
+JSON compressed with gzip: one monthly file and one complete partner file per importing
+market. Content hashes in filenames allow browser caching; the generated manifest
+records each compressed file's bytes, SHA-256, row count, encoding and snapshot version.
+The browser verifies compressed bytes before decompression and checks the restored
+snapshot before showing results. This requires a browser with `DecompressionStream`
+(current Chrome, Firefox, Edge and Safari). Original snapshot files remain available
+for audit and older clients; they are not downloaded by the optimized homepage.
+
+The homepage downloads monthly data and the default US market only. Other markets load
+on selection and are reused for the session. Failed requests can be retried and downloads
+have a 30-second timeout. Market switches hide stale results and ignore superseded
+responses. Exact NUMERIC strings, nulls, row ordering and complete filtered CSV exports
+are preserved. Analysis is reused when only the page, language or window size changes;
+detail-table sorting is deferred until the data page is opened.
+
+With snapshot `65e478c3765d4c3f836115b1f5b5e529`, initial analytical data drops from
+76,022,488 bytes to 1,131,833 bytes (98.5% smaller), excluding unchanged map/UI assets.
+These are payload sizes, not a guarantee about load time on every connection.
+`tests/delivery-production.test.mjs` verifies every production market's restored rows,
+KPI/trends/rankings and full CSV against the original snapshot, plus the size budget.
+
 Current preview uses a compact dark layout, a single-line title and six dashboard panels in a two-column desktop grid. No custom branding, logo or top information bar is displayed. HHI remains in the data contract but is omitted from the UI; country coverage remains visible. Detail pages show 50 compact rows.

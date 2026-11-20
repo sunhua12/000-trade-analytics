@@ -1,5 +1,11 @@
 // Local UI copy only. Source names, ISO codes, numeric values and CSV schema stay unchanged.
 const copy = {
+'正在載入所選市場資料…':'Loading the selected market…',
+'資料下載逾時，請檢查連線後重試。':'Download timed out. Check your connection and try again.',
+'重試':'Retry',
+'此市場沒有可用的資料檔案。':'No data file is available for this market.',
+'瀏覽器不支援壓縮資料，請更新瀏覽器後重試。':'Please update your browser to load compressed data.',
+
 '全球來源進口總額':'Imports from all global sources','所選來源國進口額':'Imports from selected sources',
 '進口市場':'Importing market','進口來源國／地區':'Import source country / area',
 '兩個金額為什麼不同？':'Why do these totals differ?',
