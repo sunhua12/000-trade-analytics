@@ -43,7 +43,9 @@ export function analyze(monthly, partners, {start, end, countries = [], topN = 1
   const rankings = [...buckets.values()].map(row => ({...row, value: sum(row.values)})).sort((a,b) => units(a.value) === units(b.value) ? a.code.localeCompare(b.code) : units(a.value) > units(b.value) ? -1 : 1);
   const top = rankings.slice(0, topN);
   const selectedPartner = countries.length === 1 ? countries[0] : null;
-  const trend = months.map(row => ({month: row.month, value: sum(scope.filter(p => p.month === row.month).map(p => p.import_value))}));
+  const monthlyValues=new Map();
+  for(const row of scope){const values=monthlyValues.get(row.month)??[];values.push(row.import_value);monthlyValues.set(row.month,values);}
+  const trend = months.map(row => ({month: row.month, value: sum(monthlyValues.get(row.month)??[])}));
   const yoy = months.map(row => ({month: row.month, value: selectedPartner ? scope.find(p => p.month === row.month)?.yoy ?? null : row.world_yoy}));
   const last = months.filter(row => row.has_world || row.has_countries).at(-1)?.month ?? null;
   return {months, scope, world, selected, selectedShare: share(selected, world), rankings, top, trend, yoy, last,
